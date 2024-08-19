@@ -1,0 +1,5 @@
+{
+    "quarto.usePipQuarto": true,
+    "quarto.path": "/home/cervaf/miniforge-pypy3/envs/adv-ml/bin/quarto",
+    "jupyter.allowUnauthorizedRemoteConnection": true
+}
