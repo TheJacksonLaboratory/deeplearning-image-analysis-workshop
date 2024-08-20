@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.5.55">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -193,46 +193,89 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#more-tasks-addressed-in-recent-years" id="toc-more-tasks-addressed-in-recent-years" class="nav-link" data-scroll-target="#more-tasks-addressed-in-recent-years">More tasks addressed in recent years</a></li>
   </ul></li>
-  <li><a href="#deep-learning-dl-models" id="toc-deep-learning-dl-models" class="nav-link" data-scroll-target="#deep-learning-dl-models">Deep Learning (DL) models</a>
-  <ul class="collapse">
-  <li><a href="#examples-of-popular-dl-models-in-computer-vision" id="toc-examples-of-popular-dl-models-in-computer-vision" class="nav-link" data-scroll-target="#examples-of-popular-dl-models-in-computer-vision">Examples of popular DL models in computer vision</a></li>
   </ul></li>
-  <li><a href="#train-the-model-to-learn-the-parameters-values" id="toc-train-the-model-to-learn-the-parameters-values" class="nav-link" data-scroll-target="#train-the-model-to-learn-the-parameters-values">Train the model to learn the parameter’s values</a></li>
-  <li><a href="#evaluate-the-model-performance" id="toc-evaluate-the-model-performance" class="nav-link" data-scroll-target="#evaluate-the-model-performance">Evaluate the model performance</a></li>
-  <li><a href="#prepare-our-model-for-production" id="toc-prepare-our-model-for-production" class="nav-link" data-scroll-target="#prepare-our-model-for-production">Prepare our model for production</a></li>
-  </ul></li>
-  <li><a href="#intro-to-pytorch" id="toc-intro-to-pytorch" class="nav-link" data-scroll-target="#intro-to-pytorch">2. Intro to PyTorch</a>
+  <li><a href="#types-of-machine-learning" id="toc-types-of-machine-learning" class="nav-link" data-scroll-target="#types-of-machine-learning">Types of machine learning</a>
   <ul class="collapse">
-  <li><a href="#what-is-a-tensor-pytorch" id="toc-what-is-a-tensor-pytorch" class="nav-link" data-scroll-target="#what-is-a-tensor-pytorch">What is a tensor (PyTorch)?</a>
+  <li><a href="#types-of-machine-learning-1" id="toc-types-of-machine-learning-1" class="nav-link" data-scroll-target="#types-of-machine-learning-1">Types of machine learning</a>
   <ul class="collapse">
-  <li><a href="#from-numpy-to-torch" id="toc-from-numpy-to-torch" class="nav-link" data-scroll-target="#from-numpy-to-torch">From Numpy to Torch</a></li>
+  <li><a href="#depending-on-how-the-model-is-trained" id="toc-depending-on-how-the-model-is-trained" class="nav-link" data-scroll-target="#depending-on-how-the-model-is-trained">Depending on how the model is trained</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#how-are-tensors-used-in-deep-learning" id="toc-how-are-tensors-used-in-deep-learning" class="nav-link" data-scroll-target="#how-are-tensors-used-in-deep-learning">How are tensors used in Deep Learning?</a>
+  <li><a href="#inputs-and-outputs" id="toc-inputs-and-outputs" class="nav-link" data-scroll-target="#inputs-and-outputs">Inputs and outputs</a>
   <ul class="collapse">
-  <li><a href="#training-with-mini-batches-of-images" id="toc-training-with-mini-batches-of-images" class="nav-link" data-scroll-target="#training-with-mini-batches-of-images">Training with mini-batches of images</a></li>
+  <li><a href="#inputs-and-outputs-1" id="toc-inputs-and-outputs-1" class="nav-link" data-scroll-target="#inputs-and-outputs-1">Inputs and outputs</a></li>
+  <li><a href="#use-case-image-classification-with-the-cifar-100-dataset" id="toc-use-case-image-classification-with-the-cifar-100-dataset" class="nav-link" data-scroll-target="#use-case-image-classification-with-the-cifar-100-dataset">Use case: Image classification with the CIFAR-100 dataset</a></li>
   </ul></li>
-  <li><a href="#pytorchs-building-blocks" id="toc-pytorchs-building-blocks" class="nav-link" data-scroll-target="#pytorchs-building-blocks">PyTorch’s building blocks</a>
+  <li><a href="#introduction-to-pytorch" id="toc-introduction-to-pytorch" class="nav-link" data-scroll-target="#introduction-to-pytorch">Introduction to PyTorch</a>
   <ul class="collapse">
-  <li><a href="#convolution-layers" id="toc-convolution-layers" class="nav-link" data-scroll-target="#convolution-layers">Convolution layers</a>
-  <ul class="collapse">
-  <li><a href="#the-effect-of-convolution-operations" id="toc-the-effect-of-convolution-operations" class="nav-link" data-scroll-target="#the-effect-of-convolution-operations">The effect of convolution operations</a></li>
+  <li><a href="#what-is-a-tensor-pytorch" id="toc-what-is-a-tensor-pytorch" class="nav-link" data-scroll-target="#what-is-a-tensor-pytorch">What is a tensor (PyTorch)?</a></li>
+  <li><a href="#exercise-add-the-preprocessing-pipeline-to-the-cifar-100-dataset" id="toc-exercise-add-the-preprocessing-pipeline-to-the-cifar-100-dataset" class="nav-link" data-scroll-target="#exercise-add-the-preprocessing-pipeline-to-the-cifar-100-dataset">Exercise: Add the preprocessing pipeline to the CIFAR-100 dataset</a></li>
   </ul></li>
-  <li><a href="#result-of-the-convolution-between-an-image-and-the-kernel" id="toc-result-of-the-convolution-between-an-image-and-the-kernel" class="nav-link" data-scroll-target="#result-of-the-convolution-between-an-image-and-the-kernel">Result of the convolution between an image and the kernel</a>
+  <li><a href="#training-validation-and-test-data" id="toc-training-validation-and-test-data" class="nav-link" data-scroll-target="#training-validation-and-test-data">Training, Validation, and Test data</a>
   <ul class="collapse">
-  <li><a href="#convolution-layers-from-torch.nn-module" id="toc-convolution-layers-from-torch.nn-module" class="nav-link" data-scroll-target="#convolution-layers-from-torch.nn-module">Convolution layers from torch.nn module</a></li>
+  <li><a href="#training-set" id="toc-training-set" class="nav-link" data-scroll-target="#training-set">Training set</a></li>
+  <li><a href="#validation-set" id="toc-validation-set" class="nav-link" data-scroll-target="#validation-set">Validation set</a></li>
+  <li><a href="#test-set" id="toc-test-set" class="nav-link" data-scroll-target="#test-set">Test set</a></li>
+  <li><a href="#exercise-load-the-test-set-and-split-the-train-set-into-train-and-validation-subsets" id="toc-exercise-load-the-test-set-and-split-the-train-set-into-train-and-validation-subsets" class="nav-link" data-scroll-target="#exercise-load-the-test-set-and-split-the-train-set-into-train-and-validation-subsets">Exercise: Load the test set and split the train set into train and validation subsets</a></li>
   </ul></li>
-  <li><a href="#linear-layers" id="toc-linear-layers" class="nav-link" data-scroll-target="#linear-layers">Linear layers</a>
+  <li><a href="#deep-learning-dl-models" id="toc-deep-learning-dl-models" class="nav-link" data-scroll-target="#deep-learning-dl-models"><strong>D</strong>eep <strong>L</strong>earning (<strong>DL</strong>) models</a>
   <ul class="collapse">
-  <li><a href="#linear-layers-from-torch.nn" id="toc-linear-layers-from-torch.nn" class="nav-link" data-scroll-target="#linear-layers-from-torch.nn">Linear layers from torch.nn</a></li>
+  <li><a href="#deep-learning-dl-models-1" id="toc-deep-learning-dl-models-1" class="nav-link" data-scroll-target="#deep-learning-dl-models-1">Deep Learning (DL) models</a></li>
+  <li><a href="#exercise-create-a-logisic-regression-model-with-pytorch" id="toc-exercise-create-a-logisic-regression-model-with-pytorch" class="nav-link" data-scroll-target="#exercise-create-a-logisic-regression-model-with-pytorch">Exercise: Create a Logisic Regression model with PyTorch</a></li>
+  <li><a href="#exercise-create-a-multilayer-perceptron-mlp-model-with-pytorch" id="toc-exercise-create-a-multilayer-perceptron-mlp-model-with-pytorch" class="nav-link" data-scroll-target="#exercise-create-a-multilayer-perceptron-mlp-model-with-pytorch">Exercise: Create a MultiLayer Perceptron (MLP) model with PyTorch</a></li>
   </ul></li>
-  <li><a href="#non-linear-activation-layers" id="toc-non-linear-activation-layers" class="nav-link" data-scroll-target="#non-linear-activation-layers">Non-linear activation layers</a></li>
-  <li><a href="#pooling-layers" id="toc-pooling-layers" class="nav-link" data-scroll-target="#pooling-layers">Pooling layers</a></li>
-  </ul></li>
-  <li><a href="#review-and-understand-the-architecture-of-classic-and-recent-dl-models" id="toc-review-and-understand-the-architecture-of-classic-and-recent-dl-models" class="nav-link" data-scroll-target="#review-and-understand-the-architecture-of-classic-and-recent-dl-models">3.- Review and understand the architecture of classic and recent DL models</a>
+  <li><a href="#model-optimization" id="toc-model-optimization" class="nav-link" data-scroll-target="#model-optimization">Model optimization</a>
   <ul class="collapse">
-  <li><a href="#lenet-5-architecture" id="toc-lenet-5-architecture" class="nav-link" data-scroll-target="#lenet-5-architecture">LeNet 5 architecture</a></li>
-  <li><a href="#u-net" id="toc-u-net" class="nav-link" data-scroll-target="#u-net">U-Net</a></li>
+  <li><a href="#model-fittingtraining" id="toc-model-fittingtraining" class="nav-link" data-scroll-target="#model-fittingtraining">Model fitting/training</a></li>
+  </ul></li>
+  <li><a href="#loss-function" id="toc-loss-function" class="nav-link" data-scroll-target="#loss-function">Loss function</a>
+  <ul class="collapse">
+  <li><a href="#loss-function-1" id="toc-loss-function-1" class="nav-link" data-scroll-target="#loss-function-1">Loss function</a></li>
+  <li><a href="#loss-function-for-regression" id="toc-loss-function-for-regression" class="nav-link" data-scroll-target="#loss-function-for-regression">11.1 Loss function for regression</a></li>
+  <li><a href="#loss-function-for-classification" id="toc-loss-function-for-classification" class="nav-link" data-scroll-target="#loss-function-for-classification">Loss function for classification</a></li>
+  <li><a href="#exercise-define-the-loss-function-for-the-cifar-100-classification-problem" id="toc-exercise-define-the-loss-function-for-the-cifar-100-classification-problem" class="nav-link" data-scroll-target="#exercise-define-the-loss-function-for-the-cifar-100-classification-problem">Exercise: Define the loss function for the CIFAR-100 classification problem</a></li>
+  <li><a href="#exercise-define-the-loss-function-for-the-cifar-100-classification-problem-1" id="toc-exercise-define-the-loss-function-for-the-cifar-100-classification-problem-1" class="nav-link" data-scroll-target="#exercise-define-the-loss-function-for-the-cifar-100-classification-problem-1">Exercise: Define the loss function for the CIFAR-100 classification problem</a></li>
+  </ul></li>
+  <li><a href="#gradient-based-optimization" id="toc-gradient-based-optimization" class="nav-link" data-scroll-target="#gradient-based-optimization">Gradient based optimization</a>
+  <ul class="collapse">
+  <li><a href="#gradient-based-optimization-1" id="toc-gradient-based-optimization-1" class="nav-link" data-scroll-target="#gradient-based-optimization-1">Gradient based optimization</a>
+  <ul class="collapse">
+  <li><a href="#gradient-descent" id="toc-gradient-descent" class="nav-link" data-scroll-target="#gradient-descent"><strong>Gradient Descent</strong></a></li>
+  </ul></li>
+  <li><a href="#exercise-compute-the-gradient-of-the-loss-function-with-respect-to-the-parameters-of-the-mlp." id="toc-exercise-compute-the-gradient-of-the-loss-function-with-respect-to-the-parameters-of-the-mlp." class="nav-link" data-scroll-target="#exercise-compute-the-gradient-of-the-loss-function-with-respect-to-the-parameters-of-the-mlp.">Exercise: Compute the gradient of the loss function with respect to the parameters of the MLP.</a></li>
+  <li><a href="#stochastic-methods" id="toc-stochastic-methods" class="nav-link" data-scroll-target="#stochastic-methods">Stochastic methods</a></li>
+  <li><a href="#stochastic-gradient-descent-sgd" id="toc-stochastic-gradient-descent-sgd" class="nav-link" data-scroll-target="#stochastic-gradient-descent-sgd"><strong>S</strong>tochastic <strong>G</strong>radient <strong>D</strong>escent (<strong>SGD</strong>)</a></li>
+  <li><a href="#training-with-mini-batches" id="toc-training-with-mini-batches" class="nav-link" data-scroll-target="#training-with-mini-batches">Training with mini-batches</a></li>
+  <li><a href="#exercise-train-the-mlp-classifier" id="toc-exercise-train-the-mlp-classifier" class="nav-link" data-scroll-target="#exercise-train-the-mlp-classifier">Exercise: Train the MLP classifier</a></li>
+  <li><a href="#exercise-train-the-mlp-classifier-1" id="toc-exercise-train-the-mlp-classifier-1" class="nav-link" data-scroll-target="#exercise-train-the-mlp-classifier-1">Exercise: Train the MLP classifier</a></li>
+  <li><a href="#exercise-train-the-mlp-classifier-and-track-the-training-and-validation-loss" id="toc-exercise-train-the-mlp-classifier-and-track-the-training-and-validation-loss" class="nav-link" data-scroll-target="#exercise-train-the-mlp-classifier-and-track-the-training-and-validation-loss">Exercise: Train the MLP classifier and track the training and validation loss</a></li>
+  <li><a href="#exercise-train-the-mlp-classifier-and-track-the-training-and-validation-loss-1" id="toc-exercise-train-the-mlp-classifier-and-track-the-training-and-validation-loss-1" class="nav-link" data-scroll-target="#exercise-train-the-mlp-classifier-and-track-the-training-and-validation-loss-1">Exercise: Train the MLP classifier and track the training and validation loss</a></li>
+  <li><a href="#exercise-train-the-mlp-classifier-and-track-the-training-and-validation-loss-2" id="toc-exercise-train-the-mlp-classifier-and-track-the-training-and-validation-loss-2" class="nav-link" data-scroll-target="#exercise-train-the-mlp-classifier-and-track-the-training-and-validation-loss-2">Exercise: Train the MLP classifier and track the training and validation loss</a></li>
+  <li><a href="#exercise-train-the-mlp-classifier-and-track-the-training-and-validation-loss-through-several-epochs" id="toc-exercise-train-the-mlp-classifier-and-track-the-training-and-validation-loss-through-several-epochs" class="nav-link" data-scroll-target="#exercise-train-the-mlp-classifier-and-track-the-training-and-validation-loss-through-several-epochs">Exercise: Train the MLP classifier and track the training and validation loss through several <em>epochs</em></a></li>
+  <li><a href="#exercise-show-the-progress-of-the-training-throught-the-epochs" id="toc-exercise-show-the-progress-of-the-training-throught-the-epochs" class="nav-link" data-scroll-target="#exercise-show-the-progress-of-the-training-throught-the-epochs">Exercise: Show the progress of the training throught the epochs</a></li>
+  </ul></li>
+  <li><a href="#performance-metrics" id="toc-performance-metrics" class="nav-link" data-scroll-target="#performance-metrics">Performance metrics</a>
+  <ul class="collapse">
+  <li><a href="#performance-metrics-1" id="toc-performance-metrics-1" class="nav-link" data-scroll-target="#performance-metrics-1">Performance metrics</a></li>
+  <li><a href="#exercise-measure-the-accuracy-of-the-mlp-trained-to-classify-images-from-cifar-100" id="toc-exercise-measure-the-accuracy-of-the-mlp-trained-to-classify-images-from-cifar-100" class="nav-link" data-scroll-target="#exercise-measure-the-accuracy-of-the-mlp-trained-to-classify-images-from-cifar-100">Exercise: Measure the accuracy of the MLP trained to classify images from CIFAR-100</a></li>
+  <li><a href="#exercise-measure-the-accuracy-of-the-mlp-trained-to-classify-images-from-cifar-100-1" id="toc-exercise-measure-the-accuracy-of-the-mlp-trained-to-classify-images-from-cifar-100-1" class="nav-link" data-scroll-target="#exercise-measure-the-accuracy-of-the-mlp-trained-to-classify-images-from-cifar-100-1">Exercise: Measure the accuracy of the MLP trained to classify images from CIFAR-100</a></li>
+  </ul></li>
+  <li><a href="#convolutional-neural-network-cnn-or-convnet" id="toc-convolutional-neural-network-cnn-or-convnet" class="nav-link" data-scroll-target="#convolutional-neural-network-cnn-or-convnet"><strong>C</strong>onvolutional <strong>N</strong>eural <strong>N</strong>etwork (<strong>CNN</strong> or <strong>ConvNet</strong>)</a>
+  <ul class="collapse">
+  <li><a href="#convolution-layers" id="toc-convolution-layers" class="nav-link" data-scroll-target="#convolution-layers">Convolution layers</a></li>
+  <li><a href="#exercise-visualize-the-effect-of-the-convolution-operation" id="toc-exercise-visualize-the-effect-of-the-convolution-operation" class="nav-link" data-scroll-target="#exercise-visualize-the-effect-of-the-convolution-operation">Exercise: Visualize the effect of the convolution operation</a></li>
+  <li><a href="#exercise-visualize-the-effect-of-the-convolution-operation-1" id="toc-exercise-visualize-the-effect-of-the-convolution-operation-1" class="nav-link" data-scroll-target="#exercise-visualize-the-effect-of-the-convolution-operation-1">Exercise: Visualize the effect of the convolution operation</a></li>
+  <li><a href="#exercise-visualize-the-effect-of-the-convolution-operation-2" id="toc-exercise-visualize-the-effect-of-the-convolution-operation-2" class="nav-link" data-scroll-target="#exercise-visualize-the-effect-of-the-convolution-operation-2">Exercise: Visualize the effect of the convolution operation</a></li>
+  <li><a href="#exercise-visualize-the-effect-of-the-convolution-operation-3" id="toc-exercise-visualize-the-effect-of-the-convolution-operation-3" class="nav-link" data-scroll-target="#exercise-visualize-the-effect-of-the-convolution-operation-3">Exercise: Visualize the effect of the convolution operation</a></li>
+  <li><a href="#exercise-visualize-the-effect-of-the-convolution-operation-4" id="toc-exercise-visualize-the-effect-of-the-convolution-operation-4" class="nav-link" data-scroll-target="#exercise-visualize-the-effect-of-the-convolution-operation-4">Exercise: Visualize the effect of the convolution operation</a></li>
+  <li><a href="#exercise-visualize-the-effect-of-the-convolution-operation-5" id="toc-exercise-visualize-the-effect-of-the-convolution-operation-5" class="nav-link" data-scroll-target="#exercise-visualize-the-effect-of-the-convolution-operation-5">Exercise: Visualize the effect of the convolution operation</a></li>
+  <li><a href="#exercise-visualize-the-effect-of-the-convolution-operation-6" id="toc-exercise-visualize-the-effect-of-the-convolution-operation-6" class="nav-link" data-scroll-target="#exercise-visualize-the-effect-of-the-convolution-operation-6">Exercise: Visualize the effect of the convolution operation</a></li>
+  <li><a href="#examples-of-popular-deep-learning-models-in-computer-vision" id="toc-examples-of-popular-deep-learning-models-in-computer-vision" class="nav-link" data-scroll-target="#examples-of-popular-deep-learning-models-in-computer-vision">Examples of popular Deep Learning models in computer vision</a></li>
+  <li><a href="#examples-of-popular-deep-learning-models-in-computer-vision-1" id="toc-examples-of-popular-deep-learning-models-in-computer-vision-1" class="nav-link" data-scroll-target="#examples-of-popular-deep-learning-models-in-computer-vision-1">Examples of popular Deep Learning models in computer vision</a></li>
+  <li><a href="#examples-of-popular-deep-learning-models-in-computer-vision-2" id="toc-examples-of-popular-deep-learning-models-in-computer-vision-2" class="nav-link" data-scroll-target="#examples-of-popular-deep-learning-models-in-computer-vision-2">Examples of popular Deep Learning models in computer vision</a></li>
+  <li><a href="#exercise-implement-letnet-5-in-pytorch" id="toc-exercise-implement-letnet-5-in-pytorch" class="nav-link" data-scroll-target="#exercise-implement-letnet-5-in-pytorch">Exercise: Implement LetNet-5 in PyTorch</a></li>
+  <li><a href="#exercise-implement-letnet-5-in-pytorch-1" id="toc-exercise-implement-letnet-5-in-pytorch-1" class="nav-link" data-scroll-target="#exercise-implement-letnet-5-in-pytorch-1">Exercise: Implement LetNet-5 in PyTorch</a></li>
+  <li><a href="#exercise-implement-letnet-5-in-pytorch-2" id="toc-exercise-implement-letnet-5-in-pytorch-2" class="nav-link" data-scroll-target="#exercise-implement-letnet-5-in-pytorch-2">Exercise: Implement LetNet-5 in PyTorch</a></li>
   </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="Adv_ML_Python_presentation.html"><i class="bi bi-file-slides"></i>RevealJS</a></li><li><a href="Adv_ML_Python.ipynb" download="Adv_ML_Python.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
@@ -285,7 +328,7 @@ window.Quarto = {
 <p><img src="imgs/select_runtime.png" class="img-fluid" style="width:50.0%"></p>
 <hr>
 <p>Now we can connect to the runtime by clicking <code>Connect</code>. This will create a <strong>V</strong>irtual <strong>M</strong>achine (<strong>VM</strong>) with compute resources we can use for a limited amount of time.</p>
-<p><img src="imgs/connect.png" class="img-fluid" style="width:25.0%"></p>
+<p><img src="imgs/connect.png" style="height:25.0%"></p>
 <div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -340,55 +383,109 @@ Caution
 <li><p>Generation of content</p></li>
 <li><p>Language processing</p></li>
 </ul>
+</section>
+</section>
+</section>
+<section id="types-of-machine-learning" class="level1">
+<h1>Types of machine learning</h1>
+<hr>
+<section id="types-of-machine-learning-1" class="level2">
+<h2 class="anchored" data-anchor-id="types-of-machine-learning-1">Types of machine learning</h2>
+<section id="depending-on-how-the-model-is-trained" class="level3">
+<h3 class="anchored" data-anchor-id="depending-on-how-the-model-is-trained">Depending on how the model is trained</h3>
+<ul>
+<li><p>Supervised</p></li>
+<li><p>Unsupervised</p></li>
+<li><p>Weakly supervised</p></li>
+<li><p>Reinforced</p></li>
+<li><p>…</p></li>
+</ul>
+<div class="notes">
+<p>Supervised learning: teach the machine to perform a task with a set of inputs and their respective expected outcome (<span class="math inline">\(X\)</span>, <span class="math inline">\(Y\)</span>).</p>
+<p>Unsupervised learning: let the machine learn to perform a task on its own (<span class="math inline">\(X\)</span>) without any specific expected outcome.</p>
+<p>Weakly supervised: teach the machine to perform a task using a limited set of expected outcomes.</p>
+<p>Reinforced learning: let the machine learn to perform a task on its own, then give it a reward relative to its performance.</p>
+</div>
+</section>
+</section>
+</section>
+<section id="inputs-and-outputs" class="level1">
+<h1>Inputs and outputs</h1>
+<hr>
+<section id="inputs-and-outputs-1" class="level2">
+<h2 class="anchored" data-anchor-id="inputs-and-outputs-1">Inputs and outputs</h2>
+<p>For a task, we want to <em>model</em> the <strong>outcome/output</strong> (<span class="math inline">\(y\)</span>) obtained by a given <strong>input</strong> (<span class="math inline">\(x\)</span>)</p>
+<p><span class="math inline">\(f(x) \approx y\)</span></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The complete set of (<span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span>) pairs is known as dataset (<span class="math inline">\(X\)</span>, <span class="math inline">\(Y\)</span>).</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Inputs can be virtually anything, including images, texts, video, audio, electrical signals, etc.</p>
+<p>While outputs are expected to be some meaningful piece of information, such as a category, position, value, etc.</p>
+</div>
+</div>
 <hr>
 </section>
-</section>
-<section id="deep-learning-dl-models" class="level2">
-<h2 class="anchored" data-anchor-id="deep-learning-dl-models">Deep Learning (DL) models</h2>
-<p>Models that construct knowledge in a hierarchical manner are considered <strong>deep models</strong>. The most common type of deep learning models are <em>artificial neural networks</em>.</p>
-<p>Artifical neural networks are layered models that use the output of a layer as the input of a subsequent layer.</p>
-<p>What determines the complexity and accuracy of neural networks to perform a certain tasks are their <strong>architecture</strong> and <strong>parameters <span class="math inline">\(\theta\)</span></strong>.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://www.mdpi.com/applsci/applsci-09-05507/article_deploy/html/images/applsci-09-05507-g003-550.jpg" class="img-fluid figure-img"></p>
-<figcaption>ANN</figcaption>
-</figure>
-</div>
-<p>The architecture of a neural network also help us to represent the model, implement it in a programming language, and share trained models.</p>
-<p>A drawback of deep learning models, and artificial neural networks in general, is their lack of explainability.</p>
-<p>However, there are recent techniques that address that problem and try to give some explanation to how a DL model made its prediction.</p>
-<section id="examples-of-popular-dl-models-in-computer-vision" class="level3">
-<h3 class="anchored" data-anchor-id="examples-of-popular-dl-models-in-computer-vision">Examples of popular DL models in computer vision</h3>
-<p>Inception v3 for image classification <img src="https://cloud.google.com/static/tpu/docs/images/inceptionv3onc--oview.png" class="img-fluid" alt="InceptionV3"></p>
-<p>U-Net for cell segmentation <img src="https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/u-net-architecture.png" class="img-fluid" alt="U-Net"></p>
-</section>
-</section>
-<section id="train-the-model-to-learn-the-parameters-values" class="level2">
-<h2 class="anchored" data-anchor-id="train-the-model-to-learn-the-parameters-values">Train the model to learn the parameter’s values</h2>
-</section>
-<section id="evaluate-the-model-performance" class="level2">
-<h2 class="anchored" data-anchor-id="evaluate-the-model-performance">Evaluate the model performance</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Intersection_over_Union_-_object_detection_bounding_boxes.jpg" class="img-fluid figure-img"></p>
-<figcaption>Object detection and localization</figcaption>
-</figure>
-</div>
-</section>
-<section id="prepare-our-model-for-production" class="level2">
-<h2 class="anchored" data-anchor-id="prepare-our-model-for-production">Prepare our model for production</h2>
-<p>After training and evaluating our model, we can fix its parameters and have a version that behaves good enough in the task it was trained to carry out.</p>
-<p>Some options to deliver our trained model are</p>
-<ul>
-<li>Containerize it for use in HPC (Sumner, Winter)</li>
-<li>Migrate it to a Cloud platform for external use</li>
-<li>Share the code to build the model (github), along the pre-trained parameters (bucket, drive)</li>
+<section id="use-case-image-classification-with-the-cifar-100-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="use-case-image-classification-with-the-cifar-100-dataset">Use case: Image classification with the CIFAR-100 dataset</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Load the CIFAR-100 dataset from torchvision.datasets</label></li>
 </ul>
-<p><span class="math inline">\(\hat{y} = f_{\theta*}(x)\)</span>, where <span class="math inline">\(x\)</span> is a new real-world sample</p>
+<div id="2604515d" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torchvision</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>cifar_ds <span class="op">=</span> torchvision.datasets.CIFAR100(root<span class="op">=</span><span class="st">"/tmp"</span>, train<span class="op">=</span><span class="va">True</span>, download<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Files already downloaded and verified</code></pre>
+</div>
+</div>
+<ul class="task-list">
+<li><label><input type="checkbox">Explore the CIFAR-100 dataset</label></li>
+</ul>
+<div id="8c86d998" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x_im, y <span class="op">=</span> cifar_ds[<span class="dv">0</span>]</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(cifar_ds), <span class="bu">type</span>(x_im), <span class="bu">type</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="44">
+<pre><code>(50000, PIL.Image.Image, int)</code></pre>
+</div>
+</div>
+<div id="b04e443c" class="cell" data-execution_count="5">
+<div class="cell-output cell-output-stdout">
+<pre><code>y = 19 (cattle)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="DL_image_analysis_1_1_files/figure-html/cell-5-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 </section>
-<section id="intro-to-pytorch" class="level1">
-<h1>2. Intro to PyTorch</h1>
+<section id="introduction-to-pytorch" class="level1">
+<h1>Introduction to PyTorch</h1>
 <section id="what-is-a-tensor-pytorch" class="level2">
 <h2 class="anchored" data-anchor-id="what-is-a-tensor-pytorch">What is a tensor (PyTorch)?</h2>
 <p>A tensor is a multi-dimensional array. In PyTorch, this comes from a generalization of the notation of variables that exists on more than two dimensions.</p>
@@ -398,306 +495,849 @@ Caution
 <li>two-dimensional variables are matrices,</li>
 <li>and three or more dimensional variables, are tensors.</li>
 </ul>
-<div id="1bc6dc3f" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>x0 <span class="op">=</span> torch.Tensor([<span class="dv">7</span>]) <span class="co"># This is a point</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>x1 <span class="op">=</span> torch.Tensor([<span class="dv">15</span>, <span class="dv">64</span>, <span class="dv">123</span>]) <span class="co"># This is a vector</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>x2 <span class="op">=</span> torch.Tensor([[<span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">5</span>],</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                   [<span class="dv">7</span>, <span class="dv">9</span>, <span class="dv">12</span>],</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                   [<span class="dv">10</span>, <span class="dv">33</span>, <span class="dv">1</span>]]) <span class="co"># This is a matrix</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>x3 <span class="op">=</span> torch.Tensor([[[[<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                     [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>                     [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>]],</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                    [[<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>],</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>                     [<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">3</span>],</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>                     [<span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">5</span>]]]]) <span class="co"># This is a tensor</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="e8fb11ea" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>x0 <span class="op">=</span> torch.Tensor([<span class="dv">7</span>]) <span class="co"># This is a point</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>x1 <span class="op">=</span> torch.Tensor([<span class="dv">15</span>, <span class="dv">64</span>, <span class="dv">123</span>]) <span class="co"># This is a vector</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>x2 <span class="op">=</span> torch.Tensor([[<span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">5</span>],</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                   [<span class="dv">7</span>, <span class="dv">9</span>, <span class="dv">12</span>],</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                   [<span class="dv">10</span>, <span class="dv">33</span>, <span class="dv">1</span>]]) <span class="co"># This is a matrix</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>x3 <span class="op">=</span> torch.Tensor([[[[<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>                     [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>                     [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>]],</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>                    [[<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>],</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>                     [<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">3</span>],</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>                     [<span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">5</span>]]]]) <span class="co"># This is a tensor</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <hr>
-<p>Arithmetic operations are applied to each element inside the tensor</p>
-<div id="039b0811" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a tensor of any dimension</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.Tensor([[<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>], [<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">7</span>]])</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>x</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Define "y" as two times "x" plus five</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="2">
-<pre><code>tensor([[1., 3., 2.],
-        [4., 5., 7.]])</code></pre>
-</div>
-</div>
-<p>The same happens with functions, e.g., trigonometric functions</p>
-<div id="cc1da618" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply a trigonometric function (e.g., sin, cos, tan) on "x"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Arithmetic operations between two tensors can be applied as well</p>
 <ul class="task-list">
-<li><label><input type="checkbox">Compute “z” as the sum of “x” and “y”</label></li>
+<li><label><input type="checkbox">Convert the example image <code>x_im</code> to a PyTorch tensor, and cast it to floating point data type</label></li>
 </ul>
-<div id="28eb2035" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.Tensor([<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">7</span>])</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> torch.Tensor([<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<p><strong>Important</strong> – Check the shape of the tensors first!</p>
-<div id="58874676" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> torch.Tensor([[<span class="dv">1</span>, <span class="dv">2</span>], [<span class="dv">4</span>, <span class="dv">5</span>]])</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> torch.Tensor([<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="dv">5</span>])</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> r <span class="op">+</span> s <span class="co"># This will generate an error because r and s does not have the same shape</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">RuntimeError</span>                              Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[5], line 4</span>
-<span class="ansi-green-fg ansi-bold">      1</span> r <span style="color:rgb(98,98,98)">=</span> torch<span style="color:rgb(98,98,98)">.</span>Tensor([[<span style="color:rgb(98,98,98)">1</span>, <span style="color:rgb(98,98,98)">2</span>], [<span style="color:rgb(98,98,98)">4</span>, <span style="color:rgb(98,98,98)">5</span>]])
-<span class="ansi-green-fg ansi-bold">      2</span> s <span style="color:rgb(98,98,98)">=</span> torch<span style="color:rgb(98,98,98)">.</span>Tensor([<span style="color:rgb(98,98,98)">4</span>, <span style="color:rgb(98,98,98)">5</span>, <span style="color:rgb(98,98,98)">10</span>, <span style="color:rgb(98,98,98)">11</span>, <span style="color:rgb(98,98,98)">5</span>])
-<span class="ansi-green-fg">----&gt; 4</span> t <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">r</span><span class="ansi-yellow-bg"> </span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">+</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">s</span> <span style="font-style:italic;color:rgb(95,135,135)"># This will generate an error because r and s does not have the same shape</span>
-
-<span class="ansi-red-fg">RuntimeError</span>: The size of tensor a (2) must match the size of tensor b (5) at non-singleton dimension 1</pre>
+<div class="callout-title-container flex-fill">
+Tip
 </div>
 </div>
-</div>
-<p>Use the tensor’s property <em>.shape</em> to know the shape of that tensor</p>
-<div id="967be3aa" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>r.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
-<pre><code>torch.Size([2, 2])</code></pre>
+<div class="callout-body-container callout-body">
+<p>We can use the utilities in <code>torchvision</code> to convert an image from PIL to tensor</p>
 </div>
 </div>
-<section id="from-numpy-to-torch" class="level3">
-<h3 class="anchored" data-anchor-id="from-numpy-to-torch">From Numpy to Torch</h3>
-<p>If you are familiar with Numpy’s arrays, you can convert them into PyTorch’s tensors as follows</p>
-<div id="88f87c73" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="00d36355" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torchvision.transforms.v2 <span class="im">import</span> PILToTensor</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>pre_process <span class="op">=</span> PILToTensor()</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> pre_process(x_im)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> x.<span class="bu">float</span>()</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(x), x.shape, x.dtype, x.<span class="bu">min</span>(), x.<span class="bu">max</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="47">
+<pre><code>(torch.Tensor,
+ torch.Size([3, 32, 32]),
+ torch.float32,
+ tensor(1.),
+ tensor(255.))</code></pre>
 </div>
-<div id="88b2bffb" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>x_np <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>])</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define "x_pt" as a PyTorch's Tensor version of "x_np"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For convenience, PyTorch’s tensors have their channels axis before the spatial axes.</p>
+</div>
+</div>
+<hr>
+<ul class="task-list">
+<li><label><input type="checkbox">Create a composed transformation to carry out the conversion, casting to float, and rescaling to <span class="math inline">\([0, 1]\)</span> range in the same function.</label></li>
+</ul>
+<div id="3652c424" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torchvision.transforms.v2 <span class="im">import</span> Compose, PILToTensor, ToDtype</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>pre_process <span class="op">=</span> Compose([</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  PILToTensor(),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  ToDtype(torch.float32, scale<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> pre_process(x_im)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(x), x.shape, x.dtype, x.<span class="bu">min</span>(), x.<span class="bu">max</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="48">
+<pre><code>(torch.Tensor,
+ torch.Size([3, 32, 32]),
+ torch.float32,
+ tensor(0.0039),
+ tensor(1.))</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For convenience, PyTorch’s tensors have their channels axis before the spatial axes.</p>
+</div>
 </div>
 <hr>
 </section>
+<section id="exercise-add-the-preprocessing-pipeline-to-the-cifar-100-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-add-the-preprocessing-pipeline-to-the-cifar-100-dataset">Exercise: Add the preprocessing pipeline to the CIFAR-100 dataset</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Re-load the CIFAR-100 dataset, this time passing the <code>pre_process</code> function as argument.</label></li>
+</ul>
+<div id="b81f098d" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>cifar_ds <span class="op">=</span> torchvision.datasets.CIFAR100(root<span class="op">=</span><span class="st">"/tmp"</span>, train<span class="op">=</span><span class="va">True</span>, download<span class="op">=</span><span class="va">True</span>, transform<span class="op">=</span>pre_process)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Files already downloaded and verified</code></pre>
+</div>
+</div>
 </section>
 </section>
-<section id="how-are-tensors-used-in-deep-learning" class="level1">
-<h1>How are tensors used in Deep Learning?</h1>
-<p>We store images in form of two-dimensional tensors for black and white, gray-scale images, and as three-dimensional tensors for color images (RGB).</p>
-<div id="f4779f12" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> skimage</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">ModuleNotFoundError</span>                       Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[9], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> <span style="font-weight:bold;color:rgb(0,135,0)">import</span> <span style="font-weight:bold;color:rgb(0,0,255)">matplotlib</span><span style="font-weight:bold;color:rgb(0,0,255)">.</span><span style="font-weight:bold;color:rgb(0,0,255)">pyplot</span> <span style="font-weight:bold;color:rgb(0,135,0)">as</span> <span style="font-weight:bold;color:rgb(0,0,255)">plt</span>
-<span class="ansi-green-fg ansi-bold">      2</span> <span style="font-weight:bold;color:rgb(0,135,0)">import</span> <span style="font-weight:bold;color:rgb(0,0,255)">skimage</span>
-
-File <span class="ansi-green-fg">~/.local/lib/python3.10/site-packages/matplotlib/__init__.py:161</span>
-<span class="ansi-green-fg ansi-bold">    157</span> <span style="font-weight:bold;color:rgb(0,135,0)">from</span> <span style="font-weight:bold;color:rgb(0,0,255)">packaging</span><span style="font-weight:bold;color:rgb(0,0,255)">.</span><span style="font-weight:bold;color:rgb(0,0,255)">version</span> <span style="font-weight:bold;color:rgb(0,135,0)">import</span> parse <span style="font-weight:bold;color:rgb(0,135,0)">as</span> parse_version
-<span class="ansi-green-fg ansi-bold">    159</span> <span style="font-style:italic;color:rgb(95,135,135)"># cbook must import matplotlib only within function</span>
-<span class="ansi-green-fg ansi-bold">    160</span> <span style="font-style:italic;color:rgb(95,135,135)"># definitions, so it is safe to import from it here.</span>
-<span class="ansi-green-fg">--&gt; 161</span> <span style="font-weight:bold;color:rgb(0,135,0)">from</span> <span style="font-weight:bold;color:rgb(0,0,255)">.</span> <span style="font-weight:bold;color:rgb(0,135,0)">import</span> _api, _version, cbook, _docstring, rcsetup
-<span class="ansi-green-fg ansi-bold">    162</span> <span style="font-weight:bold;color:rgb(0,135,0)">from</span> <span style="font-weight:bold;color:rgb(0,0,255)">matplotlib</span><span style="font-weight:bold;color:rgb(0,0,255)">.</span><span style="font-weight:bold;color:rgb(0,0,255)">cbook</span> <span style="font-weight:bold;color:rgb(0,135,0)">import</span> sanitize_sequence
-<span class="ansi-green-fg ansi-bold">    163</span> <span style="font-weight:bold;color:rgb(0,135,0)">from</span> <span style="font-weight:bold;color:rgb(0,0,255)">matplotlib</span><span style="font-weight:bold;color:rgb(0,0,255)">.</span><span style="font-weight:bold;color:rgb(0,0,255)">_api</span> <span style="font-weight:bold;color:rgb(0,135,0)">import</span> MatplotlibDeprecationWarning
-
-File <span class="ansi-green-fg">~/.local/lib/python3.10/site-packages/matplotlib/rcsetup.py:28</span>
-<span class="ansi-green-fg ansi-bold">     26</span> <span style="font-weight:bold;color:rgb(0,135,0)">from</span> <span style="font-weight:bold;color:rgb(0,0,255)">matplotlib</span><span style="font-weight:bold;color:rgb(0,0,255)">.</span><span style="font-weight:bold;color:rgb(0,0,255)">cbook</span> <span style="font-weight:bold;color:rgb(0,135,0)">import</span> ls_mapper
-<span class="ansi-green-fg ansi-bold">     27</span> <span style="font-weight:bold;color:rgb(0,135,0)">from</span> <span style="font-weight:bold;color:rgb(0,0,255)">matplotlib</span><span style="font-weight:bold;color:rgb(0,0,255)">.</span><span style="font-weight:bold;color:rgb(0,0,255)">colors</span> <span style="font-weight:bold;color:rgb(0,135,0)">import</span> Colormap, is_color_like
-<span class="ansi-green-fg">---&gt; 28</span> <span style="font-weight:bold;color:rgb(0,135,0)">from</span> <span style="font-weight:bold;color:rgb(0,0,255)">matplotlib</span><span style="font-weight:bold;color:rgb(0,0,255)">.</span><span style="font-weight:bold;color:rgb(0,0,255)">_fontconfig_pattern</span> <span style="font-weight:bold;color:rgb(0,135,0)">import</span> parse_fontconfig_pattern
-<span class="ansi-green-fg ansi-bold">     29</span> <span style="font-weight:bold;color:rgb(0,135,0)">from</span> <span style="font-weight:bold;color:rgb(0,0,255)">matplotlib</span><span style="font-weight:bold;color:rgb(0,0,255)">.</span><span style="font-weight:bold;color:rgb(0,0,255)">_enums</span> <span style="font-weight:bold;color:rgb(0,135,0)">import</span> JoinStyle, CapStyle
-<span class="ansi-green-fg ansi-bold">     31</span> <span style="font-style:italic;color:rgb(95,135,135)"># Don't let the original cycler collide with our validating cycler</span>
-
-File <span class="ansi-green-fg">~/.local/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:15</span>
-<span class="ansi-green-fg ansi-bold">     12</span> <span style="font-weight:bold;color:rgb(0,135,0)">from</span> <span style="font-weight:bold;color:rgb(0,0,255)">functools</span> <span style="font-weight:bold;color:rgb(0,135,0)">import</span> lru_cache, partial
-<span class="ansi-green-fg ansi-bold">     13</span> <span style="font-weight:bold;color:rgb(0,135,0)">import</span> <span style="font-weight:bold;color:rgb(0,0,255)">re</span>
-<span class="ansi-green-fg">---&gt; 15</span> <span style="font-weight:bold;color:rgb(0,135,0)">from</span> <span style="font-weight:bold;color:rgb(0,0,255)">pyparsing</span> <span style="font-weight:bold;color:rgb(0,135,0)">import</span> (
-<span class="ansi-green-fg ansi-bold">     16</span>     Group, Optional, ParseException, Regex, StringEnd, Suppress, ZeroOrMore)
-<span class="ansi-green-fg ansi-bold">     18</span> <span style="font-weight:bold;color:rgb(0,135,0)">from</span> <span style="font-weight:bold;color:rgb(0,0,255)">matplotlib</span> <span style="font-weight:bold;color:rgb(0,135,0)">import</span> _api
-<span class="ansi-green-fg ansi-bold">     21</span> _family_punc <span style="color:rgb(98,98,98)">=</span> <span style="color:rgb(175,0,0)">r</span><span style="color:rgb(175,0,0)">'</span><span style="font-weight:bold;color:rgb(175,95,0)">\\</span><span style="color:rgb(175,0,0)">\</span><span style="color:rgb(175,0,0)">-:,</span><span style="color:rgb(175,0,0)">'</span>
-
-<span class="ansi-red-fg">ModuleNotFoundError</span>: No module named 'pyparsing'</pre>
-</div>
-</div>
-</div>
-<div id="06bdaac6" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load some images as numpy arrays</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>im_bw <span class="op">=</span> skimage.data.camera()</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>im_bw.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[10], line 2</span>
-<span class="ansi-green-fg ansi-bold">      1</span> <span style="font-style:italic;color:rgb(95,135,135)"># Load some images as numpy arrays</span>
-<span class="ansi-green-fg">----&gt; 2</span> im_bw <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">skimage</span><span style="color:rgb(98,98,98)">.</span>data<span style="color:rgb(98,98,98)">.</span>camera()
-<span class="ansi-green-fg ansi-bold">      3</span> im_bw<span style="color:rgb(98,98,98)">.</span>shape
-
-<span class="ansi-red-fg">NameError</span>: name 'skimage' is not defined</pre>
-</div>
-</div>
-</div>
-<div id="2cf980f0" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>plt.imshow(im_bw, cmap<span class="op">=</span><span class="st">"gray"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[11], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-yellow-bg">plt</span><span style="color:rgb(98,98,98)">.</span>imshow(im_bw, cmap<span style="color:rgb(98,98,98)">=</span><span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">gray</span><span style="color:rgb(175,0,0)">"</span>)
-
-<span class="ansi-red-fg">NameError</span>: name 'plt' is not defined</pre>
-</div>
-</div>
-</div>
-<div id="6a344830" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>im_bw[:<span class="dv">5</span>, :<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[12], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-yellow-bg">im_bw</span>[:<span style="color:rgb(98,98,98)">5</span>, :<span style="color:rgb(98,98,98)">5</span>]
-
-<span class="ansi-red-fg">NameError</span>: name 'im_bw' is not defined</pre>
-</div>
-</div>
-</div>
-<div id="583e9480" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>im_color <span class="op">=</span> skimage.data.astronaut()</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>im_color.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[13], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> im_color <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">skimage</span><span style="color:rgb(98,98,98)">.</span>data<span style="color:rgb(98,98,98)">.</span>astronaut()
-<span class="ansi-green-fg ansi-bold">      2</span> im_color<span style="color:rgb(98,98,98)">.</span>shape
-
-<span class="ansi-red-fg">NameError</span>: name 'skimage' is not defined</pre>
-</div>
-</div>
-</div>
-<div id="dd09b2c5" class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>plt.imshow(im_color)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[14], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-yellow-bg">plt</span><span style="color:rgb(98,98,98)">.</span>imshow(im_color)
-
-<span class="ansi-red-fg">NameError</span>: name 'plt' is not defined</pre>
-</div>
-</div>
-</div>
-<div id="778bb8e2" class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>im_color[:<span class="dv">5</span>, :<span class="dv">5</span>, :]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[15], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-yellow-bg">im_color</span>[:<span style="color:rgb(98,98,98)">5</span>, :<span style="color:rgb(98,98,98)">5</span>, :]
-
-<span class="ansi-red-fg">NameError</span>: name 'im_color' is not defined</pre>
-</div>
-</div>
-</div>
-<p>For convenience, PyTorch’s tensors are stored with the channels axis before the spatial (X, Y) axis. So, lets permute the axes after converting the image to a PyTorch’s tensor.</p>
-<div id="a843fd13" class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.from_numpy(im_color)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Permute the axes of "x", so we have the color axes first, then cast the type of "x" into float type</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[16], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> x <span style="color:rgb(98,98,98)">=</span> torch<span style="color:rgb(98,98,98)">.</span>from_numpy(<span class="ansi-yellow-bg">im_color</span>)
-<span class="ansi-green-fg ansi-bold">      3</span> <span style="font-style:italic;color:rgb(95,135,135)"># Permute the axes of "x", so we have the color axes first, then cast the type of "x" into float type</span>
-
-<span class="ansi-red-fg">NameError</span>: name 'im_color' is not defined</pre>
-</div>
-</div>
-</div>
-<div id="3a4713b1" class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Numpy original:"</span>, im_color.dtype)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"PyTorch Tensor:"</span>, x.dtype)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[17], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> <span style="color:rgb(0,135,0)">print</span>(<span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">Numpy original:</span><span style="color:rgb(175,0,0)">"</span>, <span class="ansi-yellow-bg">im_color</span><span style="color:rgb(98,98,98)">.</span>dtype)
-<span class="ansi-green-fg ansi-bold">      2</span> <span style="color:rgb(0,135,0)">print</span>(<span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">PyTorch Tensor:</span><span style="color:rgb(175,0,0)">"</span>, x<span style="color:rgb(98,98,98)">.</span>dtype)
-
-<span class="ansi-red-fg">NameError</span>: name 'im_color' is not defined</pre>
-</div>
-</div>
-</div>
-<p>Cast the type of data from integers to floating points, so we can apply functions that return continuous variables.</p>
-<div id="12a59682" class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the mean, and standard deviation of the pixel values of "x"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="3917a2d1" class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Numpy original:"</span>, im_color.dtype)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"PyTorch Tensor:"</span>, x.dtype)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[19], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> <span style="color:rgb(0,135,0)">print</span>(<span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">Numpy original:</span><span style="color:rgb(175,0,0)">"</span>, <span class="ansi-yellow-bg">im_color</span><span style="color:rgb(98,98,98)">.</span>dtype)
-<span class="ansi-green-fg ansi-bold">      2</span> <span style="color:rgb(0,135,0)">print</span>(<span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">PyTorch Tensor:</span><span style="color:rgb(175,0,0)">"</span>, x<span style="color:rgb(98,98,98)">.</span>dtype)
-
-<span class="ansi-red-fg">NameError</span>: name 'im_color' is not defined</pre>
-</div>
-</div>
-</div>
-<section id="training-with-mini-batches-of-images" class="level2">
-<h2 class="anchored" data-anchor-id="training-with-mini-batches-of-images">Training with mini-batches of images</h2>
-<p>PyTorch can operate efficiently on multiple images at the same time. To do that, we need to stack these images into a single tensor first.</p>
-<p>That is because operations in PyTorch expect the images to have the following axes order <strong>B,C,H,W</strong> 1. <strong>B</strong>: Batch size, 2. <strong>C</strong>: Number of Channels, 3. <strong>H</strong>: Height, and 4. <strong>W</strong>: Width</p>
-<div id="6b699304" class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>im1 <span class="op">=</span> skimage.data.astronaut()</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>x1 <span class="op">=</span> torch.from_numpy(im1).permute(<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>x1 <span class="op">=</span> x1.<span class="bu">float</span>()</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>im2 <span class="op">=</span> skimage.data.cat()</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>x2 <span class="op">=</span> torch.from_numpy(im2).permute(<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>x2 <span class="op">=</span> x2.<span class="bu">float</span>()</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x1.shape)</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x2.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[20], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> im1 <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">skimage</span><span style="color:rgb(98,98,98)">.</span>data<span style="color:rgb(98,98,98)">.</span>astronaut()
-<span class="ansi-green-fg ansi-bold">      2</span> x1 <span style="color:rgb(98,98,98)">=</span> torch<span style="color:rgb(98,98,98)">.</span>from_numpy(im1)<span style="color:rgb(98,98,98)">.</span>permute(<span style="color:rgb(98,98,98)">2</span>, <span style="color:rgb(98,98,98)">0</span>, <span style="color:rgb(98,98,98)">1</span>)
-<span class="ansi-green-fg ansi-bold">      3</span> x1 <span style="color:rgb(98,98,98)">=</span> x1<span style="color:rgb(98,98,98)">.</span>float()
-
-<span class="ansi-red-fg">NameError</span>: name 'skimage' is not defined</pre>
-</div>
-</div>
-</div>
-<p>Crop, resize, apply color transformations to images, so these are of the same shape and number of channels.</p>
-<div id="d82616d4" class="cell" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a patch of size 256x256 pixels from each image</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Stack the patches into a batch of tensors at dimension 0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="training-validation-and-test-data" class="level1">
+<h1>Training, Validation, and Test data</h1>
+<hr>
+<section id="training-set" class="level2">
+<h2 class="anchored" data-anchor-id="training-set">Training set</h2>
+<p>The examples (<span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span>) used to teach a machine/model to perform a task</p>
+<hr>
+</section>
+<section id="validation-set" class="level2">
+<h2 class="anchored" data-anchor-id="validation-set">Validation set</h2>
+<p>Used to measure the performance of a model during training</p>
+<p>This subset is not used for training the model, so it is <em>unseen</em> data.</p>
+<div class="notes">
+<p>This is a subset from the <em>training set</em> and can be used to test the generalization capacity of the model or to select the best configuration of a model.</p>
 </div>
 <hr>
 </section>
+<section id="test-set" class="level2">
+<h2 class="anchored" data-anchor-id="test-set">Test set</h2>
+<p>This set of samples is <strong>not</strong> used when training</p>
+<p>Its purpose is to measure the <em>generalization</em> capacity of the model</p>
+<hr>
 </section>
-<section id="pytorchs-building-blocks" class="level1">
-<h1>PyTorch’s building blocks</h1>
-<p>Deep learning models are defined as hierarchical transformations arranged as <em>layers</em>. Each <em>layer</em> takes an input (the original image, or from a previous layer) and computes its output using some <strong>operations</strong> and <strong>functions</strong>. Then that output is used as input for the next layer …</p>
+<section id="exercise-load-the-test-set-and-split-the-train-set-into-train-and-validation-subsets" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-load-the-test-set-and-split-the-train-set-into-train-and-validation-subsets">Exercise: Load the test set and split the train set into train and validation subsets</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Load the CIFAR-100 test set</label></li>
+</ul>
+<div id="f39afb60" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>cifar_test_ds <span class="op">=</span> torchvision.datasets.CIFAR100(root<span class="op">=</span><span class="st">"/tmp"</span>, train<span class="op">=</span><span class="va">False</span>, download<span class="op">=</span><span class="va">True</span>, transform<span class="op">=</span>pre_process)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Files already downloaded and verified</code></pre>
+</div>
+</div>
+<ul class="task-list">
+<li><label><input type="checkbox">Split the training set into train and validation subsets</label></li>
+</ul>
+<div id="97bd22e7" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.utils.data <span class="im">import</span> random_split</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>cifar_train_ds, cifar_val_ds <span class="op">=</span> random_split(cifar_ds, (<span class="dv">40_000</span>, <span class="dv">10_000</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="deep-learning-dl-models" class="level1">
+<h1><strong>D</strong>eep <strong>L</strong>earning (<strong>DL</strong>) models</h1>
+<hr>
+<section id="deep-learning-dl-models-1" class="level2">
+<h2 class="anchored" data-anchor-id="deep-learning-dl-models-1">Deep Learning (DL) models</h2>
+<p>Models that construct knowledge in a hierarchical manner are considered <strong>deep models</strong>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://www.mdpi.com/applsci/applsci-09-05507/article_deploy/html/images/applsci-09-05507-g003-550.jpg" style="height:50.0%" class="figure-img"></p>
+<figcaption><a href="https://www.mdpi.com/595982">From Cervantes-Sanchez et al.</a></figcaption>
+</figure>
+</div>
+<hr>
+</section>
+<section id="exercise-create-a-logisic-regression-model-with-pytorch" class="level2 scrollable">
+<h2 class="scrollable anchored" data-anchor-id="exercise-create-a-logisic-regression-model-with-pytorch">Exercise: Create a Logisic Regression model with PyTorch</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Use the <code>nn</code> (Neural Networks) module from <code>pytorch</code> to create a Logistic Regression model</label></li>
+</ul>
+<div id="72fb117d" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>lr_clf_1 <span class="op">=</span> nn.Linear(in_features<span class="op">=</span><span class="dv">3</span> <span class="op">*</span> <span class="dv">32</span> <span class="op">*</span> <span class="dv">32</span>, out_features<span class="op">=</span><span class="dv">100</span>, bias<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>lr_clf_2 <span class="op">=</span> nn.Softmax()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul class="task-list">
+<li><label><input type="checkbox"><em>Feed</em> the model with a sample <code>x</code></label></li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We have to <em>reshape</em> <code>x</code> before feeding it to the model because <code>x</code> is an image with axes: Channels, Height, Width (CHW), but the Logistic Regression input should be a vector.</p>
+</div>
+</div>
+<div id="560e39fb" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>y_hat <span class="op">=</span> lr_clf_2( lr_clf_1( x.reshape(<span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>) ))</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(y_hat), y_hat.shape, y_hat.dtype</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="53">
+<pre><code>(torch.Tensor, torch.Size([1, 100]), torch.float32)</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="exercise-create-a-multilayer-perceptron-mlp-model-with-pytorch" class="level2 scrollable">
+<h2 class="scrollable anchored" data-anchor-id="exercise-create-a-multilayer-perceptron-mlp-model-with-pytorch">Exercise: Create a MultiLayer Perceptron (MLP) model with PyTorch</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Use the <code>nn.Sequential</code> module to build sequential models</label></li>
+</ul>
+<div id="075097b0" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>mlp_clf <span class="op">=</span> nn.Sequential(</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  nn.Linear(in_features<span class="op">=</span><span class="dv">3</span> <span class="op">*</span> <span class="dv">32</span> <span class="op">*</span> <span class="dv">32</span>, out_features<span class="op">=</span><span class="dv">1024</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  nn.Tanh(),</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  nn.Linear(in_features<span class="op">=</span><span class="dv">1024</span>, out_features<span class="op">=</span><span class="dv">100</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  nn.Softmax()</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul class="task-list">
+<li><label><input type="checkbox"><em>Feed</em> the model with a sample <code>x</code></label></li>
+</ul>
+<div id="a109acc4" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>y_hat <span class="op">=</span> mlp_clf(x.reshape(<span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>))</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(y_hat), y_hat.shape, y_hat.dtype</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="55">
+<pre><code>(torch.Tensor, torch.Size([1, 100]), torch.float32)</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="model-optimization" class="level1">
+<h1>Model optimization</h1>
+<hr>
+<section id="model-fittingtraining" class="level2">
+<h2 class="anchored" data-anchor-id="model-fittingtraining">Model fitting/training</h2>
+<p>Models behavior depends directly on the value of their set of parameters <span class="math inline">\(\theta\)</span>.</p>
+<ul>
+<li><span class="math inline">\(f(x) \approx y\)</span></li>
+<li><span class="math inline">\(f_\theta(x) = y + \epsilon = \hat{y}\)</span></li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>As models increase their number of parameters, they become more <em>complex</em></p>
+</div>
+</div>
+<p><strong>Training</strong> is the process of optimizing the values of <span class="math inline">\(\theta\)</span></p>
+<div class="notes">
+<p>Training is often an expensive process in terms of computational resources and time.</p>
+</div>
+</section>
+</section>
+<section id="loss-function" class="level1">
+<h1>Loss function</h1>
+<hr>
+<section id="loss-function-1" class="level2">
+<h2 class="anchored" data-anchor-id="loss-function-1">Loss function</h2>
+<p>This is measure of the difference between the expected outputs and the predictions made by a model <span class="math inline">\(L(Y, \hat{Y})\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We look for <em>smooth</em> loss functions for which we can compute their gradient</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="loss-function-for-regression" class="level2">
+<h2 class="anchored" data-anchor-id="loss-function-for-regression">11.1 Loss function for regression</h2>
+<p>In the case of regression tasks we generally use the Mean Squared Error (MSE).</p>
+<p><span class="math inline">\(MSE=\frac{1}{N}\sum \left(Y - \hat{Y}\right)^2\)</span></p>
+<hr>
+</section>
+<section id="loss-function-for-classification" class="level2">
+<h2 class="anchored" data-anchor-id="loss-function-for-classification">Loss function for classification</h2>
+<p>And for classification tasks we use the <strong>C</strong>ross <strong>E</strong>ntropy (<strong>CE</strong>) function.</p>
+<p><span class="math inline">\(CE = -\frac{1}{N}\sum\limits_i^N\sum\limits_k^C y_{i,k} log(\hat{y_{i,k}})\)</span></p>
+<p>where <span class="math inline">\(C\)</span> is the number of classes.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For the binary classification case:</p>
+<p><span class="math inline">\(BCE = -\frac{1}{N}\sum\limits_i^N \left(y_i log(\hat{y_i}) + (1 - y_i) log(1 - \hat{y_i})\right)\)</span></p>
+</div>
+</div>
+<hr>
+</section>
+<section id="exercise-define-the-loss-function-for-the-cifar-100-classification-problem" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-define-the-loss-function-for-the-cifar-100-classification-problem">Exercise: Define the loss function for the CIFAR-100 classification problem</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Define a Cross Entropy loss function with <code>nn.CrossEntropyLoss</code></label></li>
+</ul>
+<div id="cdae98c7" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>loss_fun <span class="op">=</span> nn.CrossEntropyLoss()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul class="task-list">
+<li><label><input type="checkbox">Remove the <code>nn.Softmax</code> layer from the MLP model.</label></li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>According to the PyTorch documentation, the CrossEntropyLoss function takes as inputs the <em>logits</em> of the probabilities and not the probabilities themselves. So, we don’t need to <em>squash</em> the output of the MLP model.</p>
+</div>
+</div>
+<div id="4ffd3959" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>mlp_clf <span class="op">=</span> nn.Sequential(</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  nn.Linear(in_features<span class="op">=</span><span class="dv">3</span> <span class="op">*</span> <span class="dv">32</span> <span class="op">*</span> <span class="dv">32</span>, out_features<span class="op">=</span><span class="dv">1024</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  nn.Tanh(),</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  nn.Linear(in_features<span class="op">=</span><span class="dv">1024</span>, out_features<span class="op">=</span><span class="dv">100</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># nn.Softmax() # &lt;- remove this line</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+</section>
+<section id="exercise-define-the-loss-function-for-the-cifar-100-classification-problem-1" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-define-the-loss-function-for-the-cifar-100-classification-problem-1">Exercise: Define the loss function for the CIFAR-100 classification problem</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Measure the prediction loss (error) of our MLP with respect to the grund-truth</label></li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We are using a PyTorch loss function, and it expects PyTorch’s tensors as arguments, so we have to convert <code>y</code> to tensor before computing the loss function.</p>
+</div>
+</div>
+<div id="86b399fc" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>loss <span class="op">=</span> loss_fun(y_hat, torch.LongTensor([y]))</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>loss</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="58">
+<pre><code>tensor(4.6077, grad_fn=&lt;NllLossBackward0&gt;)</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="gradient-based-optimization" class="level1">
+<h1>Gradient based optimization</h1>
+<hr>
+<section id="gradient-based-optimization-1" class="level2">
+<h2 class="anchored" data-anchor-id="gradient-based-optimization-1">Gradient based optimization</h2>
+<p><em>Gradient</em>-based methods are able to fit large numbers of parameters when using a <em>smooth</em> Loss function as target.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We compute the gradient of the loss function with respect to the model parameters using the chain rule from calculous. Generally, this is managed by the machine learning packages such as PyTorch and Tensorflow with a method called <em>back propagation</em>.</p>
+</div>
+</div>
+<section id="gradient-descent" class="level3">
+<h3 class="anchored" data-anchor-id="gradient-descent"><strong>Gradient Descent</strong></h3>
+<ul>
+<li><span class="math inline">\(\theta^{t+1} = \theta^t - \eta \nabla_\theta L(Y, \hat{Y})\)</span></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="exercise-compute-the-gradient-of-the-loss-function-with-respect-to-the-parameters-of-the-mlp." class="level2">
+<h2 class="anchored" data-anchor-id="exercise-compute-the-gradient-of-the-loss-function-with-respect-to-the-parameters-of-the-mlp.">Exercise: Compute the gradient of the loss function with respect to the parameters of the MLP.</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Check what are the gradients of the MLP parameters befor back propagating the gradient.</label></li>
+</ul>
+<div id="003b6d97" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>mlp_clf[<span class="dv">0</span>].bias.grad</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul class="task-list">
+<li><label><input type="checkbox">Compute the gradient of the loss function with respect to the MLP parameters.</label></li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To <em>back propagate</em> the gradients we use the <code>loss.backward()</code> method of the loss function.</p>
+</div>
+</div>
+<div id="28d25f76" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>loss <span class="op">=</span> loss_fun(y_hat, torch.LongTensor([y]))</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>loss.backward()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul class="task-list">
+<li><label><input type="checkbox">Verify that the gradients have been propagated to the model parameters.</label></li>
+</ul>
+<div id="4666c0c9" class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>mlp_clf[<span class="dv">0</span>].bias.grad</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+</section>
+<section id="stochastic-methods" class="level2">
+<h2 class="anchored" data-anchor-id="stochastic-methods">Stochastic methods</h2>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The Gradient descent method require to obtain the Loss function for the whole training set before doing a single update.</p>
+<p>This can be inefficient when large volumes of data are used for training the model.</p>
+</div>
+</div>
+<ul>
+<li><p>These methods use a relative small sample from the training data called <em>mini-batch</em> at a time.</p></li>
+<li><p>This reduces the amount of memory used for computing intermediate operations carried out during optimization process.</p></li>
+</ul>
+<hr>
+</section>
+<section id="stochastic-gradient-descent-sgd" class="level2">
+<h2 class="anchored" data-anchor-id="stochastic-gradient-descent-sgd"><strong>S</strong>tochastic <strong>G</strong>radient <strong>D</strong>escent (<strong>SGD</strong>)</h2>
+<div class="notes">
+<p>This strategy defines <span class="math inline">\(\theta\)</span>’s’ update rule for iteration <span class="math inline">\(t+1\)</span> using a <em>mini-batch</em> sampled at random from the training set as follows.</p>
+</div>
+<ul>
+<li><p><span class="math inline">\(\theta^{t+1} = \theta^t - \eta \nabla_\theta L(Y_{b}, \hat{Y_{b}})\)</span></p></li>
+<li><p><span class="math inline">\(\eta\)</span> controls the update we perform on the current parameter’s values</p></li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This parameter in Deep Learning is known as the <strong>learning rate</strong></p>
+</div>
+</div>
+<hr>
+</section>
+<section id="training-with-mini-batches" class="level2">
+<h2 class="anchored" data-anchor-id="training-with-mini-batches">Training with mini-batches</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PyTorch can operate efficiently on multiple inputs at the same time. To do that, we can use a <code>DataLoader</code> to serve mini-batches of inputs.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="exercise-train-the-mlp-classifier" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-train-the-mlp-classifier">Exercise: Train the MLP classifier</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Use a <code>DataLoader</code> to serve mini-batches of images to train our MLP.</label></li>
+</ul>
+<div id="78463b4e" class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.utils.data <span class="im">import</span> DataLoader</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>cifar_train_dl <span class="op">=</span> DataLoader(cifar_train_ds, batch_size<span class="op">=</span><span class="dv">128</span>, shuffle<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>cifar_val_dl <span class="op">=</span> DataLoader(cifar_val_ds, batch_size<span class="op">=</span><span class="dv">256</span>)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>cifar_test_dl <span class="op">=</span> DataLoader(cifar_test_ds, batch_size<span class="op">=</span><span class="dv">256</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul class="task-list">
+<li><label><input type="checkbox">Create a Stochastic Gradient Descent optimizer for our MLP classifier.</label></li>
+</ul>
+<div id="ab186d28" class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.optim <span class="im">as</span> optim</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> optim.SGD(mlp_clf.parameters(), lr<span class="op">=</span><span class="fl">0.01</span>, )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+</section>
+<section id="exercise-train-the-mlp-classifier-1" class="level2 scrollable">
+<h2 class="scrollable anchored" data-anchor-id="exercise-train-the-mlp-classifier-1">Exercise: Train the MLP classifier</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Implement the <em>training-loop</em> to fit the parameters of our MLP classifier.</label></li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Gradients are accumulated on every iteration, so we need to reset the accumulator with <code>optimizer.zero_grad()</code> for every new batch.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To perform get the new iteration’s parameter values <span class="math inline">\(\theta^{t+1}\)</span> we use <code>optimizer.step()</code> to compute the update step.</p>
+</div>
+</div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1"></a>mlp_clf.train()</span>
+<span id="cb31-2"><a href="#cb31-2"></a><span class="cf">for</span> x, y <span class="kw">in</span> cifar_train_dl:</span>
+<span id="cb31-3"><a href="#cb31-3"></a>  optimizer.zero_grad()</span>
+<span id="cb31-4"><a href="#cb31-4"></a></span>
+<span id="cb31-5"><a href="#cb31-5"></a>  y_hat <span class="op">=</span> mlp_clf( x.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span> <span class="op">*</span> <span class="dv">32</span> <span class="op">*</span> <span class="dv">32</span>) ) <span class="co"># Reshape it into a batch of vectors</span></span>
+<span id="cb31-6"><a href="#cb31-6"></a></span>
+<span id="cb31-7"><a href="#cb31-7"></a>  loss <span class="op">=</span> loss_fun(y_hat, y)</span>
+<span id="cb31-8"><a href="#cb31-8"></a></span>
+<span id="cb31-9"><a href="#cb31-9"></a>  loss.backward()</span>
+<span id="cb31-10"><a href="#cb31-10"></a></span>
+<span id="cb31-11"><a href="#cb31-11"></a>  optimizer.step()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="exercise-train-the-mlp-classifier-and-track-the-training-and-validation-loss" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-train-the-mlp-classifier-and-track-the-training-and-validation-loss">Exercise: Train the MLP classifier and track the training and validation loss</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Save the loss function of each batch and the overall average loss during training.</label></li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To extract the loss function’s value without anything else attached use <code>loss.item()</code>.</p>
+</div>
+</div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1"></a>train_loss <span class="op">=</span> []</span>
+<span id="cb32-2"><a href="#cb32-2"></a>train_loss_avg <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb32-3"><a href="#cb32-3"></a>total_train_samples <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb32-4"><a href="#cb32-4"></a></span>
+<span id="cb32-5"><a href="#cb32-5"></a>mlp_clf.train()</span>
+<span id="cb32-6"><a href="#cb32-6"></a><span class="cf">for</span> x, y <span class="kw">in</span> cifar_train_dl:</span>
+<span id="cb32-7"><a href="#cb32-7"></a>  optimizer.zero_grad()</span>
+<span id="cb32-8"><a href="#cb32-8"></a></span>
+<span id="cb32-9"><a href="#cb32-9"></a>  y_hat <span class="op">=</span> mlp_clf( x.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span> <span class="op">*</span> <span class="dv">32</span> <span class="op">*</span> <span class="dv">32</span>) ) <span class="co"># Reshape it into a batch of vectors</span></span>
+<span id="cb32-10"><a href="#cb32-10"></a></span>
+<span id="cb32-11"><a href="#cb32-11"></a>  loss <span class="op">=</span> loss_fun(y_hat, y)</span>
+<span id="cb32-12"><a href="#cb32-12"></a></span>
+<span id="cb32-13"><a href="#cb32-13"></a>  train_loss.append(loss.item())</span>
+<span id="cb32-14"><a href="#cb32-14"></a>  train_loss_avg <span class="op">+=</span> loss.item() <span class="op">*</span> <span class="bu">len</span>(x)</span>
+<span id="cb32-15"><a href="#cb32-15"></a>  total_train_samples <span class="op">+=</span> <span class="bu">len</span>(x)</span>
+<span id="cb32-16"><a href="#cb32-16"></a></span>
+<span id="cb32-17"><a href="#cb32-17"></a>  loss.backward()</span>
+<span id="cb32-18"><a href="#cb32-18"></a></span>
+<span id="cb32-19"><a href="#cb32-19"></a>  optimizer.step()</span>
+<span id="cb32-20"><a href="#cb32-20"></a></span>
+<span id="cb32-21"><a href="#cb32-21"></a>train_loss_avg <span class="op">/=</span> total_train_samples</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="exercise-train-the-mlp-classifier-and-track-the-training-and-validation-loss-1" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-train-the-mlp-classifier-and-track-the-training-and-validation-loss-1">Exercise: Train the MLP classifier and track the training and validation loss</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Compute the average loss function for the validation set.</label></li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Because we don’t train the model with the validation set, back-propagation and optimization steps are not needed.</p>
+<p>Additionally, we wrap the loop <code>with torch.no_grad()</code> to prevent the generation of gradients that could fill the memory innecessarily.</p>
+</div>
+</div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1"></a>val_loss_avg <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a>total_val_samples <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb33-3"><a href="#cb33-3"></a></span>
+<span id="cb33-4"><a href="#cb33-4"></a>mlp_clf.<span class="bu">eval</span>()</span>
+<span id="cb33-5"><a href="#cb33-5"></a><span class="cf">with</span> torch.no_grad():</span>
+<span id="cb33-6"><a href="#cb33-6"></a>  <span class="cf">for</span> x, y <span class="kw">in</span> cifar_val_dl:</span>
+<span id="cb33-7"><a href="#cb33-7"></a>    y_hat <span class="op">=</span> mlp_clf( x.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span> <span class="op">*</span> <span class="dv">32</span> <span class="op">*</span> <span class="dv">32</span>) ) <span class="co"># Reshape it into a batch of vectors</span></span>
+<span id="cb33-8"><a href="#cb33-8"></a>    loss <span class="op">=</span> loss_fun(y_hat, y)</span>
+<span id="cb33-9"><a href="#cb33-9"></a></span>
+<span id="cb33-10"><a href="#cb33-10"></a>    val_loss_avg <span class="op">+=</span> loss.item() <span class="op">*</span> <span class="bu">len</span>(x)</span>
+<span id="cb33-11"><a href="#cb33-11"></a>    total_val_samples <span class="op">+=</span> <span class="bu">len</span>(x)</span>
+<span id="cb33-12"><a href="#cb33-12"></a></span>
+<span id="cb33-13"><a href="#cb33-13"></a>val_loss_avg <span class="op">/=</span> total_val_samples</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="exercise-train-the-mlp-classifier-and-track-the-training-and-validation-loss-2" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-train-the-mlp-classifier-and-track-the-training-and-validation-loss-2">Exercise: Train the MLP classifier and track the training and validation loss</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Plot the training loss for this <em>epoch</em>.</label></li>
+</ul>
+<div id="fc393394" class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>plt.plot(train_loss, <span class="st">"b-"</span>, label<span class="op">=</span><span class="st">"Training loss"</span>)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>plt.plot([<span class="dv">0</span>, <span class="bu">len</span>(train_loss)], [train_loss_avg, train_loss_avg], <span class="st">"r:"</span>, label<span class="op">=</span><span class="st">"Average training loss"</span>)</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>plt.plot([<span class="dv">0</span>, <span class="bu">len</span>(train_loss)], [val_loss_avg, val_loss_avg], <span class="st">"b:"</span>, label<span class="op">=</span><span class="st">"Average validation loss"</span>)</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="DL_image_analysis_1_1_files/figure-html/cell-27-output-1.png" width="579" height="411" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="exercise-train-the-mlp-classifier-and-track-the-training-and-validation-loss-through-several-epochs" class="level2 scrollable">
+<h2 class="scrollable anchored" data-anchor-id="exercise-train-the-mlp-classifier-and-track-the-training-and-validation-loss-through-several-epochs">Exercise: Train the MLP classifier and track the training and validation loss through several <em>epochs</em></h2>
+<div class="sourceCode" id="cb35"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1"></a>num_epochs <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb35-2"><a href="#cb35-2"></a>train_loss <span class="op">=</span> []</span>
+<span id="cb35-3"><a href="#cb35-3"></a>val_loss <span class="op">=</span> []</span>
+<span id="cb35-4"><a href="#cb35-4"></a></span>
+<span id="cb35-5"><a href="#cb35-5"></a><span class="cf">for</span> e <span class="kw">in</span> <span class="bu">range</span>(num_epochs):</span>
+<span id="cb35-6"><a href="#cb35-6"></a>  train_loss_avg <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb35-7"><a href="#cb35-7"></a>  total_train_samples <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb35-8"><a href="#cb35-8"></a></span>
+<span id="cb35-9"><a href="#cb35-9"></a>  mlp_clf.train()</span>
+<span id="cb35-10"><a href="#cb35-10"></a>  <span class="cf">for</span> x, y <span class="kw">in</span> cifar_train_dl:</span>
+<span id="cb35-11"><a href="#cb35-11"></a>    optimizer.zero_grad()</span>
+<span id="cb35-12"><a href="#cb35-12"></a></span>
+<span id="cb35-13"><a href="#cb35-13"></a>    y_hat <span class="op">=</span> mlp_clf( x.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span> <span class="op">*</span> <span class="dv">32</span> <span class="op">*</span> <span class="dv">32</span>) ) <span class="co"># Reshape it into a batch of vectors</span></span>
+<span id="cb35-14"><a href="#cb35-14"></a></span>
+<span id="cb35-15"><a href="#cb35-15"></a>    loss <span class="op">=</span> loss_fun(y_hat, y)</span>
+<span id="cb35-16"><a href="#cb35-16"></a></span>
+<span id="cb35-17"><a href="#cb35-17"></a>    train_loss_avg <span class="op">+=</span> loss.item() <span class="op">*</span> <span class="bu">len</span>(x)</span>
+<span id="cb35-18"><a href="#cb35-18"></a>    total_train_samples <span class="op">+=</span> <span class="bu">len</span>(x)</span>
+<span id="cb35-19"><a href="#cb35-19"></a></span>
+<span id="cb35-20"><a href="#cb35-20"></a>    loss.backward()</span>
+<span id="cb35-21"><a href="#cb35-21"></a></span>
+<span id="cb35-22"><a href="#cb35-22"></a>    optimizer.step()</span>
+<span id="cb35-23"><a href="#cb35-23"></a></span>
+<span id="cb35-24"><a href="#cb35-24"></a>  train_loss_avg <span class="op">/=</span> total_train_samples</span>
+<span id="cb35-25"><a href="#cb35-25"></a>  train_loss.append(train_loss_avg)</span>
+<span id="cb35-26"><a href="#cb35-26"></a></span>
+<span id="cb35-27"><a href="#cb35-27"></a>  val_loss_avg <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb35-28"><a href="#cb35-28"></a>  total_val_samples <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb35-29"><a href="#cb35-29"></a></span>
+<span id="cb35-30"><a href="#cb35-30"></a>  mlp_clf.<span class="bu">eval</span>()</span>
+<span id="cb35-31"><a href="#cb35-31"></a>  <span class="cf">with</span> torch.no_grad():</span>
+<span id="cb35-32"><a href="#cb35-32"></a>    <span class="cf">for</span> x, y <span class="kw">in</span> cifar_val_dl:</span>
+<span id="cb35-33"><a href="#cb35-33"></a>      y_hat <span class="op">=</span> mlp_clf( x.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span> <span class="op">*</span> <span class="dv">32</span> <span class="op">*</span> <span class="dv">32</span>) ) <span class="co"># Reshape it into a batch of vectors</span></span>
+<span id="cb35-34"><a href="#cb35-34"></a>      loss <span class="op">=</span> loss_fun(y_hat, y)</span>
+<span id="cb35-35"><a href="#cb35-35"></a></span>
+<span id="cb35-36"><a href="#cb35-36"></a>      val_loss_avg <span class="op">+=</span> loss.item() <span class="op">*</span> <span class="bu">len</span>(x)</span>
+<span id="cb35-37"><a href="#cb35-37"></a>      total_val_samples <span class="op">+=</span> <span class="bu">len</span>(x)</span>
+<span id="cb35-38"><a href="#cb35-38"></a></span>
+<span id="cb35-39"><a href="#cb35-39"></a>  val_loss_avg <span class="op">/=</span> total_val_samples</span>
+<span id="cb35-40"><a href="#cb35-40"></a>  val_loss.append(val_loss_avg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="exercise-show-the-progress-of-the-training-throught-the-epochs" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-show-the-progress-of-the-training-throught-the-epochs">Exercise: Show the progress of the training throught the epochs</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Plot the average train and validation losses</label></li>
+</ul>
+<div id="e6e47f8a" class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>plt.plot(train_loss, <span class="st">"b-"</span>, label<span class="op">=</span><span class="st">"Average training loss"</span>)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>plt.plot(val_loss, <span class="st">"r-"</span>, label<span class="op">=</span><span class="st">"Average validation loss"</span>)</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="DL_image_analysis_1_1_files/figure-html/cell-29-output-1.png" width="579" height="411" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="performance-metrics" class="level1">
+<h1>Performance metrics</h1>
+<hr>
+<section id="performance-metrics-1" class="level2">
+<h2 class="anchored" data-anchor-id="performance-metrics-1">Performance metrics</h2>
+<p>Used to measure how good or bad a model carries out a task</p>
+<ul>
+<li><p><span class="math inline">\(f(x) \approx y\)</span></p></li>
+<li><p><span class="math inline">\(f(x) = y + \epsilon = \hat{y}\)</span></p></li>
+</ul>
+<div class="notes">
+<p>Given the set of parameters, as well as other factors, the output of a model can deviate from the expected outcome. So, the actual output of a model is <span class="math inline">\(f(x) = \hat{y}\)</span>.</p>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The output <span class="math inline">\(\hat{y}\)</span> is called <strong>prediction </strong> given the context taken from statistical regression analysis.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Selecting the correct performance metrics depends on the training type, task, and even the distribution of the data.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="exercise-measure-the-accuracy-of-the-mlp-trained-to-classify-images-from-cifar-100" class="level2 scrollable">
+<h2 class="scrollable anchored" data-anchor-id="exercise-measure-the-accuracy-of-the-mlp-trained-to-classify-images-from-cifar-100">Exercise: Measure the accuracy of the MLP trained to classify images from CIFAR-100</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Install the <code>torchmetrics</code> package.</label></li>
+</ul>
+<div class="sourceCode" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install torchmetrics</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul class="task-list">
+<li><label><input type="checkbox">Compute the average accuracy for the Train set.</label></li>
+</ul>
+<div id="7bd1fc3d" class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torchmetrics.classification <span class="im">import</span> Accuracy</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>mlp_clf.<span class="bu">eval</span>()</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>train_acc_metric <span class="op">=</span> Accuracy(task<span class="op">=</span><span class="st">"multiclass"</span>, num_classes<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> torch.no_grad():</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> x, y <span class="kw">in</span> cifar_train_dl:</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>    y_hat <span class="op">=</span> mlp_clf( x.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span> <span class="op">*</span> <span class="dv">32</span> <span class="op">*</span> <span class="dv">32</span>) )</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>    train_acc_metric(y_hat.softmax(dim<span class="op">=</span><span class="dv">1</span>), y)</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>  train_acc <span class="op">=</span> train_acc_metric.compute()</span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Training acc=</span><span class="sc">{</span>train_acc<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>train_acc_metric.reset()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Training acc=0.106174997985363</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="exercise-measure-the-accuracy-of-the-mlp-trained-to-classify-images-from-cifar-100-1" class="level2 scrollable">
+<h2 class="scrollable anchored" data-anchor-id="exercise-measure-the-accuracy-of-the-mlp-trained-to-classify-images-from-cifar-100-1">Exercise: Measure the accuracy of the MLP trained to classify images from CIFAR-100</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Compute the average accuracy for the Validation and Test sets.</label></li>
+</ul>
+<div id="fbb70e96" class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>val_acc_metric <span class="op">=</span> Accuracy(task<span class="op">=</span><span class="st">"multiclass"</span>, num_classes<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>test_acc_metric <span class="op">=</span> Accuracy(task<span class="op">=</span><span class="st">"multiclass"</span>, num_classes<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> torch.no_grad():</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> x, y <span class="kw">in</span> cifar_val_dl:</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>    y_hat <span class="op">=</span> mlp_clf( x.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span> <span class="op">*</span> <span class="dv">32</span> <span class="op">*</span> <span class="dv">32</span>) )</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>    val_acc_metric(y_hat.softmax(dim<span class="op">=</span><span class="dv">1</span>), y)</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>  val_acc <span class="op">=</span> val_acc_metric.compute()</span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> x, y <span class="kw">in</span> cifar_test_dl:</span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>    y_hat <span class="op">=</span> mlp_clf( x.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span> <span class="op">*</span> <span class="dv">32</span> <span class="op">*</span> <span class="dv">32</span>) )</span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>    test_acc_metric(y_hat.softmax(dim<span class="op">=</span><span class="dv">1</span>), y)</span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>  test_acc <span class="op">=</span> test_acc_metric.compute()</span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Validation acc=</span><span class="sc">{</span>val_acc<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Test acc=</span><span class="sc">{</span>test_acc<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a>val_acc_metric.reset()</span>
+<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a>test_acc_metric.reset()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Validation acc=0.09650000184774399
+Test acc=0.10100000351667404</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="convolutional-neural-network-cnn-or-convnet" class="level1">
+<h1><strong>C</strong>onvolutional <strong>N</strong>eural <strong>N</strong>etwork (<strong>CNN</strong> or <strong>ConvNet</strong>)</h1>
+<hr>
 <section id="convolution-layers" class="level2">
 <h2 class="anchored" data-anchor-id="convolution-layers">Convolution layers</h2>
 <p>The most common operation in DL models for image processing are Convolution operations.</p>
@@ -708,186 +1348,317 @@ Cell <span class="ansi-green-fg">In[20], line 1</span>
 </figure>
 </div>
 <p>The animation shows the convolution of a 7x7 pixels input image (bottom) with a 3x3 pixels kernel (moving window), that results in a 5x5 pixels output (top).</p>
-<section id="the-effect-of-convolution-operations" class="level3">
-<h3 class="anchored" data-anchor-id="the-effect-of-convolution-operations">The effect of convolution operations</h3>
-<div id="84d941c0" class="cell" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>kernel <span class="op">=</span> torch.Tensor([[</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    [[<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>     [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>     [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>]], <span class="co"># This part of the Kernel will operate on the Red channel of the images</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    [[<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>     [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>     [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>]], <span class="co"># This part of the Kernel will operate on the Green channel of the images</span></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>    [[<span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>],</span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>     [<span class="op">-</span><span class="dv">1</span>, <span class="dv">5</span>, <span class="op">-</span><span class="dv">1</span>],</span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>     [<span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>]], <span class="co"># This part of the Kernel will operate on the Blue channel of the images</span></span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>    ]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="exercise-visualize-the-effect-of-the-convolution-operation" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-visualize-the-effect-of-the-convolution-operation">Exercise: Visualize the effect of the convolution operation</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Create a convolution layer with <code>nn.Conv2D</code> using 3 channels as input, and a single one for output.</label></li>
+</ul>
+<div id="1cb72280" class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>conv_1 <span class="op">=</span> nn.Conv2d(in_channels<span class="op">=</span><span class="dv">3</span>, out_channels<span class="op">=</span><span class="dv">1</span>, kernel_size<span class="op">=</span><span class="dv">7</span>, padding<span class="op">=</span><span class="dv">0</span>, bias<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>x, _ <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(cifar_train_dl))</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>fx <span class="op">=</span> conv_1(x)</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(fx), fx.dtype, fx.shape, fx.<span class="bu">min</span>(), fx.<span class="bu">max</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="72">
+<pre><code>(torch.Tensor,
+ torch.float32,
+ torch.Size([128, 1, 26, 26]),
+ tensor(-0.4548, grad_fn=&lt;MinBackward1&gt;),
+ tensor(0.4700, grad_fn=&lt;MaxBackward1&gt;))</code></pre>
 </div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The convolution layer is initialized with random values, so the results will vary.</p>
+</div>
+</div>
+<hr>
 </section>
+<section id="exercise-visualize-the-effect-of-the-convolution-operation-1" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-visualize-the-effect-of-the-convolution-operation-1">Exercise: Visualize the effect of the convolution operation</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Create a convolution layer with <code>nn.Conv2D</code> using 3 channels as input, and a single one for output.</label></li>
+</ul>
+<div id="bbeb3885" class="cell" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.figsize'</span>] <span class="op">=</span> [<span class="dv">5</span>, <span class="dv">5</span>]</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].imshow(x[<span class="dv">0</span>].permute(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>))</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].imshow(fx.detach()[<span class="dv">0</span>, <span class="dv">0</span>], cmap<span class="op">=</span><span class="st">"gray"</span>)</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="DL_image_analysis_1_1_files/figure-html/cell-33-output-1.png" width="418" height="213" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>By default, outputs from PyTorch modules are tracked for back-propagation.</p>
+<p>To visualize it with <code>matplotlib</code> we have to <code>.detach()</code> the tensor first.</p>
+</div>
+</div>
+<hr>
 </section>
-<section id="result-of-the-convolution-between-an-image-and-the-kernel" class="level2">
-<h2 class="anchored" data-anchor-id="result-of-the-convolution-between-an-image-and-the-kernel">Result of the convolution between an image and the kernel</h2>
-<div id="5435eba1" class="cell" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>im <span class="op">=</span> skimage.data.cat()</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.from_numpy(im).<span class="bu">float</span>().permute(<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co"># We add a "dummy" dimension to our tensor "x" so it has the BCHW axes</span></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> x[<span class="va">None</span>, ...]</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the con2d function from torch.nn.functional</span></span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>output <span class="op">=</span> torch.nn.functional.conv2d(x, kernel, padding<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>output.shape</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>plt.imshow(output[<span class="dv">0</span>, <span class="dv">0</span>], cmap<span class="op">=</span><span class="st">"gray"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[23], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> im <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">skimage</span><span style="color:rgb(98,98,98)">.</span>data<span style="color:rgb(98,98,98)">.</span>cat()
-<span class="ansi-green-fg ansi-bold">      3</span> x <span style="color:rgb(98,98,98)">=</span> torch<span style="color:rgb(98,98,98)">.</span>from_numpy(im)<span style="color:rgb(98,98,98)">.</span>float()<span style="color:rgb(98,98,98)">.</span>permute(<span style="color:rgb(98,98,98)">2</span>, <span style="color:rgb(98,98,98)">0</span>, <span style="color:rgb(98,98,98)">1</span>)
-<span class="ansi-green-fg ansi-bold">      5</span> <span style="font-style:italic;color:rgb(95,135,135)"># We add a "dummy" dimension to our tensor "x" so it has the BCHW axes</span>
-
-<span class="ansi-red-fg">NameError</span>: name 'skimage' is not defined</pre>
+<section id="exercise-visualize-the-effect-of-the-convolution-operation-2" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-visualize-the-effect-of-the-convolution-operation-2">Exercise: Visualize the effect of the convolution operation</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Visualize the weights of the convolution layer.</label></li>
+</ul>
+<div id="2786fc0d" class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>conv_1.weight.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="74">
+<pre><code>torch.Size([1, 3, 7, 7])</code></pre>
+</div>
+</div>
+<div id="93e64210" class="cell" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>)</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>, <span class="dv">0</span>].imshow(conv_1.weight.detach()[<span class="dv">0</span>, <span class="dv">0</span>], cmap<span class="op">=</span><span class="st">"gray"</span>)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>, <span class="dv">1</span>].imshow(conv_1.weight.detach()[<span class="dv">0</span>, <span class="dv">1</span>], cmap<span class="op">=</span><span class="st">"gray"</span>)</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>, <span class="dv">0</span>].imshow(conv_1.weight.detach()[<span class="dv">0</span>, <span class="dv">2</span>], cmap<span class="op">=</span><span class="st">"gray"</span>)</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>, <span class="dv">1</span>].set_axis_off()</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="DL_image_analysis_1_1_files/figure-html/cell-35-output-1.png" width="408" height="411" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="exercise-visualize-the-effect-of-the-convolution-operation-3" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-visualize-the-effect-of-the-convolution-operation-3">Exercise: Visualize the effect of the convolution operation</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Modify the weights of the convolution layer.</label></li>
+</ul>
+<div id="52380f69" class="cell" data-execution_count="36">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>conv_1 <span class="op">=</span> nn.Conv2d(in_channels<span class="op">=</span><span class="dv">3</span>, out_channels<span class="op">=</span><span class="dv">1</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">0</span>, bias<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>conv_1.weight.data[:] <span class="op">=</span> torch.FloatTensor([</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>  [</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>    [</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>      [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>      [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>      [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>    [</span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>      [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>      [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a>      [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a>    [</span>
+<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a>      [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a>      [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a>      [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb48-19"><a href="#cb48-19" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="cb48-20"><a href="#cb48-20" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb48-21"><a href="#cb48-21" aria-hidden="true" tabindex="-1"></a>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+</section>
+<section id="exercise-visualize-the-effect-of-the-convolution-operation-4" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-visualize-the-effect-of-the-convolution-operation-4">Exercise: Visualize the effect of the convolution operation</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Visualize the effects after changingthe values.</label></li>
+</ul>
+<div id="ddb8817d" class="cell" data-execution_count="37">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>fx <span class="op">=</span> conv_1(x)</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].imshow(x[<span class="dv">0</span>].permute(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>))</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].imshow(fx.detach()[<span class="dv">0</span>].permute(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>))</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="DL_image_analysis_1_1_files/figure-html/cell-37-output-1.png" width="418" height="213" class="figure-img"></p>
+</figure>
 </div>
 </div>
 </div>
 <p>Experiment with different values and shapes of the kernel https://en.wikipedia.org/wiki/Kernel_(image_processing)</p>
 <hr>
-<section id="convolution-layers-from-torch.nn-module" class="level3">
-<h3 class="anchored" data-anchor-id="convolution-layers-from-torch.nn-module">Convolution layers from torch.nn module</h3>
-<div id="073134b3" class="cell" data-execution_count="24">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the Conv2d module from torch.nn to define a learnable convolution layer</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>conv_1 <span class="op">=</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-cyan-fg">  Cell </span><span class="ansi-green-fg">In[24], line 2</span>
-<span class="ansi-red-fg">    conv_1 =</span>
-            ^
-<span class="ansi-red-fg">SyntaxError</span><span class="ansi-red-fg">:</span> invalid syntax
-</pre>
-</div>
-</div>
-</div>
-<div id="4d259e9f" class="cell" data-execution_count="25">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> conv_1(x)</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>y.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[25], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> y <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">conv_1</span>(x)
-<span class="ansi-green-fg ansi-bold">      2</span> y<span style="color:rgb(98,98,98)">.</span>shape
-
-<span class="ansi-red-fg">NameError</span>: name 'conv_1' is not defined</pre>
-</div>
-</div>
-</div>
-<div id="94dcd7e0" class="cell" data-execution_count="26">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#@title Visualize the output of the randomly initialized kernel of the convolution layer</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>plt.imshow((y[<span class="dv">0</span>].detach().permute(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>) <span class="op">-</span> y[<span class="dv">0</span>].detach().<span class="bu">min</span>()) <span class="op">/</span> (y[<span class="dv">0</span>].detach().<span class="bu">max</span>() <span class="op">-</span> y[<span class="dv">0</span>].detach().<span class="bu">min</span>()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[26], line 2</span>
-<span class="ansi-green-fg ansi-bold">      1</span> <span style="font-style:italic;color:rgb(95,135,135)">#@title Visualize the output of the randomly initialized kernel of the convolution layer</span>
-<span class="ansi-green-fg">----&gt; 2</span> <span class="ansi-yellow-bg">plt</span><span style="color:rgb(98,98,98)">.</span>imshow((y[<span style="color:rgb(98,98,98)">0</span>]<span style="color:rgb(98,98,98)">.</span>detach()<span style="color:rgb(98,98,98)">.</span>permute(<span style="color:rgb(98,98,98)">1</span>, <span style="color:rgb(98,98,98)">2</span>, <span style="color:rgb(98,98,98)">0</span>) <span style="color:rgb(98,98,98)">-</span> y[<span style="color:rgb(98,98,98)">0</span>]<span style="color:rgb(98,98,98)">.</span>detach()<span style="color:rgb(98,98,98)">.</span>min()) <span style="color:rgb(98,98,98)">/</span> (y[<span style="color:rgb(98,98,98)">0</span>]<span style="color:rgb(98,98,98)">.</span>detach()<span style="color:rgb(98,98,98)">.</span>max() <span style="color:rgb(98,98,98)">-</span> y[<span style="color:rgb(98,98,98)">0</span>]<span style="color:rgb(98,98,98)">.</span>detach()<span style="color:rgb(98,98,98)">.</span>min()))
-
-<span class="ansi-red-fg">NameError</span>: name 'plt' is not defined</pre>
-</div>
-</div>
-</div>
 </section>
-</section>
-<section id="linear-layers" class="level2">
-<h2 class="anchored" data-anchor-id="linear-layers">Linear layers</h2>
-<p>These layers perform matrix-matrix, and matrix-vector operations on its corresponding inputs. Linear layers are commonly used in final layers to obtain the output of the model.</p>
-<p>For classification tasks, these layers project a multi-channel feature map into a single prediction of the image’s class.</p>
-<div class="quarto-figure quarto-figure-center">
+<section id="exercise-visualize-the-effect-of-the-convolution-operation-5" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-visualize-the-effect-of-the-convolution-operation-5">Exercise: Visualize the effect of the convolution operation</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Modify the weights of the convolution layer.</label></li>
+</ul>
+<div id="6a2bd99a" class="cell" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>conv_1 <span class="op">=</span> nn.Conv2d(in_channels<span class="op">=</span><span class="dv">3</span>, out_channels<span class="op">=</span><span class="dv">1</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">0</span>, bias<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>conv_1.weight.data[:] <span class="op">=</span> torch.FloatTensor([</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  [[[<span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>], [<span class="op">-</span><span class="dv">1</span>, <span class="dv">5</span>, <span class="op">-</span><span class="dv">1</span>], [<span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>]],</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>   [[<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>], [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>], [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>]],</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>   [[<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>], [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>], [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>]]]</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>fx <span class="op">=</span> conv_1(x)</span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].imshow(x[<span class="dv">0</span>].permute(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>))</span>
+<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].imshow(fx.detach()[<span class="dv">0</span>, <span class="dv">0</span>], cmap<span class="op">=</span><span class="st">"gray"</span>)</span>
+<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
 <figure class="figure">
-<p><img src="https://wngaw.github.io/images/inception_v3_architecture.png" class="img-fluid figure-img"></p>
-<figcaption>Inception V3</figcaption>
+<p><img src="DL_image_analysis_1_1_files/figure-html/cell-38-output-1.png" width="418" height="213" class="figure-img"></p>
 </figure>
 </div>
-<p>In object detection and localization problems, these layers generate the detection confidence and bounding box of the object.</p>
-<div class="quarto-figure quarto-figure-center">
+</div>
+</div>
+<p>Experiment with different values and shapes of the kernel https://en.wikipedia.org/wiki/Kernel_(image_processing)</p>
+<hr>
+</section>
+<section id="exercise-visualize-the-effect-of-the-convolution-operation-6" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-visualize-the-effect-of-the-convolution-operation-6">Exercise: Visualize the effect of the convolution operation</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Modify the weights of the convolution layer.</label></li>
+</ul>
+<div id="0467bc98" class="cell" data-execution_count="39">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>conv_1 <span class="op">=</span> nn.Conv2d(in_channels<span class="op">=</span><span class="dv">3</span>, out_channels<span class="op">=</span><span class="dv">1</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">0</span>, bias<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>conv_1.weight.data[:] <span class="op">=</span> torch.FloatTensor([</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>  [[[<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>], [<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>], [<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>]],</span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>   [[<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>], [<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>], [<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>]],</span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>   [[<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>], [<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>], [<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>]]]</span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>fx <span class="op">=</span> conv_1(x)</span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].imshow(x[<span class="dv">0</span>].permute(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>))</span>
+<span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].imshow(fx.detach()[<span class="dv">0</span>, <span class="dv">0</span>], cmap<span class="op">=</span><span class="st">"gray"</span>)</span>
+<span id="cb51-14"><a href="#cb51-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
 <figure class="figure">
-<p><img src="https://viso.ai/wp-content/uploads/2021/02/yolo-object-detection.jpg" class="img-fluid figure-img"></p>
-<figcaption>YOLO</figcaption>
+<p><img src="DL_image_analysis_1_1_files/figure-html/cell-39-output-1.png" width="418" height="213" class="figure-img"></p>
 </figure>
 </div>
-<section id="linear-layers-from-torch.nn" class="level3">
-<h3 class="anchored" data-anchor-id="linear-layers-from-torch.nn">Linear layers from torch.nn</h3>
-<div id="3641c0b0" class="cell" data-execution_count="27">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the Linear module from torch.nn to define a linear operation</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>lin_1 <span class="op">=</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-cyan-fg">  Cell </span><span class="ansi-green-fg">In[27], line 2</span>
-<span class="ansi-red-fg">    lin_1 =</span>
-           ^
-<span class="ansi-red-fg">SyntaxError</span><span class="ansi-red-fg">:</span> invalid syntax
-</pre>
 </div>
 </div>
+<p>Experiment with different values and shapes of the kernel https://en.wikipedia.org/wiki/Kernel_(image_processing)</p>
+<hr>
+</section>
+<section id="examples-of-popular-deep-learning-models-in-computer-vision" class="level2">
+<h2 class="anchored" data-anchor-id="examples-of-popular-deep-learning-models-in-computer-vision">Examples of popular Deep Learning models in computer vision</h2>
+<ul>
+<li>Inception v3 for image classification</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://cloud.google.com/static/tpu/docs/images/inceptionv3onc--oview.png" class="img-fluid figure-img"></p>
+<figcaption>InceptionV3</figcaption>
+</figure>
 </div>
 <hr>
 </section>
-</section>
-<section id="non-linear-activation-layers" class="level2">
-<h2 class="anchored" data-anchor-id="non-linear-activation-layers">Non-linear activation layers</h2>
-<p>These layers are integrated to add non-linear behavior into the neural network.</p>
-<div id="2c5b9b76" class="cell" data-execution_count="28">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a Rectified Linear Unit (ReLU) layer using the torch.nn module</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>relu_1 <span class="op">=</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-cyan-fg">  Cell </span><span class="ansi-green-fg">In[28], line 2</span>
-<span class="ansi-red-fg">    relu_1 =</span>
-            ^
-<span class="ansi-red-fg">SyntaxError</span><span class="ansi-red-fg">:</span> invalid syntax
-</pre>
-</div>
-</div>
-</div>
-<p>A list of activation layers here https://pytorch.org/docs/stable/nn.html#non-linear-activations-weighted-sum-nonlinearity</p>
-<hr>
-</section>
-<section id="pooling-layers" class="level2">
-<h2 class="anchored" data-anchor-id="pooling-layers">Pooling layers</h2>
-<p>This kind of layers are used to downsample the current feature maps which helps to summarize information from large regions into a couple of pixels.</p>
-<p>There are two common pooling operations: maximum pooling, and average pooling.</p>
-<p>Maximum pooling looks for the maximum value in a region and returns it as a single pixel. While average pooling computes the average value for that region.</p>
-<pre class="azxheabcid=&quot;uuha-fslr7w_&quot;"><code># Define a Maximum Pooling layer from torch.nn module
-max_pool =</code></pre>
-</section>
-</section>
-<section id="review-and-understand-the-architecture-of-classic-and-recent-dl-models" class="level1">
-<h1>3.- Review and understand the architecture of classic and recent DL models</h1>
-<section id="lenet-5-architecture" class="level2">
-<h2 class="anchored" data-anchor-id="lenet-5-architecture">LeNet 5 architecture</h2>
-<p>http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Implement the layers of LeNet5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Test our implementation</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="u-net" class="level2">
-<h2 class="anchored" data-anchor-id="u-net">U-Net</h2>
+<section id="examples-of-popular-deep-learning-models-in-computer-vision-1" class="level2">
+<h2 class="anchored" data-anchor-id="examples-of-popular-deep-learning-models-in-computer-vision-1">Examples of popular Deep Learning models in computer vision</h2>
+<ul>
+<li>U-Net for cell segmentation</li>
+</ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/u-net-architecture.png" class="img-fluid figure-img"></p>
 <figcaption>U-Net</figcaption>
 </figure>
 </div>
-<p>Lets impelment the first operations of U-Net</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="examples-of-popular-deep-learning-models-in-computer-vision-2" class="level2">
+<h2 class="anchored" data-anchor-id="examples-of-popular-deep-learning-models-in-computer-vision-2">Examples of popular Deep Learning models in computer vision</h2>
+<ul>
+<li>LeNet-5 for handwritten digits classification (<a href="http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf">LeCun et al.</a>)</li>
+</ul>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/6/61/LeNet_architecture.png" class="img-fluid" alt="LeNet-5"> By Daniel Voigt Godoy - <a rel="nofollow" class="external free" href="https://github.com/dvgodoy/dl-visuals/">https://github.com/dvgodoy/dl-visuals/</a>, <a href="https://creativecommons.org/licenses/by/4.0" title="Creative Commons Attribution 4.0">CC BY 4.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=150820922">Link</a></p>
+<hr>
+</section>
+<section id="exercise-implement-letnet-5-in-pytorch" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-implement-letnet-5-in-pytorch">Exercise: Implement LetNet-5 in PyTorch</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Build the convolutional neural network using <code>nn.Sequential</code>, and the <code>nn.ReLU()</code> activation function.</label></li>
+</ul>
+<div id="3cf48dc1" class="cell" data-execution_count="40">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>lenet_clf <span class="op">=</span> nn.Sequential(</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>    nn.Conv2d(in_channels<span class="op">=</span><span class="dv">3</span>, out_channels<span class="op">=</span><span class="dv">6</span>, kernel_size<span class="op">=</span><span class="dv">5</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>    nn.ReLU(),</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>    nn.MaxPool2d(kernel_size<span class="op">=</span><span class="dv">2</span>),</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>    nn.Conv2d(in_channels<span class="op">=</span><span class="dv">6</span>, out_channels<span class="op">=</span><span class="dv">16</span>, kernel_size<span class="op">=</span><span class="dv">5</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>    nn.ReLU(),</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>    nn.MaxPool2d(kernel_size<span class="op">=</span><span class="dv">2</span>),</span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>    nn.Flatten(),</span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a>    nn.Linear(in_features<span class="op">=</span><span class="dv">16</span><span class="op">*</span><span class="dv">5</span><span class="op">*</span><span class="dv">5</span>, out_features<span class="op">=</span><span class="dv">120</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a>    nn.ReLU(),</span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a>    nn.Linear(in_features<span class="op">=</span><span class="dv">120</span>, out_features<span class="op">=</span><span class="dv">84</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a>    nn.ReLU(),</span>
+<span id="cb52-13"><a href="#cb52-13" aria-hidden="true" tabindex="-1"></a>    nn.Linear(in_features<span class="op">=</span><span class="dv">84</span>, out_features<span class="op">=</span><span class="dv">100</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb52-14"><a href="#cb52-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Pooling layers are used to downsample feature maps to summarize information from large regions.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="exercise-implement-letnet-5-in-pytorch-1" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-implement-letnet-5-in-pytorch-1">Exercise: Implement LetNet-5 in PyTorch</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Test our implementation.</label></li>
+</ul>
+<div id="8a058c26" class="cell" data-execution_count="41">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>y_hat <span class="op">=</span> lenet_clf(x)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(y_hat), y_hat.dtype, y_hat.shape, y_hat.<span class="bu">min</span>(), y_hat.<span class="bu">max</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="81">
+<pre><code>(torch.Tensor,
+ torch.float32,
+ torch.Size([128, 100]),
+ tensor(-0.1326, grad_fn=&lt;MinBackward1&gt;),
+ tensor(0.1386, grad_fn=&lt;MaxBackward1&gt;))</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="exercise-implement-letnet-5-in-pytorch-2" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-implement-letnet-5-in-pytorch-2">Exercise: Implement LetNet-5 in PyTorch</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Train the model to classify images from CIFAR-100.</label></li>
+</ul>
 
 
 </section>

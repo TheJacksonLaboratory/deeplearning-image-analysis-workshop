@@ -28,244 +28,6 @@
     "text": "Common tasks\n\n\nClassification\n\nwhat is this?\n\nDetection\n\nwhere is something?\n\nSegmentation\n\nwhere specifically is something?"
   },
   {
-    "objectID": "Adv_ML_Python_presentation.html#deep-learning-dl-models",
-    "href": "Adv_ML_Python_presentation.html#deep-learning-dl-models",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Deep Learning (DL) models",
-    "text": "Deep Learning (DL) models\nModels that construct knowledge in a hierarchical manner are considered deep models. The most common type of deep learning models are artificial neural networks.\nArtifical neural networks are layered models that use the output of a layer as the input of a subsequent layer.\nWhat determines the complexity and accuracy of neural networks to perform a certain tasks are their architecture and parameters \\(\\theta\\).\n\n\n\nANN\n\n\nThe architecture of a neural network also help us to represent the model, implement it in a programming language, and share trained models.\nA drawback of deep learning models, and artificial neural networks in general, is their lack of explainability.\nHowever, there are recent techniques that address that problem and try to give some explanation to how a DL model made its prediction.\nExamples of popular DL models in computer vision\nInception v3 for image classification \nU-Net for cell segmentation"
-  },
-  {
-    "objectID": "Adv_ML_Python_presentation.html#train-the-model-to-learn-the-parameters-values",
-    "href": "Adv_ML_Python_presentation.html#train-the-model-to-learn-the-parameters-values",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Train the model to learn the parameter’s values",
-    "text": "Train the model to learn the parameter’s values"
-  },
-  {
-    "objectID": "Adv_ML_Python_presentation.html#evaluate-the-model-performance",
-    "href": "Adv_ML_Python_presentation.html#evaluate-the-model-performance",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Evaluate the model performance",
-    "text": "Evaluate the model performance\n\nObject detection and localization"
-  },
-  {
-    "objectID": "Adv_ML_Python_presentation.html#prepare-our-model-for-production",
-    "href": "Adv_ML_Python_presentation.html#prepare-our-model-for-production",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Prepare our model for production",
-    "text": "Prepare our model for production\nAfter training and evaluating our model, we can fix its parameters and have a version that behaves good enough in the task it was trained to carry out.\nSome options to deliver our trained model are\n\nContainerize it for use in HPC (Sumner, Winter)\nMigrate it to a Cloud platform for external use\nShare the code to build the model (github), along the pre-trained parameters (bucket, drive)\n\n\\(\\hat{y} = f_{\\theta*}(x)\\), where \\(x\\) is a new real-world sample"
-  },
-  {
-    "objectID": "Adv_ML_Python_presentation.html#what-is-a-tensor-pytorch",
-    "href": "Adv_ML_Python_presentation.html#what-is-a-tensor-pytorch",
-    "title": "Advanced Machine Learning with Python",
-    "section": "What is a tensor (PyTorch)?",
-    "text": "What is a tensor (PyTorch)?\nA tensor is a multi-dimensional array. In PyTorch, this comes from a generalization of the notation of variables that exists on more than two dimensions.\n\nzero-dimensional variables are points,\none-dimensional variables are vectors,\ntwo-dimensional variables are matrices,\nand three or more dimensional variables, are tensors.\n\n\nimport torch\n\nx0 = torch.Tensor([7]) # This is a point\n\nx1 = torch.Tensor([15, 64, 123]) # This is a vector\n\nx2 = torch.Tensor([[3, 6, 5],\n                   [7, 9, 12],\n                   [10, 33, 1]]) # This is a matrix\n\nx3 = torch.Tensor([[[[1, 0, 0],\n                     [0, 1, 0],\n                     [0, 0, 1]],\n                    [[2, 0, 1],\n                     [0, 2, 3],\n                     [4, 1, 5]]]]) # This is a tensor"
-  },
-  {
-    "objectID": "Adv_ML_Python_presentation.html#training-with-mini-batches-of-images",
-    "href": "Adv_ML_Python_presentation.html#training-with-mini-batches-of-images",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Training with mini-batches of images",
-    "text": "Training with mini-batches of images\nPyTorch can operate efficiently on multiple images at the same time. To do that, we need to stack these images into a single tensor first.\nThat is because operations in PyTorch expect the images to have the following axes order B,C,H,W 1. B: Batch size, 2. C: Number of Channels, 3. H: Height, and 4. W: Width\n\nim1 = skimage.data.astronaut()\nx1 = torch.from_numpy(im1).permute(2, 0, 1)\nx1 = x1.float()\n\nim2 = skimage.data.cat()\nx2 = torch.from_numpy(im2).permute(2, 0, 1)\nx2 = x2.float()\n\nprint(x1.shape)\nprint(x2.shape)\n\n\n---------------------------------------------------------------------------\nNameError                                 Traceback (most recent call last)\nCell In[13], line 1\n----&gt; 1 im1 = skimage.data.astronaut()\n      2 x1 = torch.from_numpy(im1).permute(2, 0, 1)\n      3 x1 = x1.float()\n\nNameError: name 'skimage' is not defined\n\n\n\nCrop, resize, apply color transformations to images, so these are of the same shape and number of channels.\n\n# Take a patch of size 256x256 pixels from each image\n\n# Stack the patches into a batch of tensors at dimension 0"
-  },
-  {
-    "objectID": "Adv_ML_Python_presentation.html#convolution-layers",
-    "href": "Adv_ML_Python_presentation.html#convolution-layers",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Convolution layers",
-    "text": "Convolution layers\nThe most common operation in DL models for image processing are Convolution operations.\n\n2D ConvolutionThe animation shows the convolution of a 7x7 pixels input image (bottom) with a 3x3 pixels kernel (moving window), that results in a 5x5 pixels output (top)."
-  },
-  {
-    "objectID": "Adv_ML_Python_presentation.html#result-of-the-convolution-between-an-image-and-the-kernel",
-    "href": "Adv_ML_Python_presentation.html#result-of-the-convolution-between-an-image-and-the-kernel",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Result of the convolution between an image and the kernel",
-    "text": "Result of the convolution between an image and the kernel\n\nim = skimage.data.cat()\n\nx = torch.from_numpy(im).float().permute(2, 0, 1)\n\n# We add a \"dummy\" dimension to our tensor \"x\" so it has the BCHW axes\nx = x[None, ...]\n\n# Use the con2d function from torch.nn.functional\noutput = torch.nn.functional.conv2d(x, kernel, padding=0)\noutput.shape\n\nplt.imshow(output[0, 0], cmap=\"gray\")\n\n\n---------------------------------------------------------------------------\nNameError                                 Traceback (most recent call last)\nCell In[32], line 1\n----&gt; 1 im = skimage.data.cat()\n      3 x = torch.from_numpy(im).float().permute(2, 0, 1)\n      5 # We add a \"dummy\" dimension to our tensor \"x\" so it has the BCHW axes\n\nNameError: name 'skimage' is not defined\n\n\n\nExperiment with different values and shapes of the kernel https://en.wikipedia.org/wiki/Kernel_(image_processing)"
-  },
-  {
-    "objectID": "Adv_ML_Python_presentation.html#linear-layers",
-    "href": "Adv_ML_Python_presentation.html#linear-layers",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Linear layers",
-    "text": "Linear layers\nThese layers perform matrix-matrix, and matrix-vector operations on its corresponding inputs. Linear layers are commonly used in final layers to obtain the output of the model.\nFor classification tasks, these layers project a multi-channel feature map into a single prediction of the image’s class.\n\n\n\nInception V3\n\n\nIn object detection and localization problems, these layers generate the detection confidence and bounding box of the object.\n\n\n\nYOLO\n\n\nLinear layers from torch.nn\n\n# Use the Linear module from torch.nn to define a linear operation\nlin_1 =\n\n\n  Cell In[36], line 2\n    lin_1 =\n           ^\nSyntaxError: invalid syntax"
-  },
-  {
-    "objectID": "Adv_ML_Python_presentation.html#non-linear-activation-layers",
-    "href": "Adv_ML_Python_presentation.html#non-linear-activation-layers",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Non-linear activation layers",
-    "text": "Non-linear activation layers\nThese layers are integrated to add non-linear behavior into the neural network.\n\n# Define a Rectified Linear Unit (ReLU) layer using the torch.nn module\nrelu_1 =\n\n\n  Cell In[37], line 2\n    relu_1 =\n            ^\nSyntaxError: invalid syntax\n\n\n\n\nA list of activation layers here https://pytorch.org/docs/stable/nn.html#non-linear-activations-weighted-sum-nonlinearity"
-  },
-  {
-    "objectID": "Adv_ML_Python_presentation.html#pooling-layers",
-    "href": "Adv_ML_Python_presentation.html#pooling-layers",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Pooling layers",
-    "text": "Pooling layers\nThis kind of layers are used to downsample the current feature maps which helps to summarize information from large regions into a couple of pixels.\nThere are two common pooling operations: maximum pooling, and average pooling.\nMaximum pooling looks for the maximum value in a region and returns it as a single pixel. While average pooling computes the average value for that region.\n# Define a Maximum Pooling layer from torch.nn module\nmax_pool ="
-  },
-  {
-    "objectID": "Adv_ML_Python_presentation.html#lenet-5-architecture",
-    "href": "Adv_ML_Python_presentation.html#lenet-5-architecture",
-    "title": "Advanced Machine Learning with Python",
-    "section": "LeNet 5 architecture",
-    "text": "LeNet 5 architecture\nhttp://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf\nimport torch\nimport torch.nn as nn\n# Implement the layers of LeNet5\nTest our implementation"
-  },
-  {
-    "objectID": "Adv_ML_Python_presentation.html#u-net",
-    "href": "Adv_ML_Python_presentation.html#u-net",
-    "title": "Advanced Machine Learning with Python",
-    "section": "U-Net",
-    "text": "U-Net\n\nU-NetLets impelment the first operations of U-Net"
-  },
-  {
-    "objectID": "Adv_ML_Python.html",
-    "href": "Adv_ML_Python.html",
-    "title": "Advanced Machine Learning with Python",
-    "section": "",
-    "text": "Understand the process of training ML models.\nLoad pre-trained ML models and fine-tune them with new data.\nEvaluate the performance of ML models.\nAdapt ML models for different tasks from pre-trained models."
-  },
-  {
-    "objectID": "Adv_ML_Python.html#select-runtime-and-connect",
-    "href": "Adv_ML_Python.html#select-runtime-and-connect",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Select runtime and connect",
-    "text": "Select runtime and connect\nOn the top right corner of the page, click the drop-down arrow to the right of the Connect button and select Change runtime type.\n\n\nMake sure Python 3 runtime is selected. For this part of the workshop CPU acceleration is enough.\n\n\nNow we can connect to the runtime by clicking Connect. This will create a Virtual Machine (VM) with compute resources we can use for a limited amount of time.\n\n\n\n\n\n\n\nCaution\n\n\n\nIn free Colab accounts these resources are not guaranteed and can be taken away without notice (preemptible machines).\nData stored in this runtime will be lost if not moved into other storage when the runtime is deleted."
-  },
-  {
-    "objectID": "Adv_ML_Python.html#machine-learning-ml",
-    "href": "Adv_ML_Python.html#machine-learning-ml",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Machine Learning (ML)",
-    "text": "Machine Learning (ML)\nSub-field of Artificial Intelligence that develops methods to address tasks that require human intelligence"
-  },
-  {
-    "objectID": "Adv_ML_Python.html#artificial-intelligence-tasks",
-    "href": "Adv_ML_Python.html#artificial-intelligence-tasks",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Artificial intelligence tasks",
-    "text": "Artificial intelligence tasks"
-  },
-  {
-    "objectID": "Adv_ML_Python.html#common-tasks",
-    "href": "Adv_ML_Python.html#common-tasks",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Common tasks",
-    "text": "Common tasks\n\n\nClassification\n\nwhat is this?\n\nDetection\n\nwhere is something?\n\nSegmentation\n\nwhere specifically is something?\n\n\n\n\nMore tasks addressed in recent years\n\nStyle transference\nCompression of image/video/etc…\nGeneration of content\nLanguage processing"
-  },
-  {
-    "objectID": "Adv_ML_Python.html#deep-learning-dl-models",
-    "href": "Adv_ML_Python.html#deep-learning-dl-models",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Deep Learning (DL) models",
-    "text": "Deep Learning (DL) models\nModels that construct knowledge in a hierarchical manner are considered deep models. The most common type of deep learning models are artificial neural networks.\nArtifical neural networks are layered models that use the output of a layer as the input of a subsequent layer.\nWhat determines the complexity and accuracy of neural networks to perform a certain tasks are their architecture and parameters \\(\\theta\\).\n\n\n\nANN\n\n\nThe architecture of a neural network also help us to represent the model, implement it in a programming language, and share trained models.\nA drawback of deep learning models, and artificial neural networks in general, is their lack of explainability.\nHowever, there are recent techniques that address that problem and try to give some explanation to how a DL model made its prediction.\n\nExamples of popular DL models in computer vision\nInception v3 for image classification \nU-Net for cell segmentation"
-  },
-  {
-    "objectID": "Adv_ML_Python.html#train-the-model-to-learn-the-parameters-values",
-    "href": "Adv_ML_Python.html#train-the-model-to-learn-the-parameters-values",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Train the model to learn the parameter’s values",
-    "text": "Train the model to learn the parameter’s values"
-  },
-  {
-    "objectID": "Adv_ML_Python.html#evaluate-the-model-performance",
-    "href": "Adv_ML_Python.html#evaluate-the-model-performance",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Evaluate the model performance",
-    "text": "Evaluate the model performance\n\n\n\nObject detection and localization"
-  },
-  {
-    "objectID": "Adv_ML_Python.html#prepare-our-model-for-production",
-    "href": "Adv_ML_Python.html#prepare-our-model-for-production",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Prepare our model for production",
-    "text": "Prepare our model for production\nAfter training and evaluating our model, we can fix its parameters and have a version that behaves good enough in the task it was trained to carry out.\nSome options to deliver our trained model are\n\nContainerize it for use in HPC (Sumner, Winter)\nMigrate it to a Cloud platform for external use\nShare the code to build the model (github), along the pre-trained parameters (bucket, drive)\n\n\\(\\hat{y} = f_{\\theta*}(x)\\), where \\(x\\) is a new real-world sample"
-  },
-  {
-    "objectID": "Adv_ML_Python.html#what-is-a-tensor-pytorch",
-    "href": "Adv_ML_Python.html#what-is-a-tensor-pytorch",
-    "title": "Advanced Machine Learning with Python",
-    "section": "What is a tensor (PyTorch)?",
-    "text": "What is a tensor (PyTorch)?\nA tensor is a multi-dimensional array. In PyTorch, this comes from a generalization of the notation of variables that exists on more than two dimensions.\n\nzero-dimensional variables are points,\none-dimensional variables are vectors,\ntwo-dimensional variables are matrices,\nand three or more dimensional variables, are tensors.\n\n\nimport torch\n\nx0 = torch.Tensor([7]) # This is a point\n\nx1 = torch.Tensor([15, 64, 123]) # This is a vector\n\nx2 = torch.Tensor([[3, 6, 5],\n                   [7, 9, 12],\n                   [10, 33, 1]]) # This is a matrix\n\nx3 = torch.Tensor([[[[1, 0, 0],\n                     [0, 1, 0],\n                     [0, 0, 1]],\n                    [[2, 0, 1],\n                     [0, 2, 3],\n                     [4, 1, 5]]]]) # This is a tensor\n\n\nArithmetic operations are applied to each element inside the tensor\n\n# Define a tensor of any dimension\nx = torch.Tensor([[1, 3, 2], [4, 5, 7]])\nx\n\n# Define \"y\" as two times \"x\" plus five\n\ntensor([[1., 3., 2.],\n        [4., 5., 7.]])\n\n\nThe same happens with functions, e.g., trigonometric functions\n\n# Apply a trigonometric function (e.g., sin, cos, tan) on \"x\"\n\nArithmetic operations between two tensors can be applied as well\n\nCompute “z” as the sum of “x” and “y”\n\n\nx = torch.Tensor([1, 3, 4, 7])\ny = torch.Tensor([2, 5, 1, 1])\n\nImportant – Check the shape of the tensors first!\n\nr = torch.Tensor([[1, 2], [4, 5]])\ns = torch.Tensor([4, 5, 10, 11, 5])\n\nt = r + s # This will generate an error because r and s does not have the same shape\n\n\n---------------------------------------------------------------------------\nRuntimeError                              Traceback (most recent call last)\nCell In[5], line 4\n      1 r = torch.Tensor([[1, 2], [4, 5]])\n      2 s = torch.Tensor([4, 5, 10, 11, 5])\n----&gt; 4 t = r + s # This will generate an error because r and s does not have the same shape\n\nRuntimeError: The size of tensor a (2) must match the size of tensor b (5) at non-singleton dimension 1\n\n\n\nUse the tensor’s property .shape to know the shape of that tensor\n\nr.shape\n\ntorch.Size([2, 2])\n\n\n\nFrom Numpy to Torch\nIf you are familiar with Numpy’s arrays, you can convert them into PyTorch’s tensors as follows\n\nimport numpy as np\n\n\nx_np = np.array([1, 2, 3, 4])\n\n# Define \"x_pt\" as a PyTorch's Tensor version of \"x_np\""
-  },
-  {
-    "objectID": "Adv_ML_Python.html#training-with-mini-batches-of-images",
-    "href": "Adv_ML_Python.html#training-with-mini-batches-of-images",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Training with mini-batches of images",
-    "text": "Training with mini-batches of images\nPyTorch can operate efficiently on multiple images at the same time. To do that, we need to stack these images into a single tensor first.\nThat is because operations in PyTorch expect the images to have the following axes order B,C,H,W 1. B: Batch size, 2. C: Number of Channels, 3. H: Height, and 4. W: Width\n\nim1 = skimage.data.astronaut()\nx1 = torch.from_numpy(im1).permute(2, 0, 1)\nx1 = x1.float()\n\nim2 = skimage.data.cat()\nx2 = torch.from_numpy(im2).permute(2, 0, 1)\nx2 = x2.float()\n\nprint(x1.shape)\nprint(x2.shape)\n\n\n---------------------------------------------------------------------------\nNameError                                 Traceback (most recent call last)\nCell In[20], line 1\n----&gt; 1 im1 = skimage.data.astronaut()\n      2 x1 = torch.from_numpy(im1).permute(2, 0, 1)\n      3 x1 = x1.float()\n\nNameError: name 'skimage' is not defined\n\n\n\nCrop, resize, apply color transformations to images, so these are of the same shape and number of channels.\n\n# Take a patch of size 256x256 pixels from each image\n\n# Stack the patches into a batch of tensors at dimension 0"
-  },
-  {
-    "objectID": "Adv_ML_Python.html#convolution-layers",
-    "href": "Adv_ML_Python.html#convolution-layers",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Convolution layers",
-    "text": "Convolution layers\nThe most common operation in DL models for image processing are Convolution operations.\n\n\n\n2D Convolution\n\n\nThe animation shows the convolution of a 7x7 pixels input image (bottom) with a 3x3 pixels kernel (moving window), that results in a 5x5 pixels output (top).\n\nThe effect of convolution operations\n\nkernel = torch.Tensor([[\n    [[0, 0, 0],\n     [0, 0, 0],\n     [0, 0, 0]], # This part of the Kernel will operate on the Red channel of the images\n\n    [[0, 0, 0],\n     [0, 0, 0],\n     [0, 0, 0]], # This part of the Kernel will operate on the Green channel of the images\n\n    [[0, -1, 0],\n     [-1, 5, -1],\n     [0, -1, 0]], # This part of the Kernel will operate on the Blue channel of the images\n    ]])"
-  },
-  {
-    "objectID": "Adv_ML_Python.html#result-of-the-convolution-between-an-image-and-the-kernel",
-    "href": "Adv_ML_Python.html#result-of-the-convolution-between-an-image-and-the-kernel",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Result of the convolution between an image and the kernel",
-    "text": "Result of the convolution between an image and the kernel\n\nim = skimage.data.cat()\n\nx = torch.from_numpy(im).float().permute(2, 0, 1)\n\n# We add a \"dummy\" dimension to our tensor \"x\" so it has the BCHW axes\nx = x[None, ...]\n\n# Use the con2d function from torch.nn.functional\noutput = torch.nn.functional.conv2d(x, kernel, padding=0)\noutput.shape\n\nplt.imshow(output[0, 0], cmap=\"gray\")\n\n\n---------------------------------------------------------------------------\nNameError                                 Traceback (most recent call last)\nCell In[23], line 1\n----&gt; 1 im = skimage.data.cat()\n      3 x = torch.from_numpy(im).float().permute(2, 0, 1)\n      5 # We add a \"dummy\" dimension to our tensor \"x\" so it has the BCHW axes\n\nNameError: name 'skimage' is not defined\n\n\n\nExperiment with different values and shapes of the kernel https://en.wikipedia.org/wiki/Kernel_(image_processing)\n\n\nConvolution layers from torch.nn module\n\n# Use the Conv2d module from torch.nn to define a learnable convolution layer\nconv_1 =\n\n\n  Cell In[24], line 2\n    conv_1 =\n            ^\nSyntaxError: invalid syntax\n\n\n\n\n\ny = conv_1(x)\ny.shape\n\n\n---------------------------------------------------------------------------\nNameError                                 Traceback (most recent call last)\nCell In[25], line 1\n----&gt; 1 y = conv_1(x)\n      2 y.shape\n\nNameError: name 'conv_1' is not defined\n\n\n\n\n#@title Visualize the output of the randomly initialized kernel of the convolution layer\nplt.imshow((y[0].detach().permute(1, 2, 0) - y[0].detach().min()) / (y[0].detach().max() - y[0].detach().min()))\n\n\n---------------------------------------------------------------------------\nNameError                                 Traceback (most recent call last)\nCell In[26], line 2\n      1 #@title Visualize the output of the randomly initialized kernel of the convolution layer\n----&gt; 2 plt.imshow((y[0].detach().permute(1, 2, 0) - y[0].detach().min()) / (y[0].detach().max() - y[0].detach().min()))\n\nNameError: name 'plt' is not defined"
-  },
-  {
-    "objectID": "Adv_ML_Python.html#linear-layers",
-    "href": "Adv_ML_Python.html#linear-layers",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Linear layers",
-    "text": "Linear layers\nThese layers perform matrix-matrix, and matrix-vector operations on its corresponding inputs. Linear layers are commonly used in final layers to obtain the output of the model.\nFor classification tasks, these layers project a multi-channel feature map into a single prediction of the image’s class.\n\n\n\nInception V3\n\n\nIn object detection and localization problems, these layers generate the detection confidence and bounding box of the object.\n\n\n\nYOLO\n\n\n\nLinear layers from torch.nn\n\n# Use the Linear module from torch.nn to define a linear operation\nlin_1 =\n\n\n  Cell In[27], line 2\n    lin_1 =\n           ^\nSyntaxError: invalid syntax"
-  },
-  {
-    "objectID": "Adv_ML_Python.html#non-linear-activation-layers",
-    "href": "Adv_ML_Python.html#non-linear-activation-layers",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Non-linear activation layers",
-    "text": "Non-linear activation layers\nThese layers are integrated to add non-linear behavior into the neural network.\n\n# Define a Rectified Linear Unit (ReLU) layer using the torch.nn module\nrelu_1 =\n\n\n  Cell In[28], line 2\n    relu_1 =\n            ^\nSyntaxError: invalid syntax\n\n\n\n\nA list of activation layers here https://pytorch.org/docs/stable/nn.html#non-linear-activations-weighted-sum-nonlinearity"
-  },
-  {
-    "objectID": "Adv_ML_Python.html#pooling-layers",
-    "href": "Adv_ML_Python.html#pooling-layers",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Pooling layers",
-    "text": "Pooling layers\nThis kind of layers are used to downsample the current feature maps which helps to summarize information from large regions into a couple of pixels.\nThere are two common pooling operations: maximum pooling, and average pooling.\nMaximum pooling looks for the maximum value in a region and returns it as a single pixel. While average pooling computes the average value for that region.\n# Define a Maximum Pooling layer from torch.nn module\nmax_pool ="
-  },
-  {
-    "objectID": "Adv_ML_Python.html#lenet-5-architecture",
-    "href": "Adv_ML_Python.html#lenet-5-architecture",
-    "title": "Advanced Machine Learning with Python",
-    "section": "LeNet 5 architecture",
-    "text": "LeNet 5 architecture\nhttp://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf\nimport torch\nimport torch.nn as nn\n# Implement the layers of LeNet5\nTest our implementation"
-  },
-  {
-    "objectID": "Adv_ML_Python.html#u-net",
-    "href": "Adv_ML_Python.html#u-net",
-    "title": "Advanced Machine Learning with Python",
-    "section": "U-Net",
-    "text": "U-Net\n\n\n\nU-Net\n\n\nLets impelment the first operations of U-Net"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this site"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Advanced Machine Learning with Python",
-    "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
-  },
-  {
-    "objectID": "notebooks/DL_exercises_1.html",
-    "href": "notebooks/DL_exercises_1.html",
-    "title": "Advanced Machine Learning with Python (Exercises)",
-    "section": "",
-    "text": "import torch\nimport torchvision\n\ncifar_ds = torchvision.datasets.CIFAR100(root=\"/tmp\", train=True, download=True)\n\nx, y = cifar_ds[0]\n\ntype(x), type(y)\n\nFiles already downloaded and verified\n\n\n(PIL.Image.Image, int)\n\n\n\nx.show()"
-  },
-  {
     "objectID": "Adv_ML_Python_presentation.html#types-of-machine-learning-1",
     "href": "Adv_ML_Python_presentation.html#types-of-machine-learning-1",
     "title": "Advanced Machine Learning with Python",
@@ -285,6 +47,20 @@
     "title": "Advanced Machine Learning with Python",
     "section": "Use case: Image classification with the CIFAR-100 dataset",
     "text": "Use case: Image classification with the CIFAR-100 dataset\n\nLoad the CIFAR-100 dataset from torchvision.datasets\n\n\nimport torch\nimport torchvision\n\ncifar_ds = torchvision.datasets.CIFAR100(root=\"/tmp\", train=True, download=True)\n\nFiles already downloaded and verified\n\n\n\nExplore the CIFAR-100 dataset\n\n\nx_im, y = cifar_ds[0]\n\nlen(cifar_ds), type(x_im), type(y)\n\n(50000, PIL.Image.Image, int)\n\n\n\n\ny = 19 (cattle)"
+  },
+  {
+    "objectID": "Adv_ML_Python_presentation.html#what-is-a-tensor-pytorch",
+    "href": "Adv_ML_Python_presentation.html#what-is-a-tensor-pytorch",
+    "title": "Advanced Machine Learning with Python",
+    "section": "What is a tensor (PyTorch)?",
+    "text": "What is a tensor (PyTorch)?\nA tensor is a multi-dimensional array. In PyTorch, this comes from a generalization of the notation of variables that exists on more than two dimensions.\n\nzero-dimensional variables are points,\none-dimensional variables are vectors,\ntwo-dimensional variables are matrices,\nand three or more dimensional variables, are tensors.\n\n\nimport torch\n\nx0 = torch.Tensor([7]) # This is a point\n\nx1 = torch.Tensor([15, 64, 123]) # This is a vector\n\nx2 = torch.Tensor([[3, 6, 5],\n                   [7, 9, 12],\n                   [10, 33, 1]]) # This is a matrix\n\nx3 = torch.Tensor([[[[1, 0, 0],\n                     [0, 1, 0],\n                     [0, 0, 1]],\n                    [[2, 0, 1],\n                     [0, 2, 3],\n                     [4, 1, 5]]]]) # This is a tensor"
+  },
+  {
+    "objectID": "Adv_ML_Python_presentation.html#exercise-add-the-preprocessing-pipeline-to-the-cifar-100-dataset",
+    "href": "Adv_ML_Python_presentation.html#exercise-add-the-preprocessing-pipeline-to-the-cifar-100-dataset",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Add the preprocessing pipeline to the CIFAR-100 dataset",
+    "text": "Exercise: Add the preprocessing pipeline to the CIFAR-100 dataset\n\nRe-load the CIFAR-100 dataset, this time passing the pre_process function as argument.\n\n\ncifar_ds = torchvision.datasets.CIFAR100(root=\"/tmp\", train=True, download=True, transform=pre_process)\n\nFiles already downloaded and verified"
   },
   {
     "objectID": "Adv_ML_Python_presentation.html#training-set",
@@ -308,13 +84,6 @@
     "text": "Test set\nThis set of samples is not used when training\nIts purpose is to measure the generalization capacity of the model"
   },
   {
-    "objectID": "Adv_ML_Python_presentation.html#exercise-split-the-data-into-training-and-test-subsets",
-    "href": "Adv_ML_Python_presentation.html#exercise-split-the-data-into-training-and-test-subsets",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Exercise: Split the data into training and test subsets",
-    "text": "Exercise: Split the data into training and test subsets\n\nfrom pytorch.utils.data import random_split\n\n(X_train, X_test,\n Y_train, Y_test) = model_selection.train_test_split(X, Y,\n                                                     test_size=0.20,\n                                                     random_state=0,\n                                                     shuffle=True)\n\nX_train.shape\n\nX_test.shape"
-  },
-  {
     "objectID": "Adv_ML_Python_presentation.html#exercise-load-the-test-set-and-split-the-train-set-into-train-and-validation-subsets",
     "href": "Adv_ML_Python_presentation.html#exercise-load-the-test-set-and-split-the-train-set-into-train-and-validation-subsets",
     "title": "Advanced Machine Learning with Python",
@@ -329,11 +98,18 @@
     "text": "Deep Learning (DL) models\nModels that construct knowledge in a hierarchical manner are considered deep models.\n\n\n\nFrom Cervantes-Sanchez et al."
   },
   {
-    "objectID": "Adv_ML_Python_presentation.html#examples-of-popular-dl-models-in-computer-vision",
-    "href": "Adv_ML_Python_presentation.html#examples-of-popular-dl-models-in-computer-vision",
+    "objectID": "Adv_ML_Python_presentation.html#exercise-create-a-logisic-regression-model-with-pytorch",
+    "href": "Adv_ML_Python_presentation.html#exercise-create-a-logisic-regression-model-with-pytorch",
     "title": "Advanced Machine Learning with Python",
-    "section": "Examples of popular DL models in computer vision",
-    "text": "Examples of popular DL models in computer vision\n\nInception v3 for image classification\n\n\nInceptionV3"
+    "section": "Exercise: Create a Logisic Regression model with PyTorch",
+    "text": "Exercise: Create a Logisic Regression model with PyTorch\n\nUse the nn (Neural Networks) module from pytorch to create a Logistic Regression model\n\n\nimport torch.nn as nn\n\nlr_clf_1 = nn.Linear(in_features=3 * 32 * 32, out_features=100, bias=True)\nlr_clf_2 = nn.Softmax()\n\n\nFeed the model with a sample x\n\n\n\n\n\n\n\nImportant\n\n\nWe have to reshape x before feeding it to the model because x is an image with axes: Channels, Height, Width (CHW), but the Logistic Regression input should be a vector.\n\n\n\n\ny_hat = lr_clf_2( lr_clf_1( x.reshape(1, -1) ))\n\ntype(y_hat), y_hat.shape, y_hat.dtype\n\n(torch.Tensor, torch.Size([1, 100]), torch.float32)"
+  },
+  {
+    "objectID": "Adv_ML_Python_presentation.html#exercise-create-a-multilayer-perceptron-mlp-model-with-pytorch",
+    "href": "Adv_ML_Python_presentation.html#exercise-create-a-multilayer-perceptron-mlp-model-with-pytorch",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Create a MultiLayer Perceptron (MLP) model with PyTorch",
+    "text": "Exercise: Create a MultiLayer Perceptron (MLP) model with PyTorch\n\nUse the nn.Sequential module to build sequential models\n\n\nmlp_clf = nn.Sequential(\n  nn.Linear(in_features=3 * 32 * 32, out_features=1024, bias=True),\n  nn.Tanh(),\n  nn.Linear(in_features=1024, out_features=100, bias=True),\n  nn.Softmax()\n)\n\n\nFeed the model with a sample x\n\n\ny_hat = mlp_clf(x.reshape(1, -1))\n\ntype(y_hat), y_hat.shape, y_hat.dtype\n\n(torch.Tensor, torch.Size([1, 100]), torch.float32)"
   },
   {
     "objectID": "Adv_ML_Python_presentation.html#model-fittingtraining",
@@ -341,48 +117,6 @@
     "title": "Advanced Machine Learning with Python",
     "section": "Model fitting/training",
     "text": "Model fitting/training\nModels behavior depends directly on the value of their set of parameters \\(\\theta\\).\n\n\\(f(x) \\approx y\\)\n\\(f_\\theta(x) = y + \\epsilon = \\hat{y}\\)\n\n\n\n\n\n\n\nNote\n\n\nAs models increase their number of parameters, they become more complex\n\n\n\nTraining is the process of optimizing the values of \\(\\theta\\)\n\nTraining is often an expensive process in terms of computational resources and time."
-  },
-  {
-    "objectID": "Adv_ML_Python_presentation.html#inception-v3-for-image-classification",
-    "href": "Adv_ML_Python_presentation.html#inception-v3-for-image-classification",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Inception v3 for image classification",
-    "text": "Inception v3 for image classification\n\nInceptionV3"
-  },
-  {
-    "objectID": "Adv_ML_Python_presentation.html#u-net-for-cell-segmentation",
-    "href": "Adv_ML_Python_presentation.html#u-net-for-cell-segmentation",
-    "title": "Advanced Machine Learning with Python",
-    "section": "U-Net for cell segmentation",
-    "text": "U-Net for cell segmentation\n\nU-Net"
-  },
-  {
-    "objectID": "Adv_ML_Python_presentation.html#examples-of-popular-dl-models-in-computer-vision-1",
-    "href": "Adv_ML_Python_presentation.html#examples-of-popular-dl-models-in-computer-vision-1",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Examples of popular DL models in computer vision",
-    "text": "Examples of popular DL models in computer vision\n\nU-Net for cell segmentation\n\n\nU-Net"
-  },
-  {
-    "objectID": "Adv_ML_Python_presentation.html#how-are-tensors-used-in-deep-learning",
-    "href": "Adv_ML_Python_presentation.html#how-are-tensors-used-in-deep-learning",
-    "title": "Advanced Machine Learning with Python",
-    "section": "How are tensors used in Deep Learning?",
-    "text": "How are tensors used in Deep Learning?\n\nWe store images in form of two-dimensional tensors for black and white, gray-scale images, and as three-dimensional tensors for color images (RGB).\nFor convenience, PyTorch’s tensors are stored with the channels axis before the spatial (X, Y) axis."
-  },
-  {
-    "objectID": "Adv_ML_Python_presentation.html#exercise-create-an-ann-with-pytorch",
-    "href": "Adv_ML_Python_presentation.html#exercise-create-an-ann-with-pytorch",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Exercise: Create an ANN with PyTorch",
-    "text": "Exercise: Create an ANN with PyTorch\n\nUse the nn (Neural Networks) module from pytorch to create a MultiLayer Perceptron\n\n\nimport torch.nn as nn\n\nmlp_clf = nn.Sequential(\n  nn.Linear(in_features=3 * 32 * 32, out_features=1024, bias=True),\n  nn.ReLU(),\n  nn.Linear(in_features=1024, out_features=100, bias=True)\n)\n\nmlp_clf\n\nSequential(\n  (0): Linear(in_features=3072, out_features=1024, bias=True)\n  (1): ReLU()\n  (2): Linear(in_features=1024, out_features=100, bias=True)\n)\n\n\n\nFeed the model with a sample x\n\n\ny_hat = mlp_clf(x.reshape(1, -1))\n\ntype(y_hat), y_hat.shape, y_hat.dtype\n\n(torch.Tensor, torch.Size([1, 100]), torch.float32)"
-  },
-  {
-    "objectID": "Adv_ML_Python_presentation.html#convolutional-neural-networks-cnn-or-convnet",
-    "href": "Adv_ML_Python_presentation.html#convolutional-neural-networks-cnn-or-convnet",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Convolutional Neural Networks (CNN or ConvNet)",
-    "text": "Convolutional Neural Networks (CNN or ConvNet)"
   },
   {
     "objectID": "Adv_ML_Python_presentation.html#loss-function-1",
@@ -406,11 +140,32 @@
     "text": "Loss function for classification\nAnd for classification tasks we use the Cross Entropy (CE) function.\n\\(CE = -\\frac{1}{N}\\sum\\limits_i^N\\sum\\limits_k^C y_{i,k} log(\\hat{y_{i,k}})\\)\nwhere \\(C\\) is the number of classes.\n\n\n\n\n\n\nNote\n\n\nFor the binary classification case:\n\\(BCE = -\\frac{1}{N}\\sum\\limits_i^N \\left(y_i log(\\hat{y_i}) + (1 - y_i) log(1 - \\hat{y_i})\\right)\\)"
   },
   {
+    "objectID": "Adv_ML_Python_presentation.html#exercise-define-the-loss-function-for-the-cifar-100-classification-problem",
+    "href": "Adv_ML_Python_presentation.html#exercise-define-the-loss-function-for-the-cifar-100-classification-problem",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Define the loss function for the CIFAR-100 classification problem",
+    "text": "Exercise: Define the loss function for the CIFAR-100 classification problem\n\nDefine a Cross Entropy loss function with nn.CrossEntropyLoss\n\n\nloss_fun = nn.CrossEntropyLoss()\n\n\nRemove the nn.Softmax layer from the MLP model.\n\n\n\n\n\n\n\nNote\n\n\nAccording to the PyTorch documentation, the CrossEntropyLoss function takes as inputs the logits of the probabilities and not the probabilities themselves. So, we don’t need to squash the output of the MLP model.\n\n\n\n\nmlp_clf = nn.Sequential(\n  nn.Linear(in_features=3 * 32 * 32, out_features=1024, bias=True),\n  nn.Tanh(),\n  nn.Linear(in_features=1024, out_features=100, bias=True),\n  # nn.Softmax() # &lt;- remove this line\n)"
+  },
+  {
+    "objectID": "Adv_ML_Python_presentation.html#exercise-define-the-loss-function-for-the-cifar-100-classification-problem-1",
+    "href": "Adv_ML_Python_presentation.html#exercise-define-the-loss-function-for-the-cifar-100-classification-problem-1",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Define the loss function for the CIFAR-100 classification problem",
+    "text": "Exercise: Define the loss function for the CIFAR-100 classification problem\n\nMeasure the prediction loss (error) of our MLP with respect to the grund-truth\n\n\n\n\n\n\n\nImportant\n\n\nWe are using a PyTorch loss function, and it expects PyTorch’s tensors as arguments, so we have to convert y to tensor before computing the loss function.\n\n\n\n\nloss = loss_fun(y_hat, torch.LongTensor([y]))\n\nloss\n\ntensor(4.6058, grad_fn=&lt;NllLossBackward0&gt;)"
+  },
+  {
     "objectID": "Adv_ML_Python_presentation.html#gradient-based-optimization-1",
     "href": "Adv_ML_Python_presentation.html#gradient-based-optimization-1",
     "title": "Advanced Machine Learning with Python",
     "section": "Gradient based optimization",
     "text": "Gradient based optimization\nGradient-based methods are able to fit large numbers of parameters when using a smooth Loss function as target.\n\n\n\n\n\n\nNote\n\n\nWe compute the gradient of the loss function with respect to the model parameters using the chain rule from calculous. Generally, this is managed by the machine learning packages such as PyTorch and Tensorflow with a method called back propagation.\n\n\n\nGradient Descent\n\n\\(\\theta^{t+1} = \\theta^t - \\eta \\nabla_\\theta L(Y, \\hat{Y})\\)"
+  },
+  {
+    "objectID": "Adv_ML_Python_presentation.html#exercise-compute-the-gradient-of-the-loss-function-with-respect-to-the-parameters-of-the-mlp.",
+    "href": "Adv_ML_Python_presentation.html#exercise-compute-the-gradient-of-the-loss-function-with-respect-to-the-parameters-of-the-mlp.",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Compute the gradient of the loss function with respect to the parameters of the MLP.",
+    "text": "Exercise: Compute the gradient of the loss function with respect to the parameters of the MLP.\n\nCheck what are the gradients of the MLP parameters befor back propagating the gradient.\n\n\nmlp_clf[0].bias.grad\n\n\nCompute the gradient of the loss function with respect to the MLP parameters.\n\n\n\n\n\n\n\nNote\n\n\nTo back propagate the gradients we use the loss.backward() method of the loss function.\n\n\n\n\nloss = loss_fun(y_hat, torch.LongTensor([y]))\n\nloss.backward()\n\n\nVerify that the gradients have been propagated to the model parameters.\n\n\nmlp_clf[0].bias.grad"
   },
   {
     "objectID": "Adv_ML_Python_presentation.html#stochastic-methods",
@@ -425,62 +180,6 @@
     "title": "Advanced Machine Learning with Python",
     "section": "Stochastic Gradient Descent (SGD)",
     "text": "Stochastic Gradient Descent (SGD)\n\nThis strategy defines \\(\\theta\\)’s’ update rule for iteration \\(t+1\\) using a mini-batch sampled at random from the training set as follows.\n\n\n\\(\\theta^{t+1} = \\theta^t - \\eta \\nabla_\\theta L(Y_{b}, \\hat{Y_{b}})\\)\n\\(\\eta\\) controls the update we perform on the current parameter’s values\n\n\n\n\n\n\n\nNote\n\n\nThis parameter in Deep Learning is known as the learning rate"
-  },
-  {
-    "objectID": "Adv_ML_Python_presentation.html#convolutional-neural-network-cnn-or-convnets",
-    "href": "Adv_ML_Python_presentation.html#convolutional-neural-network-cnn-or-convnets",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Convolutional Neural Network (CNN or ConvNets)",
-    "text": "Convolutional Neural Network (CNN or ConvNets)"
-  },
-  {
-    "objectID": "Adv_ML_Python_presentation.html#exercise-create-an-ann-with-pytorch-.scrollabletrue",
-    "href": "Adv_ML_Python_presentation.html#exercise-create-an-ann-with-pytorch-.scrollabletrue",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Exercise: Create an ANN with PyTorch {.scrollable=true}",
-    "text": "Exercise: Create an ANN with PyTorch {.scrollable=true}\n\nUse the nn (Neural Networks) module from pytorch to create a MultiLayer Perceptron\n\n\nimport torch.nn as nn\n\nmlp_clf = nn.Sequential(\n  nn.Linear(in_features=3 * 32 * 32, out_features=1024, bias=True),\n  nn.ReLU(),\n  nn.Linear(in_features=1024, out_features=100, bias=True)\n)\n\nmlp_clf\n\nSequential(\n  (0): Linear(in_features=3072, out_features=1024, bias=True)\n  (1): ReLU()\n  (2): Linear(in_features=1024, out_features=100, bias=True)\n)\n\n\n\nFeed the model with a sample x\n\n\ny_hat = mlp_clf(x.reshape(1, -1))\n\ntype(y_hat), y_hat.shape, y_hat.dtype\n\n\n---------------------------------------------------------------------------\nRuntimeError                              Traceback (most recent call last)\nCell In[10], line 1\n----&gt; 1 y_hat = mlp_clf(x.reshape(1, -1))\n      3 type(y_hat), y_hat.shape, y_hat.dtype\n\nFile ~/.local/lib/python3.10/site-packages/torch/nn/modules/module.py:1532, in Module._wrapped_call_impl(self, *args, **kwargs)\n   1530     return self._compiled_call_impl(*args, **kwargs)  # type: ignore[misc]\n   1531 else:\n-&gt; 1532     return self._call_impl(*args, **kwargs)\n\nFile ~/.local/lib/python3.10/site-packages/torch/nn/modules/module.py:1541, in Module._call_impl(self, *args, **kwargs)\n   1536 # If we don't have any hooks, we want to skip the rest of the logic in\n   1537 # this function, and just call forward.\n   1538 if not (self._backward_hooks or self._backward_pre_hooks or self._forward_hooks or self._forward_pre_hooks\n   1539         or _global_backward_pre_hooks or _global_backward_hooks\n   1540         or _global_forward_hooks or _global_forward_pre_hooks):\n-&gt; 1541     return forward_call(*args, **kwargs)\n   1543 try:\n   1544     result = None\n\nFile ~/.local/lib/python3.10/site-packages/torch/nn/modules/container.py:217, in Sequential.forward(self, input)\n    215 def forward(self, input):\n    216     for module in self:\n--&gt; 217         input = module(input)\n    218     return input\n\nFile ~/.local/lib/python3.10/site-packages/torch/nn/modules/module.py:1532, in Module._wrapped_call_impl(self, *args, **kwargs)\n   1530     return self._compiled_call_impl(*args, **kwargs)  # type: ignore[misc]\n   1531 else:\n-&gt; 1532     return self._call_impl(*args, **kwargs)\n\nFile ~/.local/lib/python3.10/site-packages/torch/nn/modules/module.py:1541, in Module._call_impl(self, *args, **kwargs)\n   1536 # If we don't have any hooks, we want to skip the rest of the logic in\n   1537 # this function, and just call forward.\n   1538 if not (self._backward_hooks or self._backward_pre_hooks or self._forward_hooks or self._forward_pre_hooks\n   1539         or _global_backward_pre_hooks or _global_backward_hooks\n   1540         or _global_forward_hooks or _global_forward_pre_hooks):\n-&gt; 1541     return forward_call(*args, **kwargs)\n   1543 try:\n   1544     result = None\n\nFile ~/.local/lib/python3.10/site-packages/torch/nn/modules/linear.py:116, in Linear.forward(self, input)\n    115 def forward(self, input: Tensor) -&gt; Tensor:\n--&gt; 116     return F.linear(input, self.weight, self.bias)\n\nRuntimeError: mat1 and mat2 must have the same dtype, but got Byte and Float"
-  },
-  {
-    "objectID": "Adv_ML_Python_presentation.html#exercise-create-an-logisic-regression-model-with-pytorch",
-    "href": "Adv_ML_Python_presentation.html#exercise-create-an-logisic-regression-model-with-pytorch",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Exercise: Create an Logisic Regression model with PyTorch",
-    "text": "Exercise: Create an Logisic Regression model with PyTorch\n\nUse the nn (Neural Networks) module from pytorch to create a Logistic Regression model\n\n\nimport torch.nn as nn\n\nlr_clf_1 = nn.Linear(in_features=3 * 32 * 32, out_features=100, bias=True)\nlr_clf_2 = nn.Softmax()\n\n\nFeed the model with a sample x\n\n`x` is an image with axes Channels, Height, Width (CHW), but the Logistic Regression input should be a vector.\nWe have to *reshape* `x` before feeding it to the model.\n\ny_hat = lr_clf_2( lr_clf_1( x.reshape(1, -1) ))\n\ntype(y_hat), y_hat.shape, y_hat.dtype\n\n(torch.Tensor, torch.Size([1, 100]), torch.float32)"
-  },
-  {
-    "objectID": "Adv_ML_Python_presentation.html#exercise-create-a-logisic-regression-model-with-pytorch",
-    "href": "Adv_ML_Python_presentation.html#exercise-create-a-logisic-regression-model-with-pytorch",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Exercise: Create a Logisic Regression model with PyTorch",
-    "text": "Exercise: Create a Logisic Regression model with PyTorch\n\nUse the nn (Neural Networks) module from pytorch to create a Logistic Regression model\n\n\nimport torch.nn as nn\n\nlr_clf_1 = nn.Linear(in_features=3 * 32 * 32, out_features=100, bias=True)\nlr_clf_2 = nn.Softmax()\n\n\nFeed the model with a sample x\n\n\n\n\n\n\n\nImportant\n\n\nWe have to reshape x before feeding it to the model because x is an image with axes: Channels, Height, Width (CHW), but the Logistic Regression input should be a vector.\n\n\n\n\ny_hat = lr_clf_2( lr_clf_1( x.reshape(1, -1) ))\n\ntype(y_hat), y_hat.shape, y_hat.dtype\n\n(torch.Tensor, torch.Size([1, 100]), torch.float32)"
-  },
-  {
-    "objectID": "Adv_ML_Python_presentation.html#exercise-create-a-multilayer-perceptron-mlp-model-with-pytorch",
-    "href": "Adv_ML_Python_presentation.html#exercise-create-a-multilayer-perceptron-mlp-model-with-pytorch",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Exercise: Create a MultiLayer Perceptron (MLP) model with PyTorch",
-    "text": "Exercise: Create a MultiLayer Perceptron (MLP) model with PyTorch\n\nUse the nn.Sequential module to build sequential models\n\n\nmlp_clf = nn.Sequential(\n  nn.Linear(in_features=3 * 32 * 32, out_features=1024, bias=True),\n  nn.Tanh(),\n  nn.Linear(in_features=1024, out_features=100, bias=True),\n  nn.Softmax()\n)\n\n\nFeed the model with a sample x\n\n\ny_hat = mlp_clf(x.reshape(1, -1))\n\ntype(y_hat), y_hat.shape, y_hat.dtype\n\n(torch.Tensor, torch.Size([1, 100]), torch.float32)"
-  },
-  {
-    "objectID": "Adv_ML_Python_presentation.html#exercise-define-the-loss-function-for-the-cifar-100-classification-problem",
-    "href": "Adv_ML_Python_presentation.html#exercise-define-the-loss-function-for-the-cifar-100-classification-problem",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Exercise: Define the loss function for the CIFAR-100 classification problem",
-    "text": "Exercise: Define the loss function for the CIFAR-100 classification problem\n\nDefine a Cross Entropy loss function with nn.CrossEntropyLoss\n\n\nloss_fun = nn.CrossEntropyLoss()\n\n\nRemove the nn.Softmax layer from the MLP model.\n\n\n\n\n\n\n\nNote\n\n\nAccording to the PyTorch documentation, the CrossEntropyLoss function takes as inputs the logits of the probabilities and not the probabilities themselves. So, we don’t need to squash the output of the MLP model.\n\n\n\n\nmlp_clf = nn.Sequential(\n  nn.Linear(in_features=3 * 32 * 32, out_features=1024, bias=True),\n  nn.Tanh(),\n  nn.Linear(in_features=1024, out_features=100, bias=True),\n  # nn.Softmax() # &lt;- remove this line\n)"
-  },
-  {
-    "objectID": "Adv_ML_Python_presentation.html#exercise-define-the-loss-function-for-the-cifar-100-classification-problem-1",
-    "href": "Adv_ML_Python_presentation.html#exercise-define-the-loss-function-for-the-cifar-100-classification-problem-1",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Exercise: Define the loss function for the CIFAR-100 classification problem",
-    "text": "Exercise: Define the loss function for the CIFAR-100 classification problem\n\nMeasure the prediction loss (error) of our MLP with respect to the grund-truth\n\n\n\n\n\n\n\nImportant\n\n\nWe are using a PyTorch loss function, and it expects PyTorch’s tensors as arguments, so we have to convert y to tensor before computing the loss function.\n\n\n\n\nloss = loss_fun(y_hat, torch.LongTensor([y]))\n\nloss\n\ntensor(4.6060, grad_fn=&lt;NllLossBackward0&gt;)"
-  },
-  {
-    "objectID": "Adv_ML_Python_presentation.html#exercise-compute-the-gradient-of-the-loss-function-with-respect-to-the-parameters-of-the-mlp.",
-    "href": "Adv_ML_Python_presentation.html#exercise-compute-the-gradient-of-the-loss-function-with-respect-to-the-parameters-of-the-mlp.",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Exercise: Compute the gradient of the loss function with respect to the parameters of the MLP.",
-    "text": "Exercise: Compute the gradient of the loss function with respect to the parameters of the MLP.\n\nCheck what are the gradients of the MLP parameters befor back propagating the gradient.\n\n\nmlp_clf[0].bias.grad\n\n\nCompute the gradient of the loss function with respect to the MLP parameters.\n\n\n\n\n\n\n\nNote\n\n\nTo back propagate the gradients we use the loss.backward() method of the loss function.\n\n\n\n\nloss = loss_fun(y_hat, torch.LongTensor([y]))\n\nloss.backward()\n\n\nVerify that the gradients have been propagated to the model parameters.\n\n\nmlp_clf[0].bias.grad"
   },
   {
     "objectID": "Adv_ML_Python_presentation.html#training-with-mini-batches",
@@ -502,13 +201,6 @@
     "title": "Advanced Machine Learning with Python",
     "section": "Exercise: Train the MLP classifier",
     "text": "Exercise: Train the MLP classifier\n\nImplement the training-loop to fit the parameters of our MLP classifier.\n\n\n\n\n\n\n\nNote\n\n\nGradients are accumulated on every iteration, so we need to reset the accumulator with optimizer.zero_grad() for every new batch.\n\n\n\n\n\n\n\n\n\nNote\n\n\nTo perform get the new iteration’s parameter values \\(\\theta^{t+1}\\) we use optimizer.step() to compute the update step.\n\n\n\nmlp_clf.train()\nfor x, y in cifar_train_dl:\n  optimizer.zero_grad()\n\n  y_hat = mlp_clf( x.reshape(-1, 3 * 32 * 32) ) # Reshape it into a batch of vectors\n\n  loss = loss_fun(y_hat, y)\n\n  loss.backward()\n\n  optimizer.step()"
-  },
-  {
-    "objectID": "Adv_ML_Python_presentation.html#exercise-add-the-preprocessing-pipeline-to-the-cifar-100-dataset",
-    "href": "Adv_ML_Python_presentation.html#exercise-add-the-preprocessing-pipeline-to-the-cifar-100-dataset",
-    "title": "Advanced Machine Learning with Python",
-    "section": "Exercise: Add the preprocessing pipeline to the CIFAR-100 dataset",
-    "text": "Exercise: Add the preprocessing pipeline to the CIFAR-100 dataset\n\nRe-load the CIFAR-100 dataset, this time passing the pre_process function as argument.\n\n\ncifar_ds = torchvision.datasets.CIFAR100(root=\"/tmp\", train=True, download=True, transform=pre_process)\n\nFiles already downloaded and verified"
   },
   {
     "objectID": "Adv_ML_Python_presentation.html#exercise-train-the-mlp-classifier-and-track-the-training-and-validation-loss",
@@ -557,14 +249,14 @@
     "href": "Adv_ML_Python_presentation.html#exercise-measure-the-accuracy-of-the-mlp-trained-to-classify-images-from-cifar-100",
     "title": "Advanced Machine Learning with Python",
     "section": "Exercise: Measure the accuracy of the MLP trained to classify images from CIFAR-100",
-    "text": "Exercise: Measure the accuracy of the MLP trained to classify images from CIFAR-100\n\nInstall the torchmetrics package.\n\n!pip install torchmetrics\n\nCompute the average accuracy for the Train set.\n\n\nfrom torchmetrics.classification import Accuracy\n\nmlp_clf.eval()\n\ntrain_acc_metric = Accuracy(task=\"multiclass\", num_classes=100)\n\nwith torch.no_grad():\n  for x, y in cifar_train_dl:\n    y_hat = mlp_clf( x.reshape(-1, 3 * 32 * 32) )\n    train_acc_metric(y_hat.softmax(dim=1), y)\n\n  train_acc = train_acc_metric.compute()\n\nprint(f\"Training acc={train_acc}\")\ntrain_acc_metric.reset()\n\nTraining acc=0.15344999730587006"
+    "text": "Exercise: Measure the accuracy of the MLP trained to classify images from CIFAR-100\n\nInstall the torchmetrics package.\n\n!pip install torchmetrics\n\nCompute the average accuracy for the Train set.\n\n\nfrom torchmetrics.classification import Accuracy\n\nmlp_clf.eval()\n\ntrain_acc_metric = Accuracy(task=\"multiclass\", num_classes=100)\n\nwith torch.no_grad():\n  for x, y in cifar_train_dl:\n    y_hat = mlp_clf( x.reshape(-1, 3 * 32 * 32) )\n    train_acc_metric(y_hat.softmax(dim=1), y)\n\n  train_acc = train_acc_metric.compute()\n\nprint(f\"Training acc={train_acc}\")\ntrain_acc_metric.reset()\n\nTraining acc=0.10509999841451645"
   },
   {
     "objectID": "Adv_ML_Python_presentation.html#exercise-measure-the-accuracy-of-the-mlp-trained-to-classify-images-from-cifar-100-1",
     "href": "Adv_ML_Python_presentation.html#exercise-measure-the-accuracy-of-the-mlp-trained-to-classify-images-from-cifar-100-1",
     "title": "Advanced Machine Learning with Python",
     "section": "Exercise: Measure the accuracy of the MLP trained to classify images from CIFAR-100",
-    "text": "Exercise: Measure the accuracy of the MLP trained to classify images from CIFAR-100\n\nCompute the average accuracy for the Validation and Test sets.\n\n\nval_acc_metric = Accuracy(task=\"multiclass\", num_classes=100)\ntest_acc_metric = Accuracy(task=\"multiclass\", num_classes=100)\n\nwith torch.no_grad():\n  for x, y in cifar_val_dl:\n    y_hat = mlp_clf( x.reshape(-1, 3 * 32 * 32) )\n    val_acc_metric(y_hat.softmax(dim=1), y)\n\n  val_acc = val_acc_metric.compute()\n\n  for x, y in cifar_test_dl:\n    y_hat = mlp_clf( x.reshape(-1, 3 * 32 * 32) )\n    test_acc_metric(y_hat.softmax(dim=1), y)\n\n  test_acc = test_acc_metric.compute()\n\nprint(f\"Validation acc={val_acc}\")\nprint(f\"Test acc={test_acc}\")\n\nval_acc_metric.reset()\ntest_acc_metric.reset()\n\nValidation acc=0.14579999446868896\nTest acc=0.14229999482631683"
+    "text": "Exercise: Measure the accuracy of the MLP trained to classify images from CIFAR-100\n\nCompute the average accuracy for the Validation and Test sets.\n\n\nval_acc_metric = Accuracy(task=\"multiclass\", num_classes=100)\ntest_acc_metric = Accuracy(task=\"multiclass\", num_classes=100)\n\nwith torch.no_grad():\n  for x, y in cifar_val_dl:\n    y_hat = mlp_clf( x.reshape(-1, 3 * 32 * 32) )\n    val_acc_metric(y_hat.softmax(dim=1), y)\n\n  val_acc = val_acc_metric.compute()\n\n  for x, y in cifar_test_dl:\n    y_hat = mlp_clf( x.reshape(-1, 3 * 32 * 32) )\n    test_acc_metric(y_hat.softmax(dim=1), y)\n\n  test_acc = test_acc_metric.compute()\n\nprint(f\"Validation acc={val_acc}\")\nprint(f\"Test acc={test_acc}\")\n\nval_acc_metric.reset()\ntest_acc_metric.reset()\n\nValidation acc=0.1023000031709671\nTest acc=0.10010000318288803"
   },
   {
     "objectID": "Adv_ML_Python_presentation.html#convolutional-neural-network-cnn-or-convnet",
@@ -574,10 +266,556 @@
     "text": "Convolutional Neural Network (CNN or ConvNet)"
   },
   {
-    "objectID": "Adv_ML_Python_presentation.html#exercise-experiment-whith-different-kernels-of-the-convolution-operation",
-    "href": "Adv_ML_Python_presentation.html#exercise-experiment-whith-different-kernels-of-the-convolution-operation",
+    "objectID": "Adv_ML_Python_presentation.html#convolution-layers",
+    "href": "Adv_ML_Python_presentation.html#convolution-layers",
     "title": "Advanced Machine Learning with Python",
-    "section": "Exercise: Experiment whith different kernels of the convolution operation",
-    "text": "Exercise: Experiment whith different kernels of the convolution operation\n\nkernel = torch.Tensor([[\n    [[0, 0, 0],\n     [0, 0, 0],\n     [0, 0, 0]], # This part of the Kernel will operate on the Red channel of the images\n\n    [[0, 0, 0],\n     [0, 0, 0],\n     [0, 0, 0]], # This part of the Kernel will operate on the Green channel of the images\n\n    [[0, -1, 0],\n     [-1, 5, -1],\n     [0, -1, 0]], # This part of the Kernel will operate on the Blue channel of the images\n    ]])"
+    "section": "Convolution layers",
+    "text": "Convolution layers\nThe most common operation in DL models for image processing are Convolution operations.\n\n2D ConvolutionThe animation shows the convolution of a 7x7 pixels input image (bottom) with a 3x3 pixels kernel (moving window), that results in a 5x5 pixels output (top)."
+  },
+  {
+    "objectID": "Adv_ML_Python_presentation.html#exercise-visualize-the-effect-of-the-convolution-operation",
+    "href": "Adv_ML_Python_presentation.html#exercise-visualize-the-effect-of-the-convolution-operation",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Visualize the effect of the convolution operation",
+    "text": "Exercise: Visualize the effect of the convolution operation\n\nCreate a convolution layer with nn.Conv2D using 3 channels as input, and a single one for output.\n\n\nconv_1 = nn.Conv2d(in_channels=3, out_channels=1, kernel_size=7, padding=0, bias=True)\n\nx, _ = next(iter(cifar_train_dl))\n\nfx = conv_1(x)\n\ntype(fx), fx.dtype, fx.shape, fx.min(), fx.max()\n\n(torch.Tensor,\n torch.float32,\n torch.Size([128, 1, 26, 26]),\n tensor(-0.5487, grad_fn=&lt;MinBackward1&gt;),\n tensor(0.5428, grad_fn=&lt;MaxBackward1&gt;))\n\n\n\n\n\n\n\n\nWarning\n\n\nThe convolution layer is initialized with random values, so the results will vary."
+  },
+  {
+    "objectID": "Adv_ML_Python_presentation.html#exercise-visualize-the-effect-of-the-convolution-operation-1",
+    "href": "Adv_ML_Python_presentation.html#exercise-visualize-the-effect-of-the-convolution-operation-1",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Visualize the effect of the convolution operation",
+    "text": "Exercise: Visualize the effect of the convolution operation\n\nCreate a convolution layer with nn.Conv2D using 3 channels as input, and a single one for output.\n\n\nplt.rcParams['figure.figsize'] = [5, 5]\n\nfig, ax = plt.subplots(1, 2)\nax[0].imshow(x[0].permute(1, 2, 0))\nax[1].imshow(fx.detach()[0, 0], cmap=\"gray\")\nplt.show()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nImportant\n\n\nBy default, outputs from PyTorch modules are tracked for back-propagation.\nTo visualize it with matplotlib we have to .detach() the tensor first."
+  },
+  {
+    "objectID": "Adv_ML_Python_presentation.html#exercise-visualize-the-effect-of-the-convolution-operation-2",
+    "href": "Adv_ML_Python_presentation.html#exercise-visualize-the-effect-of-the-convolution-operation-2",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Visualize the effect of the convolution operation",
+    "text": "Exercise: Visualize the effect of the convolution operation\n\nVisualize the weights of the convolution layer.\n\n\nconv_1.weight.shape\n\ntorch.Size([1, 3, 7, 7])\n\n\n\nfig, ax = plt.subplots(2, 2)\nax[0, 0].imshow(conv_1.weight.detach()[0, 0], cmap=\"gray\")\nax[0, 1].imshow(conv_1.weight.detach()[0, 1], cmap=\"gray\")\nax[1, 0].imshow(conv_1.weight.detach()[0, 2], cmap=\"gray\")\nax[1, 1].set_axis_off()\nplt.show()"
+  },
+  {
+    "objectID": "Adv_ML_Python_presentation.html#exercise-visualize-the-effect-of-the-convolution-operation-3",
+    "href": "Adv_ML_Python_presentation.html#exercise-visualize-the-effect-of-the-convolution-operation-3",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Visualize the effect of the convolution operation",
+    "text": "Exercise: Visualize the effect of the convolution operation\n\nModify the weights of the convolution layer.\n\n\nconv_1 = nn.Conv2d(in_channels=3, out_channels=1, kernel_size=3, padding=0, bias=False)\n\nconv_1.weight.data[:] = torch.FloatTensor([\n  [\n    [\n      [0, 0, 0],\n      [0, 0, 0],\n      [0, 0, 0],\n    ],\n    [\n      [0, 0, 0],\n      [0, 1, 0],\n      [0, 0, 0],\n    ],\n    [\n      [0, 0, 0],\n      [0, 0, 0],\n      [0, 0, 0],\n    ],\n  ]\n])"
+  },
+  {
+    "objectID": "Adv_ML_Python_presentation.html#examples-of-popular-dl-models-in-computer-vision",
+    "href": "Adv_ML_Python_presentation.html#examples-of-popular-dl-models-in-computer-vision",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Examples of popular DL models in computer vision",
+    "text": "Examples of popular DL models in computer vision\n\nInception v3 for image classification\n\n\nInceptionV3"
+  },
+  {
+    "objectID": "Adv_ML_Python_presentation.html#examples-of-popular-dl-models-in-computer-vision-1",
+    "href": "Adv_ML_Python_presentation.html#examples-of-popular-dl-models-in-computer-vision-1",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Examples of popular DL models in computer vision",
+    "text": "Examples of popular DL models in computer vision\n\nU-Net for cell segmentation\n\n\nU-Net"
+  },
+  {
+    "objectID": "Adv_ML_Python_presentation.html#linear-layers",
+    "href": "Adv_ML_Python_presentation.html#linear-layers",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Linear layers",
+    "text": "Linear layers\nThese layers perform matrix-matrix, and matrix-vector operations on its corresponding inputs. Linear layers are commonly used in final layers to obtain the output of the model.\nFor classification tasks, these layers project a multi-channel feature map into a single prediction of the image’s class.\n\n\n\nInception V3\n\n\nIn object detection and localization problems, these layers generate the detection confidence and bounding box of the object.\n\n\n\nYOLO\n\n\nLinear layers from torch.nn\n\n# Use the Linear module from torch.nn to define a linear operation\nlin_1 =\n\n\n  Cell In[41], line 2\n    lin_1 =\n           ^\nSyntaxError: invalid syntax"
+  },
+  {
+    "objectID": "Adv_ML_Python_presentation.html#non-linear-activation-layers",
+    "href": "Adv_ML_Python_presentation.html#non-linear-activation-layers",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Non-linear activation layers",
+    "text": "Non-linear activation layers\nThese layers are integrated to add non-linear behavior into the neural network.\n\n# Define a Rectified Linear Unit (ReLU) layer using the torch.nn module\nrelu_1 =\n\n\n  Cell In[42], line 2\n    relu_1 =\n            ^\nSyntaxError: invalid syntax\n\n\n\n\nA list of activation layers here https://pytorch.org/docs/stable/nn.html#non-linear-activations-weighted-sum-nonlinearity"
+  },
+  {
+    "objectID": "Adv_ML_Python_presentation.html#pooling-layers",
+    "href": "Adv_ML_Python_presentation.html#pooling-layers",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Pooling layers",
+    "text": "Pooling layers\nThis kind of layers are used to downsample the current feature maps which helps to summarize information from large regions into a couple of pixels.\nThere are two common pooling operations: maximum pooling, and average pooling.\nMaximum pooling looks for the maximum value in a region and returns it as a single pixel. While average pooling computes the average value for that region.\n# Define a Maximum Pooling layer from torch.nn module\nmax_pool ="
+  },
+  {
+    "objectID": "Adv_ML_Python_presentation.html#lenet-5-architecture",
+    "href": "Adv_ML_Python_presentation.html#lenet-5-architecture",
+    "title": "Advanced Machine Learning with Python",
+    "section": "LeNet 5 architecture",
+    "text": "LeNet 5 architecture\nhttp://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf\nimport torch\nimport torch.nn as nn\n# Implement the layers of LeNet5\nTest our implementation"
+  },
+  {
+    "objectID": "Adv_ML_Python_presentation.html#u-net",
+    "href": "Adv_ML_Python_presentation.html#u-net",
+    "title": "Advanced Machine Learning with Python",
+    "section": "U-Net",
+    "text": "U-Net\n\nU-NetLets impelment the first operations of U-Net"
+  },
+  {
+    "objectID": "Adv_ML_Python_presentation.html#exercise-visualize-the-effect-of-the-convolution-operation-4",
+    "href": "Adv_ML_Python_presentation.html#exercise-visualize-the-effect-of-the-convolution-operation-4",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Visualize the effect of the convolution operation",
+    "text": "Exercise: Visualize the effect of the convolution operation\n\nVisualize the effects after changingthe values.\n\n\nfx = conv_1(x)\n\nfig, ax = plt.subplots(1, 2)\nax[0].imshow(x[0].permute(1, 2, 0))\nax[1].imshow(fx.detach()[0].permute(1, 2, 0))\nplt.show()\n\n\n\n\n\n\n\n\nExperiment with different values and shapes of the kernel https://en.wikipedia.org/wiki/Kernel_(image_processing)"
+  },
+  {
+    "objectID": "Adv_ML_Python_presentation.html#exercise-visualize-the-effect-of-the-convolution-operation-5",
+    "href": "Adv_ML_Python_presentation.html#exercise-visualize-the-effect-of-the-convolution-operation-5",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Visualize the effect of the convolution operation",
+    "text": "Exercise: Visualize the effect of the convolution operation\n\nModify the weights of the convolution layer.\n\n\nconv_1 = nn.Conv2d(in_channels=3, out_channels=1, kernel_size=3, padding=0, bias=False)\n\nconv_1.weight.data[:] = torch.FloatTensor([\n  [[[0, -1, 0], [-1, 5, -1], [0, -1, 0]],\n   [[0, 0, 0], [0, 0, 0], [0, 0, 0]],\n   [[0, 0, 0], [0, 0, 0], [0, 0, 0]]]\n])\n\nfx = conv_1(x)\n\nfig, ax = plt.subplots(1, 2)\nax[0].imshow(x[0].permute(1, 2, 0))\nax[1].imshow(fx.detach()[0, 0], cmap=\"gray\")\nplt.show()\n\n\n\n\n\n\n\n\nExperiment with different values and shapes of the kernel https://en.wikipedia.org/wiki/Kernel_(image_processing)"
+  },
+  {
+    "objectID": "Adv_ML_Python_presentation.html#exercise-visualize-the-effect-of-the-convolution-operation-6",
+    "href": "Adv_ML_Python_presentation.html#exercise-visualize-the-effect-of-the-convolution-operation-6",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Visualize the effect of the convolution operation",
+    "text": "Exercise: Visualize the effect of the convolution operation\n\nModify the weights of the convolution layer.\n\n\nconv_1 = nn.Conv2d(in_channels=3, out_channels=1, kernel_size=3, padding=0, bias=False)\n\nconv_1.weight.data[:] = torch.FloatTensor([\n  [[[1, 0, -1], [1, 0, -1], [1, 0, -1]],\n   [[1, 0, -1], [1, 0, -1], [1, 0, -1]],\n   [[1, 0, -1], [1, 0, -1], [1, 0, -1]]]\n])\n\nfx = conv_1(x)\n\nfig, ax = plt.subplots(1, 2)\nax[0].imshow(x[0].permute(1, 2, 0))\nax[1].imshow(fx.detach()[0, 0], cmap=\"gray\")\nplt.show()\n\n\n\n\n\n\n\n\nExperiment with different values and shapes of the kernel https://en.wikipedia.org/wiki/Kernel_(image_processing)"
+  },
+  {
+    "objectID": "Adv_ML_Python_presentation.html#examples-of-popular-dl-models-in-computer-vision-2",
+    "href": "Adv_ML_Python_presentation.html#examples-of-popular-dl-models-in-computer-vision-2",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Examples of popular DL models in computer vision",
+    "text": "Examples of popular DL models in computer vision\n\nLeNet-5 for handwritten digits classification\n\n By Daniel Voigt Godoy - https://github.com/dvgodoy/dl-visuals/, CC BY 4.0, Link"
+  },
+  {
+    "objectID": "Adv_ML_Python_presentation.html#exercise-implement-letnet-5-in-pytorch",
+    "href": "Adv_ML_Python_presentation.html#exercise-implement-letnet-5-in-pytorch",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Implement LetNet-5 in PyTorch",
+    "text": "Exercise: Implement LetNet-5 in PyTorch\n\nBuild the convolutional neural network using nn.Sequential, and the nn.ReLU() activation function.\n\n\nlenet_clf = nn.Sequential(\n    nn.Conv2d(in_channels=3, out_channels=6, kernel_size=5, bias=True),\n    nn.ReLU(),\n    nn.MaxPool2d(kernel_size=2),\n    nn.Conv2d(in_channels=6, out_channels=16, kernel_size=5, bias=True),\n    nn.ReLU(),\n    nn.MaxPool2d(kernel_size=2),\n    nn.Flatten(),\n    nn.Linear(in_features=16*5*5, out_features=120, bias=True),\n    nn.ReLU(),\n    nn.Linear(in_features=120, out_features=84, bias=True),\n    nn.ReLU(),\n    nn.Linear(in_features=84, out_features=100, bias=True),\n)\n\n\n\n\n\n\n\nNote\n\n\nPooling layers are used to downsample feature maps to summarize information from large regions."
+  },
+  {
+    "objectID": "Adv_ML_Python_presentation.html#exercise-implement-letnet-5-in-pytorch-1",
+    "href": "Adv_ML_Python_presentation.html#exercise-implement-letnet-5-in-pytorch-1",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Implement LetNet-5 in PyTorch",
+    "text": "Exercise: Implement LetNet-5 in PyTorch\n\nTest our implementation.\n\n\ny_hat = lenet_clf(x)\n\ntype(y_hat), y_hat.dtype, y_hat.shape, y_hat.min(), y_hat.max()\n\n(torch.Tensor,\n torch.float32,\n torch.Size([128, 100]),\n tensor(-0.1299, grad_fn=&lt;MinBackward1&gt;),\n tensor(0.1413, grad_fn=&lt;MaxBackward1&gt;))"
+  },
+  {
+    "objectID": "Adv_ML_Python_presentation.html#examples-of-popular-deep-learning-models-in-computer-vision",
+    "href": "Adv_ML_Python_presentation.html#examples-of-popular-deep-learning-models-in-computer-vision",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Examples of popular Deep Learning models in computer vision",
+    "text": "Examples of popular Deep Learning models in computer vision\n\nInception v3 for image classification\n\n\nInceptionV3"
+  },
+  {
+    "objectID": "Adv_ML_Python_presentation.html#examples-of-popular-deep-learning-models-in-computer-vision-1",
+    "href": "Adv_ML_Python_presentation.html#examples-of-popular-deep-learning-models-in-computer-vision-1",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Examples of popular Deep Learning models in computer vision",
+    "text": "Examples of popular Deep Learning models in computer vision\n\nU-Net for cell segmentation\n\n\nU-Net"
+  },
+  {
+    "objectID": "Adv_ML_Python_presentation.html#examples-of-popular-deep-learning-models-in-computer-vision-2",
+    "href": "Adv_ML_Python_presentation.html#examples-of-popular-deep-learning-models-in-computer-vision-2",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Examples of popular Deep Learning models in computer vision",
+    "text": "Examples of popular Deep Learning models in computer vision\n\nLeNet-5 for handwritten digits classification (LeCun et al.)\n\n By Daniel Voigt Godoy - https://github.com/dvgodoy/dl-visuals/, CC BY 4.0, Link"
+  },
+  {
+    "objectID": "Adv_ML_Python_presentation.html#exercise-implement-letnet-5-in-pytorch-2",
+    "href": "Adv_ML_Python_presentation.html#exercise-implement-letnet-5-in-pytorch-2",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Implement LetNet-5 in PyTorch",
+    "text": "Exercise: Implement LetNet-5 in PyTorch\n\nTrain the model to classify images from CIFAR-100.\n\n\nnum_epochs = 2\ntrain_loss = []\nval_loss = []\n\nlenet_clf.cuda()\n\nfor e in range(num_epochs):\n  train_loss_avg = 0\n  total_train_samples = 0\n\n  lenet_clf.train()\n  for x, y in cifar_train_dl:\n    optimizer.zero_grad()\n\n    y_hat = lenet_clf( x.cuda() ).cpu()\n\n    loss = loss_fun(y_hat, y)\n\n    train_loss_avg += loss.item() * len(x)\n    total_train_samples += len(x)\n\n    loss.backward()\n\n    optimizer.step()\n\n  train_loss_avg /= total_train_samples\n  train_loss.append(train_loss_avg)\n\n  val_loss_avg = 0\n  total_val_samples = 0\n\n  lenet_clf.eval()\n  with torch.no_grad():\n    for x, y in cifar_val_dl:\n      y_hat = lenet_clf( x.cuda() ).cpu()\n      loss = loss_fun(y_hat, y)\n\n      val_loss_avg += loss.item() * len(x)\n      total_val_samples += len(x)\n\n  val_loss_avg /= total_val_samples\n  val_loss.append(val_loss_avg)"
+  },
+  {
+    "objectID": "Adv_ML_Python.html",
+    "href": "Adv_ML_Python.html",
+    "title": "Advanced Machine Learning with Python",
+    "section": "",
+    "text": "Understand the process of training ML models.\nLoad pre-trained ML models and fine-tune them with new data.\nEvaluate the performance of ML models.\nAdapt ML models for different tasks from pre-trained models."
+  },
+  {
+    "objectID": "Adv_ML_Python.html#select-runtime-and-connect",
+    "href": "Adv_ML_Python.html#select-runtime-and-connect",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Select runtime and connect",
+    "text": "Select runtime and connect\nOn the top right corner of the page, click the drop-down arrow to the right of the Connect button and select Change runtime type.\n\n\nMake sure Python 3 runtime is selected. For this part of the workshop CPU acceleration is enough.\n\n\nNow we can connect to the runtime by clicking Connect. This will create a Virtual Machine (VM) with compute resources we can use for a limited amount of time.\n\n\n\n\n\n\n\nCaution\n\n\n\nIn free Colab accounts these resources are not guaranteed and can be taken away without notice (preemptible machines).\nData stored in this runtime will be lost if not moved into other storage when the runtime is deleted."
+  },
+  {
+    "objectID": "Adv_ML_Python.html#machine-learning-ml",
+    "href": "Adv_ML_Python.html#machine-learning-ml",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Machine Learning (ML)",
+    "text": "Machine Learning (ML)\nSub-field of Artificial Intelligence that develops methods to address tasks that require human intelligence"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#artificial-intelligence-tasks",
+    "href": "Adv_ML_Python.html#artificial-intelligence-tasks",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Artificial intelligence tasks",
+    "text": "Artificial intelligence tasks"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#common-tasks",
+    "href": "Adv_ML_Python.html#common-tasks",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Common tasks",
+    "text": "Common tasks\n\n\nClassification\n\nwhat is this?\n\nDetection\n\nwhere is something?\n\nSegmentation\n\nwhere specifically is something?\n\n\n\n\nMore tasks addressed in recent years\n\nStyle transference\nCompression of image/video/etc…\nGeneration of content\nLanguage processing"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#types-of-machine-learning-1",
+    "href": "Adv_ML_Python.html#types-of-machine-learning-1",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Types of machine learning",
+    "text": "Types of machine learning\n\nDepending on how the model is trained\n\nSupervised\nUnsupervised\nWeakly supervised\nReinforced\n…\n\n\nSupervised learning: teach the machine to perform a task with a set of inputs and their respective expected outcome (\\(X\\), \\(Y\\)).\nUnsupervised learning: let the machine learn to perform a task on its own (\\(X\\)) without any specific expected outcome.\nWeakly supervised: teach the machine to perform a task using a limited set of expected outcomes.\nReinforced learning: let the machine learn to perform a task on its own, then give it a reward relative to its performance."
+  },
+  {
+    "objectID": "Adv_ML_Python.html#inputs-and-outputs-1",
+    "href": "Adv_ML_Python.html#inputs-and-outputs-1",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Inputs and outputs",
+    "text": "Inputs and outputs\nFor a task, we want to model the outcome/output (\\(y\\)) obtained by a given input (\\(x\\))\n\\(f(x) \\approx y\\)\n\n\n\n\n\n\nNote\n\n\n\nThe complete set of (\\(x\\), \\(y\\)) pairs is known as dataset (\\(X\\), \\(Y\\)).\n\n\n\n\n\n\n\n\nNote\n\n\n\nInputs can be virtually anything, including images, texts, video, audio, electrical signals, etc.\nWhile outputs are expected to be some meaningful piece of information, such as a category, position, value, etc."
+  },
+  {
+    "objectID": "Adv_ML_Python.html#use-case-image-classification-with-the-cifar-100-dataset",
+    "href": "Adv_ML_Python.html#use-case-image-classification-with-the-cifar-100-dataset",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Use case: Image classification with the CIFAR-100 dataset",
+    "text": "Use case: Image classification with the CIFAR-100 dataset\n\nLoad the CIFAR-100 dataset from torchvision.datasets\n\n\nimport torch\nimport torchvision\n\ncifar_ds = torchvision.datasets.CIFAR100(root=\"/tmp\", train=True, download=True)\n\nFiles already downloaded and verified\n\n\n\nExplore the CIFAR-100 dataset\n\n\nx_im, y = cifar_ds[0]\n\nlen(cifar_ds), type(x_im), type(y)\n\n(50000, PIL.Image.Image, int)\n\n\n\n\ny = 19 (cattle)"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#what-is-a-tensor-pytorch",
+    "href": "Adv_ML_Python.html#what-is-a-tensor-pytorch",
+    "title": "Advanced Machine Learning with Python",
+    "section": "What is a tensor (PyTorch)?",
+    "text": "What is a tensor (PyTorch)?\nA tensor is a multi-dimensional array. In PyTorch, this comes from a generalization of the notation of variables that exists on more than two dimensions.\n\nzero-dimensional variables are points,\none-dimensional variables are vectors,\ntwo-dimensional variables are matrices,\nand three or more dimensional variables, are tensors.\n\n\nimport torch\n\nx0 = torch.Tensor([7]) # This is a point\n\nx1 = torch.Tensor([15, 64, 123]) # This is a vector\n\nx2 = torch.Tensor([[3, 6, 5],\n                   [7, 9, 12],\n                   [10, 33, 1]]) # This is a matrix\n\nx3 = torch.Tensor([[[[1, 0, 0],\n                     [0, 1, 0],\n                     [0, 0, 1]],\n                    [[2, 0, 1],\n                     [0, 2, 3],\n                     [4, 1, 5]]]]) # This is a tensor\n\n\n\nConvert the example image x_im to a PyTorch tensor, and cast it to floating point data type\n\n\n\n\n\n\n\nTip\n\n\n\nWe can use the utilities in torchvision to convert an image from PIL to tensor\n\n\n\nfrom torchvision.transforms.v2 import PILToTensor\n\npre_process = PILToTensor()\n\nx = pre_process(x_im)\n\nx = x.float()\n\ntype(x), x.shape, x.dtype, x.min(), x.max()\n\n(torch.Tensor,\n torch.Size([3, 32, 32]),\n torch.float32,\n tensor(1.),\n tensor(255.))\n\n\n\n\n\n\n\n\nNote\n\n\n\nFor convenience, PyTorch’s tensors have their channels axis before the spatial axes.\n\n\n\n\nCreate a composed transformation to carry out the conversion, casting to float, and rescaling to \\([0, 1]\\) range in the same function.\n\n\nfrom torchvision.transforms.v2 import Compose, PILToTensor, ToDtype\n\npre_process = Compose([\n  PILToTensor(),\n  ToDtype(torch.float32, scale=True)\n])\n\nx = pre_process(x_im)\n\ntype(x), x.shape, x.dtype, x.min(), x.max()\n\n(torch.Tensor,\n torch.Size([3, 32, 32]),\n torch.float32,\n tensor(0.0039),\n tensor(1.))\n\n\n\n\n\n\n\n\nNote\n\n\n\nFor convenience, PyTorch’s tensors have their channels axis before the spatial axes."
+  },
+  {
+    "objectID": "Adv_ML_Python.html#exercise-add-the-preprocessing-pipeline-to-the-cifar-100-dataset",
+    "href": "Adv_ML_Python.html#exercise-add-the-preprocessing-pipeline-to-the-cifar-100-dataset",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Add the preprocessing pipeline to the CIFAR-100 dataset",
+    "text": "Exercise: Add the preprocessing pipeline to the CIFAR-100 dataset\n\nRe-load the CIFAR-100 dataset, this time passing the pre_process function as argument.\n\n\ncifar_ds = torchvision.datasets.CIFAR100(root=\"/tmp\", train=True, download=True, transform=pre_process)\n\nFiles already downloaded and verified"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#training-set",
+    "href": "Adv_ML_Python.html#training-set",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Training set",
+    "text": "Training set\nThe examples (\\(x\\), \\(y\\)) used to teach a machine/model to perform a task"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#validation-set",
+    "href": "Adv_ML_Python.html#validation-set",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Validation set",
+    "text": "Validation set\nUsed to measure the performance of a model during training\nThis subset is not used for training the model, so it is unseen data.\n\nThis is a subset from the training set and can be used to test the generalization capacity of the model or to select the best configuration of a model."
+  },
+  {
+    "objectID": "Adv_ML_Python.html#test-set",
+    "href": "Adv_ML_Python.html#test-set",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Test set",
+    "text": "Test set\nThis set of samples is not used when training\nIts purpose is to measure the generalization capacity of the model"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#exercise-load-the-test-set-and-split-the-train-set-into-train-and-validation-subsets",
+    "href": "Adv_ML_Python.html#exercise-load-the-test-set-and-split-the-train-set-into-train-and-validation-subsets",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Load the test set and split the train set into train and validation subsets",
+    "text": "Exercise: Load the test set and split the train set into train and validation subsets\n\nLoad the CIFAR-100 test set\n\n\ncifar_test_ds = torchvision.datasets.CIFAR100(root=\"/tmp\", train=False, download=True, transform=pre_process)\n\nFiles already downloaded and verified\n\n\n\nSplit the training set into train and validation subsets\n\n\nfrom torch.utils.data import random_split\n\ncifar_train_ds, cifar_val_ds = random_split(cifar_ds, (40_000, 10_000))"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#deep-learning-dl-models-1",
+    "href": "Adv_ML_Python.html#deep-learning-dl-models-1",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Deep Learning (DL) models",
+    "text": "Deep Learning (DL) models\nModels that construct knowledge in a hierarchical manner are considered deep models.\n\n\n\nFrom Cervantes-Sanchez et al."
+  },
+  {
+    "objectID": "Adv_ML_Python.html#exercise-create-a-logisic-regression-model-with-pytorch",
+    "href": "Adv_ML_Python.html#exercise-create-a-logisic-regression-model-with-pytorch",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Create a Logisic Regression model with PyTorch",
+    "text": "Exercise: Create a Logisic Regression model with PyTorch\n\nUse the nn (Neural Networks) module from pytorch to create a Logistic Regression model\n\n\nimport torch.nn as nn\n\nlr_clf_1 = nn.Linear(in_features=3 * 32 * 32, out_features=100, bias=True)\nlr_clf_2 = nn.Softmax()\n\n\nFeed the model with a sample x\n\n\n\n\n\n\n\nImportant\n\n\n\nWe have to reshape x before feeding it to the model because x is an image with axes: Channels, Height, Width (CHW), but the Logistic Regression input should be a vector.\n\n\n\ny_hat = lr_clf_2( lr_clf_1( x.reshape(1, -1) ))\n\ntype(y_hat), y_hat.shape, y_hat.dtype\n\n(torch.Tensor, torch.Size([1, 100]), torch.float32)"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#exercise-create-a-multilayer-perceptron-mlp-model-with-pytorch",
+    "href": "Adv_ML_Python.html#exercise-create-a-multilayer-perceptron-mlp-model-with-pytorch",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Create a MultiLayer Perceptron (MLP) model with PyTorch",
+    "text": "Exercise: Create a MultiLayer Perceptron (MLP) model with PyTorch\n\nUse the nn.Sequential module to build sequential models\n\n\nmlp_clf = nn.Sequential(\n  nn.Linear(in_features=3 * 32 * 32, out_features=1024, bias=True),\n  nn.Tanh(),\n  nn.Linear(in_features=1024, out_features=100, bias=True),\n  nn.Softmax()\n)\n\n\nFeed the model with a sample x\n\n\ny_hat = mlp_clf(x.reshape(1, -1))\n\ntype(y_hat), y_hat.shape, y_hat.dtype\n\n(torch.Tensor, torch.Size([1, 100]), torch.float32)"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#model-fittingtraining",
+    "href": "Adv_ML_Python.html#model-fittingtraining",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Model fitting/training",
+    "text": "Model fitting/training\nModels behavior depends directly on the value of their set of parameters \\(\\theta\\).\n\n\\(f(x) \\approx y\\)\n\\(f_\\theta(x) = y + \\epsilon = \\hat{y}\\)\n\n\n\n\n\n\n\nNote\n\n\n\nAs models increase their number of parameters, they become more complex\n\n\nTraining is the process of optimizing the values of \\(\\theta\\)\n\nTraining is often an expensive process in terms of computational resources and time."
+  },
+  {
+    "objectID": "Adv_ML_Python.html#loss-function-1",
+    "href": "Adv_ML_Python.html#loss-function-1",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Loss function",
+    "text": "Loss function\nThis is measure of the difference between the expected outputs and the predictions made by a model \\(L(Y, \\hat{Y})\\).\n\n\n\n\n\n\nNote\n\n\n\nWe look for smooth loss functions for which we can compute their gradient"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#loss-function-for-regression",
+    "href": "Adv_ML_Python.html#loss-function-for-regression",
+    "title": "Advanced Machine Learning with Python",
+    "section": "11.1 Loss function for regression",
+    "text": "11.1 Loss function for regression\nIn the case of regression tasks we generally use the Mean Squared Error (MSE).\n\\(MSE=\\frac{1}{N}\\sum \\left(Y - \\hat{Y}\\right)^2\\)"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#loss-function-for-classification",
+    "href": "Adv_ML_Python.html#loss-function-for-classification",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Loss function for classification",
+    "text": "Loss function for classification\nAnd for classification tasks we use the Cross Entropy (CE) function.\n\\(CE = -\\frac{1}{N}\\sum\\limits_i^N\\sum\\limits_k^C y_{i,k} log(\\hat{y_{i,k}})\\)\nwhere \\(C\\) is the number of classes.\n\n\n\n\n\n\nNote\n\n\n\nFor the binary classification case:\n\\(BCE = -\\frac{1}{N}\\sum\\limits_i^N \\left(y_i log(\\hat{y_i}) + (1 - y_i) log(1 - \\hat{y_i})\\right)\\)"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#exercise-define-the-loss-function-for-the-cifar-100-classification-problem",
+    "href": "Adv_ML_Python.html#exercise-define-the-loss-function-for-the-cifar-100-classification-problem",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Define the loss function for the CIFAR-100 classification problem",
+    "text": "Exercise: Define the loss function for the CIFAR-100 classification problem\n\nDefine a Cross Entropy loss function with nn.CrossEntropyLoss\n\n\nloss_fun = nn.CrossEntropyLoss()\n\n\nRemove the nn.Softmax layer from the MLP model.\n\n\n\n\n\n\n\nNote\n\n\n\nAccording to the PyTorch documentation, the CrossEntropyLoss function takes as inputs the logits of the probabilities and not the probabilities themselves. So, we don’t need to squash the output of the MLP model.\n\n\n\nmlp_clf = nn.Sequential(\n  nn.Linear(in_features=3 * 32 * 32, out_features=1024, bias=True),\n  nn.Tanh(),\n  nn.Linear(in_features=1024, out_features=100, bias=True),\n  # nn.Softmax() # &lt;- remove this line\n)"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#exercise-define-the-loss-function-for-the-cifar-100-classification-problem-1",
+    "href": "Adv_ML_Python.html#exercise-define-the-loss-function-for-the-cifar-100-classification-problem-1",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Define the loss function for the CIFAR-100 classification problem",
+    "text": "Exercise: Define the loss function for the CIFAR-100 classification problem\n\nMeasure the prediction loss (error) of our MLP with respect to the grund-truth\n\n\n\n\n\n\n\nImportant\n\n\n\nWe are using a PyTorch loss function, and it expects PyTorch’s tensors as arguments, so we have to convert y to tensor before computing the loss function.\n\n\n\nloss = loss_fun(y_hat, torch.LongTensor([y]))\n\nloss\n\ntensor(4.6077, grad_fn=&lt;NllLossBackward0&gt;)"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#gradient-based-optimization-1",
+    "href": "Adv_ML_Python.html#gradient-based-optimization-1",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Gradient based optimization",
+    "text": "Gradient based optimization\nGradient-based methods are able to fit large numbers of parameters when using a smooth Loss function as target.\n\n\n\n\n\n\nNote\n\n\n\nWe compute the gradient of the loss function with respect to the model parameters using the chain rule from calculous. Generally, this is managed by the machine learning packages such as PyTorch and Tensorflow with a method called back propagation.\n\n\n\nGradient Descent\n\n\\(\\theta^{t+1} = \\theta^t - \\eta \\nabla_\\theta L(Y, \\hat{Y})\\)"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#exercise-compute-the-gradient-of-the-loss-function-with-respect-to-the-parameters-of-the-mlp.",
+    "href": "Adv_ML_Python.html#exercise-compute-the-gradient-of-the-loss-function-with-respect-to-the-parameters-of-the-mlp.",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Compute the gradient of the loss function with respect to the parameters of the MLP.",
+    "text": "Exercise: Compute the gradient of the loss function with respect to the parameters of the MLP.\n\nCheck what are the gradients of the MLP parameters befor back propagating the gradient.\n\n\nmlp_clf[0].bias.grad\n\n\nCompute the gradient of the loss function with respect to the MLP parameters.\n\n\n\n\n\n\n\nNote\n\n\n\nTo back propagate the gradients we use the loss.backward() method of the loss function.\n\n\n\nloss = loss_fun(y_hat, torch.LongTensor([y]))\n\nloss.backward()\n\n\nVerify that the gradients have been propagated to the model parameters.\n\n\nmlp_clf[0].bias.grad"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#stochastic-methods",
+    "href": "Adv_ML_Python.html#stochastic-methods",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Stochastic methods",
+    "text": "Stochastic methods\n\n\n\n\n\n\nCaution\n\n\n\nThe Gradient descent method require to obtain the Loss function for the whole training set before doing a single update.\nThis can be inefficient when large volumes of data are used for training the model.\n\n\n\nThese methods use a relative small sample from the training data called mini-batch at a time.\nThis reduces the amount of memory used for computing intermediate operations carried out during optimization process."
+  },
+  {
+    "objectID": "Adv_ML_Python.html#stochastic-gradient-descent-sgd",
+    "href": "Adv_ML_Python.html#stochastic-gradient-descent-sgd",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Stochastic Gradient Descent (SGD)",
+    "text": "Stochastic Gradient Descent (SGD)\n\nThis strategy defines \\(\\theta\\)’s’ update rule for iteration \\(t+1\\) using a mini-batch sampled at random from the training set as follows.\n\n\n\\(\\theta^{t+1} = \\theta^t - \\eta \\nabla_\\theta L(Y_{b}, \\hat{Y_{b}})\\)\n\\(\\eta\\) controls the update we perform on the current parameter’s values\n\n\n\n\n\n\n\nNote\n\n\n\nThis parameter in Deep Learning is known as the learning rate"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#training-with-mini-batches",
+    "href": "Adv_ML_Python.html#training-with-mini-batches",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Training with mini-batches",
+    "text": "Training with mini-batches\n\n\n\n\n\n\nNote\n\n\n\nPyTorch can operate efficiently on multiple inputs at the same time. To do that, we can use a DataLoader to serve mini-batches of inputs."
+  },
+  {
+    "objectID": "Adv_ML_Python.html#exercise-train-the-mlp-classifier",
+    "href": "Adv_ML_Python.html#exercise-train-the-mlp-classifier",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Train the MLP classifier",
+    "text": "Exercise: Train the MLP classifier\n\nUse a DataLoader to serve mini-batches of images to train our MLP.\n\n\nfrom torch.utils.data import DataLoader\n\ncifar_train_dl = DataLoader(cifar_train_ds, batch_size=128, shuffle=True)\ncifar_val_dl = DataLoader(cifar_val_ds, batch_size=256)\ncifar_test_dl = DataLoader(cifar_test_ds, batch_size=256)\n\n\nCreate a Stochastic Gradient Descent optimizer for our MLP classifier.\n\n\nimport torch.optim as optim\n\noptimizer = optim.SGD(mlp_clf.parameters(), lr=0.01, )"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#exercise-train-the-mlp-classifier-1",
+    "href": "Adv_ML_Python.html#exercise-train-the-mlp-classifier-1",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Train the MLP classifier",
+    "text": "Exercise: Train the MLP classifier\n\nImplement the training-loop to fit the parameters of our MLP classifier.\n\n\n\n\n\n\n\nNote\n\n\n\nGradients are accumulated on every iteration, so we need to reset the accumulator with optimizer.zero_grad() for every new batch.\n\n\n\n\n\n\n\n\nNote\n\n\n\nTo perform get the new iteration’s parameter values \\(\\theta^{t+1}\\) we use optimizer.step() to compute the update step.\n\n\nmlp_clf.train()\nfor x, y in cifar_train_dl:\n  optimizer.zero_grad()\n\n  y_hat = mlp_clf( x.reshape(-1, 3 * 32 * 32) ) # Reshape it into a batch of vectors\n\n  loss = loss_fun(y_hat, y)\n\n  loss.backward()\n\n  optimizer.step()"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#exercise-train-the-mlp-classifier-and-track-the-training-and-validation-loss",
+    "href": "Adv_ML_Python.html#exercise-train-the-mlp-classifier-and-track-the-training-and-validation-loss",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Train the MLP classifier and track the training and validation loss",
+    "text": "Exercise: Train the MLP classifier and track the training and validation loss\n\nSave the loss function of each batch and the overall average loss during training.\n\n\n\n\n\n\n\nNote\n\n\n\nTo extract the loss function’s value without anything else attached use loss.item().\n\n\ntrain_loss = []\ntrain_loss_avg = 0\ntotal_train_samples = 0\n\nmlp_clf.train()\nfor x, y in cifar_train_dl:\n  optimizer.zero_grad()\n\n  y_hat = mlp_clf( x.reshape(-1, 3 * 32 * 32) ) # Reshape it into a batch of vectors\n\n  loss = loss_fun(y_hat, y)\n\n  train_loss.append(loss.item())\n  train_loss_avg += loss.item() * len(x)\n  total_train_samples += len(x)\n\n  loss.backward()\n\n  optimizer.step()\n\ntrain_loss_avg /= total_train_samples"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#exercise-train-the-mlp-classifier-and-track-the-training-and-validation-loss-1",
+    "href": "Adv_ML_Python.html#exercise-train-the-mlp-classifier-and-track-the-training-and-validation-loss-1",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Train the MLP classifier and track the training and validation loss",
+    "text": "Exercise: Train the MLP classifier and track the training and validation loss\n\nCompute the average loss function for the validation set.\n\n\n\n\n\n\n\nNote\n\n\n\nBecause we don’t train the model with the validation set, back-propagation and optimization steps are not needed.\nAdditionally, we wrap the loop with torch.no_grad() to prevent the generation of gradients that could fill the memory innecessarily.\n\n\nval_loss_avg = 0\ntotal_val_samples = 0\n\nmlp_clf.eval()\nwith torch.no_grad():\n  for x, y in cifar_val_dl:\n    y_hat = mlp_clf( x.reshape(-1, 3 * 32 * 32) ) # Reshape it into a batch of vectors\n    loss = loss_fun(y_hat, y)\n\n    val_loss_avg += loss.item() * len(x)\n    total_val_samples += len(x)\n\nval_loss_avg /= total_val_samples"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#exercise-train-the-mlp-classifier-and-track-the-training-and-validation-loss-2",
+    "href": "Adv_ML_Python.html#exercise-train-the-mlp-classifier-and-track-the-training-and-validation-loss-2",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Train the MLP classifier and track the training and validation loss",
+    "text": "Exercise: Train the MLP classifier and track the training and validation loss\n\nPlot the training loss for this epoch.\n\n\nimport matplotlib.pyplot as plt\n\nplt.plot(train_loss, \"b-\", label=\"Training loss\")\nplt.plot([0, len(train_loss)], [train_loss_avg, train_loss_avg], \"r:\", label=\"Average training loss\")\nplt.plot([0, len(train_loss)], [val_loss_avg, val_loss_avg], \"b:\", label=\"Average validation loss\")\nplt.legend()\nplt.show()"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#exercise-train-the-mlp-classifier-and-track-the-training-and-validation-loss-through-several-epochs",
+    "href": "Adv_ML_Python.html#exercise-train-the-mlp-classifier-and-track-the-training-and-validation-loss-through-several-epochs",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Train the MLP classifier and track the training and validation loss through several epochs",
+    "text": "Exercise: Train the MLP classifier and track the training and validation loss through several epochs\nnum_epochs = 10\ntrain_loss = []\nval_loss = []\n\nfor e in range(num_epochs):\n  train_loss_avg = 0\n  total_train_samples = 0\n\n  mlp_clf.train()\n  for x, y in cifar_train_dl:\n    optimizer.zero_grad()\n\n    y_hat = mlp_clf( x.reshape(-1, 3 * 32 * 32) ) # Reshape it into a batch of vectors\n\n    loss = loss_fun(y_hat, y)\n\n    train_loss_avg += loss.item() * len(x)\n    total_train_samples += len(x)\n\n    loss.backward()\n\n    optimizer.step()\n\n  train_loss_avg /= total_train_samples\n  train_loss.append(train_loss_avg)\n\n  val_loss_avg = 0\n  total_val_samples = 0\n\n  mlp_clf.eval()\n  with torch.no_grad():\n    for x, y in cifar_val_dl:\n      y_hat = mlp_clf( x.reshape(-1, 3 * 32 * 32) ) # Reshape it into a batch of vectors\n      loss = loss_fun(y_hat, y)\n\n      val_loss_avg += loss.item() * len(x)\n      total_val_samples += len(x)\n\n  val_loss_avg /= total_val_samples\n  val_loss.append(val_loss_avg)"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#exercise-show-the-progress-of-the-training-throught-the-epochs",
+    "href": "Adv_ML_Python.html#exercise-show-the-progress-of-the-training-throught-the-epochs",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Show the progress of the training throught the epochs",
+    "text": "Exercise: Show the progress of the training throught the epochs\n\nPlot the average train and validation losses\n\n\nimport matplotlib.pyplot as plt\n\nplt.plot(train_loss, \"b-\", label=\"Average training loss\")\nplt.plot(val_loss, \"r-\", label=\"Average validation loss\")\nplt.legend()\nplt.show()"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#performance-metrics-1",
+    "href": "Adv_ML_Python.html#performance-metrics-1",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Performance metrics",
+    "text": "Performance metrics\nUsed to measure how good or bad a model carries out a task\n\n\\(f(x) \\approx y\\)\n\\(f(x) = y + \\epsilon = \\hat{y}\\)\n\n\nGiven the set of parameters, as well as other factors, the output of a model can deviate from the expected outcome. So, the actual output of a model is \\(f(x) = \\hat{y}\\).\n\n\n\n\n\n\n\nNote\n\n\n\nThe output \\(\\hat{y}\\) is called prediction  given the context taken from statistical regression analysis.\n\n\n\n\n\n\n\n\nImportant\n\n\n\nSelecting the correct performance metrics depends on the training type, task, and even the distribution of the data."
+  },
+  {
+    "objectID": "Adv_ML_Python.html#exercise-measure-the-accuracy-of-the-mlp-trained-to-classify-images-from-cifar-100",
+    "href": "Adv_ML_Python.html#exercise-measure-the-accuracy-of-the-mlp-trained-to-classify-images-from-cifar-100",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Measure the accuracy of the MLP trained to classify images from CIFAR-100",
+    "text": "Exercise: Measure the accuracy of the MLP trained to classify images from CIFAR-100\n\nInstall the torchmetrics package.\n\n!pip install torchmetrics\n\nCompute the average accuracy for the Train set.\n\n\nfrom torchmetrics.classification import Accuracy\n\nmlp_clf.eval()\n\ntrain_acc_metric = Accuracy(task=\"multiclass\", num_classes=100)\n\nwith torch.no_grad():\n  for x, y in cifar_train_dl:\n    y_hat = mlp_clf( x.reshape(-1, 3 * 32 * 32) )\n    train_acc_metric(y_hat.softmax(dim=1), y)\n\n  train_acc = train_acc_metric.compute()\n\nprint(f\"Training acc={train_acc}\")\ntrain_acc_metric.reset()\n\nTraining acc=0.106174997985363"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#exercise-measure-the-accuracy-of-the-mlp-trained-to-classify-images-from-cifar-100-1",
+    "href": "Adv_ML_Python.html#exercise-measure-the-accuracy-of-the-mlp-trained-to-classify-images-from-cifar-100-1",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Measure the accuracy of the MLP trained to classify images from CIFAR-100",
+    "text": "Exercise: Measure the accuracy of the MLP trained to classify images from CIFAR-100\n\nCompute the average accuracy for the Validation and Test sets.\n\n\nval_acc_metric = Accuracy(task=\"multiclass\", num_classes=100)\ntest_acc_metric = Accuracy(task=\"multiclass\", num_classes=100)\n\nwith torch.no_grad():\n  for x, y in cifar_val_dl:\n    y_hat = mlp_clf( x.reshape(-1, 3 * 32 * 32) )\n    val_acc_metric(y_hat.softmax(dim=1), y)\n\n  val_acc = val_acc_metric.compute()\n\n  for x, y in cifar_test_dl:\n    y_hat = mlp_clf( x.reshape(-1, 3 * 32 * 32) )\n    test_acc_metric(y_hat.softmax(dim=1), y)\n\n  test_acc = test_acc_metric.compute()\n\nprint(f\"Validation acc={val_acc}\")\nprint(f\"Test acc={test_acc}\")\n\nval_acc_metric.reset()\ntest_acc_metric.reset()\n\nValidation acc=0.09650000184774399\nTest acc=0.10100000351667404"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#convolution-layers",
+    "href": "Adv_ML_Python.html#convolution-layers",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Convolution layers",
+    "text": "Convolution layers\nThe most common operation in DL models for image processing are Convolution operations.\n\n\n\n2D Convolution\n\n\nThe animation shows the convolution of a 7x7 pixels input image (bottom) with a 3x3 pixels kernel (moving window), that results in a 5x5 pixels output (top)."
+  },
+  {
+    "objectID": "Adv_ML_Python.html#exercise-visualize-the-effect-of-the-convolution-operation",
+    "href": "Adv_ML_Python.html#exercise-visualize-the-effect-of-the-convolution-operation",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Visualize the effect of the convolution operation",
+    "text": "Exercise: Visualize the effect of the convolution operation\n\nCreate a convolution layer with nn.Conv2D using 3 channels as input, and a single one for output.\n\n\nconv_1 = nn.Conv2d(in_channels=3, out_channels=1, kernel_size=7, padding=0, bias=True)\n\nx, _ = next(iter(cifar_train_dl))\n\nfx = conv_1(x)\n\ntype(fx), fx.dtype, fx.shape, fx.min(), fx.max()\n\n(torch.Tensor,\n torch.float32,\n torch.Size([128, 1, 26, 26]),\n tensor(-0.4548, grad_fn=&lt;MinBackward1&gt;),\n tensor(0.4700, grad_fn=&lt;MaxBackward1&gt;))\n\n\n\n\n\n\n\n\nWarning\n\n\n\nThe convolution layer is initialized with random values, so the results will vary."
+  },
+  {
+    "objectID": "Adv_ML_Python.html#exercise-visualize-the-effect-of-the-convolution-operation-1",
+    "href": "Adv_ML_Python.html#exercise-visualize-the-effect-of-the-convolution-operation-1",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Visualize the effect of the convolution operation",
+    "text": "Exercise: Visualize the effect of the convolution operation\n\nCreate a convolution layer with nn.Conv2D using 3 channels as input, and a single one for output.\n\n\nplt.rcParams['figure.figsize'] = [5, 5]\n\nfig, ax = plt.subplots(1, 2)\nax[0].imshow(x[0].permute(1, 2, 0))\nax[1].imshow(fx.detach()[0, 0], cmap=\"gray\")\nplt.show()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nImportant\n\n\n\nBy default, outputs from PyTorch modules are tracked for back-propagation.\nTo visualize it with matplotlib we have to .detach() the tensor first."
+  },
+  {
+    "objectID": "Adv_ML_Python.html#exercise-visualize-the-effect-of-the-convolution-operation-2",
+    "href": "Adv_ML_Python.html#exercise-visualize-the-effect-of-the-convolution-operation-2",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Visualize the effect of the convolution operation",
+    "text": "Exercise: Visualize the effect of the convolution operation\n\nVisualize the weights of the convolution layer.\n\n\nconv_1.weight.shape\n\ntorch.Size([1, 3, 7, 7])\n\n\n\nfig, ax = plt.subplots(2, 2)\nax[0, 0].imshow(conv_1.weight.detach()[0, 0], cmap=\"gray\")\nax[0, 1].imshow(conv_1.weight.detach()[0, 1], cmap=\"gray\")\nax[1, 0].imshow(conv_1.weight.detach()[0, 2], cmap=\"gray\")\nax[1, 1].set_axis_off()\nplt.show()"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#exercise-visualize-the-effect-of-the-convolution-operation-3",
+    "href": "Adv_ML_Python.html#exercise-visualize-the-effect-of-the-convolution-operation-3",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Visualize the effect of the convolution operation",
+    "text": "Exercise: Visualize the effect of the convolution operation\n\nModify the weights of the convolution layer.\n\n\nconv_1 = nn.Conv2d(in_channels=3, out_channels=1, kernel_size=3, padding=0, bias=False)\n\nconv_1.weight.data[:] = torch.FloatTensor([\n  [\n    [\n      [0, 0, 0],\n      [0, 0, 0],\n      [0, 0, 0],\n    ],\n    [\n      [0, 0, 0],\n      [0, 1, 0],\n      [0, 0, 0],\n    ],\n    [\n      [0, 0, 0],\n      [0, 0, 0],\n      [0, 0, 0],\n    ],\n  ]\n])"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#exercise-visualize-the-effect-of-the-convolution-operation-4",
+    "href": "Adv_ML_Python.html#exercise-visualize-the-effect-of-the-convolution-operation-4",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Visualize the effect of the convolution operation",
+    "text": "Exercise: Visualize the effect of the convolution operation\n\nVisualize the effects after changingthe values.\n\n\nfx = conv_1(x)\n\nfig, ax = plt.subplots(1, 2)\nax[0].imshow(x[0].permute(1, 2, 0))\nax[1].imshow(fx.detach()[0].permute(1, 2, 0))\nplt.show()\n\n\n\n\n\n\n\n\nExperiment with different values and shapes of the kernel https://en.wikipedia.org/wiki/Kernel_(image_processing)"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#exercise-visualize-the-effect-of-the-convolution-operation-5",
+    "href": "Adv_ML_Python.html#exercise-visualize-the-effect-of-the-convolution-operation-5",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Visualize the effect of the convolution operation",
+    "text": "Exercise: Visualize the effect of the convolution operation\n\nModify the weights of the convolution layer.\n\n\nconv_1 = nn.Conv2d(in_channels=3, out_channels=1, kernel_size=3, padding=0, bias=False)\n\nconv_1.weight.data[:] = torch.FloatTensor([\n  [[[0, -1, 0], [-1, 5, -1], [0, -1, 0]],\n   [[0, 0, 0], [0, 0, 0], [0, 0, 0]],\n   [[0, 0, 0], [0, 0, 0], [0, 0, 0]]]\n])\n\nfx = conv_1(x)\n\nfig, ax = plt.subplots(1, 2)\nax[0].imshow(x[0].permute(1, 2, 0))\nax[1].imshow(fx.detach()[0, 0], cmap=\"gray\")\nplt.show()\n\n\n\n\n\n\n\n\nExperiment with different values and shapes of the kernel https://en.wikipedia.org/wiki/Kernel_(image_processing)"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#exercise-visualize-the-effect-of-the-convolution-operation-6",
+    "href": "Adv_ML_Python.html#exercise-visualize-the-effect-of-the-convolution-operation-6",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Visualize the effect of the convolution operation",
+    "text": "Exercise: Visualize the effect of the convolution operation\n\nModify the weights of the convolution layer.\n\n\nconv_1 = nn.Conv2d(in_channels=3, out_channels=1, kernel_size=3, padding=0, bias=False)\n\nconv_1.weight.data[:] = torch.FloatTensor([\n  [[[1, 0, -1], [1, 0, -1], [1, 0, -1]],\n   [[1, 0, -1], [1, 0, -1], [1, 0, -1]],\n   [[1, 0, -1], [1, 0, -1], [1, 0, -1]]]\n])\n\nfx = conv_1(x)\n\nfig, ax = plt.subplots(1, 2)\nax[0].imshow(x[0].permute(1, 2, 0))\nax[1].imshow(fx.detach()[0, 0], cmap=\"gray\")\nplt.show()\n\n\n\n\n\n\n\n\nExperiment with different values and shapes of the kernel https://en.wikipedia.org/wiki/Kernel_(image_processing)"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#examples-of-popular-deep-learning-models-in-computer-vision",
+    "href": "Adv_ML_Python.html#examples-of-popular-deep-learning-models-in-computer-vision",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Examples of popular Deep Learning models in computer vision",
+    "text": "Examples of popular Deep Learning models in computer vision\n\nInception v3 for image classification\n\n\n\n\nInceptionV3"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#examples-of-popular-deep-learning-models-in-computer-vision-1",
+    "href": "Adv_ML_Python.html#examples-of-popular-deep-learning-models-in-computer-vision-1",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Examples of popular Deep Learning models in computer vision",
+    "text": "Examples of popular Deep Learning models in computer vision\n\nU-Net for cell segmentation\n\n\n\n\nU-Net"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#examples-of-popular-deep-learning-models-in-computer-vision-2",
+    "href": "Adv_ML_Python.html#examples-of-popular-deep-learning-models-in-computer-vision-2",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Examples of popular Deep Learning models in computer vision",
+    "text": "Examples of popular Deep Learning models in computer vision\n\nLeNet-5 for handwritten digits classification (LeCun et al.)\n\n By Daniel Voigt Godoy - https://github.com/dvgodoy/dl-visuals/, CC BY 4.0, Link"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#exercise-implement-letnet-5-in-pytorch",
+    "href": "Adv_ML_Python.html#exercise-implement-letnet-5-in-pytorch",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Implement LetNet-5 in PyTorch",
+    "text": "Exercise: Implement LetNet-5 in PyTorch\n\nBuild the convolutional neural network using nn.Sequential, and the nn.ReLU() activation function.\n\n\nlenet_clf = nn.Sequential(\n    nn.Conv2d(in_channels=3, out_channels=6, kernel_size=5, bias=True),\n    nn.ReLU(),\n    nn.MaxPool2d(kernel_size=2),\n    nn.Conv2d(in_channels=6, out_channels=16, kernel_size=5, bias=True),\n    nn.ReLU(),\n    nn.MaxPool2d(kernel_size=2),\n    nn.Flatten(),\n    nn.Linear(in_features=16*5*5, out_features=120, bias=True),\n    nn.ReLU(),\n    nn.Linear(in_features=120, out_features=84, bias=True),\n    nn.ReLU(),\n    nn.Linear(in_features=84, out_features=100, bias=True),\n)\n\n\n\n\n\n\n\nNote\n\n\n\nPooling layers are used to downsample feature maps to summarize information from large regions."
+  },
+  {
+    "objectID": "Adv_ML_Python.html#exercise-implement-letnet-5-in-pytorch-1",
+    "href": "Adv_ML_Python.html#exercise-implement-letnet-5-in-pytorch-1",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Implement LetNet-5 in PyTorch",
+    "text": "Exercise: Implement LetNet-5 in PyTorch\n\nTest our implementation.\n\n\ny_hat = lenet_clf(x)\n\ntype(y_hat), y_hat.dtype, y_hat.shape, y_hat.min(), y_hat.max()\n\n(torch.Tensor,\n torch.float32,\n torch.Size([128, 100]),\n tensor(-0.1326, grad_fn=&lt;MinBackward1&gt;),\n tensor(0.1386, grad_fn=&lt;MaxBackward1&gt;))"
+  },
+  {
+    "objectID": "Adv_ML_Python.html#exercise-implement-letnet-5-in-pytorch-2",
+    "href": "Adv_ML_Python.html#exercise-implement-letnet-5-in-pytorch-2",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Implement LetNet-5 in PyTorch",
+    "text": "Exercise: Implement LetNet-5 in PyTorch\n\nTrain the model to classify images from CIFAR-100."
+  },
+  {
+    "objectID": "Adv_ML_Python_presentation.html#exercise-implement-and-train-the-letnet-5-model-with-pytorch",
+    "href": "Adv_ML_Python_presentation.html#exercise-implement-and-train-the-letnet-5-model-with-pytorch",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Implement and train the LetNet-5 model with PyTorch",
+    "text": "Exercise: Implement and train the LetNet-5 model with PyTorch\n\nBuild the convolutional neural network using nn.Sequential, and the nn.ReLU() activation function.\n\n\nlenet_clf = nn.Sequential(\n    nn.Conv2d(in_channels=3, out_channels=6, kernel_size=5, bias=True),\n    nn.ReLU(),\n    nn.MaxPool2d(kernel_size=2),\n    nn.Conv2d(in_channels=6, out_channels=16, kernel_size=5, bias=True),\n    nn.ReLU(),\n    nn.MaxPool2d(kernel_size=2),\n    nn.Flatten(),\n    nn.Linear(in_features=16*5*5, out_features=120, bias=True),\n    nn.ReLU(),\n    nn.Linear(in_features=120, out_features=84, bias=True),\n    nn.ReLU(),\n    nn.Linear(in_features=84, out_features=100, bias=True),\n)\n\n\n\n\n\n\n\nNote\n\n\nPooling layers are used to downsample feature maps to summarize information from large regions."
+  },
+  {
+    "objectID": "Adv_ML_Python_presentation.html#exercise-implement-and-train-the-letnet-5-model-with-pytorch-1",
+    "href": "Adv_ML_Python_presentation.html#exercise-implement-and-train-the-letnet-5-model-with-pytorch-1",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Implement and train the LetNet-5 model with PyTorch",
+    "text": "Exercise: Implement and train the LetNet-5 model with PyTorch\n\nTest our implementation.\n\n\ny_hat = lenet_clf(x)\n\ntype(y_hat), y_hat.dtype, y_hat.shape, y_hat.min(), y_hat.max()\n\n(torch.Tensor,\n torch.float32,\n torch.Size([128, 100]),\n tensor(-0.1254, grad_fn=&lt;MinBackward1&gt;),\n tensor(0.1473, grad_fn=&lt;MaxBackward1&gt;))"
+  },
+  {
+    "objectID": "Adv_ML_Python_presentation.html#exercise-implement-and-train-the-letnet-5-model-with-pytorch-2",
+    "href": "Adv_ML_Python_presentation.html#exercise-implement-and-train-the-letnet-5-model-with-pytorch-2",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Implement and train the LetNet-5 model with PyTorch",
+    "text": "Exercise: Implement and train the LetNet-5 model with PyTorch\n\nTrain the model to classify images from CIFAR-100.\n\n\nnum_epochs = 50\ntrain_loss = []\nval_loss = []\n\nlenet_clf.cuda()\noptimizer = optim.SGD(lenet_clf.parameters(), lr=0.01)\n\nfor e in range(num_epochs):\n  train_loss_avg = 0\n  total_train_samples = 0\n\n  lenet_clf.train()\n  for x, y in cifar_train_dl:\n    optimizer.zero_grad()\n\n    y_hat = lenet_clf( x.cuda() ).cpu()\n\n    loss = loss_fun(y_hat, y)\n\n    train_loss_avg += loss.item() * len(x)\n    total_train_samples += len(x)\n\n    loss.backward()\n\n    optimizer.step()\n\n  train_loss_avg /= total_train_samples\n  train_loss.append(train_loss_avg)\n\n  val_loss_avg = 0\n  total_val_samples = 0\n\n  lenet_clf.eval()\n  with torch.no_grad():\n    for x, y in cifar_val_dl:\n      y_hat = lenet_clf( x.cuda() ).cpu()\n      loss = loss_fun(y_hat, y)\n\n      val_loss_avg += loss.item() * len(x)\n      total_val_samples += len(x)\n\n  val_loss_avg /= total_val_samples\n  val_loss.append(val_loss_avg)"
+  },
+  {
+    "objectID": "Adv_ML_Python_presentation.html#exercise-implement-and-train-the-letnet-5-model-with-pytorch-3",
+    "href": "Adv_ML_Python_presentation.html#exercise-implement-and-train-the-letnet-5-model-with-pytorch-3",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Implement and train the LetNet-5 model with PyTorch",
+    "text": "Exercise: Implement and train the LetNet-5 model with PyTorch\n\nPlot the average train and validation losses\n\n\nimport matplotlib.pyplot as plt\n\nplt.plot(train_loss, \"b-\", label=\"Average training loss\")\nplt.plot(val_loss, \"r-\", label=\"Average validation loss\")\nplt.legend()\nplt.show()"
+  },
+  {
+    "objectID": "Adv_ML_Python_presentation.html#exercise-implement-and-train-the-letnet-5-model-with-pytorch-4",
+    "href": "Adv_ML_Python_presentation.html#exercise-implement-and-train-the-letnet-5-model-with-pytorch-4",
+    "title": "Advanced Machine Learning with Python",
+    "section": "Exercise: Implement and train the LetNet-5 model with PyTorch",
+    "text": "Exercise: Implement and train the LetNet-5 model with PyTorch\n\nCompute the average accuracy for the Validation and Test sets.\n\n\nlenet_clf.eval()\n\nval_acc_metric = Accuracy(task=\"multiclass\", num_classes=100)\ntest_acc_metric = Accuracy(task=\"multiclass\", num_classes=100)\ntrain_acc_metric = Accuracy(task=\"multiclass\", num_classes=100)\n\nwith torch.no_grad():\n  for x, y in cifar_train_dl:\n    y_hat = lenet_clf( x.cuda() ).cpu()\n    train_acc_metric(y_hat.softmax(dim=1), y)\n\n  train_acc = train_acc_metric.compute()\n\n  for x, y in cifar_val_dl:\n    y_hat = lenet_clf( x.cuda() ).cpu()\n    val_acc_metric(y_hat.softmax(dim=1), y)\n\n  val_acc = val_acc_metric.compute()\n\n  for x, y in cifar_test_dl:\n    y_hat = lenet_clf( x.cuda() ).cpu()\n    test_acc_metric(y_hat.softmax(dim=1), y)\n\n  test_acc = test_acc_metric.compute()\n\nprint(f\"Training acc={train_acc}\")\nprint(f\"Validation acc={val_acc}\")\nprint(f\"Test acc={test_acc}\")\n\ntrain_acc_metric.reset()\nval_acc_metric.reset()\ntest_acc_metric.reset()\n\nTraining acc=0.23177500069141388\nValidation acc=0.21940000355243683\nTest acc=0.21330000460147858"
   }
 ]
