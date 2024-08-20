@@ -905,7 +905,7 @@ for e in range(num_epochs):
 ```
 ```{python}
 #| echo: false
-num_epochs = 10
+num_epochs = 2
 train_loss = []
 val_loss = []
 
@@ -1046,9 +1046,9 @@ val_acc_metric.reset()
 test_acc_metric.reset()
 ```
 
----
+# **C**onvolutional **N**eural **N**etwork (**CNN** or **ConvNet**)
 
-## **C**onvolutional **N**eural **N**etwork (**CNN** or **ConvNet**)
+---
 
 ## Convolution layers
 
@@ -1060,39 +1060,107 @@ The animation shows the convolution of a 7x7 pixels input image (bottom) with a 
 
 ---
 
-## Exercise: Experiment whith different kernels of the convolution operation
+## Exercise: Visualize the effect of the convolution operation
+
+- [ ] Create a convolution layer with `nn.Conv2D` using 3 channels as input, and a single one for output.
 
 ``` {python}
-kernel = torch.Tensor([[
-    [[0, 0, 0],
-     [0, 0, 0],
-     [0, 0, 0]], # This part of the Kernel will operate on the Red channel of the images
+conv_1 = nn.Conv2d(in_channels=3, out_channels=1, kernel_size=7, padding=0, bias=True)
 
-    [[0, 0, 0],
-     [0, 0, 0],
-     [0, 0, 0]], # This part of the Kernel will operate on the Green channel of the images
+x, _ = next(iter(cifar_train_dl))
 
-    [[0, -1, 0],
-     [-1, 5, -1],
-     [0, -1, 0]], # This part of the Kernel will operate on the Blue channel of the images
-    ]])
+fx = conv_1(x)
+
+type(fx), fx.dtype, fx.shape, fx.min(), fx.max()
 ```
 
-## Result of the convolution between an image and the kernel
+::: {.callout-warning}
+The convolution layer is initialized with random values, so the results will vary.
+:::
+
+---
+
+## Exercise: Visualize the effect of the convolution operation
+
+- [ ] Create a convolution layer with `nn.Conv2D` using 3 channels as input, and a single one for output.
 
 ``` {python}
-im = skimage.data.cat()
+plt.rcParams['figure.figsize'] = [5, 5]
 
-x = torch.from_numpy(im).float().permute(2, 0, 1)
+fig, ax = plt.subplots(1, 2)
+ax[0].imshow(x[0].permute(1, 2, 0))
+ax[1].imshow(fx.detach()[0, 0], cmap="gray")
+plt.show()
+```
 
-# We add a "dummy" dimension to our tensor "x" so it has the BCHW axes
-x = x[None, ...]
+::: {.callout-important}
+By default, outputs from PyTorch modules are tracked for back-propagation.
 
-# Use the con2d function from torch.nn.functional
-output = torch.nn.functional.conv2d(x, kernel, padding=0)
-output.shape
+To visualize it with `matplotlib` we have to `.detach()` the tensor first.
+:::
 
-plt.imshow(output[0, 0], cmap="gray")
+---
+
+## Exercise: Visualize the effect of the convolution operation
+
+- [ ] Visualize the weights of the convolution layer.
+
+``` {python}
+conv_1.weight.shape
+```
+
+``` {python}
+fig, ax = plt.subplots(2, 2)
+ax[0, 0].imshow(conv_1.weight.detach()[0, 0], cmap="gray")
+ax[0, 1].imshow(conv_1.weight.detach()[0, 1], cmap="gray")
+ax[1, 0].imshow(conv_1.weight.detach()[0, 2], cmap="gray")
+ax[1, 1].set_axis_off()
+plt.show()
+```
+
+---
+
+## Exercise: Visualize the effect of the convolution operation
+
+- [ ] Modify the weights of the convolution layer.
+
+``` {python}
+conv_1 = nn.Conv2d(in_channels=3, out_channels=1, kernel_size=3, padding=0, bias=False)
+
+conv_1.weight.data[:] = torch.FloatTensor([
+  [
+    [
+      [0, 0, 0],
+      [0, 0, 0],
+      [0, 0, 0],
+    ],
+    [
+      [0, 0, 0],
+      [0, 1, 0],
+      [0, 0, 0],
+    ],
+    [
+      [0, 0, 0],
+      [0, 0, 0],
+      [0, 0, 0],
+    ],
+  ]
+])
+```
+
+---
+
+## Exercise: Visualize the effect of the convolution operation
+
+- [ ] Visualize the effects after changingthe values.
+
+``` {python}
+fx = conv_1(x)
+
+fig, ax = plt.subplots(1, 2)
+ax[0].imshow(x[0].permute(1, 2, 0))
+ax[1].imshow(fx.detach()[0].permute(1, 2, 0))
+plt.show()
 ```
 
 Experiment with different values and shapes of the kernel
@@ -1100,7 +1168,59 @@ https://en.wikipedia.org/wiki/Kernel_(image_processing)
 
 ---
 
-## Examples of popular DL models in computer vision
+## Exercise: Visualize the effect of the convolution operation
+
+- [ ] Modify the weights of the convolution layer.
+
+``` {python}
+conv_1 = nn.Conv2d(in_channels=3, out_channels=1, kernel_size=3, padding=0, bias=False)
+
+conv_1.weight.data[:] = torch.FloatTensor([
+  [[[0, -1, 0], [-1, 5, -1], [0, -1, 0]],
+   [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+   [[0, 0, 0], [0, 0, 0], [0, 0, 0]]]
+])
+
+fx = conv_1(x)
+
+fig, ax = plt.subplots(1, 2)
+ax[0].imshow(x[0].permute(1, 2, 0))
+ax[1].imshow(fx.detach()[0, 0], cmap="gray")
+plt.show()
+```
+
+Experiment with different values and shapes of the kernel
+https://en.wikipedia.org/wiki/Kernel_(image_processing)
+
+---
+
+## Exercise: Visualize the effect of the convolution operation
+
+- [ ] Modify the weights of the convolution layer.
+
+``` {python}
+conv_1 = nn.Conv2d(in_channels=3, out_channels=1, kernel_size=3, padding=0, bias=False)
+
+conv_1.weight.data[:] = torch.FloatTensor([
+  [[[1, 0, -1], [1, 0, -1], [1, 0, -1]],
+   [[1, 0, -1], [1, 0, -1], [1, 0, -1]],
+   [[1, 0, -1], [1, 0, -1], [1, 0, -1]]]
+])
+
+fx = conv_1(x)
+
+fig, ax = plt.subplots(1, 2)
+ax[0].imshow(x[0].permute(1, 2, 0))
+ax[1].imshow(fx.detach()[0, 0], cmap="gray")
+plt.show()
+```
+
+Experiment with different values and shapes of the kernel
+https://en.wikipedia.org/wiki/Kernel_(image_processing)
+
+---
+
+## Examples of popular Deep Learning models in computer vision
 
 * Inception v3 for image classification
 
@@ -1108,7 +1228,7 @@ https://en.wikipedia.org/wiki/Kernel_(image_processing)
 
 ---
 
-## Examples of popular DL models in computer vision
+## Examples of popular Deep Learning models in computer vision
 
 * U-Net for cell segmentation
 
@@ -1116,100 +1236,156 @@ https://en.wikipedia.org/wiki/Kernel_(image_processing)
 
 ---
 
+## Examples of popular Deep Learning models in computer vision
 
-### Convolution layers from torch.nn module
+* LeNet-5 for handwritten digits classification (<a href=http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf>LeCun et al.</a>)
+
+![LeNet-5](https://upload.wikimedia.org/wikipedia/commons/6/61/LeNet_architecture.png)
+By Daniel Voigt Godoy - <a rel="nofollow" class="external free" href="https://github.com/dvgodoy/dl-visuals/">https://github.com/dvgodoy/dl-visuals/</a>, <a href="https://creativecommons.org/licenses/by/4.0" title="Creative Commons Attribution 4.0">CC BY 4.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=150820922">Link</a>
+
+---
+
+## Exercise: Implement and train the LetNet-5 model with PyTorch
+
+- [ ] Build the convolutional neural network using `nn.Sequential`, and the `nn.ReLU()` activation function.
 
 ``` {python}
-# Use the Conv2d module from torch.nn to define a learnable convolution layer
-conv_1 =
+lenet_clf = nn.Sequential(
+    nn.Conv2d(in_channels=3, out_channels=6, kernel_size=5, bias=True),
+    nn.ReLU(),
+    nn.MaxPool2d(kernel_size=2),
+    nn.Conv2d(in_channels=6, out_channels=16, kernel_size=5, bias=True),
+    nn.ReLU(),
+    nn.MaxPool2d(kernel_size=2),
+    nn.Flatten(),
+    nn.Linear(in_features=16*5*5, out_features=120, bias=True),
+    nn.ReLU(),
+    nn.Linear(in_features=120, out_features=84, bias=True),
+    nn.ReLU(),
+    nn.Linear(in_features=84, out_features=100, bias=True),
+)
 ```
 
-``` {python}
-y = conv_1(x)
-y.shape
-```
+::: {.callout-note}
+Pooling layers are used to downsample feature maps to summarize information from large regions.
+:::
+
+---
+
+## Exercise: Implement and train the LetNet-5 model with PyTorch
+
+- [ ] Test our implementation.
 
 ``` {python}
-#@title Visualize the output of the randomly initialized kernel of the convolution layer
-plt.imshow((y[0].detach().permute(1, 2, 0) - y[0].detach().min()) / (y[0].detach().max() - y[0].detach().min()))
-```
+y_hat = lenet_clf(x)
 
-## Linear layers
-
-These layers perform matrix-matrix, and matrix-vector operations on its corresponding inputs. Linear layers are commonly used in final layers to obtain the output of the model.
-
-For classification tasks, these layers project a multi-channel feature map into a single prediction of the image's class.
-
-![Inception V3](https://wngaw.github.io/images/inception_v3_architecture.png)
-
-In object detection and localization problems, these layers generate the detection confidence and bounding box of the object.
-
-![YOLO](https://viso.ai/wp-content/uploads/2021/02/yolo-object-detection.jpg)
-
-### Linear layers from torch.nn
-
-``` {python}
-# Use the Linear module from torch.nn to define a linear operation
-lin_1 =
+type(y_hat), y_hat.dtype, y_hat.shape, y_hat.min(), y_hat.max()
 ```
 
 ---
 
-## Non-linear activation layers
+## Exercise: Implement and train the LetNet-5 model with PyTorch
 
-These layers are integrated to add non-linear behavior into the neural network.
+- [ ] Train the model to classify images from CIFAR-100.
 
 ``` {python}
-# Define a Rectified Linear Unit (ReLU) layer using the torch.nn module
-relu_1 =
-```
+num_epochs = 50
+train_loss = []
+val_loss = []
 
-A list of activation layers here https://pytorch.org/docs/stable/nn.html#non-linear-activations-weighted-sum-nonlinearity
+lenet_clf.cuda()
+optimizer = optim.SGD(lenet_clf.parameters(), lr=0.01)
+
+for e in range(num_epochs):
+  train_loss_avg = 0
+  total_train_samples = 0
+
+  lenet_clf.train()
+  for x, y in cifar_train_dl:
+    optimizer.zero_grad()
+
+    y_hat = lenet_clf( x.cuda() ).cpu()
+
+    loss = loss_fun(y_hat, y)
+
+    train_loss_avg += loss.item() * len(x)
+    total_train_samples += len(x)
+
+    loss.backward()
+
+    optimizer.step()
+
+  train_loss_avg /= total_train_samples
+  train_loss.append(train_loss_avg)
+
+  val_loss_avg = 0
+  total_val_samples = 0
+
+  lenet_clf.eval()
+  with torch.no_grad():
+    for x, y in cifar_val_dl:
+      y_hat = lenet_clf( x.cuda() ).cpu()
+      loss = loss_fun(y_hat, y)
+
+      val_loss_avg += loss.item() * len(x)
+      total_val_samples += len(x)
+
+  val_loss_avg /= total_val_samples
+  val_loss.append(val_loss_avg)
+```
 
 ---
 
-## Pooling layers
+## Exercise: Implement and train the LetNet-5 model with PyTorch
 
-This kind of layers are used to downsample the current feature maps which helps to summarize information from large regions into a couple of pixels.
+- [ ] Plot the average train and validation losses
 
-There are two common pooling operations: maximum pooling, and average pooling.
+``` {python}
+import matplotlib.pyplot as plt
 
-Maximum pooling looks for the maximum value in a region and returns it as a single pixel. While average pooling computes the average value for that region.
-
-``` {python}id="uUHa-FsLr7w_"
-# Define a Maximum Pooling layer from torch.nn module
-max_pool =
+plt.plot(train_loss, "b-", label="Average training loss")
+plt.plot(val_loss, "r-", label="Average validation loss")
+plt.legend()
+plt.show()
 ```
 
+---
 
-# 3.- Review and understand the architecture of classic and recent DL models
+## Exercise: Implement and train the LetNet-5 model with PyTorch {.scrollable}
 
-## LeNet 5 architecture
+- [ ] Compute the average accuracy for the Validation and Test sets.
 
-http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf
+``` {python}
+lenet_clf.eval()
 
-```python
-import torch
-import torch.nn as nn
-```
+val_acc_metric = Accuracy(task="multiclass", num_classes=100)
+test_acc_metric = Accuracy(task="multiclass", num_classes=100)
+train_acc_metric = Accuracy(task="multiclass", num_classes=100)
 
-```python
-# Implement the layers of LeNet5
+with torch.no_grad():
+  for x, y in cifar_train_dl:
+    y_hat = lenet_clf( x.cuda() ).cpu()
+    train_acc_metric(y_hat.softmax(dim=1), y)
 
-```
+  train_acc = train_acc_metric.compute()
 
-Test our implementation
+  for x, y in cifar_val_dl:
+    y_hat = lenet_clf( x.cuda() ).cpu()
+    val_acc_metric(y_hat.softmax(dim=1), y)
 
-```python
+  val_acc = val_acc_metric.compute()
 
-```
+  for x, y in cifar_test_dl:
+    y_hat = lenet_clf( x.cuda() ).cpu()
+    test_acc_metric(y_hat.softmax(dim=1), y)
 
-## U-Net
+  test_acc = test_acc_metric.compute()
 
-![U-Net](https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/u-net-architecture.png)
+print(f"Training acc={train_acc}")
+print(f"Validation acc={val_acc}")
+print(f"Test acc={test_acc}")
 
-Lets impelment the first operations of U-Net
-
-```python
-
+train_acc_metric.reset()
+val_acc_metric.reset()
+test_acc_metric.reset()
 ```
