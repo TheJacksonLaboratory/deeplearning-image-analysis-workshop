@@ -1,15 +1,24 @@
 ---
-jupyter:
-  jupytext:
-    text_representation:
-      extension: .md
-      format_name: markdown
-      format_version: '1.3'
-      jupytext_version: 1.16.4
-  kernelspec:
-    display_name: Python 3
-    name: python3
+title: Advanced Machine Learning with Python (Session 2 - Part 2)
+author: Fernando Cervantes (fernando.cervantes@jax.org)
+format: 
+  revealjs:
+    code-fold: false
+    progress: true
+    controls: true
+    output-file: "Adv_ML_Python_presentation_2_2"
+    fontsize: 20pt
+
+execute:
+  error: true
+  echo: true
+  cache: true
+  freeze: true
+  keep-ipynb: true
+
+jupyter: python3
 ---
+
 
 ```python cellView="form" colab={"base_uri": "https://localhost:8080/"} outputId="16ebe262-e8d5-4fdf-ceb1-d0b403d9f6cb" id="EeN3qSPnr9ko"
 # @title 0. Setup environment

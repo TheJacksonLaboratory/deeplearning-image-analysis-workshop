@@ -1,25 +1,20 @@
 ---
-title: Advanced Machine Learning with Python
+title: Advanced Machine Learning with Python (Session 1)
 author: Fernando Cervantes (fernando.cervantes@jax.org)
 format: 
   revealjs:
     code-fold: false
     progress: true
     controls: true
-    output-file: "Adv_ML_Python_presentation"
+    output-file: "Adv_ML_Python_presentation_1"
     fontsize: 20pt
-  html:
-    toc: true
-    output-file: "Adv_ML_Python"
-  ipynb:
-    roc: true
-    toc: true
-    output-file: "Adv_ML_Python"
 
 execute:
   error: true
   echo: true
   cache: true
+  freeze: true
+  keep-ipynb: true
 
 jupyter: python3
 ---
@@ -905,7 +900,7 @@ for e in range(num_epochs):
 ```
 ```{python}
 #| echo: false
-num_epochs = 2
+num_epochs = 5
 train_loss = []
 val_loss = []
 
@@ -1284,16 +1279,18 @@ type(y_hat), y_hat.dtype, y_hat.shape, y_hat.min(), y_hat.max()
 
 ---
 
-## Exercise: Implement and train the LetNet-5 model with PyTorch
+## Exercise: Implement and train the LetNet-5 model with PyTorch {.scrollable}
 
 - [ ] Train the model to classify images from CIFAR-100.
 
 ``` {python}
-num_epochs = 50
+num_epochs = 5
 train_loss = []
 val_loss = []
 
-lenet_clf.cuda()
+if torch.cuda.is_available():
+  lenet_clf.cuda()
+
 optimizer = optim.SGD(lenet_clf.parameters(), lr=0.01)
 
 for e in range(num_epochs):
@@ -1304,7 +1301,10 @@ for e in range(num_epochs):
   for x, y in cifar_train_dl:
     optimizer.zero_grad()
 
-    y_hat = lenet_clf( x.cuda() ).cpu()
+    if torch.cuda.is_available():
+      x = x.cuda()
+    
+    y_hat = lenet_clf( x ).cpu()
 
     loss = loss_fun(y_hat, y)
 
@@ -1324,7 +1324,10 @@ for e in range(num_epochs):
   lenet_clf.eval()
   with torch.no_grad():
     for x, y in cifar_val_dl:
-      y_hat = lenet_clf( x.cuda() ).cpu()
+      if torch.cuda.is_available():
+        x = x.cuda()
+      
+      y_hat = lenet_clf( x ).cpu()
       loss = loss_fun(y_hat, y)
 
       val_loss_avg += loss.item() * len(x)
@@ -1341,8 +1344,6 @@ for e in range(num_epochs):
 - [ ] Plot the average train and validation losses
 
 ``` {python}
-import matplotlib.pyplot as plt
-
 plt.plot(train_loss, "b-", label="Average training loss")
 plt.plot(val_loss, "r-", label="Average validation loss")
 plt.legend()
@@ -1364,19 +1365,25 @@ train_acc_metric = Accuracy(task="multiclass", num_classes=100)
 
 with torch.no_grad():
   for x, y in cifar_train_dl:
-    y_hat = lenet_clf( x.cuda() ).cpu()
+    if torch.cuda.is_available():
+      x = x.cuda()
+    y_hat = lenet_clf( x ).cpu()
     train_acc_metric(y_hat.softmax(dim=1), y)
 
   train_acc = train_acc_metric.compute()
 
   for x, y in cifar_val_dl:
-    y_hat = lenet_clf( x.cuda() ).cpu()
+    if torch.cuda.is_available():
+      x = x.cuda()
+    y_hat = lenet_clf( x ).cpu()
     val_acc_metric(y_hat.softmax(dim=1), y)
 
   val_acc = val_acc_metric.compute()
 
   for x, y in cifar_test_dl:
-    y_hat = lenet_clf( x.cuda() ).cpu()
+    if torch.cuda.is_available():
+      x = x.cuda()
+    y_hat = lenet_clf( x ).cpu()
     test_acc_metric(y_hat.softmax(dim=1), y)
 
   test_acc = test_acc_metric.compute()

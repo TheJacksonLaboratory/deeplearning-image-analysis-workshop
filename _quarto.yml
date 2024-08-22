@@ -1,6 +1,6 @@
 project:
   type: website
-  # output-dir: docs
+  output-dir: docs
 
 website:
   title: "Advanced Machine Learning with Python workshop"
@@ -9,11 +9,16 @@ website:
       - href: index.qmd
         text: Home
       - about.qmd
-      - href: DL_image_analysis_1_1.qmd
-        text: Session 1/2
+      - href: notes/DL_image_analysis_1_1.qmd
+        text: Session 1
+      - href: notes/DL_image_analysis_2_1.qmd
+        text: Session 2 - Part 1
+      - href: notes/DL_image_analysis_2_2.qmd
+        text: Session 2 - Part 2
 
 format:
   html:
     theme: cosmo
     css: styles.css
     toc: true
+    self-contained: true

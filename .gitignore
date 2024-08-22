@@ -2,3 +2,6 @@
 /.jupyter_cache/
 /.jupyter/
 /.vscode/
+
+*.quarto_ipynb
+/site_libs/
