@@ -2,6 +2,8 @@
 title: "Advanced Machine Learning with Python"
 ---
 
-This is a Quarto website.
+# Welcome to Advanced Machine Learning with Python!
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+My name is Fernando Cervantes, a Systems Analyst II in the [Imaging Applications Group](https://thejacksonlaboratory.github.io/imaging_applications) of the Research IT department of The Jackson Laboratory.
+
+You can ask me questions about this material at fernando.cervantes@jax.org

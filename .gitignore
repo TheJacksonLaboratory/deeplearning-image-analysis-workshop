@@ -5,3 +5,5 @@
 
 *.quarto_ipynb
 /site_libs/
+*.pt
+/notes/.jupyter_cache/

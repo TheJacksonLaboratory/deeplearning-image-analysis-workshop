@@ -16,7 +16,7 @@ execute:
   freeze: true
   keep-ipynb: true
 
-jupyter: python3
+jupyter: adv-ml
 ---
 
 
@@ -33,19 +33,19 @@ jupyter: python3
 
 On the top right corner of the page, click the drop-down arrow to the right of the `Connect` button and select `Change runtime type`.
 
-![](imgs/connect_runtime.png){width=50%}
+![](../imgs/connect_runtime.png){width=50%}
 
 ---
 
 Make sure `Python 3` runtime is selected. For this part of the workshop `CPU` acceleration is enough.
 
-![](imgs/select_runtime.png){width=50%}
+![](../imgs/select_runtime.png){width=50%}
 
 ---
 
 Now we can connect to the runtime by clicking `Connect`. This will create a **V**irtual **M**achine (**VM**) with compute resources we can use for a limited amount of time.
 
-![](imgs/connect.png){height=25%}
+![](../imgs/connect.png){height=25%}
 
 :::{.callout-caution}
 In free Colab accounts these resources are not guaranteed and can be taken away without notice (preemptible machines).
@@ -67,7 +67,7 @@ Data stored in this runtime will be lost if not moved into other storage when th
 
 ---
 
-## Exercise: Use a pretrained deep learning model to classify images {.scrollable}
+## Exercise: Use a pre-trained deep learning model to classify images {.scrollable}
  
 - [ ] Import the pre-trained weights of the Inception V3 model from models.inception_v3
 
@@ -92,7 +92,7 @@ More info about Inception V3 implementation in `torchvision` [here](https://pyto
 
 ---
 
-## Exercise: Use a pretrained deep learning model to classify images {.scrollable}
+## Exercise: Use a pre-trained deep learning model to classify images {.scrollable}
 
 - [ ] Load the Inception V3 model using the pre-trained weights `inception_weights`
 
@@ -104,7 +104,7 @@ dl_model.eval()
 
 ---
 
-## Exercise: Use a pretrained deep learning model to classify images {.scrollable}
+## Exercise: Use a pre-trained deep learning model to classify images {.scrollable}
 
 - [ ] Load a sample image to predict its category
 
@@ -118,7 +118,7 @@ sample_im.shape
 
 ---
 
-## Exercise: Use a pretrained deep learning model to classify images {.scrollable}
+## Exercise: Use a pre-trained deep learning model to classify images {.scrollable}
 
 - [ ] Visualize the sample image
 
@@ -129,7 +129,7 @@ plt.show()
 
 ---
 
-## Exercise: Use a pretrained deep learning model to classify images
+## Exercise: Use a pre-trained deep learning model to classify images
 
 - [ ] Inspect what transforms are required by the pre-trained Inception model to work properly
 
@@ -155,7 +155,7 @@ The transforms used by the Inception V3 are
 
 ## Exercise: Use a pretrained deep learning model to classify images
 
-- [ ] Define a preprocessing pipeline uisng the inception_weights.transforms() method. Add also a transformation from numpy arrays into torch tensors.
+- [ ] Define a preprocessing pipeline using the inception_weights.transforms() method. Add also a transformation from `numpy` arrays into torch tensors.
 
 ``` {python}
 from torchvision.transforms.v2 import Compose, ToTensor
