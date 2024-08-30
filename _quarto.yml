@@ -8,7 +8,6 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
       - href: notes/DL_image_analysis_1_1.qmd
         text: Session 1
       - href: notes/DL_image_analysis_2_1.qmd

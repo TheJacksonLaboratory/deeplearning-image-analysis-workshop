@@ -16,7 +16,7 @@ execute:
   freeze: true
   keep-ipynb: true
 
-jupyter: python3
+jupyter: adv-ml
 ---
 
 
@@ -34,19 +34,19 @@ jupyter: python3
 
 On the top right corner of the page, click the drop-down arrow to the right of the `Connect` button and select `Change runtime type`.
 
-![](imgs/connect_runtime.png){width=50%}
+![](../imgs/connect_runtime.png){width=50%}
 
 ---
 
 Make sure `Python 3` runtime is selected. For this part of the workshop `CPU` acceleration is enough.
 
-![](imgs/select_runtime.png){width=50%}
+![](../imgs/select_runtime.png){width=50%}
 
 ---
 
 Now we can connect to the runtime by clicking `Connect`. This will create a **V**irtual **M**achine (**VM**) with compute resources we can use for a limited amount of time.
 
-![](imgs/connect.png){height=25%}
+![](../imgs/connect.png){height=25%}
 
 :::{.callout-caution}
 In free Colab accounts these resources are not guaranteed and can be taken away without notice (preemptible machines).
@@ -62,7 +62,7 @@ Data stored in this runtime will be lost if not moved into other storage when th
 
 Sub-field of **Artificial Intelligence** that develops methods to address tasks that require human intelligence
 
-![](imgs/Diagram_AI.png){width=50%}
+![](../imgs/Diagram_AI.png){width=50%}
 
 
 ## Artificial intelligence tasks
@@ -78,7 +78,7 @@ Sub-field of **Artificial Intelligence** that develops methods to address tasks 
 **Classification** 
 
 
-![](imgs/Object.png)
+![](../imgs/Object.png)
 
 what is this?
 
@@ -88,7 +88,7 @@ what is this?
 
 **Detection** 
 
-![](imgs/Detect.png)
+![](../imgs/Detect.png)
 
 where is something?
 
@@ -98,7 +98,7 @@ where is something?
 
 **Segmentation**
 
-![](imgs/Segment.png)
+![](../imgs/Segment.png)
 
 where *specifically* is something?
 
@@ -608,7 +608,7 @@ Generally, this is managed by the machine learning packages such as PyTorch and 
 
 ## Exercise: Compute the gradient of the loss function with respect to the parameters of the MLP.
 
-- [ ] Check what are the gradients of the MLP parameters befor back propagating the gradient.
+- [ ] Check what are the gradients of the MLP parameters before back propagating the gradient.
 
 ``` {python}
 mlp_clf[0].bias.grad
@@ -801,7 +801,7 @@ train_loss_avg /= total_train_samples
 ::: {.callout-note}
 Because we don't train the model with the validation set, back-propagation and optimization steps are not needed.
 
-Additionally, we wrap the loop `with torch.no_grad()` to prevent the generation of gradients that could fill the memory innecessarily.
+Additionally, we wrap the loop `with torch.no_grad()` to prevent the generation of gradients that could fill the memory unnecessarily.
 :::
 
 ``` {.python code-line-numbers="|5"}
@@ -944,7 +944,7 @@ for e in range(num_epochs):
 
 ---
 
-## Exercise: Show the progress of the training throught the epochs
+## Exercise: Show the progress of the training throughout the epochs
 
 - [ ] Plot the average train and validation losses
 
@@ -1147,7 +1147,7 @@ conv_1.weight.data[:] = torch.FloatTensor([
 
 ## Exercise: Visualize the effect of the convolution operation
 
-- [ ] Visualize the effects after changingthe values.
+- [ ] Visualize the effects after changing the values.
 
 ``` {python}
 fx = conv_1(x)
@@ -1284,7 +1284,7 @@ type(y_hat), y_hat.dtype, y_hat.shape, y_hat.min(), y_hat.max()
 - [ ] Train the model to classify images from CIFAR-100.
 
 ``` {python}
-num_epochs = 5
+num_epochs = 10
 train_loss = []
 val_loss = []
 

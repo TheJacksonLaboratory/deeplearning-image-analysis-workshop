@@ -1,0 +1,2716 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.5.56">
+
+  <meta name="author" content="Fernando Cervantes (fernando.cervantes@jax.org)">
+  <title>Advanced Machine Learning with Python workshop – Advanced Machine Learning with Python (Session 2 - Part 1)</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-titled.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-titled) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-titled.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-titled .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-titled .callout-title  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-titled.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-titled.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-title {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-title {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-title {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-titled .callout-body > .callout-content > :last-child {
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
+  }
+
+  .callout.callout-titled .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-titled) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-title {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-title {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-title {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-title {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-title {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Advanced Machine Learning with Python (Session 2 - Part 1)</h1>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Fernando Cervantes (fernando.cervantes@jax.org) 
+</div>
+</div>
+</div>
+
+</section>
+<section id="workshop-outcomes" class="title-slide slide level1 center">
+<h1>Workshop outcomes</h1>
+<ul>
+<li>Understand the process of training ML models.</li>
+<li>Load pre-trained ML models and fine-tune them with new data.</li>
+<li>Evaluate the performance of ML models.</li>
+<li>Adapt ML models for different tasks from pre-trained models.</li>
+</ul>
+</section>
+
+<section>
+<section id="setup-environment" class="title-slide slide level1 center">
+<h1>0. Setup environment</h1>
+
+</section>
+<section id="select-runtime-and-connect" class="slide level2">
+<h2>Select runtime and connect</h2>
+<p>On the top right corner of the page, click the drop-down arrow to the right of the <code>Connect</code> button and select <code>Change runtime type</code>.</p>
+
+<img data-src="../imgs/connect_runtime.png" style="width:50.0%" class="r-stretch"></section>
+<section class="slide level2">
+
+<p>Make sure <code>Python 3</code> runtime is selected. For this part of the workshop <code>CPU</code> acceleration is enough.</p>
+
+<img data-src="../imgs/select_runtime.png" style="width:50.0%" class="r-stretch"></section>
+<section class="slide level2">
+
+<p>Now we can connect to the runtime by clicking <code>Connect</code>. This will create a <strong>V</strong>irtual <strong>M</strong>achine (<strong>VM</strong>) with compute resources we can use for a limited amount of time.</p>
+<p><img data-src="../imgs/connect.png" style="height:25.0%"></p>
+<div class="callout callout-caution callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Caution</strong></p>
+</div>
+<div class="callout-content">
+<p>In free Colab accounts these resources are not guaranteed and can be taken away without notice (preemptible machines).</p>
+<p>Data stored in this runtime will be lost if not moved into other storage when the runtime is deleted.</p>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="load-pre-trained-models" class="title-slide slide level1 center">
+<h1>Load pre-trained models</h1>
+
+</section>
+<section id="load-pre-trained-models-1" class="slide level2">
+<h2>Load pre-trained models</h2>
+<ul>
+<li><p>Lets use one from the PyTorch’s <code>torchvision</code> module for computer vision</p></li>
+<li><p>Try first with the InceptionV3 model. <img data-src="https://cloud.google.com/static/tpu/docs/images/inceptionv3onc--oview.png" alt="InceptionV3"></p></li>
+</ul>
+</section>
+<section id="exercise-use-a-pre-trained-deep-learning-model-to-classify-images" class="slide level2 scrollable">
+<h2>Exercise: Use a pre-trained deep learning model to classify images</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Import the pre-trained weights of the Inception V3 model from models.inception_v3</label></li>
+</ul>
+<div id="263963dd" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> torch</span>
+<span id="cb1-2"><a></a><span class="im">from</span> torchvision <span class="im">import</span> models</span>
+<span id="cb1-3"><a></a></span>
+<span id="cb1-4"><a></a>inception_weights <span class="op">=</span> models.inception.Inception_V3_Weights.IMAGENET1K_V1</span>
+<span id="cb1-5"><a></a></span>
+<span id="cb1-6"><a></a>inception_weights.meta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>{'num_params': 27161264,
+ 'min_size': (75, 75),
+ 'categories': ['tench',
+  'goldfish',
+  'great white shark',
+  'tiger shark',
+  'hammerhead',
+  'electric ray',
+  'stingray',
+  'cock',
+  'hen',
+  'ostrich',
+  'brambling',
+  'goldfinch',
+  'house finch',
+  'junco',
+  'indigo bunting',
+  'robin',
+  'bulbul',
+  'jay',
+  'magpie',
+  'chickadee',
+  'water ouzel',
+  'kite',
+  'bald eagle',
+  'vulture',
+  'great grey owl',
+  'European fire salamander',
+  'common newt',
+  'eft',
+  'spotted salamander',
+  'axolotl',
+  'bullfrog',
+  'tree frog',
+  'tailed frog',
+  'loggerhead',
+  'leatherback turtle',
+  'mud turtle',
+  'terrapin',
+  'box turtle',
+  'banded gecko',
+  'common iguana',
+  'American chameleon',
+  'whiptail',
+  'agama',
+  'frilled lizard',
+  'alligator lizard',
+  'Gila monster',
+  'green lizard',
+  'African chameleon',
+  'Komodo dragon',
+  'African crocodile',
+  'American alligator',
+  'triceratops',
+  'thunder snake',
+  'ringneck snake',
+  'hognose snake',
+  'green snake',
+  'king snake',
+  'garter snake',
+  'water snake',
+  'vine snake',
+  'night snake',
+  'boa constrictor',
+  'rock python',
+  'Indian cobra',
+  'green mamba',
+  'sea snake',
+  'horned viper',
+  'diamondback',
+  'sidewinder',
+  'trilobite',
+  'harvestman',
+  'scorpion',
+  'black and gold garden spider',
+  'barn spider',
+  'garden spider',
+  'black widow',
+  'tarantula',
+  'wolf spider',
+  'tick',
+  'centipede',
+  'black grouse',
+  'ptarmigan',
+  'ruffed grouse',
+  'prairie chicken',
+  'peacock',
+  'quail',
+  'partridge',
+  'African grey',
+  'macaw',
+  'sulphur-crested cockatoo',
+  'lorikeet',
+  'coucal',
+  'bee eater',
+  'hornbill',
+  'hummingbird',
+  'jacamar',
+  'toucan',
+  'drake',
+  'red-breasted merganser',
+  'goose',
+  'black swan',
+  'tusker',
+  'echidna',
+  'platypus',
+  'wallaby',
+  'koala',
+  'wombat',
+  'jellyfish',
+  'sea anemone',
+  'brain coral',
+  'flatworm',
+  'nematode',
+  'conch',
+  'snail',
+  'slug',
+  'sea slug',
+  'chiton',
+  'chambered nautilus',
+  'Dungeness crab',
+  'rock crab',
+  'fiddler crab',
+  'king crab',
+  'American lobster',
+  'spiny lobster',
+  'crayfish',
+  'hermit crab',
+  'isopod',
+  'white stork',
+  'black stork',
+  'spoonbill',
+  'flamingo',
+  'little blue heron',
+  'American egret',
+  'bittern',
+  'crane bird',
+  'limpkin',
+  'European gallinule',
+  'American coot',
+  'bustard',
+  'ruddy turnstone',
+  'red-backed sandpiper',
+  'redshank',
+  'dowitcher',
+  'oystercatcher',
+  'pelican',
+  'king penguin',
+  'albatross',
+  'grey whale',
+  'killer whale',
+  'dugong',
+  'sea lion',
+  'Chihuahua',
+  'Japanese spaniel',
+  'Maltese dog',
+  'Pekinese',
+  'Shih-Tzu',
+  'Blenheim spaniel',
+  'papillon',
+  'toy terrier',
+  'Rhodesian ridgeback',
+  'Afghan hound',
+  'basset',
+  'beagle',
+  'bloodhound',
+  'bluetick',
+  'black-and-tan coonhound',
+  'Walker hound',
+  'English foxhound',
+  'redbone',
+  'borzoi',
+  'Irish wolfhound',
+  'Italian greyhound',
+  'whippet',
+  'Ibizan hound',
+  'Norwegian elkhound',
+  'otterhound',
+  'Saluki',
+  'Scottish deerhound',
+  'Weimaraner',
+  'Staffordshire bullterrier',
+  'American Staffordshire terrier',
+  'Bedlington terrier',
+  'Border terrier',
+  'Kerry blue terrier',
+  'Irish terrier',
+  'Norfolk terrier',
+  'Norwich terrier',
+  'Yorkshire terrier',
+  'wire-haired fox terrier',
+  'Lakeland terrier',
+  'Sealyham terrier',
+  'Airedale',
+  'cairn',
+  'Australian terrier',
+  'Dandie Dinmont',
+  'Boston bull',
+  'miniature schnauzer',
+  'giant schnauzer',
+  'standard schnauzer',
+  'Scotch terrier',
+  'Tibetan terrier',
+  'silky terrier',
+  'soft-coated wheaten terrier',
+  'West Highland white terrier',
+  'Lhasa',
+  'flat-coated retriever',
+  'curly-coated retriever',
+  'golden retriever',
+  'Labrador retriever',
+  'Chesapeake Bay retriever',
+  'German short-haired pointer',
+  'vizsla',
+  'English setter',
+  'Irish setter',
+  'Gordon setter',
+  'Brittany spaniel',
+  'clumber',
+  'English springer',
+  'Welsh springer spaniel',
+  'cocker spaniel',
+  'Sussex spaniel',
+  'Irish water spaniel',
+  'kuvasz',
+  'schipperke',
+  'groenendael',
+  'malinois',
+  'briard',
+  'kelpie',
+  'komondor',
+  'Old English sheepdog',
+  'Shetland sheepdog',
+  'collie',
+  'Border collie',
+  'Bouvier des Flandres',
+  'Rottweiler',
+  'German shepherd',
+  'Doberman',
+  'miniature pinscher',
+  'Greater Swiss Mountain dog',
+  'Bernese mountain dog',
+  'Appenzeller',
+  'EntleBucher',
+  'boxer',
+  'bull mastiff',
+  'Tibetan mastiff',
+  'French bulldog',
+  'Great Dane',
+  'Saint Bernard',
+  'Eskimo dog',
+  'malamute',
+  'Siberian husky',
+  'dalmatian',
+  'affenpinscher',
+  'basenji',
+  'pug',
+  'Leonberg',
+  'Newfoundland',
+  'Great Pyrenees',
+  'Samoyed',
+  'Pomeranian',
+  'chow',
+  'keeshond',
+  'Brabancon griffon',
+  'Pembroke',
+  'Cardigan',
+  'toy poodle',
+  'miniature poodle',
+  'standard poodle',
+  'Mexican hairless',
+  'timber wolf',
+  'white wolf',
+  'red wolf',
+  'coyote',
+  'dingo',
+  'dhole',
+  'African hunting dog',
+  'hyena',
+  'red fox',
+  'kit fox',
+  'Arctic fox',
+  'grey fox',
+  'tabby',
+  'tiger cat',
+  'Persian cat',
+  'Siamese cat',
+  'Egyptian cat',
+  'cougar',
+  'lynx',
+  'leopard',
+  'snow leopard',
+  'jaguar',
+  'lion',
+  'tiger',
+  'cheetah',
+  'brown bear',
+  'American black bear',
+  'ice bear',
+  'sloth bear',
+  'mongoose',
+  'meerkat',
+  'tiger beetle',
+  'ladybug',
+  'ground beetle',
+  'long-horned beetle',
+  'leaf beetle',
+  'dung beetle',
+  'rhinoceros beetle',
+  'weevil',
+  'fly',
+  'bee',
+  'ant',
+  'grasshopper',
+  'cricket',
+  'walking stick',
+  'cockroach',
+  'mantis',
+  'cicada',
+  'leafhopper',
+  'lacewing',
+  'dragonfly',
+  'damselfly',
+  'admiral',
+  'ringlet',
+  'monarch',
+  'cabbage butterfly',
+  'sulphur butterfly',
+  'lycaenid',
+  'starfish',
+  'sea urchin',
+  'sea cucumber',
+  'wood rabbit',
+  'hare',
+  'Angora',
+  'hamster',
+  'porcupine',
+  'fox squirrel',
+  'marmot',
+  'beaver',
+  'guinea pig',
+  'sorrel',
+  'zebra',
+  'hog',
+  'wild boar',
+  'warthog',
+  'hippopotamus',
+  'ox',
+  'water buffalo',
+  'bison',
+  'ram',
+  'bighorn',
+  'ibex',
+  'hartebeest',
+  'impala',
+  'gazelle',
+  'Arabian camel',
+  'llama',
+  'weasel',
+  'mink',
+  'polecat',
+  'black-footed ferret',
+  'otter',
+  'skunk',
+  'badger',
+  'armadillo',
+  'three-toed sloth',
+  'orangutan',
+  'gorilla',
+  'chimpanzee',
+  'gibbon',
+  'siamang',
+  'guenon',
+  'patas',
+  'baboon',
+  'macaque',
+  'langur',
+  'colobus',
+  'proboscis monkey',
+  'marmoset',
+  'capuchin',
+  'howler monkey',
+  'titi',
+  'spider monkey',
+  'squirrel monkey',
+  'Madagascar cat',
+  'indri',
+  'Indian elephant',
+  'African elephant',
+  'lesser panda',
+  'giant panda',
+  'barracouta',
+  'eel',
+  'coho',
+  'rock beauty',
+  'anemone fish',
+  'sturgeon',
+  'gar',
+  'lionfish',
+  'puffer',
+  'abacus',
+  'abaya',
+  'academic gown',
+  'accordion',
+  'acoustic guitar',
+  'aircraft carrier',
+  'airliner',
+  'airship',
+  'altar',
+  'ambulance',
+  'amphibian',
+  'analog clock',
+  'apiary',
+  'apron',
+  'ashcan',
+  'assault rifle',
+  'backpack',
+  'bakery',
+  'balance beam',
+  'balloon',
+  'ballpoint',
+  'Band Aid',
+  'banjo',
+  'bannister',
+  'barbell',
+  'barber chair',
+  'barbershop',
+  'barn',
+  'barometer',
+  'barrel',
+  'barrow',
+  'baseball',
+  'basketball',
+  'bassinet',
+  'bassoon',
+  'bathing cap',
+  'bath towel',
+  'bathtub',
+  'beach wagon',
+  'beacon',
+  'beaker',
+  'bearskin',
+  'beer bottle',
+  'beer glass',
+  'bell cote',
+  'bib',
+  'bicycle-built-for-two',
+  'bikini',
+  'binder',
+  'binoculars',
+  'birdhouse',
+  'boathouse',
+  'bobsled',
+  'bolo tie',
+  'bonnet',
+  'bookcase',
+  'bookshop',
+  'bottlecap',
+  'bow',
+  'bow tie',
+  'brass',
+  'brassiere',
+  'breakwater',
+  'breastplate',
+  'broom',
+  'bucket',
+  'buckle',
+  'bulletproof vest',
+  'bullet train',
+  'butcher shop',
+  'cab',
+  'caldron',
+  'candle',
+  'cannon',
+  'canoe',
+  'can opener',
+  'cardigan',
+  'car mirror',
+  'carousel',
+  "carpenter's kit",
+  'carton',
+  'car wheel',
+  'cash machine',
+  'cassette',
+  'cassette player',
+  'castle',
+  'catamaran',
+  'CD player',
+  'cello',
+  'cellular telephone',
+  'chain',
+  'chainlink fence',
+  'chain mail',
+  'chain saw',
+  'chest',
+  'chiffonier',
+  'chime',
+  'china cabinet',
+  'Christmas stocking',
+  'church',
+  'cinema',
+  'cleaver',
+  'cliff dwelling',
+  'cloak',
+  'clog',
+  'cocktail shaker',
+  'coffee mug',
+  'coffeepot',
+  'coil',
+  'combination lock',
+  'computer keyboard',
+  'confectionery',
+  'container ship',
+  'convertible',
+  'corkscrew',
+  'cornet',
+  'cowboy boot',
+  'cowboy hat',
+  'cradle',
+  'crane',
+  'crash helmet',
+  'crate',
+  'crib',
+  'Crock Pot',
+  'croquet ball',
+  'crutch',
+  'cuirass',
+  'dam',
+  'desk',
+  'desktop computer',
+  'dial telephone',
+  'diaper',
+  'digital clock',
+  'digital watch',
+  'dining table',
+  'dishrag',
+  'dishwasher',
+  'disk brake',
+  'dock',
+  'dogsled',
+  'dome',
+  'doormat',
+  'drilling platform',
+  'drum',
+  'drumstick',
+  'dumbbell',
+  'Dutch oven',
+  'electric fan',
+  'electric guitar',
+  'electric locomotive',
+  'entertainment center',
+  'envelope',
+  'espresso maker',
+  'face powder',
+  'feather boa',
+  'file',
+  'fireboat',
+  'fire engine',
+  'fire screen',
+  'flagpole',
+  'flute',
+  'folding chair',
+  'football helmet',
+  'forklift',
+  'fountain',
+  'fountain pen',
+  'four-poster',
+  'freight car',
+  'French horn',
+  'frying pan',
+  'fur coat',
+  'garbage truck',
+  'gasmask',
+  'gas pump',
+  'goblet',
+  'go-kart',
+  'golf ball',
+  'golfcart',
+  'gondola',
+  'gong',
+  'gown',
+  'grand piano',
+  'greenhouse',
+  'grille',
+  'grocery store',
+  'guillotine',
+  'hair slide',
+  'hair spray',
+  'half track',
+  'hammer',
+  'hamper',
+  'hand blower',
+  'hand-held computer',
+  'handkerchief',
+  'hard disc',
+  'harmonica',
+  'harp',
+  'harvester',
+  'hatchet',
+  'holster',
+  'home theater',
+  'honeycomb',
+  'hook',
+  'hoopskirt',
+  'horizontal bar',
+  'horse cart',
+  'hourglass',
+  'iPod',
+  'iron',
+  "jack-o'-lantern",
+  'jean',
+  'jeep',
+  'jersey',
+  'jigsaw puzzle',
+  'jinrikisha',
+  'joystick',
+  'kimono',
+  'knee pad',
+  'knot',
+  'lab coat',
+  'ladle',
+  'lampshade',
+  'laptop',
+  'lawn mower',
+  'lens cap',
+  'letter opener',
+  'library',
+  'lifeboat',
+  'lighter',
+  'limousine',
+  'liner',
+  'lipstick',
+  'Loafer',
+  'lotion',
+  'loudspeaker',
+  'loupe',
+  'lumbermill',
+  'magnetic compass',
+  'mailbag',
+  'mailbox',
+  'maillot',
+  'maillot tank suit',
+  'manhole cover',
+  'maraca',
+  'marimba',
+  'mask',
+  'matchstick',
+  'maypole',
+  'maze',
+  'measuring cup',
+  'medicine chest',
+  'megalith',
+  'microphone',
+  'microwave',
+  'military uniform',
+  'milk can',
+  'minibus',
+  'miniskirt',
+  'minivan',
+  'missile',
+  'mitten',
+  'mixing bowl',
+  'mobile home',
+  'Model T',
+  'modem',
+  'monastery',
+  'monitor',
+  'moped',
+  'mortar',
+  'mortarboard',
+  'mosque',
+  'mosquito net',
+  'motor scooter',
+  'mountain bike',
+  'mountain tent',
+  'mouse',
+  'mousetrap',
+  'moving van',
+  'muzzle',
+  'nail',
+  'neck brace',
+  'necklace',
+  'nipple',
+  'notebook',
+  'obelisk',
+  'oboe',
+  'ocarina',
+  'odometer',
+  'oil filter',
+  'organ',
+  'oscilloscope',
+  'overskirt',
+  'oxcart',
+  'oxygen mask',
+  'packet',
+  'paddle',
+  'paddlewheel',
+  'padlock',
+  'paintbrush',
+  'pajama',
+  'palace',
+  'panpipe',
+  'paper towel',
+  'parachute',
+  'parallel bars',
+  'park bench',
+  'parking meter',
+  'passenger car',
+  'patio',
+  'pay-phone',
+  'pedestal',
+  'pencil box',
+  'pencil sharpener',
+  'perfume',
+  'Petri dish',
+  'photocopier',
+  'pick',
+  'pickelhaube',
+  'picket fence',
+  'pickup',
+  'pier',
+  'piggy bank',
+  'pill bottle',
+  'pillow',
+  'ping-pong ball',
+  'pinwheel',
+  'pirate',
+  'pitcher',
+  'plane',
+  'planetarium',
+  'plastic bag',
+  'plate rack',
+  'plow',
+  'plunger',
+  'Polaroid camera',
+  'pole',
+  'police van',
+  'poncho',
+  'pool table',
+  'pop bottle',
+  'pot',
+  "potter's wheel",
+  'power drill',
+  'prayer rug',
+  'printer',
+  'prison',
+  'projectile',
+  'projector',
+  'puck',
+  'punching bag',
+  'purse',
+  'quill',
+  'quilt',
+  'racer',
+  'racket',
+  'radiator',
+  'radio',
+  'radio telescope',
+  'rain barrel',
+  'recreational vehicle',
+  'reel',
+  'reflex camera',
+  'refrigerator',
+  'remote control',
+  'restaurant',
+  'revolver',
+  'rifle',
+  'rocking chair',
+  'rotisserie',
+  'rubber eraser',
+  'rugby ball',
+  'rule',
+  'running shoe',
+  'safe',
+  'safety pin',
+  'saltshaker',
+  'sandal',
+  'sarong',
+  'sax',
+  'scabbard',
+  'scale',
+  'school bus',
+  'schooner',
+  'scoreboard',
+  'screen',
+  'screw',
+  'screwdriver',
+  'seat belt',
+  'sewing machine',
+  'shield',
+  'shoe shop',
+  'shoji',
+  'shopping basket',
+  'shopping cart',
+  'shovel',
+  'shower cap',
+  'shower curtain',
+  'ski',
+  'ski mask',
+  'sleeping bag',
+  'slide rule',
+  'sliding door',
+  'slot',
+  'snorkel',
+  'snowmobile',
+  'snowplow',
+  'soap dispenser',
+  'soccer ball',
+  'sock',
+  'solar dish',
+  'sombrero',
+  'soup bowl',
+  'space bar',
+  'space heater',
+  'space shuttle',
+  'spatula',
+  'speedboat',
+  'spider web',
+  'spindle',
+  'sports car',
+  'spotlight',
+  'stage',
+  'steam locomotive',
+  'steel arch bridge',
+  'steel drum',
+  'stethoscope',
+  'stole',
+  'stone wall',
+  'stopwatch',
+  'stove',
+  'strainer',
+  'streetcar',
+  'stretcher',
+  'studio couch',
+  'stupa',
+  'submarine',
+  'suit',
+  'sundial',
+  'sunglass',
+  'sunglasses',
+  'sunscreen',
+  'suspension bridge',
+  'swab',
+  'sweatshirt',
+  'swimming trunks',
+  'swing',
+  'switch',
+  'syringe',
+  'table lamp',
+  'tank',
+  'tape player',
+  'teapot',
+  'teddy',
+  'television',
+  'tennis ball',
+  'thatch',
+  'theater curtain',
+  'thimble',
+  'thresher',
+  'throne',
+  'tile roof',
+  'toaster',
+  'tobacco shop',
+  'toilet seat',
+  'torch',
+  'totem pole',
+  'tow truck',
+  'toyshop',
+  'tractor',
+  'trailer truck',
+  'tray',
+  'trench coat',
+  'tricycle',
+  'trimaran',
+  'tripod',
+  'triumphal arch',
+  'trolleybus',
+  'trombone',
+  'tub',
+  'turnstile',
+  'typewriter keyboard',
+  'umbrella',
+  'unicycle',
+  'upright',
+  'vacuum',
+  'vase',
+  'vault',
+  'velvet',
+  'vending machine',
+  'vestment',
+  'viaduct',
+  'violin',
+  'volleyball',
+  'waffle iron',
+  'wall clock',
+  'wallet',
+  'wardrobe',
+  'warplane',
+  'washbasin',
+  'washer',
+  'water bottle',
+  'water jug',
+  'water tower',
+  'whiskey jug',
+  'whistle',
+  'wig',
+  'window screen',
+  'window shade',
+  'Windsor tie',
+  'wine bottle',
+  'wing',
+  'wok',
+  'wooden spoon',
+  'wool',
+  'worm fence',
+  'wreck',
+  'yawl',
+  'yurt',
+  'web site',
+  'comic book',
+  'crossword puzzle',
+  'street sign',
+  'traffic light',
+  'book jacket',
+  'menu',
+  'plate',
+  'guacamole',
+  'consomme',
+  'hot pot',
+  'trifle',
+  'ice cream',
+  'ice lolly',
+  'French loaf',
+  'bagel',
+  'pretzel',
+  'cheeseburger',
+  'hotdog',
+  'mashed potato',
+  'head cabbage',
+  'broccoli',
+  'cauliflower',
+  'zucchini',
+  'spaghetti squash',
+  'acorn squash',
+  'butternut squash',
+  'cucumber',
+  'artichoke',
+  'bell pepper',
+  'cardoon',
+  'mushroom',
+  'Granny Smith',
+  'strawberry',
+  'orange',
+  'lemon',
+  'fig',
+  'pineapple',
+  'banana',
+  'jackfruit',
+  'custard apple',
+  'pomegranate',
+  'hay',
+  'carbonara',
+  'chocolate sauce',
+  'dough',
+  'meat loaf',
+  'pizza',
+  'potpie',
+  'burrito',
+  'red wine',
+  'espresso',
+  'cup',
+  'eggnog',
+  'alp',
+  'bubble',
+  'cliff',
+  'coral reef',
+  'geyser',
+  'lakeside',
+  'promontory',
+  'sandbar',
+  'seashore',
+  'valley',
+  'volcano',
+  'ballplayer',
+  'groom',
+  'scuba diver',
+  'rapeseed',
+  'daisy',
+  "yellow lady's slipper",
+  'corn',
+  'acorn',
+  'hip',
+  'buckeye',
+  'coral fungus',
+  'agaric',
+  'gyromitra',
+  'stinkhorn',
+  'earthstar',
+  'hen-of-the-woods',
+  'bolete',
+  'ear',
+  'toilet tissue'],
+ 'recipe': 'https://github.com/pytorch/vision/tree/main/references/classification#inception-v3',
+ '_metrics': {'ImageNet-1K': {'acc@1': 77.294, 'acc@5': 93.45}},
+ '_ops': 5.713,
+ '_file_size': 103.903,
+ '_docs': 'These weights are ported from the original paper.'}</code></pre>
+</div>
+</div>
+<ul class="task-list">
+<li><label><input type="checkbox">Store the categories in a variable to use them later</label></li>
+</ul>
+<div id="051c91e8" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>categories <span class="op">=</span> inception_weights.meta[<span class="st">"categories"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>More info about Inception V3 implementation in <code>torchvision</code> <a href="https://pytorch.org/vision/main/models/generated/models.inception_v3.html">here</a></p>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-use-a-pre-trained-deep-learning-model-to-classify-images-1" class="slide level2 scrollable">
+<h2>Exercise: Use a pre-trained deep learning model to classify images</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Load the Inception V3 model using the pre-trained weights <code>inception_weights</code></label></li>
+</ul>
+<div id="93c15e54" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a>dl_model <span class="op">=</span> models.inception_v3(inception_weights, progress<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-2"><a></a></span>
+<span id="cb4-3"><a></a>dl_model.<span class="bu">eval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>Inception3(
+  (Conv2d_1a_3x3): BasicConv2d(
+    (conv): Conv2d(3, 32, kernel_size=(3, 3), stride=(2, 2), bias=False)
+    (bn): BatchNorm2d(32, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (Conv2d_2a_3x3): BasicConv2d(
+    (conv): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), bias=False)
+    (bn): BatchNorm2d(32, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (Conv2d_2b_3x3): BasicConv2d(
+    (conv): Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (maxpool1): MaxPool2d(kernel_size=3, stride=2, padding=0, dilation=1, ceil_mode=False)
+  (Conv2d_3b_1x1): BasicConv2d(
+    (conv): Conv2d(64, 80, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (bn): BatchNorm2d(80, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (Conv2d_4a_3x3): BasicConv2d(
+    (conv): Conv2d(80, 192, kernel_size=(3, 3), stride=(1, 1), bias=False)
+    (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (maxpool2): MaxPool2d(kernel_size=3, stride=2, padding=0, dilation=1, ceil_mode=False)
+  (Mixed_5b): InceptionA(
+    (branch1x1): BasicConv2d(
+      (conv): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch5x5_1): BasicConv2d(
+      (conv): Conv2d(192, 48, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(48, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch5x5_2): BasicConv2d(
+      (conv): Conv2d(48, 64, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), bias=False)
+      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_1): BasicConv2d(
+      (conv): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_2): BasicConv2d(
+      (conv): Conv2d(64, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(96, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_3): BasicConv2d(
+      (conv): Conv2d(96, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(96, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch_pool): BasicConv2d(
+      (conv): Conv2d(192, 32, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(32, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (Mixed_5c): InceptionA(
+    (branch1x1): BasicConv2d(
+      (conv): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch5x5_1): BasicConv2d(
+      (conv): Conv2d(256, 48, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(48, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch5x5_2): BasicConv2d(
+      (conv): Conv2d(48, 64, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), bias=False)
+      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_1): BasicConv2d(
+      (conv): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_2): BasicConv2d(
+      (conv): Conv2d(64, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(96, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_3): BasicConv2d(
+      (conv): Conv2d(96, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(96, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch_pool): BasicConv2d(
+      (conv): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (Mixed_5d): InceptionA(
+    (branch1x1): BasicConv2d(
+      (conv): Conv2d(288, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch5x5_1): BasicConv2d(
+      (conv): Conv2d(288, 48, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(48, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch5x5_2): BasicConv2d(
+      (conv): Conv2d(48, 64, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), bias=False)
+      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_1): BasicConv2d(
+      (conv): Conv2d(288, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_2): BasicConv2d(
+      (conv): Conv2d(64, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(96, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_3): BasicConv2d(
+      (conv): Conv2d(96, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(96, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch_pool): BasicConv2d(
+      (conv): Conv2d(288, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (Mixed_6a): InceptionB(
+    (branch3x3): BasicConv2d(
+      (conv): Conv2d(288, 384, kernel_size=(3, 3), stride=(2, 2), bias=False)
+      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_1): BasicConv2d(
+      (conv): Conv2d(288, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_2): BasicConv2d(
+      (conv): Conv2d(64, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(96, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_3): BasicConv2d(
+      (conv): Conv2d(96, 96, kernel_size=(3, 3), stride=(2, 2), bias=False)
+      (bn): BatchNorm2d(96, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (Mixed_6b): InceptionC(
+    (branch1x1): BasicConv2d(
+      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7_1): BasicConv2d(
+      (conv): Conv2d(768, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(128, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7_2): BasicConv2d(
+      (conv): Conv2d(128, 128, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
+      (bn): BatchNorm2d(128, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7_3): BasicConv2d(
+      (conv): Conv2d(128, 192, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_1): BasicConv2d(
+      (conv): Conv2d(768, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(128, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_2): BasicConv2d(
+      (conv): Conv2d(128, 128, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
+      (bn): BatchNorm2d(128, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_3): BasicConv2d(
+      (conv): Conv2d(128, 128, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
+      (bn): BatchNorm2d(128, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_4): BasicConv2d(
+      (conv): Conv2d(128, 128, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
+      (bn): BatchNorm2d(128, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_5): BasicConv2d(
+      (conv): Conv2d(128, 192, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch_pool): BasicConv2d(
+      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (Mixed_6c): InceptionC(
+    (branch1x1): BasicConv2d(
+      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7_1): BasicConv2d(
+      (conv): Conv2d(768, 160, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7_2): BasicConv2d(
+      (conv): Conv2d(160, 160, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
+      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7_3): BasicConv2d(
+      (conv): Conv2d(160, 192, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_1): BasicConv2d(
+      (conv): Conv2d(768, 160, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_2): BasicConv2d(
+      (conv): Conv2d(160, 160, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
+      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_3): BasicConv2d(
+      (conv): Conv2d(160, 160, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
+      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_4): BasicConv2d(
+      (conv): Conv2d(160, 160, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
+      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_5): BasicConv2d(
+      (conv): Conv2d(160, 192, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch_pool): BasicConv2d(
+      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (Mixed_6d): InceptionC(
+    (branch1x1): BasicConv2d(
+      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7_1): BasicConv2d(
+      (conv): Conv2d(768, 160, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7_2): BasicConv2d(
+      (conv): Conv2d(160, 160, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
+      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7_3): BasicConv2d(
+      (conv): Conv2d(160, 192, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_1): BasicConv2d(
+      (conv): Conv2d(768, 160, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_2): BasicConv2d(
+      (conv): Conv2d(160, 160, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
+      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_3): BasicConv2d(
+      (conv): Conv2d(160, 160, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
+      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_4): BasicConv2d(
+      (conv): Conv2d(160, 160, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
+      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_5): BasicConv2d(
+      (conv): Conv2d(160, 192, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch_pool): BasicConv2d(
+      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (Mixed_6e): InceptionC(
+    (branch1x1): BasicConv2d(
+      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7_1): BasicConv2d(
+      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7_2): BasicConv2d(
+      (conv): Conv2d(192, 192, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7_3): BasicConv2d(
+      (conv): Conv2d(192, 192, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_1): BasicConv2d(
+      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_2): BasicConv2d(
+      (conv): Conv2d(192, 192, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_3): BasicConv2d(
+      (conv): Conv2d(192, 192, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_4): BasicConv2d(
+      (conv): Conv2d(192, 192, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_5): BasicConv2d(
+      (conv): Conv2d(192, 192, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch_pool): BasicConv2d(
+      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (AuxLogits): InceptionAux(
+    (conv0): BasicConv2d(
+      (conv): Conv2d(768, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(128, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (conv1): BasicConv2d(
+      (conv): Conv2d(128, 768, kernel_size=(5, 5), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(768, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (fc): Linear(in_features=768, out_features=1000, bias=True)
+  )
+  (Mixed_7a): InceptionD(
+    (branch3x3_1): BasicConv2d(
+      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3_2): BasicConv2d(
+      (conv): Conv2d(192, 320, kernel_size=(3, 3), stride=(2, 2), bias=False)
+      (bn): BatchNorm2d(320, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7x3_1): BasicConv2d(
+      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7x3_2): BasicConv2d(
+      (conv): Conv2d(192, 192, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7x3_3): BasicConv2d(
+      (conv): Conv2d(192, 192, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7x3_4): BasicConv2d(
+      (conv): Conv2d(192, 192, kernel_size=(3, 3), stride=(2, 2), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (Mixed_7b): InceptionE(
+    (branch1x1): BasicConv2d(
+      (conv): Conv2d(1280, 320, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(320, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3_1): BasicConv2d(
+      (conv): Conv2d(1280, 384, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3_2a): BasicConv2d(
+      (conv): Conv2d(384, 384, kernel_size=(1, 3), stride=(1, 1), padding=(0, 1), bias=False)
+      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3_2b): BasicConv2d(
+      (conv): Conv2d(384, 384, kernel_size=(3, 1), stride=(1, 1), padding=(1, 0), bias=False)
+      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_1): BasicConv2d(
+      (conv): Conv2d(1280, 448, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(448, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_2): BasicConv2d(
+      (conv): Conv2d(448, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_3a): BasicConv2d(
+      (conv): Conv2d(384, 384, kernel_size=(1, 3), stride=(1, 1), padding=(0, 1), bias=False)
+      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_3b): BasicConv2d(
+      (conv): Conv2d(384, 384, kernel_size=(3, 1), stride=(1, 1), padding=(1, 0), bias=False)
+      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch_pool): BasicConv2d(
+      (conv): Conv2d(1280, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (Mixed_7c): InceptionE(
+    (branch1x1): BasicConv2d(
+      (conv): Conv2d(2048, 320, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(320, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3_1): BasicConv2d(
+      (conv): Conv2d(2048, 384, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3_2a): BasicConv2d(
+      (conv): Conv2d(384, 384, kernel_size=(1, 3), stride=(1, 1), padding=(0, 1), bias=False)
+      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3_2b): BasicConv2d(
+      (conv): Conv2d(384, 384, kernel_size=(3, 1), stride=(1, 1), padding=(1, 0), bias=False)
+      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_1): BasicConv2d(
+      (conv): Conv2d(2048, 448, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(448, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_2): BasicConv2d(
+      (conv): Conv2d(448, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_3a): BasicConv2d(
+      (conv): Conv2d(384, 384, kernel_size=(1, 3), stride=(1, 1), padding=(0, 1), bias=False)
+      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_3b): BasicConv2d(
+      (conv): Conv2d(384, 384, kernel_size=(3, 1), stride=(1, 1), padding=(1, 0), bias=False)
+      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch_pool): BasicConv2d(
+      (conv): Conv2d(2048, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
+  (dropout): Dropout(p=0.5, inplace=False)
+  (fc): Linear(in_features=2048, out_features=1000, bias=True)
+)</code></pre>
+</div>
+</div>
+</section>
+<section id="exercise-use-a-pre-trained-deep-learning-model-to-classify-images-2" class="slide level2 scrollable">
+<h2>Exercise: Use a pre-trained deep learning model to classify images</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Load a sample image to predict its category</label></li>
+</ul>
+<div id="d683459e" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a><span class="im">import</span> skimage</span>
+<span id="cb6-2"><a></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb6-3"><a></a></span>
+<span id="cb6-4"><a></a>sample_im <span class="op">=</span> skimage.data.rocket()</span>
+<span id="cb6-5"><a></a>sample_im.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>(427, 640, 3)</code></pre>
+</div>
+</div>
+</section>
+<section id="exercise-use-a-pre-trained-deep-learning-model-to-classify-images-3" class="slide level2 scrollable">
+<h2>Exercise: Use a pre-trained deep learning model to classify images</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Visualize the sample image</label></li>
+</ul>
+<div id="08c24b6b" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a>plt.imshow(sample_im)</span>
+<span id="cb8-2"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="DL_image_analysis_2_1_files/figure-revealjs/cell-6-output-1.png" width="608" height="416"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-use-a-pre-trained-deep-learning-model-to-classify-images-4" class="slide level2">
+<h2>Exercise: Use a pre-trained deep learning model to classify images</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Inspect what transforms are required by the pre-trained Inception model to work properly</label></li>
+</ul>
+<div id="232e7d5a" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a>inception_weights.transforms</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>functools.partial(&lt;class 'torchvision.transforms._presets.ImageClassification'&gt;, crop_size=299, resize_size=342)</code></pre>
+</div>
+</div>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Important</strong></p>
+</div>
+<div class="callout-content">
+<p><code>functools.partial</code> is a function to define functions with static arguments. So 👆 returns a function when it is called!</p>
+</div>
+</div>
+</div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>The transforms used by the Inception V3 are</p>
+<ol type="1">
+<li><p>resize the image to 342x342 pixels,</p></li>
+<li><p>crop the center 299x299 pixels window, and</p></li>
+<li><p>normalize the values of the RGB channels.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-use-a-pretrained-deep-learning-model-to-classify-images" class="slide level2">
+<h2>Exercise: Use a pretrained deep learning model to classify images</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Define a preprocessing pipeline using the inception_weights.transforms() method. Add also a transformation from <code>numpy</code> arrays into torch tensors.</label></li>
+</ul>
+<div id="6d1734ac" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a><span class="im">from</span> torchvision.transforms.v2 <span class="im">import</span> Compose, ToTensor</span>
+<span id="cb11-2"><a></a></span>
+<span id="cb11-3"><a></a>pipeline <span class="op">=</span> Compose([</span>
+<span id="cb11-4"><a></a>  ToTensor(),</span>
+<span id="cb11-5"><a></a>  inception_weights.transforms()</span>
+<span id="cb11-6"><a></a>])</span>
+<span id="cb11-7"><a></a></span>
+<span id="cb11-8"><a></a>pipeline</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>Compose(
+      ToTensor()
+      ImageClassification(
+      crop_size=[299]
+      resize_size=[342]
+      mean=[0.485, 0.456, 0.406]
+      std=[0.229, 0.224, 0.225]
+      interpolation=InterpolationMode.BILINEAR
+  )
+)</code></pre>
+</div>
+</div>
+</section>
+<section id="exercise-use-a-pretrained-deep-learning-model-to-classify-images-1" class="slide level2">
+<h2>Exercise: Use a pretrained deep learning model to classify images</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Pre-process the sample image using our pipeline</label></li>
+</ul>
+<div id="af26284b" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a>sample_x <span class="op">=</span> pipeline(sample_im)</span>
+<span id="cb13-2"><a></a><span class="bu">type</span>(sample_x), sample_x.shape, sample_x.<span class="bu">min</span>(), sample_x.<span class="bu">max</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>(torch.Tensor, torch.Size([3, 299, 299]), tensor(-1.8792), tensor(2.6400))</code></pre>
+</div>
+</div>
+</section>
+<section id="exercise-use-a-pretrained-deep-learning-model-to-classify-images-2" class="slide level2">
+<h2>Exercise: Use a pretrained deep learning model to classify images</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Use the pre-trained model to predict the class of our sample image</label></li>
+</ul>
+<div class="callout callout-caution callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Caution</strong></p>
+</div>
+<div class="callout-content">
+<p>Apply the model on sample_x[None, …], so it is treated as a one-sample batch</p>
+</div>
+</div>
+</div>
+<div id="20e9713b" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a></a>sample_y <span class="op">=</span> dl_model(sample_x[<span class="va">None</span>, ...])</span>
+<span id="cb15-2"><a></a></span>
+<span id="cb15-3"><a></a>sample_y.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>torch.Size([1, 1000])</code></pre>
+</div>
+</div>
+</section>
+<section id="exercise-use-a-pretrained-deep-learning-model-to-classify-images-3" class="slide level2 scrollable">
+<h2>Exercise: Use a pretrained deep learning model to classify images</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>The model’s output are the log-probabilities of <code>sample_x</code> belonging to each of the 1000 classes.</p>
+</div>
+</div>
+</div>
+<ul class="task-list">
+<li><label><input type="checkbox">Show the categories with the highest <em>log-</em>probabilities.</label></li>
+</ul>
+<div id="25b97bc6" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a></a>sample_y.argsort(dim<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>tensor([[578, 253, 339, 982, 301,  40, 584, 897, 382,  12, 170, 181,  25, 161,
+         255, 162, 159,  14, 500,  72,  44, 368, 714, 211, 201, 240,  90, 277,
+          99, 519,  46,  13, 790, 160, 883, 307,  31, 467, 271,  32, 452, 997,
+          92, 414, 286,  64, 241, 661, 360, 381, 473, 999, 316,  24, 184, 213,
+         804,  26, 889, 383, 689,  11, 231,  28, 207, 520, 134,  77,  37, 177,
+         513, 539, 191, 264, 306,  19, 103, 529, 823, 171, 838, 247, 174, 400,
+         228, 665, 669, 278,  16, 870, 354, 412, 272, 377, 175, 411, 551,  75,
+         265, 390, 601, 929,  27, 543, 434, 268,  94, 200,  33, 504, 760, 614,
+         387, 875, 167, 809, 588, 189,  30, 291, 703, 944, 323, 610, 631,  57,
+          41, 881, 349, 938, 493, 825, 732, 249, 593, 299, 516, 237, 246, 195,
+         137, 850, 756,  91, 695, 336, 799, 431, 766, 761, 310, 337, 894, 622,
+         305, 129, 351, 989, 581, 991, 612, 110, 672, 436, 239, 226,  93,  76,
+         785,  21, 260,  63, 294, 176, 960, 528, 606, 826, 168, 166,  87, 531,
+         355, 154,  15, 774, 717, 322,  18,   0, 193, 435, 152, 678, 722, 269,
+          86,  47, 292, 759, 248, 317, 105, 302, 621, 376,  60, 793, 295, 283,
+         692, 720, 495, 859, 284, 393, 267, 596, 537, 656, 235, 831, 707, 444,
+          85, 130, 232, 534, 560, 204, 188, 430, 379, 853,  43,  61, 261, 684,
+         932, 172, 746, 178, 986, 876, 615, 996, 770, 700, 298, 459, 384, 273,
+         328,  52, 605, 736, 968,  95, 410, 922, 296, 259, 347, 401, 518, 256,
+         912, 937, 319,  97, 155, 463, 636, 457,  53, 671, 119, 893, 300, 281,
+         921, 752, 394, 163, 244, 340, 697, 985, 763, 553, 243, 133, 568, 210,
+         454, 933, 597, 443,  20, 308, 451, 579, 549, 164, 716, 917,  59, 592,
+         136, 114, 185, 690, 472, 878, 642, 135, 771, 639, 276, 456, 485, 238,
+         943, 582, 486, 544, 979,  42, 868, 511, 321, 156,   9, 721, 365, 113,
+         263, 910,  88, 499, 670,  17, 635, 734, 266, 984, 386, 140, 280, 750,
+         407,  10, 654, 197, 478,  36,  62, 775, 638,  55, 275, 861, 230, 421,
+         603, 646, 447, 112, 233, 788, 222, 655, 492, 423, 896, 618, 675, 993,
+         794, 616, 215, 915, 196, 402, 229, 852, 364,  22, 139,  81, 685, 713,
+         309, 314, 153, 116, 547, 217, 643, 566, 719, 874,  98, 330, 587, 254,
+         458, 623, 886, 901, 842, 541, 930, 817, 507, 946, 362, 849,  73, 786,
+         939,  35, 157, 396, 250, 326, 725, 345, 617, 580, 988, 778, 552, 251,
+         187, 865,  71, 887, 242, 651, 448,  23, 559, 359, 202, 145, 180, 857,
+         691, 182, 475, 813, 743, 131, 843, 304, 318, 353, 422, 440,  89, 234,
+         704, 706,  68, 728, 150, 395, 108, 391, 512, 425, 468, 947, 143, 293,
+         350, 526, 257, 550, 957, 970, 955, 575,   5, 101, 123, 945, 633, 104,
+          80, 502, 729, 508,  49, 225, 258, 426, 637, 183, 995, 789, 344, 906,
+         948, 179, 950, 398, 397, 664, 532, 903, 198, 626, 194, 236, 667, 676,
+         757, 465, 324, 335, 218, 303, 699, 496, 934, 158,  38, 441, 433, 992,
+         375, 357, 810, 815, 693, 192, 585, 107, 586, 289, 331, 735, 772, 125,
+         515, 416, 392, 482, 869, 608, 681, 607, 882, 640, 380, 126, 854, 924,
+         768, 312, 589, 837, 141, 570, 315, 653, 102, 572, 479, 369, 956, 503,
+         115, 481,  74, 797, 122, 535, 327, 352,  45, 953, 802,  48, 389,  96,
+         270, 723, 224, 378, 795, 424, 450, 461, 796, 100,  39, 252, 800, 648,
+         679, 121, 787, 453, 925, 613, 846, 726, 702, 173,   8, 221, 287, 926,
+         169, 341, 325, 186, 128, 356, 709, 455, 645, 983,   6,  67, 449, 285,
+         972,  65, 765, 564, 282, 663, 677, 118, 806,  29, 576, 151, 388, 748,
+         782, 311, 358, 963, 329, 824, 333, 533, 203, 905, 673, 830, 951, 480,
+         419, 445, 829, 127, 904, 858,  69, 371, 313, 208, 753, 509, 521, 641,
+         219, 214, 209,  56, 928, 462, 138, 149, 776, 987, 523, 206, 916, 332,
+          51,   1, 320, 262, 798, 524, 805, 514, 627, 274, 705, 334, 420, 227,
+         773, 474, 205, 696, 899,  84, 212, 111,   7, 483, 801, 109, 990, 710,
+         866, 488,  78, 791, 602, 851, 747, 971,  70,  82, 439, 848, 367, 873,
+         591, 958, 505, 464, 342, 290, 674, 659, 898, 288, 803, 967, 594, 370,
+         730, 385, 567, 779, 223, 374, 429, 649, 741, 836, 711,  50, 952, 165,
+         598, 739, 546, 487, 686, 658, 749, 715, 501, 609, 890, 954, 432,  34,
+         769, 428, 647, 973, 962, 742, 981,   4, 619, 892,  58, 841, 964,  83,
+         142, 891, 361, 885, 909, 927, 124, 777, 363, 220, 373, 144, 406, 660,
+         731, 297, 783, 630, 245, 577, 106, 583, 965, 911, 427, 556, 834, 132,
+         762, 469, 569, 738, 199, 491, 446, 348,   3, 346, 147, 902, 808, 740,
+         936, 908, 819, 372, 827, 624, 975, 687, 548, 879, 611,  79, 574, 662,
+         476, 522, 864, 745, 969, 880, 998, 680, 343, 632, 884, 877, 497, 835,
+         477, 701, 811, 573, 818, 120, 949, 565, 190, 767, 914, 650, 418, 931,
+         216, 844, 872, 666, 415, 527, 117, 604, 148, 438, 923, 279, 599, 888,
+         698, 961, 855, 941, 338, 978, 466, 538, 688, 724, 839, 792, 542, 652,
+         525, 814, 918, 708, 366, 590, 860, 862, 600, 784, 942, 966, 976, 867,
+           2, 146, 489, 413, 712, 595, 644, 828, 994,  54, 399, 629, 780, 727,
+         822, 959, 764, 935, 832, 755, 751, 417, 977, 561, 558, 545, 625, 490,
+          66, 470, 980, 974, 816, 571, 863, 506, 737, 494, 555, 907, 409, 840,
+         460, 563, 471, 634, 620, 820, 484, 530, 913, 536, 403, 718, 856, 758,
+         845, 919, 821, 562, 871, 920, 404, 408, 683, 781, 940, 510, 847, 498,
+         628, 694, 895, 554, 405, 900, 442, 754, 833, 437, 807, 682, 668, 557,
+         812, 733, 517, 540, 744, 657]])</code></pre>
+</div>
+</div>
+</section>
+<section id="exercise-use-a-pretrained-deep-learning-model-to-classify-images-4" class="slide level2 scrollable">
+<h2>Exercise: Use a pretrained deep learning model to classify images</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Use the list of categories to translate the predicted class index into its category.</label></li>
+</ul>
+<div id="ade56e7d" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a></a>sorted_predicted_classes <span class="op">=</span> sample_y.argsort(dim<span class="op">=</span><span class="dv">1</span>, descending<span class="op">=</span><span class="va">True</span>)[<span class="dv">0</span>, :<span class="dv">10</span>]</span>
+<span id="cb19-2"><a></a>sorted_probs <span class="op">=</span> torch.softmax(sample_y, dim<span class="op">=</span><span class="dv">1</span>)[<span class="dv">0</span>, sorted_predicted_classes]</span>
+<span id="cb19-3"><a></a></span>
+<span id="cb19-4"><a></a><span class="cf">for</span> idx, prob <span class="kw">in</span> <span class="bu">zip</span>(sorted_predicted_classes, sorted_probs):</span>
+<span id="cb19-5"><a></a>    <span class="bu">print</span>(categories[idx], <span class="st">"</span><span class="sc">%3.2f</span><span class="st"> </span><span class="sc">%%</span><span class="st">"</span> <span class="op">%</span> (prob <span class="op">*</span> <span class="dv">100</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>missile 37.93 %
+projectile 14.39 %
+drilling platform 12.16 %
+crane 5.72 %
+pole 1.06 %
+space shuttle 0.93 %
+flagpole 0.93 %
+mosque 0.51 %
+obelisk 0.46 %
+solar dish 0.45 %</code></pre>
+</div>
+</div>
+</section></section>
+<section>
+<section id="try-with-other-sample-images-only-works-with-rgb" class="title-slide slide level1 center">
+<h1>Try with other sample images (only works with RGB!)</h1>
+
+</section>
+<section id="try-with-other-sample-images" class="slide level2 scrollable">
+<h2>Try with other sample images</h2>
+<div class="callout callout-caution callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Caution</strong></p>
+</div>
+<div class="callout-content">
+<p>Only works with RGB images</p>
+</div>
+</div>
+</div>
+<ul class="task-list">
+<li><label><input type="checkbox">Use the pretrained model to classify images from the internet (maybe pictures of <a href="https://en.wikipedia.org/wiki/Dog">dogs</a>).</label></li>
+</ul>
+<div id="498b8653" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a></a>sample_im <span class="op">=</span> skimage.io.imread(<span class="st">"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Black_Labrador_Retriever_-_Male_IMG_3323.jpg/1280px-Black_Labrador_Retriever_-_Male_IMG_3323.jpg"</span>)</span>
+<span id="cb21-2"><a></a>sample_x <span class="op">=</span> pipeline(sample_im)</span>
+<span id="cb21-3"><a></a>sample_y <span class="op">=</span> dl_model(sample_x[<span class="va">None</span>, ...])</span>
+<span id="cb21-4"><a></a></span>
+<span id="cb21-5"><a></a>plt.imshow(sample_im)</span>
+<span id="cb21-6"><a></a>plt.title(categories[sample_y.argmax(dim<span class="op">=</span><span class="dv">1</span>)])</span>
+<span id="cb21-7"><a></a>plt.show()</span>
+<span id="cb21-8"><a></a></span>
+<span id="cb21-9"><a></a>sorted_predicted_classes <span class="op">=</span> sample_y.argsort(dim<span class="op">=</span><span class="dv">1</span>, descending<span class="op">=</span><span class="va">True</span>)[<span class="dv">0</span>, :<span class="dv">10</span>]</span>
+<span id="cb21-10"><a></a>sorted_probs <span class="op">=</span> torch.softmax(sample_y, dim<span class="op">=</span><span class="dv">1</span>)[<span class="dv">0</span>, sorted_predicted_classes]</span>
+<span id="cb21-11"><a></a></span>
+<span id="cb21-12"><a></a><span class="cf">for</span> idx, prob <span class="kw">in</span> <span class="bu">zip</span>(sorted_predicted_classes, sorted_probs):</span>
+<span id="cb21-13"><a></a>    <span class="bu">print</span>(categories[idx], <span class="st">"</span><span class="sc">%3.2f</span><span class="st"> </span><span class="sc">%%</span><span class="st">"</span> <span class="op">%</span> (prob <span class="op">*</span> <span class="dv">100</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="DL_image_analysis_2_1_files/figure-revealjs/cell-13-output-1.png" width="608" height="431"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Labrador retriever 87.15 %
+German short-haired pointer 3.31 %
+flat-coated retriever 0.92 %
+Great Dane 0.83 %
+black-and-tan coonhound 0.52 %
+giant schnauzer 0.34 %
+curly-coated retriever 0.22 %
+Staffordshire bullterrier 0.19 %
+Doberman 0.14 %
+Rottweiler 0.07 %</code></pre>
+</div>
+</div>
+<ul class="task-list">
+<li><label><input type="checkbox">Try with an image from a category that is not in the labels set of the model (like giraffes: <a href="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Giraffe_Mikumi_National_Park.jpg/800px-Giraffe_Mikumi_National_Park.jpg">https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Giraffe_Mikumi_National_Park.jpg/800px-Giraffe_Mikumi_National_Park.jpg</a>)</label></li>
+</ul>
+</section></section>
+<section>
+<section id="using-deep-learning-models-as-feature-extractors" class="title-slide slide level1 center">
+<h1>Using Deep Learning models as feature extractors</h1>
+
+</section>
+<section id="exercise-modify-the-classifier-layer-dl_model.fc-to-return-the-features-map-from-the-input-image-instead-of-the-category" class="slide level2">
+<h2>Exercise: Modify the classifier layer <code>dl_model.fc</code> to return the features map from the input image instead of the category</h2>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>The classifier layer is commonly implemented as a MultiLayer Perceptron (Fully connected) at the end of the models. The specific name of that layer can vary between implementations.</p>
+</div>
+</div>
+</div>
+<ul class="task-list">
+<li><label><input type="checkbox">Load the pre-trained Inception V3 model again to use it as feature extractor.</label></li>
+</ul>
+<div id="5b57df1b" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a></a>dl_extractor <span class="op">=</span> models.inception_v3(inception_weights, progress<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb23-2"><a></a>dl_extractor.<span class="bu">eval</span>()</span>
+<span id="cb23-3"><a></a></span>
+<span id="cb23-4"><a></a>dl_extractor.fc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>Linear(in_features=2048, out_features=1000, bias=True)</code></pre>
+</div>
+</div>
+</section>
+<section id="exercise-modify-the-classifier-layer-dl_model.fc-to-return-the-features-map-from-the-input-image-instead-of-the-category-1" class="slide level2">
+<h2>Exercise: Modify the classifier layer <code>dl_model.fc</code> to return the features map from the input image instead of the category</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Replace the <code>.fc</code> layer with a <code>torch.nn.Identity</code> module.</label></li>
+</ul>
+<div id="6c4f9814" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a></a>dl_extractor.fc <span class="op">=</span> torch.nn.Identity()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul class="task-list">
+<li><label><input type="checkbox">Use the model for feature extraction in the same way it is used for image classification.</label></li>
+</ul>
+<div id="f5b18659" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a></a>sample_fx <span class="op">=</span> dl_extractor(sample_x[<span class="va">None</span>, ...])</span>
+<span id="cb26-2"><a></a></span>
+<span id="cb26-3"><a></a>sample_fx.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<pre><code>torch.Size([1, 2048])</code></pre>
+</div>
+</div>
+
+<div class="quarto-auto-generated-content">
+<div class="footer footer-default">
+
+</div>
+</div>
+</section></section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': false,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const onCopySuccess = function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
+      });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+</body></html>
