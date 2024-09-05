@@ -19,7 +19,7 @@ execute:
 jupyter: adv-ml
 ---
 
-``` {.python}
+``` {python}
 
 ```
 
@@ -199,7 +199,7 @@ pipeline
 from torch.utils.data import Dataset
 
 class CustomImageDataset(Dataset):
-    def __init__(self, image_filenames, image_labels, transform):
+    def __init__(self, image_filenames, image_labels, transform=None):
         self.image_filenames = image_filenames
         self.image_labels = image_labels
         self.transform = transform
@@ -209,30 +209,25 @@ class CustomImageDataset(Dataset):
 
     def __getitem__(self, idx):
         image = imread(self.image_filenames[idx])
-        image = self.transform(image)
+        if self.transform is not None:
+            image = self.transform(image)
 
         label = self.image_labels[idx]
 
         return image, label
 ```
 
-- [ ] Create the training and test sets using the `CustomImageDataset` class.
-
-``` {python}
-#| output: false
-train_ds = CustomImageDataset(train_images_fns, train_labels, pipeline)
-test_ds = CustomImageDataset(test_images_fns, test_labels, pipeline)
-```
-
 ---
 
 ## Tissue classification with the MoNuSAC dataset
 
-- [ ] Split the training set into train and validation subsets
+- [ ] Create the training and test sets using the `CustomImageDataset` class.
 
 ``` {python}
-#| output: false
 from torch.utils.data import random_split
+
+train_ds = CustomImageDataset(train_images_fns, train_labels, pipeline)
+test_ds = CustomImageDataset(test_images_fns, test_labels, pipeline)
 
 train_ds, val_ds = random_split(train_ds, [0.8, 0.2])
 
@@ -263,11 +258,14 @@ test_dl = DataLoader(test_ds, batch_size=128)
 ``` {python}
 #| output: false
 import torch
+import torch.nn as nn
 
 dl_model = torchvision.models.inception_v3(
     inception_weights,
     progress=True
 )
+
+dl_model.fc = nn.Identity()
 
 dl_model.eval()
 ```
@@ -276,16 +274,14 @@ dl_model.eval()
 
 ## Tissue classification with the MoNuSAC dataset
 
-- [ ] Replace the classifier for a MLP with the output number of classes of the MoNuSAS dataset
+- [ ] Replace the current classifier with a linear layer with the output number of classes of the MoNuSAS dataset.
 
 ``` {python}
 #| output: false
-import torch.nn as nn
-
 dl_model.fc = nn.Sequential(
-    nn.Linear(in_features=2048, out_features=1024, bias=True),
+    nn.Linear(in_features=2048, out_features=32, bias=True),
     nn.ReLU(),
-    nn.Linear(in_features=1024, out_features=4, bias=True)
+    nn.Linear(in_features=32, out_features=4, bias=True)
 )
 ```
 
@@ -296,12 +292,8 @@ dl_model.fc = nn.Sequential(
 for param in dl_model.parameters():
     param.requires_grad = False
 
-dl_model.eval()
-
 for param in dl_model.fc.parameters():
     param.requires_grad = True
-
-dl_model.fc.train()
 ```
 
 ---
@@ -314,108 +306,45 @@ dl_model.fc.train()
 #| output: false
 import torch.optim as optim
 
-optimizer = optim.Adam(dl_model.fc.parameters(), lr=0.001, weight_decay=0.001)
+if torch.cuda.is_available():
+    dl_model.cuda()
+
+optimizer = optim.Adam(dl_model.fc.parameters(), lr=0.001, weight_decay=0.0001)
 
 loss_fun = nn.CrossEntropyLoss()
 ```
 
 ---
 
-## Tissue classification with the MoNuSAC dataset
+## Tissue classification with the MoNuSAC dataset {.scrollable}
 
-- [ ] Implement the training step
-
-``` {python}
-#| output: false
-#| overflow-y: true
-if torch.cuda.is_available():
-    dl_model.cuda()
-
-avg_train_loss = 0
-total_train_samples = 0
-
-dl_model.fc.train()
-for x, y in train_dl:
-    optimizer.zero_grad()
-
-    if torch.cuda.is_available():
-        x = x.cuda()
-
-    y_hat = dl_model(x).cpu()
-
-    loss = loss_fun(y_hat, y)
-
-    loss.backward()
-
-    optimizer.step()
-
-    avg_train_loss += loss.item() * len(y)
-    total_train_samples += len(y)
-
-avg_train_loss /= total_train_samples
-print(f"Train loss={avg_train_loss}")
-```
-
----
-
-## Tissue classification with the MoNuSAC dataset
-
-- [ ] Implement the validation step
-
-``` {python}
-#| output: false
-#| overflow-y: true
-avg_val_loss = 0
-total_val_samples = 0
-
-dl_model.fc.eval()
-with torch.no_grad():
-    for x, y in val_dl:
-        if torch.cuda.is_available():
-            x = x.cuda()
-
-        y_hat = dl_model(x).cpu()
-
-        loss = loss_fun(y_hat, y)
-
-        avg_val_loss += loss.item() * len(y)
-        total_val_samples += len(y)
-
-avg_val_loss /= total_val_samples
-print(f"Validation loss={avg_val_loss}")
-```
-
-# Fine tune the model for tissue classification with the MoNuSAC dataset
-
----
-
-## Tissue classification with the MoNuSAC dataset
-
-- [ ] Put those two steps together inside an epoch loop and measure the accuracy of the model
+- [ ] Implement the training and validation steps
 
 ``` {python}
 #| overflow-y: true
 from torchmetrics.classification import Accuracy
 
-if torch.cuda.is_available():
-    dl_model.cuda()
-
 train_acc_metric = Accuracy(task="multiclass", num_classes=4)
 val_acc_metric = Accuracy(task="multiclass", num_classes=4)
 
-num_epochs = 20
+if torch.cuda.is_available():
+    train_acc_metric.cuda()
+    val_acc_metric.cuda()
+
+num_epochs = 100
 for e in range(num_epochs):
     avg_train_loss = 0
     total_train_samples = 0
 
-    dl_model.fc.train()
+    dl_model.train()
     for x, y in train_dl:
         optimizer.zero_grad()
 
         if torch.cuda.is_available():
             x = x.cuda()
+            y = y.cuda()
 
-        y_hat = dl_model(x).cpu()
+        y_hat = dl_model(x).logits
 
         loss = loss_fun(y_hat, y)
 
@@ -434,13 +363,14 @@ for e in range(num_epochs):
     avg_val_loss = 0
     total_val_samples = 0
 
-    dl_model.fc.eval()
+    dl_model.eval()
     with torch.no_grad():
         for x, y in val_dl:
             if torch.cuda.is_available():
                 x = x.cuda()
+                y = y.cuda()
 
-            y_hat = dl_model(x).cpu()
+            y_hat = dl_model(x)
 
             loss = loss_fun(y_hat, y)
 
@@ -465,19 +395,22 @@ for e in range(num_epochs):
 - [ ] Compute the performance of the model on the test set
 
 ``` {python}
-#| output: false
 avg_test_loss = 0
 total_test_samples = 0
 
 test_acc_metric = Accuracy(task="multiclass", num_classes=4)
 
-dl_model.fc.eval()
+if torch.cuda.is_available():
+    test_acc_metric.cuda()
+
+dl_model.eval()
 with torch.no_grad():
     for x, y in test_dl:
         if torch.cuda.is_available():
             x = x.cuda()
+            y = y.cuda()
 
-        y_hat = dl_model(x).cpu()
+        y_hat = dl_model(x)
 
         loss = loss_fun(y_hat, y)
 
@@ -520,11 +453,12 @@ import numpy as np
 
 if torch.cuda.is_available():
     dl_model.cuda()
+    dl_model.fc.cuda()
 
 train_features = []
 train_labels = []
 
-dl_model.fc[1] = nn.Identity()
+dl_model.fc[-1] = nn.Identity()
 
 dl_model.eval()
 with torch.no_grad():
@@ -568,10 +502,9 @@ embedding.shape
 #| code-fold: true
 import matplotlib.pyplot as plt
 
-for c in range(4):
-    plt.scatter(embedding[train_labels == c, 0], embedding[train_labels == c, 1], label=tissue_classes[c])
+emb_plot = plt.scatter(embedding[:, 0], embedding[:, 1], c=train_labels, marker="o")
 
-plt.legend()
+plt.legend(handles=emb_plot.legend_elements()[0], labels=tissue_classes)
 plt.gca().set_aspect('equal', 'datalim')
 plt.title('UMAP projection of InceptionV3 features of the MoNuSAC dataset', fontsize=24)
 ```
@@ -634,16 +567,26 @@ embedding_test = reducer.transform(test_features)
 
 ``` {python}
 #| code-fold: true
-for c in range(4):
-    plt.scatter(embedding[train_labels == c, 0], embedding[train_labels == c, 1], label=tissue_classes[c] + " (train)", marker="o")
+fig, (ax_0, ax_1) = plt.subplots(1, 2)
 
-for c in range(4):
-    plt.scatter(embedding_val[val_labels == c, 0], embedding_val[val_labels == c, 1], label=tissue_classes[c] + " (validation)", marker="v")
+emb_train_plot = ax_0.scatter(embedding[:, 0], embedding[:, 1], c=train_labels, marker="o", alpha=0.5)
+legend_train = ax_0.legend(handles=emb_train_plot.legend_elements()[0], labels=tissue_classes, loc="lower left", title="Train dataset")
+ax_0.add_artist(legend_train)
 
-for c in range(4):
-    plt.scatter(embedding_test[test_labels == c, 0], embedding_test[test_labels == c, 1], label=tissue_classes[c] + " (test)", marker="s")
+emb_val_plot = ax_0.scatter(embedding_val[:, 0], embedding_val[:, 1], c=val_labels,  marker="v", alpha=0.5)
+legend_val = ax_0.legend(handles=emb_val_plot.legend_elements()[0], labels=tissue_classes, loc="lower right", title="Validation dataset")
+ax_0.add_artist(legend_val)
 
-plt.legend()
-plt.gca().set_aspect('equal', 'datalim')
+ax_0.set_aspect('equal', 'datalim')
+
+emb_train_plot = ax_1.scatter(embedding[:, 0], embedding[:, 1], c=train_labels, marker="o", alpha=0.5)
+legend_train = ax_1.legend(handles=emb_train_plot.legend_elements()[0], labels=tissue_classes, loc="lower left", title="Train dataset")
+ax_1.add_artist(legend_train)
+
+emb_test_plot = ax_1.scatter(embedding_test[:, 0], embedding_test[:, 1], c=test_labels, marker="s", alpha=0.5)
+legend_test = ax_1.legend(handles=emb_test_plot.legend_elements()[0], labels=tissue_classes, loc="lower right", title="Test dataset")
+ax_1.add_artist(legend_test)
+
+ax_1.set_aspect('equal', 'datalim')
 plt.title('UMAP projection of InceptionV3 features of the MoNuSAC dataset', fontsize=24)
 ```
