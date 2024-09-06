@@ -8,6 +8,9 @@ format:
     controls: true
     output-file: "Adv_ML_Python_presentation_1"
     fontsize: 20pt
+    include-in-header: 
+      text: |
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel ="stylesheet" integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg==" crossorigin="anonymous">
 
 execute:
   error: true
@@ -20,17 +23,21 @@ jupyter: adv-ml
 ---
 
 
-# Workshop outcomes
+## Workshop outcomes
 
 * Understand the process of training ML models.
 *	Load pre-trained ML models and fine-tune them with new data.
 *	Evaluate the performance of ML models.
 *	Adapt ML models for different tasks from pre-trained models.
 
+### Materials
+
+[Open notebook in Colab](https://colab.research.google.com/drive/1c0Qw8ICTIl2yE2ChJZ4Fi6QNIoVUeWCx){.btn .btn-outline-primary .btn role="button" target=”_blank”} [View solutions](https://colab.research.google.com/drive/1QyVxdnwNrP1uGnsosClYsQ1hf7pF5ARF){.btn .btn-outline-primary .btn role="button" target=”_blank”}
 
 # 0. Setup environment
 
 ## Select runtime and connect
+
 
 On the top right corner of the page, click the drop-down arrow to the right of the `Connect` button and select `Change runtime type`.
 

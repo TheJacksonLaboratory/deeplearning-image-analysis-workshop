@@ -385,6 +385,7 @@
       margin-right: 0; 
     }
   </style>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg==" crossorigin="anonymous">
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -402,16 +403,17 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 </div>
 
 </section>
-<section id="workshop-outcomes" class="title-slide slide level1 center">
-<h1>Workshop outcomes</h1>
+<section id="workshop-outcomes" class="slide level2">
+<h2>Workshop outcomes</h2>
 <ul>
 <li>Understand the process of training ML models.</li>
 <li>Load pre-trained ML models and fine-tune them with new data.</li>
 <li>Evaluate the performance of ML models.</li>
 <li>Adapt ML models for different tasks from pre-trained models.</li>
 </ul>
+<h3 id="materials">Materials</h3>
+<p><a href="https://colab.research.google.com/drive/1c0Qw8ICTIl2yE2ChJZ4Fi6QNIoVUeWCx" class="btn btn-outline-primary" role="button" target="”_blank”">Open notebook in Colab</a> <a href="https://colab.research.google.com/drive/1QyVxdnwNrP1uGnsosClYsQ1hf7pF5ARF" class="btn btn-outline-primary" role="button" target="”_blank”">View solutions</a></p>
 </section>
-
 <section>
 <section id="setup-environment" class="title-slide slide level1 center">
 <h1>0. Setup environment</h1>
@@ -560,7 +562,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Load the CIFAR-100 dataset from torchvision.datasets</label></li>
 </ul>
-<div id="da840dd9" class="cell" data-execution_count="2">
+<div id="da840dd9" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> torch</span>
 <span id="cb1-2"><a></a><span class="im">import</span> torchvision</span>
 <span id="cb1-3"><a></a></span>
@@ -572,7 +574,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Explore the CIFAR-100 dataset</label></li>
 </ul>
-<div id="6d212c36" class="cell" data-execution_count="3">
+<div id="6d212c36" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>x_im, y <span class="op">=</span> cifar_ds[<span class="dv">0</span>]</span>
 <span id="cb3-2"><a></a></span>
 <span id="cb3-3"><a></a><span class="bu">len</span>(cifar_ds), <span class="bu">type</span>(x_im), <span class="bu">type</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -580,7 +582,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <pre><code>(50000, PIL.Image.Image, int)</code></pre>
 </div>
 </div>
-<div id="d8892205" class="cell" data-execution_count="4">
+<div id="d8892205" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-stdout">
 <pre><code>y = 19 (cattle)</code></pre>
 </div>
@@ -601,7 +603,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <li>two-dimensional variables are matrices,</li>
 <li>and three or more dimensional variables, are tensors.</li>
 </ul>
-<div id="9cfb3025" class="cell" data-execution_count="5">
+<div id="9cfb3025" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a><span class="im">import</span> torch</span>
 <span id="cb6-2"><a></a></span>
 <span id="cb6-3"><a></a>x0 <span class="op">=</span> torch.Tensor([<span class="dv">7</span>]) <span class="co"># This is a point</span></span>
@@ -638,7 +640,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 </div>
 </div>
 </div>
-<div id="2e6a9878" class="cell" data-execution_count="6">
+<div id="2e6a9878" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a><span class="im">from</span> torchvision.transforms.v2 <span class="im">import</span> PILToTensor</span>
 <span id="cb7-2"><a></a></span>
 <span id="cb7-3"><a></a>pre_process <span class="op">=</span> PILToTensor()</span>
@@ -675,7 +677,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Create a composed transformation to carry out the conversion, casting to float, and rescaling to <span class="math inline">\([0, 1]\)</span> range in the same function.</label></li>
 </ul>
-<div id="46a616d6" class="cell" data-execution_count="7">
+<div id="46a616d6" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a><span class="im">from</span> torchvision.transforms.v2 <span class="im">import</span> Compose, PILToTensor, ToDtype</span>
 <span id="cb9-2"><a></a></span>
 <span id="cb9-3"><a></a>pre_process <span class="op">=</span> Compose([</span>
@@ -713,7 +715,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Re-load the CIFAR-100 dataset, this time passing the <code>pre_process</code> function as argument.</label></li>
 </ul>
-<div id="5d3ce07c" class="cell" data-execution_count="8">
+<div id="5d3ce07c" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a>cifar_ds <span class="op">=</span> torchvision.datasets.CIFAR100(root<span class="op">=</span><span class="st">"/tmp"</span>, train<span class="op">=</span><span class="va">True</span>, download<span class="op">=</span><span class="va">True</span>, transform<span class="op">=</span>pre_process)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Files already downloaded and verified</code></pre>
@@ -757,7 +759,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Load the CIFAR-100 test set</label></li>
 </ul>
-<div id="cf05ddb2" class="cell" data-execution_count="9">
+<div id="cf05ddb2" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a>cifar_test_ds <span class="op">=</span> torchvision.datasets.CIFAR100(root<span class="op">=</span><span class="st">"/tmp"</span>, train<span class="op">=</span><span class="va">False</span>, download<span class="op">=</span><span class="va">True</span>, transform<span class="op">=</span>pre_process)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Files already downloaded and verified</code></pre>
@@ -766,7 +768,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Split the training set into train and validation subsets</label></li>
 </ul>
-<div id="50bf1c4a" class="cell" data-execution_count="10">
+<div id="50bf1c4a" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a></a><span class="im">from</span> torch.utils.data <span class="im">import</span> random_split</span>
 <span id="cb15-2"><a></a></span>
 <span id="cb15-3"><a></a>cifar_train_ds, cifar_val_ds <span class="op">=</span> random_split(cifar_ds, (<span class="dv">40_000</span>, <span class="dv">10_000</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -792,7 +794,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Use the <code>nn</code> (Neural Networks) module from <code>pytorch</code> to create a Logistic Regression model</label></li>
 </ul>
-<div id="33f1c1b1" class="cell" data-execution_count="11">
+<div id="33f1c1b1" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
 <span id="cb16-2"><a></a></span>
 <span id="cb16-3"><a></a>lr_clf_1 <span class="op">=</span> nn.Linear(in_features<span class="op">=</span><span class="dv">3</span> <span class="op">*</span> <span class="dv">32</span> <span class="op">*</span> <span class="dv">32</span>, out_features<span class="op">=</span><span class="dv">100</span>, bias<span class="op">=</span><span class="va">True</span>)</span>
@@ -814,7 +816,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 </div>
 </div>
 </div>
-<div id="a439b930" class="cell" data-execution_count="12">
+<div id="a439b930" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a></a>y_hat <span class="op">=</span> lr_clf_2( lr_clf_1( x.reshape(<span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>) ))</span>
 <span id="cb17-2"><a></a></span>
 <span id="cb17-3"><a></a><span class="bu">type</span>(y_hat), y_hat.shape, y_hat.dtype</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -828,7 +830,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Use the <code>nn.Sequential</code> module to build sequential models</label></li>
 </ul>
-<div id="aa4e0300" class="cell" data-execution_count="13">
+<div id="aa4e0300" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a></a>mlp_clf <span class="op">=</span> nn.Sequential(</span>
 <span id="cb19-2"><a></a>  nn.Linear(in_features<span class="op">=</span><span class="dv">3</span> <span class="op">*</span> <span class="dv">32</span> <span class="op">*</span> <span class="dv">32</span>, out_features<span class="op">=</span><span class="dv">1024</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
 <span id="cb19-3"><a></a>  nn.Tanh(),</span>
@@ -839,7 +841,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox"><em>Feed</em> the model with a sample <code>x</code></label></li>
 </ul>
-<div id="9da7f2bd" class="cell" data-execution_count="14">
+<div id="9da7f2bd" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a></a>y_hat <span class="op">=</span> mlp_clf(x.reshape(<span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>))</span>
 <span id="cb20-2"><a></a></span>
 <span id="cb20-3"><a></a><span class="bu">type</span>(y_hat), y_hat.shape, y_hat.dtype</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -940,7 +942,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Define a Cross Entropy loss function with <code>nn.CrossEntropyLoss</code></label></li>
 </ul>
-<div id="84c34c8c" class="cell" data-execution_count="15">
+<div id="84c34c8c" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a></a>loss_fun <span class="op">=</span> nn.CrossEntropyLoss()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul class="task-list">
@@ -959,7 +961,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 </div>
 </div>
 </div>
-<div id="964186ad" class="cell" data-execution_count="16">
+<div id="964186ad" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a></a>mlp_clf <span class="op">=</span> nn.Sequential(</span>
 <span id="cb23-2"><a></a>  nn.Linear(in_features<span class="op">=</span><span class="dv">3</span> <span class="op">*</span> <span class="dv">32</span> <span class="op">*</span> <span class="dv">32</span>, out_features<span class="op">=</span><span class="dv">1024</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
 <span id="cb23-3"><a></a>  nn.Tanh(),</span>
@@ -986,7 +988,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 </div>
 </div>
 </div>
-<div id="4f884333" class="cell" data-execution_count="17">
+<div id="4f884333" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a></a>loss <span class="op">=</span> loss_fun(y_hat, torch.LongTensor([y]))</span>
 <span id="cb24-2"><a></a></span>
 <span id="cb24-3"><a></a>loss</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1026,7 +1028,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Check what are the gradients of the MLP parameters before back propagating the gradient.</label></li>
 </ul>
-<div id="fb162ff6" class="cell" data-execution_count="18">
+<div id="fb162ff6" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a></a>mlp_clf[<span class="dv">0</span>].bias.grad</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul class="task-list">
@@ -1045,7 +1047,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 </div>
 </div>
 </div>
-<div id="efc79a21" class="cell" data-execution_count="19">
+<div id="efc79a21" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a></a>loss <span class="op">=</span> loss_fun(y_hat, torch.LongTensor([y]))</span>
 <span id="cb27-2"><a></a></span>
 <span id="cb27-3"><a></a>loss.backward()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1053,7 +1055,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Verify that the gradients have been propagated to the model parameters.</label></li>
 </ul>
-<div id="738c6c0b" class="cell" data-execution_count="20">
+<div id="738c6c0b" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a></a>mlp_clf[<span class="dv">0</span>].bias.grad</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -1132,7 +1134,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Use a <code>DataLoader</code> to serve mini-batches of images to train our MLP.</label></li>
 </ul>
-<div id="7ac55684" class="cell" data-execution_count="21">
+<div id="7ac55684" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a></a><span class="im">from</span> torch.utils.data <span class="im">import</span> DataLoader</span>
 <span id="cb29-2"><a></a></span>
 <span id="cb29-3"><a></a>cifar_train_dl <span class="op">=</span> DataLoader(cifar_train_ds, batch_size<span class="op">=</span><span class="dv">128</span>, shuffle<span class="op">=</span><span class="va">True</span>)</span>
@@ -1142,7 +1144,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Create a Stochastic Gradient Descent optimizer for our MLP classifier.</label></li>
 </ul>
-<div id="af972269" class="cell" data-execution_count="22">
+<div id="af972269" class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a></a><span class="im">import</span> torch.optim <span class="im">as</span> optim</span>
 <span id="cb30-2"><a></a></span>
 <span id="cb30-3"><a></a>optimizer <span class="op">=</span> optim.SGD(mlp_clf.parameters(), lr<span class="op">=</span><span class="fl">0.01</span>, )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1269,7 +1271,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Plot the training loss for this <em>epoch</em>.</label></li>
 </ul>
-<div id="fb87e26a" class="cell" data-execution_count="26">
+<div id="fb87e26a" class="cell" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb34-2"><a></a></span>
 <span id="cb34-3"><a></a>plt.plot(train_loss, <span class="st">"b-"</span>, label<span class="op">=</span><span class="st">"Training loss"</span>)</span>
@@ -1334,7 +1336,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Plot the average train and validation losses</label></li>
 </ul>
-<div id="08f15458" class="cell" data-execution_count="28">
+<div id="08f15458" class="cell" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb36-2"><a></a></span>
 <span id="cb36-3"><a></a>plt.plot(train_loss, <span class="st">"b-"</span>, label<span class="op">=</span><span class="st">"Average training loss"</span>)</span>
@@ -1411,7 +1413,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Compute the average accuracy for the Train set.</label></li>
 </ul>
-<div id="97a5daf4" class="cell" data-execution_count="29">
+<div id="97a5daf4" class="cell" data-execution_count="30">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a></a><span class="im">from</span> torchmetrics.classification <span class="im">import</span> Accuracy</span>
 <span id="cb38-2"><a></a></span>
 <span id="cb38-3"><a></a>mlp_clf.<span class="bu">eval</span>()</span>
@@ -1437,7 +1439,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Compute the average accuracy for the Validation and Test sets.</label></li>
 </ul>
-<div id="d03fff04" class="cell" data-execution_count="30">
+<div id="d03fff04" class="cell" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a></a>val_acc_metric <span class="op">=</span> Accuracy(task<span class="op">=</span><span class="st">"multiclass"</span>, num_classes<span class="op">=</span><span class="dv">100</span>)</span>
 <span id="cb40-2"><a></a>test_acc_metric <span class="op">=</span> Accuracy(task<span class="op">=</span><span class="st">"multiclass"</span>, num_classes<span class="op">=</span><span class="dv">100</span>)</span>
 <span id="cb40-3"><a></a></span>
@@ -1481,7 +1483,7 @@ Test acc=0.12290000170469284</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Create a convolution layer with <code>nn.Conv2D</code> using 3 channels as input, and a single one for output.</label></li>
 </ul>
-<div id="373d671d" class="cell" data-execution_count="31">
+<div id="373d671d" class="cell" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a></a>conv_1 <span class="op">=</span> nn.Conv2d(in_channels<span class="op">=</span><span class="dv">3</span>, out_channels<span class="op">=</span><span class="dv">1</span>, kernel_size<span class="op">=</span><span class="dv">7</span>, padding<span class="op">=</span><span class="dv">0</span>, bias<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb42-2"><a></a></span>
 <span id="cb42-3"><a></a>x, _ <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(cifar_train_dl))</span>
@@ -1516,7 +1518,7 @@ Test acc=0.12290000170469284</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Create a convolution layer with <code>nn.Conv2D</code> using 3 channels as input, and a single one for output.</label></li>
 </ul>
-<div id="482bec97" class="cell" data-execution_count="32">
+<div id="482bec97" class="cell" data-execution_count="33">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a></a>plt.rcParams[<span class="st">'figure.figsize'</span>] <span class="op">=</span> [<span class="dv">5</span>, <span class="dv">5</span>]</span>
 <span id="cb44-2"><a></a></span>
 <span id="cb44-3"><a></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>)</span>
@@ -1551,13 +1553,13 @@ Test acc=0.12290000170469284</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Visualize the weights of the convolution layer.</label></li>
 </ul>
-<div id="6f50a2cf" class="cell" data-execution_count="33">
+<div id="6f50a2cf" class="cell" data-execution_count="34">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a></a>conv_1.weight.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="33">
 <pre><code>torch.Size([1, 3, 7, 7])</code></pre>
 </div>
 </div>
-<div id="5b85c327" class="cell" data-execution_count="34">
+<div id="5b85c327" class="cell" data-execution_count="35">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>)</span>
 <span id="cb47-2"><a></a>ax[<span class="dv">0</span>, <span class="dv">0</span>].imshow(conv_1.weight.detach()[<span class="dv">0</span>, <span class="dv">0</span>], cmap<span class="op">=</span><span class="st">"gray"</span>)</span>
 <span id="cb47-3"><a></a>ax[<span class="dv">0</span>, <span class="dv">1</span>].imshow(conv_1.weight.detach()[<span class="dv">0</span>, <span class="dv">1</span>], cmap<span class="op">=</span><span class="st">"gray"</span>)</span>
@@ -1578,7 +1580,7 @@ Test acc=0.12290000170469284</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Modify the weights of the convolution layer.</label></li>
 </ul>
-<div id="846889e5" class="cell" data-execution_count="35">
+<div id="846889e5" class="cell" data-execution_count="36">
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a></a>conv_1 <span class="op">=</span> nn.Conv2d(in_channels<span class="op">=</span><span class="dv">3</span>, out_channels<span class="op">=</span><span class="dv">1</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">0</span>, bias<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb48-2"><a></a></span>
 <span id="cb48-3"><a></a>conv_1.weight.data[:] <span class="op">=</span> torch.FloatTensor([</span>
@@ -1607,7 +1609,7 @@ Test acc=0.12290000170469284</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Visualize the effects after changing the values.</label></li>
 </ul>
-<div id="7cc57205" class="cell" data-execution_count="36">
+<div id="7cc57205" class="cell" data-execution_count="37">
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a></a>fx <span class="op">=</span> conv_1(x)</span>
 <span id="cb49-2"><a></a></span>
 <span id="cb49-3"><a></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>)</span>
@@ -1629,7 +1631,7 @@ Test acc=0.12290000170469284</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Modify the weights of the convolution layer.</label></li>
 </ul>
-<div id="f1fe3b71" class="cell" data-execution_count="37">
+<div id="f1fe3b71" class="cell" data-execution_count="38">
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a></a>conv_1 <span class="op">=</span> nn.Conv2d(in_channels<span class="op">=</span><span class="dv">3</span>, out_channels<span class="op">=</span><span class="dv">1</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">0</span>, bias<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb50-2"><a></a></span>
 <span id="cb50-3"><a></a>conv_1.weight.data[:] <span class="op">=</span> torch.FloatTensor([</span>
@@ -1659,7 +1661,7 @@ Test acc=0.12290000170469284</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Modify the weights of the convolution layer.</label></li>
 </ul>
-<div id="717b878c" class="cell" data-execution_count="38">
+<div id="717b878c" class="cell" data-execution_count="39">
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a></a>conv_1 <span class="op">=</span> nn.Conv2d(in_channels<span class="op">=</span><span class="dv">3</span>, out_channels<span class="op">=</span><span class="dv">1</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">0</span>, bias<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb51-2"><a></a></span>
 <span id="cb51-3"><a></a>conv_1.weight.data[:] <span class="op">=</span> torch.FloatTensor([</span>
@@ -1710,7 +1712,7 @@ Test acc=0.12290000170469284</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Build the convolutional neural network using <code>nn.Sequential</code>, and the <code>nn.ReLU()</code> activation function.</label></li>
 </ul>
-<div id="fdee84a5" class="cell" data-execution_count="39">
+<div id="fdee84a5" class="cell" data-execution_count="40">
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a></a>lenet_clf <span class="op">=</span> nn.Sequential(</span>
 <span id="cb52-2"><a></a>    nn.Conv2d(in_channels<span class="op">=</span><span class="dv">3</span>, out_channels<span class="op">=</span><span class="dv">6</span>, kernel_size<span class="op">=</span><span class="dv">5</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
 <span id="cb52-3"><a></a>    nn.ReLU(),</span>
@@ -1745,7 +1747,7 @@ Test acc=0.12290000170469284</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Test our implementation.</label></li>
 </ul>
-<div id="424d75d7" class="cell" data-execution_count="40">
+<div id="424d75d7" class="cell" data-execution_count="41">
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a></a>y_hat <span class="op">=</span> lenet_clf(x)</span>
 <span id="cb53-2"><a></a></span>
 <span id="cb53-3"><a></a><span class="bu">type</span>(y_hat), y_hat.dtype, y_hat.shape, y_hat.<span class="bu">min</span>(), y_hat.<span class="bu">max</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1763,7 +1765,7 @@ Test acc=0.12290000170469284</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Train the model to classify images from CIFAR-100.</label></li>
 </ul>
-<div id="4530663f" class="cell" data-execution_count="41">
+<div id="4530663f" class="cell" data-execution_count="42">
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a></a>num_epochs <span class="op">=</span> <span class="dv">10</span></span>
 <span id="cb55-2"><a></a>train_loss <span class="op">=</span> []</span>
 <span id="cb55-3"><a></a>val_loss <span class="op">=</span> []</span>
@@ -1822,7 +1824,7 @@ Test acc=0.12290000170469284</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Plot the average train and validation losses</label></li>
 </ul>
-<div id="e36ac04b" class="cell" data-execution_count="42">
+<div id="e36ac04b" class="cell" data-execution_count="43">
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a></a>plt.plot(train_loss, <span class="st">"b-"</span>, label<span class="op">=</span><span class="st">"Average training loss"</span>)</span>
 <span id="cb56-2"><a></a>plt.plot(val_loss, <span class="st">"r-"</span>, label<span class="op">=</span><span class="st">"Average validation loss"</span>)</span>
 <span id="cb56-3"><a></a>plt.legend()</span>
@@ -1841,7 +1843,7 @@ Test acc=0.12290000170469284</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Compute the average accuracy for the Validation and Test sets.</label></li>
 </ul>
-<div id="b7e0de03" class="cell" data-execution_count="43">
+<div id="b7e0de03" class="cell" data-execution_count="44">
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a></a>lenet_clf.<span class="bu">eval</span>()</span>
 <span id="cb57-2"><a></a></span>
 <span id="cb57-3"><a></a>val_acc_metric <span class="op">=</span> Accuracy(task<span class="op">=</span><span class="st">"multiclass"</span>, num_classes<span class="op">=</span><span class="dv">100</span>)</span>

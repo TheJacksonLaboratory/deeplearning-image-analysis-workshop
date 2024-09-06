@@ -1,5 +1,12 @@
 [
   {
+    "objectID": "notes/Adv_ML_Python_presentation_2_1.html#workshop-outcomes",
+    "href": "notes/Adv_ML_Python_presentation_2_1.html#workshop-outcomes",
+    "title": "Advanced Machine Learning with Python (Session 2 - Part 1)",
+    "section": "Workshop outcomes",
+    "text": "Workshop outcomes\n\nUnderstand the process of training ML models.\nLoad pre-trained ML models and fine-tune them with new data.\nEvaluate the performance of ML models.\nAdapt ML models for different tasks from pre-trained models.\n\nMaterials\nOpen notebook in Colab View solutions"
+  },
+  {
     "objectID": "notes/Adv_ML_Python_presentation_2_1.html#select-runtime-and-connect",
     "href": "notes/Adv_ML_Python_presentation_2_1.html#select-runtime-and-connect",
     "title": "Advanced Machine Learning with Python (Session 2 - Part 1)",
@@ -487,7 +494,7 @@
     "href": "notes/Adv_ML_Python_presentation_2_2.html#tissue-classification-with-the-monusac-dataset-1",
     "title": "Advanced Machine Learning with Python (Session 2 - Part 2)",
     "section": "Tissue classification with the MoNuSAC dataset",
-    "text": "Tissue classification with the MoNuSAC dataset\n\nR. Verma, et al. “MoNuSAC2020: A Multi-organ Nuclei Segmentation and Classification Challenge.” IEEE Transactions on Medical Imaging (2021)"
+    "text": "Tissue classification with the MoNuSAC dataset\n\nR. Verma, et al. “MoNuSAC2020: A Multi-organ Nuclei Segmentation and Classification Challenge.” IEEE Transactions on Medical Imaging (2021)\n\n\nOpen notebook in Colab View solutions"
   },
   {
     "objectID": "notes/Adv_ML_Python_presentation_2_2.html#data-preparation",
@@ -567,20 +574,6 @@
     "text": "Tissue classification with the MoNuSAC dataset\n\nSave the current state of the model\n\n\ncheckpoint = dl_model.state_dict()\ntorch.save(checkpoint, \"monusac_checkpoint.pt\")"
   },
   {
-    "objectID": "notes/Adv_ML_Python_presentation_2_2.html#tissue-classification-with-the-monusac-dataset-12",
-    "href": "notes/Adv_ML_Python_presentation_2_2.html#tissue-classification-with-the-monusac-dataset-12",
-    "title": "Advanced Machine Learning with Python (Session 2 - Part 2)",
-    "section": "Tissue classification with the MoNuSAC dataset",
-    "text": "Tissue classification with the MoNuSAC dataset\n\nCompute the performance of the model on the test set\n\n\navg_test_loss = 0\ntotal_test_samples = 0\n\ntest_acc_metric = Accuracy(task=\"multiclass\", num_classes=4)\n\ndl_model.fc.eval()\nwith torch.no_grad():\n    for x, y in test_dl:\n        if torch.cuda.is_available():\n            x = x.cuda()\n\n        y_hat = dl_model(x).cpu()\n\n        loss = loss_fun(y_hat, y)\n\n        avg_test_loss += loss.item() * len(y)\n        total_test_samples += len(y)\n\n        test_acc_metric(y_hat.softmax(dim=1), y)\n\navg_test_loss /= total_test_samples\ntest_acc = test_acc_metric.compute()\n\nprint(f\"Test loss={avg_test_loss: 2.4} (Acc={test_acc: 2.2%})\")\n\ntest_acc_metric.reset()"
-  },
-  {
-    "objectID": "notes/Adv_ML_Python_presentation_2_2.html#tissue-classification-with-the-monusac-dataset-13",
-    "href": "notes/Adv_ML_Python_presentation_2_2.html#tissue-classification-with-the-monusac-dataset-13",
-    "title": "Advanced Machine Learning with Python (Session 2 - Part 2)",
-    "section": "Tissue classification with the MoNuSAC dataset",
-    "text": "Tissue classification with the MoNuSAC dataset\n\nSave the current state of the model\n\n\ncheckpoint = dl_model.state_dict()\ntorch.save(checkpoint, \"monusac_checkpoint.pt\")"
-  },
-  {
     "objectID": "notes/Adv_ML_Python_presentation_2_2.html#explore-the-monusac-dataset-in-the-embedded-feature-space-1",
     "href": "notes/Adv_ML_Python_presentation_2_2.html#explore-the-monusac-dataset-in-the-embedded-feature-space-1",
     "title": "Advanced Machine Learning with Python (Session 2 - Part 2)",
@@ -614,5 +607,12 @@
     "title": "Advanced Machine Learning with Python (Session 2 - Part 2)",
     "section": "Explore the MoNuSAC dataset in the embedded feature space",
     "text": "Explore the MoNuSAC dataset in the embedded feature space\n\nProject the features of the test and validation sets into a two-dimensional UMap.\n\n\nembedding_val = reducer.transform(val_features)\nembedding_test = reducer.transform(test_features)\n\n\nShow the embedded space.\n\n\n\nCode\nfig, (ax_0, ax_1) = plt.subplots(1, 2)\n\nemb_train_plot = ax_0.scatter(embedding[:, 0], embedding[:, 1], c=train_labels, marker=\"o\", alpha=0.5)\nlegend_train = ax_0.legend(handles=emb_train_plot.legend_elements()[0], labels=tissue_classes, loc=\"lower left\", title=\"Train dataset\")\nax_0.add_artist(legend_train)\n\nemb_val_plot = ax_0.scatter(embedding_val[:, 0], embedding_val[:, 1], c=val_labels,  marker=\"v\", alpha=0.5)\nlegend_val = ax_0.legend(handles=emb_val_plot.legend_elements()[0], labels=tissue_classes, loc=\"lower right\", title=\"Validation dataset\")\nax_0.add_artist(legend_val)\n\nax_0.set_aspect('equal', 'datalim')\n\nemb_train_plot = ax_1.scatter(embedding[:, 0], embedding[:, 1], c=train_labels, marker=\"o\", alpha=0.5)\nlegend_train = ax_1.legend(handles=emb_train_plot.legend_elements()[0], labels=tissue_classes, loc=\"lower left\", title=\"Train dataset\")\nax_1.add_artist(legend_train)\n\nemb_test_plot = ax_1.scatter(embedding_test[:, 0], embedding_test[:, 1], c=test_labels, marker=\"s\", alpha=0.5)\nlegend_test = ax_1.legend(handles=emb_test_plot.legend_elements()[0], labels=tissue_classes, loc=\"lower right\", title=\"Test dataset\")\nax_1.add_artist(legend_test)\n\nax_1.set_aspect('equal', 'datalim')\nplt.title('UMAP projection of InceptionV3 features of the MoNuSAC dataset', fontsize=24)\n\n\nText(0.5, 1.0, 'UMAP projection of InceptionV3 features of the MoNuSAC dataset')"
+  },
+  {
+    "objectID": "notes/Adv_ML_Python_presentation_1.html#workshop-outcomes",
+    "href": "notes/Adv_ML_Python_presentation_1.html#workshop-outcomes",
+    "title": "Advanced Machine Learning with Python (Session 1)",
+    "section": "Workshop outcomes",
+    "text": "Workshop outcomes\n\nUnderstand the process of training ML models.\nLoad pre-trained ML models and fine-tune them with new data.\nEvaluate the performance of ML models.\nAdapt ML models for different tasks from pre-trained models.\n\nMaterials\nOpen notebook in Colab View solutions"
   }
 ]

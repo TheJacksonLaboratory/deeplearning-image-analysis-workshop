@@ -385,6 +385,7 @@
       margin-right: 0; 
     }
   </style>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg==" crossorigin="anonymous">
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -413,7 +414,8 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <li>R. Verma, et al.&nbsp;“MoNuSAC2020: A Multi-organ Nuclei Segmentation and Classification Challenge.” IEEE Transactions on Medical Imaging (2021)</li>
 </ul>
 
-<img data-src="../imgs/Tissue_classification.png" class="r-stretch"></section>
+<img data-src="../imgs/Tissue_classification.png" class="r-stretch"><p><a href="https://colab.research.google.com/drive/1TXFtySMQ6_r2r4vO8tt-ldP9FiE0Un7q" class="btn btn-outline-primary" role="button" target="”_blank”">Open notebook in Colab</a> <a href="https://colab.research.google.com/drive/1dmegbJxh0QF9kzn18fA9nQ_-Nq6KwiYC" class="btn btn-outline-primary" role="button" target="”_blank”">View solutions</a></p>
+</section>
 <section id="data-preparation" class="slide level2">
 <h2>Data preparation</h2>
 <ul class="task-list">
@@ -438,7 +440,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Explore the dataset</label></li>
 </ul>
-<div id="c39ea862" class="cell" data-execution_count="3">
+<div id="c39ea862" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">from</span> skimage.io <span class="im">import</span> imread</span>
 <span id="cb1-2"><a></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a></a></span>
@@ -472,7 +474,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Define the pre-processing pipeline using the transforms from the pre-trained InceptionV3 model</label></li>
 </ul>
-<div id="4b82a480" class="cell" data-execution_count="4">
+<div id="4b82a480" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="im">import</span> torchvision</span>
 <span id="cb2-2"><a></a><span class="im">from</span> torchvision.transforms.v2 <span class="im">import</span> Compose, ToTensor</span>
 <span id="cb2-3"><a></a></span>
@@ -491,7 +493,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Create a dataset class to load the images from disk</label></li>
 </ul>
-<div id="d62e451f" class="cell" data-execution_count="5">
+<div id="d62e451f" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a><span class="im">from</span> torch.utils.data <span class="im">import</span> Dataset</span>
 <span id="cb3-2"><a></a></span>
 <span id="cb3-3"><a></a><span class="kw">class</span> CustomImageDataset(Dataset):</span>
@@ -518,7 +520,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Create the training and test sets using the <code>CustomImageDataset</code> class.</label></li>
 </ul>
-<div id="1022ca22" class="cell" data-execution_count="6">
+<div id="1022ca22" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="im">from</span> torch.utils.data <span class="im">import</span> random_split</span>
 <span id="cb4-2"><a></a></span>
 <span id="cb4-3"><a></a>train_ds <span class="op">=</span> CustomImageDataset(train_images_fns, train_labels, pipeline)</span>
@@ -538,7 +540,7 @@ Test images=101</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Use a <code>DataLoader</code> to serve image batches from the datasets.</label></li>
 </ul>
-<div id="47ed4416" class="cell" data-execution_count="7">
+<div id="47ed4416" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a><span class="im">from</span> torch.utils.data <span class="im">import</span> DataLoader</span>
 <span id="cb6-2"><a></a></span>
 <span id="cb6-3"><a></a>train_dl <span class="op">=</span> DataLoader(train_ds, batch_size<span class="op">=</span><span class="dv">32</span>, shuffle<span class="op">=</span><span class="va">True</span>)</span>
@@ -556,7 +558,7 @@ Test images=101</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Use the pre-trained InceptionV3 model from <code>torchvision</code></label></li>
 </ul>
-<div id="330f1f5c" class="cell" data-execution_count="8">
+<div id="330f1f5c" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a><span class="im">import</span> torch</span>
 <span id="cb7-2"><a></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
 <span id="cb7-3"><a></a></span>
@@ -575,7 +577,7 @@ Test images=101</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Replace the current classifier with a linear layer with the output number of classes of the MoNuSAS dataset.</label></li>
 </ul>
-<div id="b05e8fbf" class="cell" data-execution_count="9">
+<div id="b05e8fbf" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a>dl_model.fc <span class="op">=</span> nn.Sequential(</span>
 <span id="cb8-2"><a></a>    nn.Linear(in_features<span class="op">=</span><span class="dv">2048</span>, out_features<span class="op">=</span><span class="dv">32</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
 <span id="cb8-3"><a></a>    nn.ReLU(),</span>
@@ -585,7 +587,7 @@ Test images=101</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Freeze all layers but the MLP that serves as classifier.</label></li>
 </ul>
-<div id="ea66fae2" class="cell" data-execution_count="10">
+<div id="ea66fae2" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a><span class="cf">for</span> param <span class="kw">in</span> dl_model.parameters():</span>
 <span id="cb9-2"><a></a>    param.requires_grad <span class="op">=</span> <span class="va">False</span></span>
 <span id="cb9-3"><a></a></span>
@@ -598,7 +600,7 @@ Test images=101</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Define the optimization method and loss function.</label></li>
 </ul>
-<div id="46fbefad" class="cell" data-execution_count="11">
+<div id="46fbefad" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a><span class="im">import</span> torch.optim <span class="im">as</span> optim</span>
 <span id="cb10-2"><a></a></span>
 <span id="cb10-3"><a></a><span class="cf">if</span> torch.cuda.is_available():</span>
@@ -614,7 +616,7 @@ Test images=101</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Implement the training and validation steps</label></li>
 </ul>
-<div id="99906507" class="cell" data-overflow-y="true" data-execution_count="12">
+<div id="99906507" class="cell" data-overflow-y="true" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a><span class="im">from</span> torchmetrics.classification <span class="im">import</span> Accuracy</span>
 <span id="cb11-2"><a></a></span>
 <span id="cb11-3"><a></a>train_acc_metric <span class="op">=</span> Accuracy(task<span class="op">=</span><span class="st">"multiclass"</span>, num_classes<span class="op">=</span><span class="dv">4</span>)</span>
@@ -788,7 +790,7 @@ Test images=101</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Compute the performance of the model on the test set</label></li>
 </ul>
-<div id="5fb2b42d" class="cell" data-execution_count="13">
+<div id="5fb2b42d" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a>avg_test_loss <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb13-2"><a></a>total_test_samples <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb13-3"><a></a></span>
@@ -829,7 +831,7 @@ Test images=101</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Save the current state of the model</label></li>
 </ul>
-<div id="512076eb" class="cell" data-execution_count="14">
+<div id="512076eb" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a></a>checkpoint <span class="op">=</span> dl_model.state_dict()</span>
 <span id="cb15-2"><a></a>torch.save(checkpoint, <span class="st">"monusac_checkpoint.pt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -844,7 +846,7 @@ Test images=101</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Extract the <em>embedded</em> features from the train set.</label></li>
 </ul>
-<div id="1534e79d" class="cell" data-execution_count="15">
+<div id="1534e79d" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb16-2"><a></a></span>
 <span id="cb16-3"><a></a><span class="cf">if</span> torch.cuda.is_available():</span>
@@ -876,7 +878,7 @@ Test images=101</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Project the features into a two-dimensional UMap.</label></li>
 </ul>
-<div id="163576ec" class="cell" data-execution_count="16">
+<div id="163576ec" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a></a><span class="im">import</span> umap</span>
 <span id="cb17-2"><a></a></span>
 <span id="cb17-3"><a></a>reducer <span class="op">=</span> umap.UMAP()</span>
@@ -891,7 +893,7 @@ Test images=101</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Show the embedded space.</label></li>
 </ul>
-<div id="6bc5ac3a" class="cell" data-execution_count="17">
+<div id="6bc5ac3a" class="cell" data-execution_count="18">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -919,7 +921,7 @@ Test images=101</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Extract the <em>embedded</em> features from the validation and test sets.</label></li>
 </ul>
-<div id="ddd4eb1e" class="cell" data-overflow-y="true" data-execution_count="18">
+<div id="ddd4eb1e" class="cell" data-overflow-y="true" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a></a>val_features <span class="op">=</span> []</span>
 <span id="cb20-2"><a></a>val_labels <span class="op">=</span> []</span>
 <span id="cb20-3"><a></a></span>
@@ -958,14 +960,14 @@ Test images=101</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Project the features of the test and validation sets into a two-dimensional UMap.</label></li>
 </ul>
-<div id="2d7ade92" class="cell" data-execution_count="19">
+<div id="2d7ade92" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a></a>embedding_val <span class="op">=</span> reducer.transform(val_features)</span>
 <span id="cb21-2"><a></a>embedding_test <span class="op">=</span> reducer.transform(test_features)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul class="task-list">
 <li><label><input type="checkbox">Show the embedded space.</label></li>
 </ul>
-<div id="8f258d7c" class="cell" data-execution_count="20">
+<div id="8f258d7c" class="cell" data-execution_count="21">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a></a>fig, (ax_0, ax_1) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>)</span>
