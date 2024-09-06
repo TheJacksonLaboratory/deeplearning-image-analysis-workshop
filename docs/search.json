@@ -1,5 +1,12 @@
 [
   {
+    "objectID": "notes/Adv_ML_Python_presentation_2_1.html#workshop-outcomes",
+    "href": "notes/Adv_ML_Python_presentation_2_1.html#workshop-outcomes",
+    "title": "Advanced Machine Learning with Python (Session 2 - Part 1)",
+    "section": "Workshop outcomes",
+    "text": "Workshop outcomes\n\nUnderstand the process of training ML models.\nLoad pre-trained ML models and fine-tune them with new data.\nEvaluate the performance of ML models.\nAdapt ML models for different tasks from pre-trained models.\n\nMaterials\nOpen notebook in Colab View solutions"
+  },
+  {
     "objectID": "notes/Adv_ML_Python_presentation_2_1.html#select-runtime-and-connect",
     "href": "notes/Adv_ML_Python_presentation_2_1.html#select-runtime-and-connect",
     "title": "Advanced Machine Learning with Python (Session 2 - Part 1)",
@@ -103,6 +110,13 @@
     "title": "Advanced Machine Learning with Python (Session 2 - Part 1)",
     "section": "Exercise: Modify the classifier layer dl_model.fc to return the features map from the input image instead of the category",
     "text": "Exercise: Modify the classifier layer dl_model.fc to return the features map from the input image instead of the category\n\nReplace the .fc layer with a torch.nn.Identity module.\n\n\ndl_extractor.fc = torch.nn.Identity()\n\n\nUse the model for feature extraction in the same way it is used for image classification.\n\n\nsample_fx = dl_extractor(sample_x[None, ...])\n\nsample_fx.shape\n\ntorch.Size([1, 2048])"
+  },
+  {
+    "objectID": "notes/Adv_ML_Python_presentation_1.html#workshop-outcomes",
+    "href": "notes/Adv_ML_Python_presentation_1.html#workshop-outcomes",
+    "title": "Advanced Machine Learning with Python (Session 1)",
+    "section": "Workshop outcomes",
+    "text": "Workshop outcomes\n\nUnderstand the process of training ML models.\nLoad pre-trained ML models and fine-tune them with new data.\nEvaluate the performance of ML models.\nAdapt ML models for different tasks from pre-trained models.\n\nMaterials\nOpen notebook in Colab View solutions"
   },
   {
     "objectID": "notes/Adv_ML_Python_presentation_1.html#select-runtime-and-connect",
@@ -487,7 +501,7 @@
     "href": "notes/Adv_ML_Python_presentation_2_2.html#tissue-classification-with-the-monusac-dataset-1",
     "title": "Advanced Machine Learning with Python (Session 2 - Part 2)",
     "section": "Tissue classification with the MoNuSAC dataset",
-    "text": "Tissue classification with the MoNuSAC dataset\n\nR. Verma, et al. “MoNuSAC2020: A Multi-organ Nuclei Segmentation and Classification Challenge.” IEEE Transactions on Medical Imaging (2021)"
+    "text": "Tissue classification with the MoNuSAC dataset\n\nR. Verma, et al. “MoNuSAC2020: A Multi-organ Nuclei Segmentation and Classification Challenge.” IEEE Transactions on Medical Imaging (2021)\n\n\nOpen notebook in Colab View solutions"
   },
   {
     "objectID": "notes/Adv_ML_Python_presentation_2_2.html#data-preparation",

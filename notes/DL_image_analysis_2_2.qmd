@@ -8,6 +8,9 @@ format:
     controls: true
     output-file: "Adv_ML_Python_presentation_2_2"
     fontsize: 20pt
+    include-in-header: 
+      text: |
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel ="stylesheet" integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg==" crossorigin="anonymous">
 
 execute:
   error: false
@@ -19,10 +22,6 @@ execute:
 jupyter: adv-ml
 ---
 
-``` {python}
-
-```
-
 # Tissue classification with the MoNuSAC dataset
 
 ## Tissue classification with the MoNuSAC dataset
@@ -30,6 +29,8 @@ jupyter: adv-ml
 * R. Verma, et al. "MoNuSAC2020: A Multi-organ Nuclei Segmentation and Classification Challenge." IEEE Transactions on Medical Imaging (2021)
 
 ![](../imgs/Tissue_classification.png)
+
+[Open notebook in Colab](https://colab.research.google.com/drive/1TXFtySMQ6_r2r4vO8tt-ldP9FiE0Un7q){.btn .btn-outline-primary .btn role="button" target=”_blank”} [View solutions](https://colab.research.google.com/drive/1dmegbJxh0QF9kzn18fA9nQ_-Nq6KwiYC){.btn .btn-outline-primary .btn role="button" target=”_blank”}
 
 
 ## Data preparation
