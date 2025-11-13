@@ -1,5 +1,5 @@
 ---
-title: Advanced Machine Learning with Python (Session 2 - Part 1)
+title: Advanced Machine Learning with Python (Session 1 - Part 2)
 author: Fernando Cervantes (fernando.cervantes@jax.org)
 format: 
   revealjs:
@@ -19,7 +19,7 @@ execute:
   freeze: true
   keep-ipynb: true
 
-jupyter: adv-ml
+jupyter: python3
 ---
 
 ## Workshop outcomes
@@ -28,38 +28,6 @@ jupyter: adv-ml
 *	Load pre-trained ML models and fine-tune them with new data.
 *	Evaluate the performance of ML models.
 *	Adapt ML models for different tasks from pre-trained models.
-
-### Materials
-
-[Open notebook in Colab](https://colab.research.google.com/drive/1GntUwgFXynmwLMj9tGa74CIkbAuJ5mNN){.btn .btn-outline-primary .btn role="button" target=”_blank”} [View solutions](https://colab.research.google.com/drive/1jW_8ChQtOQgTllzhh6PwVS5avAht3Aol){.btn .btn-outline-primary .btn role="button" target=”_blank”}
-
-
-# 0. Setup environment
-
-## Select runtime and connect
-
-On the top right corner of the page, click the drop-down arrow to the right of the `Connect` button and select `Change runtime type`.
-
-![](../imgs/connect_runtime.png){width=50%}
-
----
-
-Make sure `Python 3` runtime is selected. For this part of the workshop `CPU` acceleration is enough.
-
-![](../imgs/select_runtime.png){width=50%}
-
----
-
-Now we can connect to the runtime by clicking `Connect`. This will create a **V**irtual **M**achine (**VM**) with compute resources we can use for a limited amount of time.
-
-![](../imgs/connect.png){height=25%}
-
-:::{.callout-caution}
-In free Colab accounts these resources are not guaranteed and can be taken away without notice (preemptible machines).
-
-Data stored in this runtime will be lost if not moved into other storage when the runtime is deleted.
-:::
-
 
 # Load pre-trained models
 
@@ -70,7 +38,7 @@ Data stored in this runtime will be lost if not moved into other storage when th
 * Lets use one from the PyTorch's `torchvision` module for computer vision
 
 * Try first with the InceptionV3 model. 
-![InceptionV3](https://cloud.google.com/static/tpu/docs/images/inceptionv3onc--oview.png)
+![InceptionV3](../imgs/Inception.png)
 
 ---
 
@@ -160,7 +128,7 @@ The transforms used by the Inception V3 are
 
 ---
 
-## Exercise: Use a pretrained deep learning model to classify images
+## Exercise: Use a pre-trained deep learning model to classify images
 
 - [ ] Define a preprocessing pipeline using the inception_weights.transforms() method. Add also a transformation from `numpy` arrays into torch tensors.
 
@@ -177,7 +145,7 @@ pipeline
 
 ---
 
-## Exercise: Use a pretrained deep learning model to classify images
+## Exercise: Use a pre-trained deep learning model to classify images
 
 - [ ] Pre-process the sample image using our pipeline
 
@@ -188,7 +156,7 @@ type(sample_x), sample_x.shape, sample_x.min(), sample_x.max()
 
 ---
 
-## Exercise: Use a pretrained deep learning model to classify images
+## Exercise: Use a pre-trained deep learning model to classify images
 
 - [ ] Use the pre-trained model to predict the class of our sample image
 
@@ -204,7 +172,7 @@ sample_y.shape
 
 ---
 
-## Exercise: Use a pretrained deep learning model to classify images {.scrollable}
+## Exercise: Use a pre-trained deep learning model to classify images {.scrollable}
 
 ::: {.callout-note}
 The model's output are the log-probabilities of `sample_x` belonging to each of the 1000 classes.
@@ -218,7 +186,7 @@ sample_y.argsort(dim=1)
 
 ---
 
-## Exercise: Use a pretrained deep learning model to classify images {.scrollable}
+## Exercise: Use a pre-trained deep learning model to classify images {.scrollable}
 
 - [ ] Use the list of categories to translate the predicted class index into its category.
 
@@ -241,7 +209,7 @@ for idx, prob in zip(sorted_predicted_classes, sorted_probs):
 Only works with RGB images
 :::
 
-- [ ] Use the pretrained model to classify images from the internet (maybe pictures of [dogs](https://en.wikipedia.org/wiki/Dog)).
+- [ ] Use the pre-trained model to classify images from the internet (maybe pictures of [dogs](https://en.wikipedia.org/wiki/Dog)).
 
 ``` {python}
 sample_im = skimage.io.imread("https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Black_Labrador_Retriever_-_Male_IMG_3323.jpg/1280px-Black_Labrador_Retriever_-_Male_IMG_3323.jpg")

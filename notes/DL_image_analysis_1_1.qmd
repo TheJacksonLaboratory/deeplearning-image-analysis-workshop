@@ -19,7 +19,7 @@ execute:
   freeze: true
   keep-ipynb: true
 
-jupyter: adv-ml
+jupyter: python3
 ---
 
 
@@ -1224,17 +1224,38 @@ https://en.wikipedia.org/wiki/Kernel_(image_processing)
 
 ## Examples of popular Deep Learning models in computer vision
 
-* Inception v3 for image classification
+* Residual Neural Networks
 
-![InceptionV3](https://cloud.google.com/static/tpu/docs/images/inceptionv3onc--oview.png)
+![He, Kaiming et al. “Deep Residual Learning for Image Recognition.” 2016 IEEE Conference on Computer Vision and Pattern Recognition (CVPR) (2015): 770-778.](https://en.wikipedia.org/wiki/Residual_neural_network#/media/File:Resnet-18_architecture.svg)
 
 ---
 
 ## Examples of popular Deep Learning models in computer vision
 
-* U-Net for cell segmentation
+* Inception (v3)
 
-![U-Net](https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/u-net-architecture.png)
+![Szegedy, Christian et al. “Going deeper with convolutions.” 2015 IEEE Conference on Computer Vision and Pattern Recognition (CVPR) (2014): 1-9.](../imgs/Inception.png)
+
+---
+
+## Examples of popular Deep Learning models in computer vision
+
+* U-Net (cell segmentation)
+
+![Ronneberger, Olaf et al. “U-Net: Convolutional Networks for Biomedical Image Segmentation.” ArXiv abs/1505.04597 (2015): n. pag.](https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/u-net-architecture.png)
+
+---
+
+## Examples of popular Deep Learning models in computer vision
+
+* Vision Transformer (classification and segmentation)
+
+![Dosovitskiy, Alexey et al. “An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale.” ArXiv abs/2010.11929 (2020): n. pag.](../imgs/ViT.png)
+
+
+- Segment Anything Model (SAM)
+- Micro-SAM
+
 
 ---
 
@@ -1242,7 +1263,8 @@ https://en.wikipedia.org/wiki/Kernel_(image_processing)
 
 * LeNet-5 for handwritten digits classification (<a href=http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf>LeCun et al.</a>)
 
-![LeNet-5](https://upload.wikimedia.org/wikipedia/commons/6/61/LeNet_architecture.png)
+![LeCun, Yann et al. “Gradient-based learning applied to document recognition.” Proc. IEEE 86 (1998): 2278-2324.](https://upload.wikimedia.org/wikipedia/commons/6/61/LeNet_architecture.png)
+
 By Daniel Voigt Godoy - <a rel="nofollow" class="external free" href="https://github.com/dvgodoy/dl-visuals/">https://github.com/dvgodoy/dl-visuals/</a>, <a href="https://creativecommons.org/licenses/by/4.0" title="Creative Commons Attribution 4.0">CC BY 4.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=150820922">Link</a>
 
 ---

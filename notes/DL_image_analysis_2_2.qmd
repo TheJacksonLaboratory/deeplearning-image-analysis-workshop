@@ -1,593 +1,1301 @@
 ---
-title: Advanced Machine Learning with Python (Session 2 - Part 2)
+title: Advanced Machine Learning with Python (Session 2)
 author: Fernando Cervantes (fernando.cervantes@jax.org)
-format: 
-  revealjs:
-    code-fold: false
-    progress: true
-    controls: true
-    output-file: "Adv_ML_Python_presentation_2_2"
-    fontsize: 20pt
-    include-in-header: 
-      text: |
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel ="stylesheet" integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg==" crossorigin="anonymous">
-
-execute:
-  error: false
-  echo: true
-  cache: true
-  freeze: true
-  keep-ipynb: true
-
-jupyter: adv-ml
+jupyter:
+  kernelspec:
+    display_name: Python 3 (ipykernel)
+    language: python
+    name: python3
 ---
 
-# Tissue classification with the MoNuSAC dataset
+# 0. Setup the environment
 
-## Tissue classification with the MoNuSAC dataset
+## Install packages required to access images from S3 storage
 
-* R. Verma, et al. "MoNuSAC2020: A Multi-organ Nuclei Segmentation and Classification Challenge." IEEE Transactions on Medical Imaging (2021)
-
-![](../imgs/Tissue_classification.png)
-
-[Open notebook in Colab](https://colab.research.google.com/drive/1TXFtySMQ6_r2r4vO8tt-ldP9FiE0Un7q){.btn .btn-outline-primary .btn role="button" target=”_blank”} [View solutions](https://colab.research.google.com/drive/1dmegbJxh0QF9kzn18fA9nQ_-Nq6KwiYC){.btn .btn-outline-primary .btn role="button" target=”_blank”}
-
-
-## Data preparation
-
-- [ ] Download the MoNuSAC dataset from https://monusac-2020.grand-challenge.org/Data/
-
-``` {python}
-#| echo: false
-#| output: false
-tissue_classes = [
-    'Lung',
-    'Kidney',
-    'Breast',
-    'Prostate',
-]
-
-tissue_per_train_files = {
-    "TCGA-55-1594": 0,
-    "TCGA-69-7760": 0,
-    "TCGA-69-A59K": 0,
-    "TCGA-73-4668": 0,
-    "TCGA-78-7220": 0,
-    "TCGA-86-7713": 0,
-    "TCGA-86-8672": 0,
-    "TCGA-L4-A4E5": 0,
-    "TCGA-MP-A4SY": 0,
-    "TCGA-MP-A4T7": 0,
-    "TCGA-5P-A9K0": 1,
-    "TCGA-B9-A44B": 1,
-    "TCGA-B9-A8YI": 1,
-    "TCGA-DW-7841": 1,
-    "TCGA-EV-5903": 1,
-    "TCGA-F9-A97G": 1,
-    "TCGA-G7-A8LD": 1,
-    "TCGA-MH-A560": 1,
-    "TCGA-P4-AAVK": 1,
-    "TCGA-SX-A7SR": 1,
-    "TCGA-UZ-A9PO": 1,
-    "TCGA-UZ-A9PU": 1,
-    "TCGA-A2-A0CV": 2,
-    "TCGA-A2-A0ES": 2,
-    "TCGA-B6-A0WZ": 2,
-    "TCGA-BH-A18T": 2,
-    "TCGA-D8-A1X5": 2,
-    "TCGA-E2-A154": 2,
-    "TCGA-E9-A22B": 2,
-    "TCGA-E9-A22G": 2,
-    "TCGA-EW-A6SD": 2,
-    "TCGA-S3-AA11": 2,
-    "TCGA-EJ-5495": 3,
-    "TCGA-EJ-5505": 3,
-    "TCGA-EJ-5517": 3,
-    "TCGA-G9-6342": 3,
-    "TCGA-G9-6499": 3,
-    "TCGA-J4-A67Q": 3,
-    "TCGA-J4-A67T": 3,
-    "TCGA-KK-A59X": 3,
-    "TCGA-KK-A6E0": 3,
-    "TCGA-KK-A7AW": 3,
-    "TCGA-V1-A8WL": 3,
-    "TCGA-V1-A9O9": 3,
-    "TCGA-X4-A8KQ": 3,
-    "TCGA-YL-A9WY": 3,
-}
-
-tissue_per_test_files = {
-    "TCGA-49-6743": 0,
-    "TCGA-50-6591": 0,
-    "TCGA-55-7570": 0,
-    "TCGA-55-7573": 0,
-    "TCGA-73-4662": 0,
-    "TCGA-78-7152": 0,
-    "TCGA-MP-A4T7": 0,
-    "TCGA-2Z-A9JG": 1,
-    "TCGA-2Z-A9JN": 1,
-    "TCGA-DW-7838": 1,
-    "TCGA-DW-7963": 1,
-    "TCGA-F9-A8NY": 1,
-    "TCGA-IZ-A6M9": 1,
-    "TCGA-MH-A55W": 1,
-    "TCGA-A2-A04X": 2,
-    "TCGA-A2-A0ES": 2,
-    "TCGA-D8-A3Z6": 2,
-    "TCGA-E2-A108": 2,
-    "TCGA-EW-A6SB": 2,
-    "TCGA-G9-6356": 3,
-    "TCGA-G9-6367": 3,
-    "TCGA-VP-A87E": 3,
-    "TCGA-VP-A87H": 3,
-    "TCGA-X4-A8KS": 3,
-    "TCGA-YL-A9WL": 3,
-}
-```
-``` {python}
-#| output: false
-#| echo: false
-data_dir = "/flashscratch/cervaf/data"
-
-from glob import glob
-
-train_images_fns = glob(data_dir + "/monusac_train/*/*.svs")
-test_images_fns = glob(data_dir + "/monusac_test/*/*.svs")
-
-train_labels = [
-    tissue_per_train_files[fn.split("/")[-2][:12]]
-    for fn in train_images_fns
-]
-
-test_labels = [
-    tissue_per_test_files[fn.split("/")[-2][:12]]
-    for fn in test_images_fns
-]
+``` {bash}
+!pip install -U s3fs tifffile imagecodecs
 ```
 
-::: {.callout-note}
-More information about the type of tissue of each image can be found [here](https://drive.google.com/file/d/1kdOl3s6uQBRv0nToSIf1dPuceZunzL4N/view).
-:::
+- `s3fs` allows to connect directly to S3 buckets
+- `tifffile` is a package for reading TIFF image files
+- `imagecodecs` is a library of codecs to allow loading a wider variety of image files
 
----
+# 1. Problem overview
 
-## Tissue classification with the MoNuSAC dataset {.scrollable}
+## Drug Discovery with Cell Painting and Deep Learning
 
-- [ ] Explore the dataset
+We'll use the Cell Painting Gallery database (**CP-JUMP**) to perform basic drug discovery analysis.
 
-``` {python}
-from skimage.io import imread
-import matplotlib.pyplot as plt
+This can be stated as a classification task, where we are interested in determining if a chemical compound has a similar effect as a *CRISPR* or *ORF* treatment.
+To achieve that, we analyze the morphological profile of a sample treated with a chemical compound with help of a deep learning feature extractor.
+Then, the morphological profile type is predicted using a pre-trained classifier as *CRISPR*, *ORF*, or *NONE*.
 
-img = imread(train_images_fns[0])
-plt.imshow(img)
-plt.title(tissue_classes[train_labels[0]])
-plt.show()
+## Check the CP-JUMP database in AWS's Registry of Open Data
 
-img = imread(test_images_fns[0])
-plt.imshow(img)
-plt.title(tissue_classes[test_labels[0]])
-plt.show()
+The Cell Painting Gallery is a collection of image datasets created using the Cell Painting assay.
+
+- https://registry.opendata.aws/cellpainting-gallery/
+
+- [Explore the database](https://cellpainting-gallery.s3.amazonaws.com/index.html)
+
+- Managed by *Carpenter-Singh and Cimini Labs* at the **Broad Institute**.
+
+## Get the `metadata` of one of the subsets (`cpg0016-jump`)
+
+The metadata from the `cpg0016-jump` dataset can be found in the following GitHub repositories:
+
+```{python}
+!git clone https://github.com/jump-cellpainting/JUMP-Target
 ```
 
-## Tissue classification with the MoNuSAC dataset
+```{python}
+!git clone https://github.com/jump-cellpainting/datasets.git
+```
 
-- [ ] Define the pre-processing pipeline using the transforms from the pre-trained InceptionV3 model
+## Review the `metadata` of the `cpg0016-jump` dataset
 
-``` {python}
-#| output: false
-import torchvision
-from torchvision.transforms.v2 import Compose, ToTensor
+### Check the plate-level metadata
 
-inception_weights = torchvision.models.inception.Inception_V3_Weights.IMAGENET1K_V1
+- [] Load the plate-level metadata from the `jump-cellpainting/datasets` repository
 
-pipeline = Compose([
-  ToTensor(),
-  inception_weights.transforms()
-])
+```{python}
+import pandas as pd
+```
 
-pipeline
+```{python}
+jump_plates_metadata = pd.read_csv("datasets/metadata/plate.csv.gz")
+jump_plates_metadata
+```
+
+```{python}
+jump_plates_metadata["Metadata_PlateType"].unique()
+```
+
+```{python}
+jump_plates_metadata.groupby(["Metadata_Source", "Metadata_Batch"]).describe()
 ```
 
 ---
 
-## Tissue classification with the MoNuSAC dataset
+## Subset the dataset to extract samples with *CRISPR*, *ORF*, and *NONE/DMSO* treatments
 
-- [ ] Create a dataset class to load the images from disk
+### Check the well-level metadata
 
-``` {python}
-#| output: false
-from torch.utils.data import Dataset
+- [] Read the *CRISPR* plate maps from the `JUMP-Target` repository
 
-class CustomImageDataset(Dataset):
-    def __init__(self, image_filenames, image_labels, transform=None):
-        self.image_filenames = image_filenames
-        self.image_labels = image_labels
-        self.transform = transform
+```{python}
+crispr_wells_metadata = pd.read_csv("JUMP-Target/JUMP-Target-1_crispr_platemap.tsv", sep="\t")
+```
 
-    def __len__(self):
-        return len(self.image_labels)
+- [] Add one column to identify the type of treatment, and other to assign a numeric label (*CRISPR* = 1)
 
-    def __getitem__(self, idx):
-        image = imread(self.image_filenames[idx])
-        if self.transform is not None:
-            image = self.transform(image)
+```{python}
+crispr_wells_metadata["Plate_type"] = "CRISPR"
+crispr_wells_metadata["Plate_label"] = 1
+crispr_wells_metadata
+```
 
-        label = self.image_labels[idx]
+- [] Read the *ORF* plate maps from the `JUMP-Target` repository
 
-        return image, label
+```{python}
+orf_wells_metadata = pd.read_csv("JUMP-Target/JUMP-Target-1_orf_platemap.tsv", sep="\t")
+```
+
+- [] Add one column to identify the type of treatment, and other to assign a numeric label (*ORF* = 2)
+
+```{python}
+orf_wells_metadata["Plate_type"] = "ORF"
+orf_wells_metadata["Plate_label"] = 2
+orf_wells_metadata
+```
+
+- [] Read the *COMPOUND* plate maps from the `JUMP-Target` repository
+
+```{python}
+compound_wells_metadata = pd.read_csv("JUMP-Target/JUMP-Target-1_compound_platemap.tsv", sep="\t")
+```
+
+- [] Add one column to identify the type of treatment, and other to assign a numeric label (*COMPOUND* = 3)
+
+```{python}
+compound_wells_metadata["Plate_type"] = "COMPOUND"
+compound_wells_metadata["Plate_label"] = 3
+compound_wells_metadata
+```
+
+- [] Concatenate the three tables into a single table
+
+```{python}
+wells_metadata = pd.concat([compound_wells_metadata, orf_wells_metadata, crispr_wells_metadata])
+wells_metadata
+```
+
+- [] Change the label of the well positions that were not treated with any compound (*NONE/DMSO* = 0)
+
+```{python}
+wells_metadata.loc[wells_metadata["broad_sample"].isna(), "Plate_label"] = 0
+wells_metadata
 ```
 
 ---
 
-## Tissue classification with the MoNuSAC dataset
+## Get the URL of each assay plate from the S3 bucket
 
-- [ ] Create the training and test sets using the `CustomImageDataset` class.
+- [] List the plates in the `cellpainting-gallery/cpg0016-jump` bucket
 
-``` {python}
-from torch.utils.data import random_split
-
-train_ds = CustomImageDataset(train_images_fns, train_labels, pipeline)
-test_ds = CustomImageDataset(test_images_fns, test_labels, pipeline)
-
-train_ds, val_ds = random_split(train_ds, [0.8, 0.2])
-
-print(f"Training images={len(train_ds)}")
-print(f"Validation images={len(val_ds)}")
-print(f"Test images={len(test_ds)}")
+```{python}
+import s3fs
 ```
 
-- [ ] Use a `DataLoader` to serve image batches from the datasets.
-
-``` {python}
-#| output: false
-from torch.utils.data import DataLoader
-
-train_dl = DataLoader(train_ds, batch_size=32, shuffle=True)
-val_dl = DataLoader(val_ds, batch_size=128)
-test_dl = DataLoader(test_ds, batch_size=128)
+```{python}
+fs = s3fs.S3FileSystem(anon=True)
 ```
 
-# Transfer learning from ImageNet to MoNuSAC
+```{python}
+batch_names = {}
+plate_paths = {}
+source_names = {}
+plate_types = {}
+
+for _, src_row in jump_plates_metadata.groupby(["Metadata_Source", "Metadata_Batch"]).describe().iterrows():
+    source_name, batch_name = src_row.name
+
+    # Ignore 'source_8' since the naming of the images is not standard
+    if source_name in ["source_8"]:
+        continue
+
+    plate_type = src_row["Metadata_PlateType"].top
+
+    for plate_path in fs.ls(f"cellpainting-gallery/cpg0016-jump/{source_name}/images/{batch_name}/images/"):
+        plate_path = plate_path.split("/")[-1]
+        if not plate_path:
+            continue
+
+        plate_name = plate_path.split("__")[0]
+
+        source_names[plate_name] = source_name
+        batch_names[plate_name] = batch_name
+        plate_types[plate_name] = plate_type
+        plate_paths[plate_name] = plate_path
+```
+
+- [] Create ta `pandas` data frame to associate each plate to its location within the S3 bucket
+
+```{python}
+plate_maps = pd.DataFrame()
+
+plate_maps["Plate_name"] = batch_names.keys()
+plate_maps["Source_name"] = plate_maps["Plate_name"].map(source_names)
+plate_maps["Batch_name"] = plate_maps["Plate_name"].map(batch_names)
+plate_maps["Plate_type"] = plate_maps["Plate_name"].map(plate_types)
+plate_maps["Plate_path"] = plate_maps["Plate_name"].map(plate_paths)
+
+plate_maps
+```
 
 ---
 
-## Tissue classification with the MoNuSAC dataset
+## Subset the data frame to separate perturbation (*CRISPR/ORF/NONE*) plates from *COMPOUND* plates
 
-- [ ] Use the pre-trained InceptionV3 model from `torchvision`
+- [] Subset the *COMPOUND* plates
 
-``` {python}
-#| output: false
+```{python}
+comp_plate_maps = plate_maps.query("Plate_type=='COMPOUND'")
+comp_plate_maps
+```
+
+- [] Subset the *CRISPR/ORF/DMSO* plates
+
+```{python}
+pert_plate_maps = plate_maps[plate_maps["Plate_type"].isin(["CRISPR", "ORF", "DMSO"])]
+pert_plate_maps
+```
+
+# Create a pipeline for loading images from the `cellpainting-gallery` storage
+
+## Split the perturbation plates into Training, Validation, and Test sets
+
+We'll separate the plates in each batch into the three sets to have batch-level effects in each of the sets
+
+- [] Assign $70$ % of plates for training, $20$ % for validation, and $10$ % for testing
+
+```{python}
+import random
+import math
+```
+
+```{python}
+trn_plates = []
+val_plates = []
+tst_plates = []
+
+trn_proportion = 0.7
+val_proportion = 0.2
+tst_proportion = 0.1
+
+for batch_name in pert_plate_maps["Batch_name"].unique():
+    plate_names = pert_plate_maps.query(f"Batch_name == '{batch_name}'")["Plate_name"].tolist()
+    random.shuffle(plate_names)
+
+    tst_plates_count = int(math.ceil(len(plate_names) * tst_proportion))
+    val_plates_count = int(math.ceil(len(plate_names) * val_proportion))
+
+    tst_plates += plate_names[:tst_plates_count]
+    val_plates += plate_names[tst_plates_count:tst_plates_count + val_plates_count]
+    trn_plates += plate_names[tst_plates_count + val_plates_count:]
+```
+
+```{python}
+print("Training set size:", len(trn_plates))
+print("Validation set size:", len(val_plates))
+print("Testing set size:", len(tst_plates))
+```
+
+---
+
+## Create a PyTorch Dataset to load images from S3 storage
+
+Defining a custom PyTorch dataset allows us to access the image data from S3 storage, even if it is not in a standard format across the distinct sources inside the database.
+Moreover, it is completely iterative, so no additional storage is used as the images are analyzed *on the fly*.
+
+```{python}
+# @title Definition of a Dataset class capable to pull images from S3 buckets
+import random
+import numpy as np
+import string
+import s3fs
+
+from itertools import product
+
+from PIL import Image
+import tifffile
+
+from torch.utils.data import IterableDataset, get_worker_info
+```
+
+- [] Define a function to load an image from the `cellpainting-gallery` bucket given a *field-well* position from a specific *plate*
+
+```{python}
+def load_well(plate_metadata, well_row, well_col, field_id, channels, s3):
+    # Get the label of the current well
+    curr_well_image = []
+
+    plate_path = "cellpainting-gallery/cpg0016-jump/" + plate_metadata["Source_name"] + "/images/" + plate_metadata["Batch_name"] + "/images/" + plate_metadata["Plate_path"]
+
+    for channel_id in range(channels):
+        if plate_metadata["Source_name"] in ["source_1", "source_3", "source_4", "source_9", "source_11", "source_15"]:
+            image_suffix = f"Images/r{well_row + 1:02d}c{well_col + 1:02d}f{field_id + 1:02d}p01-ch{channel_id + 1}sk1fk1fl1.tiff"
+
+        else:
+            if plate_metadata["Source_name"] in ["source_2", "source_5"]:
+                a_locs = [1, 2, 3, 4, 5]
+            elif plate_metadata["Source_name"] in ["source_6", "source_10"]:
+                a_locs = [1, 2, 2, 3, 1, 4]
+            elif plate_metadata["Source_name"] in ["source_7", "source_13"]:
+                a_locs = [1, 1, 2, 3, 4]
+
+            image_suffix = f"{plate_metadata["Plate_name"]}_{string.ascii_uppercase[well_row]}{well_col + 1:02d}_T0001F{field_id + 1:03d}L01A{a_locs[channel_id]:02d}Z01C{channel_id + 1:02d}.tif"
+
+        image_url = "s3://" + plate_path + "/" + image_suffix
+
+        try:
+            with s3.open(image_url, 'rb') as f:
+                curr_image = tifffile.imread(f)
+
+        except FileNotFoundError:
+            print("Failed retrieving:", image_url)
+            return None
+
+        curr_image = curr_image.astype(np.float32)
+        curr_image /= 2 ** 16 - 1
+
+        curr_well_image.append(curr_image)
+
+    curr_well_image = np.array(curr_well_image)
+
+    return curr_well_image
+```
+
+- [] Define an `IterableDataset` derived class to load images from S3 storage
+
+```{python}
+class TiffS3Dataset(IterableDataset):
+    """This dataset could have virtually infinite samples.
+    """
+    def __init__(self, plate_maps, wells_metadata, plate_names, well_rows=24, well_cols=16, fields=4, channels=5, shuffle=False):
+        super(TiffS3Dataset).__init__()
+
+        self._plate_maps = plate_maps
+        self._wells_metadata = wells_metadata
+
+        self._plate_names = plate_names
+        self._well_rows = well_rows
+        self._well_cols = well_cols
+        self._fields = fields
+        self._channels = channels
+
+        self._shuffle = shuffle
+
+        self._worker_sel = slice(0, len(plate_names) * self._well_rows * self._well_cols)
+        self._worker_id = 0
+        self._num_workers = 1
+
+        self._s3 = None
+
+    def __iter__(self):
+        # Select the barcodes that correspond to this worker
+        self._s3 = s3fs.S3FileSystem(anon=True)
+
+        self._plate_names = self._plate_names[self._worker_sel]
+
+        well_row_range = range(self._well_rows)
+        well_col_range = range(self._well_cols)
+        fields_range = range(self._fields)
+
+        for plate_name, well_row, well_col, field_id in product(self._plate_names, well_row_range, well_col_range, fields_range):
+            if self._shuffle:
+                plate_name = random.choice(self._plate_names)
+                well_row = random.randrange(self._well_rows)
+                well_col = random.randrange(self._well_cols)
+                field_id = random.randrange(self._fields)
+
+            curr_plate_map = self._plate_maps.query(f"Plate_name == '{plate_name}'")
+
+            curr_plate_metadata = curr_plate_map.to_dict(orient='records')[0]
+
+            if not len(curr_plate_metadata):
+                continue
+
+            curr_image = load_well(curr_plate_metadata, well_row, well_col, field_id, self._channels, self._s3)
+
+            if curr_image is None:
+                continue
+
+            curr_plate_metadata["Well_position"] = f"{string.ascii_uppercase[well_row]}{well_col + 1:02d}"
+
+            curr_image = curr_image[:, :1080, :1080]
+            _, h, w = curr_image.shape
+            pad_h = 1080 - h
+            pad_w = 1080 - w
+
+            if pad_h or pad_w:
+                curr_image = np.pad(curr_image, ((0, 0), (0, pad_h), (0, pad_w)))
+            
+            if curr_plate_metadata["Plate_type"] == "DMSO":
+                curr_label = 0
+
+            else:
+                curr_label = self._wells_metadata.query(f"Plate_type=='{curr_plate_metadata["Plate_type"]}' & well_position=='{string.ascii_uppercase[well_row]}{well_col + 1:02d}'")["Plate_label"]
+
+                if not len(curr_label):
+                    continue
+
+                curr_label = curr_label.item()
+
+            yield curr_image, curr_label, curr_plate_metadata
+
+        self._s3 = None
+```
+
+- [] Define an initialization function to separate the load when using *multi-thread* data loading
+
+```{python}
+def dataset_worker_init_fn(worker_id):
+    """ZarrDataset multithread workers initialization function.
+    """
+    worker_info = torch.utils.data.get_worker_info()
+    w_sel = slice(worker_id, None, worker_info.num_workers)
+
+    dataset_obj = worker_info.dataset
+
+    # Reset the random number generators in each worker.
+    torch_seed = torch.initial_seed()
+
+    dataset_obj._worker_sel = w_sel
+    dataset_obj._worker_id = worker_id
+    dataset_obj._num_workers = worker_info.num_workers
+```
+
+---
+
+## Create the different datasets from the plates lists
+
+- [] Instantiate a `TiffS3Dataset` from the plates assigned for training, validation, and testing
+
+```{python}
+training_ds = TiffS3Dataset(pert_plate_maps, wells_metadata, trn_plates, 16, 24, 9, 5, shuffle=True)
+validation_ds = TiffS3Dataset(pert_plate_maps, wells_metadata, val_plates, 16, 24, 9, 5, shuffle=True)
+testing_ds = TiffS3Dataset(pert_plate_maps, wells_metadata, tst_plates, 16, 24, 9, 5, shuffle=True)
+```
+
+# Compute field-level morphological profiles from perturbation plates
+
+We'll use a pre-trained deep learning model for image recognition to extract morphological features at field-level.
+
+This process is usually applied at cell level; however, we'll analyze the data at field-level for simplicity.
+
+These morphological profiles will be used subsequently to train a *perturbation classifier*.
+
+---
+
+## Import a pre-trained model from `torchvision`
+
+We'll start with a pre-trained *MobileNet* model for feature extraction since it is lightweight and fast.
+This in terms of computation resources required to use this model.
+
+In the literature, more complex models are used, such as Inception V3, DenseNet, or even Vision Transformers.
+However, these models require GPU acceleration to be efficiently applied.
+
+- [] Load a pre-trained *MobileNet* from the `torchvision` package
+
+```{python}
+from torchvision.models import mobilenet_v3_small, MobileNet_V3_Small_Weights
+```
+
+```{python}
+weights = MobileNet_V3_Small_Weights.DEFAULT
+model = mobilenet_v3_small(weights=weights)
+```
+
+## Modify the model's architecture to convert it into a feature extraction *function*
+
+- [] Save the original aggregation layer (Average Pooling) and replace it with an `Identity` layer
+
+```{python}
 import torch
-import torch.nn as nn
-
-dl_model = torchvision.models.inception_v3(
-    inception_weights,
-    progress=True
-)
-
-dl_model.fc = nn.Identity()
-
-dl_model.eval()
 ```
 
----
-
-## Tissue classification with the MoNuSAC dataset
-
-- [ ] Replace the current classifier with a linear layer with the output number of classes of the MoNuSAS dataset.
-
-``` {python}
-#| output: false
-dl_model.fc = nn.Sequential(
-    nn.Linear(in_features=2048, out_features=32, bias=True),
-    nn.ReLU(),
-    nn.Linear(in_features=32, out_features=4, bias=True)
-)
+```{python}
+org_avgpool = model.avgpool
+model.avgpool = torch.nn.Identity()
 ```
 
-- [ ] Freeze all layers but the MLP that serves as classifier.
+- [] Replace the original `classifier` layer with an `Identity` layer
 
-``` {python}
-#| output: false
-for param in dl_model.parameters():
-    param.requires_grad = False
-
-for param in dl_model.fc.parameters():
-    param.requires_grad = True
+```{python}
+model.classifier = torch.nn.Identity()
 ```
 
----
+- [] Set the model into *evaluation* mode. (Optional) Move the model to the GPU if available
 
-## Tissue classification with the MoNuSAC dataset
-
-- [ ] Define the optimization method and loss function.
-
-``` {python}
-#| output: false
-import torch.optim as optim
-
+```{python}
+#| scrolled: true
 if torch.cuda.is_available():
-    dl_model.cuda()
+    model.cuda()
 
-optimizer = optim.Adam(dl_model.fc.parameters(), lr=0.001, weight_decay=0.0001)
-
-loss_fun = nn.CrossEntropyLoss()
+model.eval()
 ```
 
 ---
 
-## Tissue classification with the MoNuSAC dataset {.scrollable}
+## Load the pre-processing transforms form the original model
 
-- [ ] Implement the training and validation steps
+We need to apply the same transforms to the images that we *feed* to the model to have the expected behavior.
 
-``` {python}
-#| overflow-y: true
-from torchmetrics.classification import Accuracy
+- [] Get the original transforms pipeline used when the model was originally trained
 
-train_acc_metric = Accuracy(task="multiclass", num_classes=4)
-val_acc_metric = Accuracy(task="multiclass", num_classes=4)
+```{python}
+model_transforms = weights.transforms()
+model_transforms
+```
 
+---
+
+## Create a PyTorch `DataLoader`
+
+A `DataLoader` takes a `Dataset` (or `IterableDataset`) and serves *mini-batches* of samples that can be used for model training or evaluation.
+It manages the *mini-batch* collation, and if enabled, the *multi-thread* loading of data.
+
+```{python}
+from torch.utils.data.dataloader import DataLoader
+```
+
+```{python}
+batch_size = 10
+
+training_dl = DataLoader(training_ds, batch_size=batch_size, num_workers=2, worker_init_fn=dataset_worker_init_fn)
+```
+
+---
+
+### Execute the feature extraction with the deep learning model
+
+- [] Use the *frozen* deep learning model to extract morphological features from the field-level images and create a features database
+
+```{python}
+from tqdm.auto import tqdm
+```
+
+```{python}
+features = []
+targets = []
+
+for i, (x, y, _) in tqdm(enumerate(training_dl)):
+    b, c, h, w = x.shape
+    x_t = model_transforms(torch.tile(x.reshape(-1, 1, h, w), (1, 3, 1, 1)))
+
+    if torch.cuda.is_available():
+        x_t = x_t.cuda()
+    
+    with torch.no_grad():
+        x_out = model(x_t)
+        x_out = x_out.detach().cpu().reshape(-1, c, 576, 7, 7).sum(dim=1)
+        x_out = org_avgpool(x_out).detach().reshape(b, -1)
+
+    features.append(x_out)
+    targets.append(y)
+
+    # This is for illustration purposes.
+    # We'll load the pre-extracted features from Cloud Storage, so no need to generate it here.
+    break
+
+features = torch.cat(features, dim=0)
+targets = torch.cat(targets, dim=0)
+```
+
+```{python}
+features.shape, targets.shape
+```
+
+---
+
+### Execute the feature extraction with the deep learning model
+
+- [] Perform the same operation for the **validation** set
+
+```{python}
+val_features = []
+val_targets = []
+
+validation_dl = DataLoader(validation_ds, batch_size=batch_size, num_workers=2, worker_init_fn=dataset_worker_init_fn)
+
+for i, (x, y, _) in tqdm(enumerate(validation_dl)):
+    b, c, h, w = x.shape
+    x_t = model_transforms(torch.tile(x.reshape(-1, 1, h, w), (1, 3, 1, 1)))
+
+    if torch.cuda.is_available():
+        x_t = x_t.cuda()
+    
+    with torch.no_grad():
+        x_out = model(x_t)
+        x_out = x_out.detach().reshape(-1, c, 576, 7, 7).sum(dim=1)
+        x_out = org_avgpool(x_out).detach().reshape(b, -1)
+
+    val_features.append(x_out)
+    val_targets.append(y)
+
+    break
+
+val_features = torch.cat(val_features, dim=0)
+val_targets = torch.cat(val_targets, dim=0)
+```
+
+---
+
+### Execute the feature extraction with the deep learning model
+
+- [] And again for the testing set
+
+```{python}
+tst_features = []
+tst_targets = []
+
+testing_dl = DataLoader(testing_ds, batch_size=batch_size, num_workers=2, worker_init_fn=dataset_worker_init_fn)
+
+for i, (x, y, _) in tqdm(enumerate(testing_dl)):
+    b, c, h, w = x.shape
+    x_t = model_transforms(torch.tile(x.reshape(-1, 1, h, w), (1, 3, 1, 1)))
+
+    if torch.cuda.is_available():
+        x_t = x_t.cuda()
+    
+    with torch.no_grad():
+        x_out = model(x_t)
+        x_out = x_out.detach().reshape(-1, c, 576, 7, 7).sum(dim=1)
+        x_out = org_avgpool(x_out).detach().reshape(b, -1)
+
+    tst_features.append(x_out)
+    tst_targets.append(y)
+
+    break
+
+tst_features = torch.cat(tst_features, dim=0)
+tst_targets = torch.cat(tst_targets, dim=0)
+```
+
+# Train a perturbation classifier model
+
+We'll take the pre-extracted features and train a perturbation classifier.
+
+This approach will use a Multilayer Perceptron (**MLP**) model to classify the field-level profiles into three categories: *NONE/DMSO* = 0 *CRISPR* = 1, *ORF* = 2.
+
+The model will be fitted using *Adam* optimizer, which objective is to reduce the *Cross Entropy* loss between the predicted and the ground-truth category of each field.
+
+---
+
+## Load the pre-extracted features to train the classifier
+
+- [] Define an `IterableDataset` to load the features from the `trn_feature_XXX.pt` files
+
+```{python}
+class GCPStorageDataset(IterableDataset):
+    """This dataset loads the features from Cloud Storage
+    """
+    def __init__(self, features_url, reducer=None, shuffle=False):
+        super(GCPStorageDataset).__init__()
+
+        self._features_url = features_url
+        self._features_dict = None
+        self._reducer = reducer
+
+        self._shuffle = shuffle
+
+        self._worker_sel = slice(0, len(self._features_url))
+        self._worker_id = 0
+        self._num_workers = 1
+
+    def __iter__(self):
+        # Select the barcodes that correspond to this worker
+        self._features_url = self._features_url[self._worker_sel]
+
+        if self._shuffle:
+            random.shuffle(self._features_url)
+
+        for url in self._features_url:
+            features_dict = torch.load(url)
+            
+            if self._reducer is not None:
+                embeddings = reducer.transform(features_dict["features"])
+
+            curr_n_samples = len(features_dict["features"])
+
+            for index in range(curr_n_samples):
+                if self._shuffle:
+                    index = random.randrange(curr_n_samples)
+
+                feats = features_dict["features"][index]
+                target = features_dict["targets"][index]
+
+                if self._reducer is not None:
+                    reduced_feats = embeddings[index]
+                else:
+                    reduced_feats = None
+
+                yield feats, target, reduced_feats
+```
+
+---
+
+## Inspect the distribution of the feature space
+
+- [] Fit a UMap to the training set of features to reduce the $576$ features into only $2$ dimensions for visualization
+
+```{python}
+import umap
+```
+
+```{python}
+reducer = umap.UMAP()
+```
+
+- [] Load the training features to fit the UMap
+
+```{python}
+trn_features_ds = GCPStorageDataset(["trn_features_002.pt"], shuffle=False)
+```
+
+```{python}
+trn_features, trn_targets, _ = list(zip(*trn_features_ds))
+```
+
+```{python}
+trn_targets = torch.tensor(trn_targets)
+```
+
+```{python}
+reducer.fit(trn_features)
+```
+
+```{python}
+#| scrolled: true
+trn_embeddings = reducer.transform(trn_features)
+```
+
+- [] Visualize the reduced feature space in two dimensions
+
+```{python}
+class_names = ["NONE/DMSO", "CRISPR", "ORF", "COMPOUND"]
+class_markers = ["*", "s", "o", "^"]
+class_colors = ["black", "red", "blue", "green"]
+class_facecolors = ["black", "none", "none", "none"]
+```
+
+```{python}
+import matplotlib.pyplot as plt
+```
+
+```{python}
+#| scrolled: false
+for class_idx, class_name in enumerate(class_names):
+    plt.scatter(trn_embeddings[trn_targets == class_idx, 0][::10], trn_embeddings[trn_targets == class_idx, 1][::10], label=class_names[class_idx], marker=class_markers[class_idx], facecolors=class_facecolors[class_idx], edgecolors=class_colors[class_idx])
+
+plt.legend()
+```
+
+```{python}
+val_features_ds = GCPStorageDataset(["val_features.pt"], shuffle=False)
+```
+
+```{python}
+val_features, val_targets, _ = list(zip(*val_features_ds))
+```
+
+```{python}
+val_targets = torch.tensor(val_targets)
+```
+
+```{python}
+val_embedding = reducer.transform(val_features)
+```
+
+```{python}
+val_embedding.shape
+```
+
+```{python}
+for class_idx, class_name in enumerate(class_names):
+    plt.scatter(val_embedding[val_targets == class_idx, 0][::10], val_embedding[val_targets == class_idx, 1][::10], label=class_names[class_idx], marker=class_markers[class_idx], facecolors=class_facecolors[class_idx], edgecolors=class_colors[class_idx])
+
+plt.legend()
+```
+
+## Create a classifier with a Multilayer Perceptron (**MLP**) architecture
+
+The *MobileNet* model extracts $576$ features per image, these will be the input features for the *MLP* classifer.
+
+- [] Define a Multilayer Perceptron *MLP* classifier that takes the pre-extracted features and predicts the perturbation applied to that sample
+
+```{python}
+class PerturbationClassifier(torch.nn.Module):
+    def __init__(self, num_features, num_classes):
+        super(PerturbationClassifier, self).__init__()
+
+        self._reducer = torch.nn.Sequential(
+            torch.nn.BatchNorm1d(num_features=num_features),
+            torch.nn.Linear(in_features=num_features, out_features=2, bias=False),
+        )
+
+        self._classifier = torch.nn.Sequential(
+            torch.nn.Dropout(0.1),
+            torch.nn.ReLU(),
+            torch.nn.Linear(in_features=2, out_features=num_classes, bias=False)
+        )
+
+    def forward(self, input):
+        fx = self._reducer(input)
+        
+        y_pred = self._classifier(fx)
+
+        return y_pred, fx
+```
+
+```{python}
+classifier = PerturbationClassifier(576, 3)
+```
+
+- [] (Optional) If a GPU is available, move the classifier model to it
+
+```{python}
 if torch.cuda.is_available():
-    train_acc_metric.cuda()
-    val_acc_metric.cuda()
+    classifier.cuda()
+```
 
-num_epochs = 100
-for e in range(num_epochs):
-    avg_train_loss = 0
-    total_train_samples = 0
+- [] Define the optimizer algorithm
 
-    dl_model.train()
-    for x, y in train_dl:
+```{python}
+optimizer = torch.optim.Adam([
+    {'params': classifier._reducer.parameters(), 'lr': 1e-5, 'weight_decay': 0.001},
+    {'params': classifier._classifier.parameters(), 'lr': 1e-4}
+])
+```
+
+- [] Define the loss function used to assess the classification performance of the model
+
+```{python}
+classifier_loss_fn = torch.nn.CrossEntropyLoss()
+reducer_loss_fn = torch.nn.MSELoss()
+```
+
+---
+
+## Train the *MLP* model
+
+- [] Instantiate the datasets that will load the features from Cloud Storage
+
+```{python}
+trn_feat_ds = GCPStorageDataset([f"trn_features_{i:03d}.pt" for i in range(10)], reducer=reducer, shuffle=True)
+val_feat_ds = GCPStorageDataset(["val_features.pt"], reducer=reducer, shuffle=False)
+tst_feat_ds = GCPStorageDataset(["tst_features.pt"], reducer=reducer, shuffle=False)
+```
+
+- [] Create one `DataLoader` for the training set and one for the validation set of pre-extracted features
+
+```{python}
+trn_feat_dl = DataLoader(trn_feat_ds, batch_size=100, num_workers=2, worker_init_fn=dataset_worker_init_fn)
+val_feat_dl = DataLoader(val_feat_ds, batch_size=100)
+tst_feat_dl = DataLoader(tst_feat_ds, batch_size=100)
+```
+
+- [] Implement the training loop
+
+```{python}
+#| scrolled: false
+n_dmso = 0
+n_crispr = 0
+n_orf = 0
+
+# Training loop
+classifier.train()
+
+cls_loss_epoch = 0
+red_loss_epoch = 0
+acc_epoch = 0
+
+for x, y, fx in tqdm(trn_feat_dl, total=1000):
+    optimizer.zero_grad()
+
+    if torch.cuda.is_available():
+        x = x.cuda()
+
+    y_pred, fx_pred = classifier(x)
+
+    cls_loss = classifier_loss_fn(y_pred.cpu(), y)
+    red_loss = reducer_loss_fn(fx_pred.cpu(), fx)
+
+    cls_loss.backward(retain_graph=True)
+    red_loss.backward()
+
+    optimizer.step()
+
+    cls_loss_epoch += cls_loss.item()
+    red_loss_epoch += red_loss.item()
+
+    acc_epoch += torch.sum(y_pred.cpu().argmax(dim=1) == y)
+
+    n_dmso += sum(y == 0)
+    n_crispr += sum(y == 1)
+    n_orf += sum(y == 2)
+```
+
+- [] Check what is the proportion of samples per category in the training set
+
+```{python}
+n_total = n_dmso + n_crispr + n_orf
+n_dmso / n_total, n_crispr / n_total, n_orf / n_total
+```
+
+- [] Check what is the average validation performance of the model
+
+```{python}
+#| scrolled: true
+cls_loss_epoch / n_total
+```
+
+```{python}
+#| scrolled: true
+red_loss_epoch / n_total
+```
+
+```{python}
+acc_epoch / n_total
+```
+
+- [] Implement the validation loop
+
+```{python}
+#| scrolled: false
+n_dmso = 0
+n_crispr = 0
+n_orf = 0
+
+cls_loss_epoch = 0
+red_loss_epoch = 0
+acc_epoch = 0
+for x_val, y_val, fx_val in tqdm(val_feat_dl):
+    with torch.no_grad():
+        if torch.cuda.is_available():
+            x_val = x_val.cuda()
+
+        y_val_pred, fx_val_pred = classifier(x_val)
+
+        cls_loss = classifier_loss_fn(y_val_pred.cpu(), y_val)
+        red_loss = reducer_loss_fn(fx_val_pred.cpu(), fx_val)
+
+    cls_loss_epoch += cls_loss.item()
+    red_loss_epoch += red_loss.item()
+    
+    acc_epoch += torch.sum(y_val_pred.cpu().argmax(dim=1) == y_val)
+
+    n_dmso += sum(y_val == 0)
+    n_crispr += sum(y_val == 1)
+    n_orf += sum(y_val == 2)
+```
+
+- [] Check what is the proportion of samples per category in the training set
+
+```{python}
+n_total = n_dmso + n_crispr + n_orf
+n_dmso / n_total, n_crispr / n_total, n_orf / n_total
+```
+
+- [] Check what is the average validation performance of the model
+
+```{python}
+cls_loss_epoch / n_total
+```
+
+```{python}
+#| scrolled: true
+red_loss_epoch / n_total
+```
+
+```{python}
+acc_epoch / n_total
+```
+
+---
+
+## Wrap the training and validation steps for multiple epochs
+
+Track the performance of the model throughout the epochs during training
+
+- [] Copy the training and validation steps into an epochs loop
+
+```{python}
+avg_cls_loss_trn = []
+avg_red_loss_trn = []
+avg_acc_trn = []
+
+avg_cls_loss_val = []
+avg_red_loss_val = []
+avg_acc_val = []
+
+n_epochs = 20
+q = tqdm(total=n_epochs)
+
+for e in range(n_epochs):
+    # Training loop
+    classifier.train()
+
+    loss_epoch = 0
+    acc_epoch = 0
+    total_samples = 0
+    for x, y, fx in trn_feat_dl:
         optimizer.zero_grad()
 
         if torch.cuda.is_available():
             x = x.cuda()
-            y = y.cuda()
 
-        y_hat = dl_model(x).logits
+        y_pred, fx_pred = classifier(x)
 
-        loss = loss_fun(y_hat, y)
+        cls_loss = classifier_loss_fn(y_pred.cpu(), y)
+        red_loss = reducer_loss_fn(fx_pred.cpu(), fx)
 
-        loss.backward()
+        cls_loss.backward(retain_graph=True)
+        red_loss.backward()
 
         optimizer.step()
 
-        avg_train_loss += loss.item() * len(y)
-        total_train_samples += len(y)
+        cls_loss_epoch += cls_loss.item() * len(y)
+        red_loss_epoch += red_loss.item() * len(y)
 
-        train_acc_metric(y_hat.softmax(dim=1), y)
+        acc_epoch += torch.sum(y_pred.cpu().argmax(dim=1) == y)
+        total_samples += len(y)
 
-    avg_train_loss /= total_train_samples
-    train_acc = train_acc_metric.compute()
+    avg_cls_loss_trn.append(cls_loss_epoch / total_samples)
+    avg_red_loss_trn.append(red_loss_epoch / total_samples)
+    avg_acc_trn.append(acc_epoch / total_samples)
 
-    avg_val_loss = 0
-    total_val_samples = 0
+    # Validation loop
+    classifier.eval()
 
-    dl_model.eval()
-    with torch.no_grad():
-        for x, y in val_dl:
+    cls_loss_epoch = 0
+    red_loss_epoch = 0
+    acc_epoch = 0
+    total_samples = 0
+    for x_val, y_val, fx_val in val_feat_dl:
+        with torch.no_grad():
             if torch.cuda.is_available():
-                x = x.cuda()
-                y = y.cuda()
+                x_val = x_val.cuda()
 
-            y_hat = dl_model(x)
+            y_val_pred, fx_val_pred = classifier(x_val)
 
-            loss = loss_fun(y_hat, y)
+            cls_loss = classifier_loss_fn(y_val_pred.cpu(), y_val)
+            red_loss = reducer_loss_fn(fx_val_pred.cpu(), fx_val)
 
-            avg_val_loss += loss.item() * len(y)
-            total_val_samples += len(y)
+        cls_loss_epoch += cls_loss.item() * len(y_val)
+        red_loss_epoch += red_loss.item() * len(y_val)
 
-            val_acc_metric(y_hat.softmax(dim=1), y)
+        acc_epoch += torch.sum(y_val_pred.cpu().argmax(dim=1) == y_val)
+        total_samples += len(y_val)
 
-    avg_val_loss /= total_val_samples
-    val_acc = val_acc_metric.compute()
+    avg_cls_loss_val.append(cls_loss_epoch / total_samples)
+    avg_red_loss_val.append(red_loss_epoch / total_samples)
+    avg_acc_val.append(acc_epoch / total_samples)
 
-    print(f"[{(e + 1) / num_epochs: 2.2%}] Train loss={avg_train_loss: 2.4} (Acc={train_acc: 2.2%}), Validation loss={avg_val_loss: 2.4} (Acc={val_acc: 2.2%})")
+    q.set_description(f"Average training CE loss: {avg_cls_loss_trn[-1]:0.4f} / MSE loss: {avg_red_loss_trn[-1]:0.4f} (Accuracy: {100 * avg_acc_trn[-1]:0.2f} %). Average validation CE loss: {avg_cls_loss_val[-1]:04f} / MSE loss: {avg_red_loss_val[-1]:04f} (Accuracy: {100 * avg_acc_val[-1]:0.2f} %)")
+    q.update()
+```
 
-    train_acc_metric.reset()
-    val_acc_metric.reset()
+```{python}
+#| scrolled: true
+y
+```
+
+```{python}
+y_pred.argmax(dim=1)
+```
+
+```{python}
+#| scrolled: true
+y_val
+```
+
+```{python}
+y_val_pred.argmax(dim=1)
 ```
 
 ---
 
-## Tissue classification with the MoNuSAC dataset
+## Review the performance of the model throughout training
 
-- [ ] Compute the performance of the model on the test set
+- [] Plot the loss function evaluation for the training and validation sets
 
-``` {python}
-avg_test_loss = 0
-total_test_samples = 0
-
-test_acc_metric = Accuracy(task="multiclass", num_classes=4)
-
-if torch.cuda.is_available():
-    test_acc_metric.cuda()
-
-dl_model.eval()
-with torch.no_grad():
-    for x, y in test_dl:
-        if torch.cuda.is_available():
-            x = x.cuda()
-            y = y.cuda()
-
-        y_hat = dl_model(x)
-
-        loss = loss_fun(y_hat, y)
-
-        avg_test_loss += loss.item() * len(y)
-        total_test_samples += len(y)
-
-        test_acc_metric(y_hat.softmax(dim=1), y)
-
-avg_test_loss /= total_test_samples
-test_acc = test_acc_metric.compute()
-
-print(f"Test loss={avg_test_loss: 2.4} (Acc={test_acc: 2.2%})")
-
-test_acc_metric.reset()
-```
-
----
-
-## Tissue classification with the MoNuSAC dataset
-
-- [ ] Save the current state of the model
-
-``` {python}
-#| output: false
-checkpoint = dl_model.state_dict()
-torch.save(checkpoint, "monusac_checkpoint.pt")
-```
-
-# Explore the MoNuSAC dataset in the embedded feature space
-
----
-
-## Explore the MoNuSAC dataset in the embedded feature space
-
-- [ ] Extract the *embedded* features from the train set.
-
-``` {python}
-#| output: false
-import numpy as np
-
-if torch.cuda.is_available():
-    dl_model.cuda()
-    dl_model.fc.cuda()
-
-train_features = []
-train_labels = []
-
-dl_model.fc[-1] = nn.Identity()
-
-dl_model.eval()
-with torch.no_grad():
-    for x, y in train_dl:
-        if torch.cuda.is_available():
-            x = x.cuda()
-
-        fx = dl_model(x).cpu().detach().numpy()
-
-        train_features.append(fx)
-        train_labels.append(y.numpy())
-
-train_features = np.concatenate(train_features, 0)
-train_labels = np.concatenate(train_labels, 0)
-```
-
----
-
-## Explore the MoNuSAC dataset in the embedded feature space
-
-- [ ] Project the features into a two-dimensional UMap.
-
-``` {python}
-#| output: false
-import umap
-
-reducer = umap.UMAP()
-
-embedding = reducer.fit_transform(train_features)
-
-embedding.shape
-```
-
----
-
-## Explore the MoNuSAC dataset in the embedded feature space
-
-- [ ] Show the embedded space.
-
-``` {python}
-#| code-fold: true
+```{python}
 import matplotlib.pyplot as plt
-
-emb_plot = plt.scatter(embedding[:, 0], embedding[:, 1], c=train_labels, marker="o")
-
-plt.legend(handles=emb_plot.legend_elements()[0], labels=tissue_classes)
-plt.gca().set_aspect('equal', 'datalim')
-plt.title('UMAP projection of InceptionV3 features of the MoNuSAC dataset', fontsize=24)
 ```
 
----
+```{python}
+plt.plot(avg_cls_loss_trn, "k-", label="Training loss")
+plt.plot(avg_cls_loss_val, "b:", label="Validation loss")
+plt.legend()
+```
 
-## Explore the MoNuSAC dataset in the embedded feature space
+```{python}
+plt.plot(avg_red_loss_trn, "k-", label="Training loss")
+plt.plot(avg_red_loss_val, "b:", label="Validation loss")
+plt.legend()
+```
 
-- [ ] Extract the *embedded* features from the validation and test sets.
+- [] Plot the accuracy of the model on the training and validation sets
 
-``` {python}
-#| output: false
-#| overflow-y: true
-val_features = []
-val_labels = []
+```{python}
+plt.plot(avg_acc_trn, "k-", label="Training accuracy")
+plt.plot(avg_acc_val, "b:", label="Validation accuracy")
+plt.legend()
+```
 
-test_features = []
-test_labels = []
+# Evaluate the model with the withold testing data
 
-with torch.no_grad():
-    for x, y in val_dl:
+## Save the classifier model to be used later or shared with collaborators
+
+- [] Evaluate the classifier on the testing set to measure its generalization capacity
+
+```{python}
+# Testing loop
+classifier.eval()
+
+n_dmso = 0
+n_crispr = 0
+n_orf = 0
+
+cls_loss_epoch = 0
+red_loss_epoch = 0
+acc_epoch = 0
+
+for x_tst, y_tst, fx_tst in tst_feat_dl:
+    with torch.no_grad():
+        if torch.cuda.is_available():
+            x_tst = x_tst.cuda()
+
+        y_tst_pred, fx_tst_pred = classifier(x_tst)
+        cls_loss = classifier_loss_fn(y_tst_pred.cpu(), y_tst)
+        red_loss = reducer_loss_fn(fx_tst_pred.cpu(), fx_tst)
+
+    cls_loss_epoch += cls_loss.item() * len(y_tst)
+    red_loss_epoch += red_loss.item() * len(y_tst)
+    acc_epoch += torch.sum(y_tst_pred.cpu().argmax(dim=1) == y_tst)
+
+    n_dmso += sum(y_tst == 0)
+    n_crispr += sum(y_tst == 1)
+    n_orf += sum(y_tst == 2)
+```
+
+- [] Check the proportion of types of perturbation in the testing set
+
+```{python}
+n_total = n_dmso + n_crispr + n_orf
+n_dmso / n_total, n_crispr / n_total, n_orf / n_total
+```
+
+- [] Check the loss and accuracy metrics on the testing set
+
+```{python}
+cls_loss_epoch / n_total
+```
+
+```{python}
+red_loss_epoch / n_total
+```
+
+```{python}
+acc_epoch / n_total
+```
+
+## Evaluate the capacity to mimic the UMap dimensionality reduction
+
+- [] Get the embeddings from the trained model for the training set
+
+```{python}
+trn_fx = []
+trn_fx_pred = []
+trn_y = []
+
+for i, (x, y, fx) in enumerate(trn_feat_dl):
+    if i >= 10:
+        break
+
+    with torch.no_grad():
         if torch.cuda.is_available():
             x = x.cuda()
 
-        fx = dl_model(x).cpu().detach().numpy()
+        _, fx_pred = classifier(x)
+        trn_fx_pred.append(fx_pred.detach().cpu())
+        trn_fx.append(fx)
+        trn_y.append(y)
 
-        val_features.append(fx)
-        val_labels.append(y.numpy())
-
-val_features = np.concatenate(val_features, 0)
-val_labels = np.concatenate(val_labels, 0)
-
-with torch.no_grad():
-    for x, y in test_dl:
-        if torch.cuda.is_available():
-            x = x.cuda()
-
-        fx = dl_model(x).cpu().detach().numpy()
-
-        test_features.append(fx)
-        test_labels.append(y.numpy())
-
-test_features = np.concatenate(test_features, 0)
-test_labels = np.concatenate(test_labels, 0)
+trn_fx = torch.cat(trn_fx, dim=0)
+trn_fx_pred = torch.cat(trn_fx_pred, dim=0)
+trn_y = torch.cat(trn_y, dim=0)
 ```
+
+```{python}
+for class_idx, class_name in enumerate(class_names):
+    plt.scatter(trn_fx[trn_y == class_idx, 0], trn_fx[trn_y == class_idx, 1], label=class_names[class_idx], marker=class_markers[class_idx], facecolors=class_facecolors[class_idx], edgecolors=class_colors[class_idx])
+
+plt.legend()
+```
+
+```{python}
+#| scrolled: false
+for class_idx, class_name in enumerate(class_names):
+    plt.scatter(trn_fx_pred[trn_y == class_idx, 0], trn_fx_pred[trn_y == class_idx, 1], label=class_names[class_idx], marker=class_markers[class_idx], facecolors=class_facecolors[class_idx], edgecolors=class_colors[class_idx])
+
+plt.legend()
+```
+
+- [] Get the embeddings from the trained model for the validation set
+
+```{python}
+val_fx = []
+val_fx_pred = []
+val_y = []
+
+for i, (x_val, y_val, fx_val) in enumerate(val_feat_dl):
+    if i >= 10:
+        break
+
+    with torch.no_grad():
+        if torch.cuda.is_available():
+            x_val = x_val.cuda()
+
+        _, fx_pred_val = classifier(x_val)
+        val_fx_pred.append(fx_pred_val.detach().cpu())
+        val_fx.append(fx_val)
+        val_y.append(y_val)
+
+val_fx = torch.cat(val_fx, dim=0)
+val_fx_pred = torch.cat(val_fx_pred, dim=0)
+val_y = torch.cat(val_y, dim=0)
+```
+
+```{python}
+for class_idx, class_name in enumerate(class_names):
+    plt.scatter(val_fx[val_y == class_idx, 0], val_fx[val_y == class_idx, 1], label=class_names[class_idx], marker=class_markers[class_idx], facecolors=class_facecolors[class_idx], edgecolors=class_colors[class_idx])
+
+plt.legend()
+```
+
+```{python}
+#| scrolled: false
+for class_idx, class_name in enumerate(class_names):
+    plt.scatter(val_fx_pred[val_y == class_idx, 0], val_fx_pred[val_y == class_idx, 1], label=class_names[class_idx], marker=class_markers[class_idx], facecolors=class_facecolors[class_idx], edgecolors=class_colors[class_idx])
+
+plt.legend()
+```
+
+# Use the pre-trained model to identify the behavior of compounds
+
+Because the model has learned to recognize *CRISPR*, *ORF*, and *NONE/DMSO* effects, it can be used to determine the behavior of any treatment based on their morphological profile.
+
+To do so, first extract the the morphological features using the pre-trained *MobileNet*, and then use the extracted features as input for the classifier model.
 
 ---
 
-## Explore the MoNuSAC dataset in the embedded feature space {.scrollable}
-
-- [ ] Project the features of the test and validation sets into a two-dimensional UMap.
-
-``` {python}
-#| output: false
-embedding_val = reducer.transform(val_features)
-embedding_test = reducer.transform(test_features)
+```{python}
+compounds_ds = TiffS3Dataset(comp_plate_maps, wells_metadata, comp_plate_maps["Plate_name"].tolist(), 16, 24, 9, 5, shuffle=True)
 ```
 
-- [ ] Show the embedded space.
+```{python}
+batch_size = 5
 
-``` {python}
-#| code-fold: true
-fig, (ax_0, ax_1) = plt.subplots(1, 2)
+compounds_dl = DataLoader(compounds_ds, batch_size=batch_size, num_workers=2, worker_init_fn=dataset_worker_init_fn)
+```
 
-emb_train_plot = ax_0.scatter(embedding[:, 0], embedding[:, 1], c=train_labels, marker="o", alpha=0.5)
-legend_train = ax_0.legend(handles=emb_train_plot.legend_elements()[0], labels=tissue_classes, loc="lower left", title="Train dataset")
-ax_0.add_artist(legend_train)
+```{python}
+for i, (x, y, metadata) in tqdm(enumerate(compounds_dl)):
+    metadata_list.append(metadata)
 
-emb_val_plot = ax_0.scatter(embedding_val[:, 0], embedding_val[:, 1], c=val_labels,  marker="v", alpha=0.5)
-legend_val = ax_0.legend(handles=emb_val_plot.legend_elements()[0], labels=tissue_classes, loc="lower right", title="Validation dataset")
-ax_0.add_artist(legend_val)
+    b, c, h, w = x.shape
+    x_t = model_transforms(torch.tile(x.reshape(-1, 1, h, w), (1, 3, 1, 1)))
 
-ax_0.set_aspect('equal', 'datalim')
+    if torch.cuda.is_available():
+        x_t = x_t.cuda()
 
-emb_train_plot = ax_1.scatter(embedding[:, 0], embedding[:, 1], c=train_labels, marker="o", alpha=0.5)
-legend_train = ax_1.legend(handles=emb_train_plot.legend_elements()[0], labels=tissue_classes, loc="lower left", title="Train dataset")
-ax_1.add_artist(legend_train)
+    with torch.no_grad():
+        x_out = model(x_t)
+        x_out = x_out.detach().reshape(-1, c, 576, 7, 7).sum(dim=1)
+        x_out = org_avgpool(x_out).detach().reshape(b, -1)
 
-emb_test_plot = ax_1.scatter(embedding_test[:, 0], embedding_test[:, 1], c=test_labels, marker="s", alpha=0.5)
-legend_test = ax_1.legend(handles=emb_test_plot.legend_elements()[0], labels=tissue_classes, loc="lower right", title="Test dataset")
-ax_1.add_artist(legend_test)
+        y_pred, fx_pred = classifier(x_out)
 
-ax_1.set_aspect('equal', 'datalim')
-plt.title('UMAP projection of InceptionV3 features of the MoNuSAC dataset', fontsize=24)
+    break
+```
+
+```{python}
+y_pred.argmax(dim=1)
+```
+
+```{python}
+y
+```
+
+```{python}
+#| scrolled: false
+for class_idx, class_name in enumerate(class_names[:3]):
+    plt.scatter(trn_fx_pred[trn_y == class_idx, 0][::10], trn_fx_pred[trn_y == class_idx, 1][::10], label=class_names[class_idx], marker=class_markers[class_idx], facecolors=class_facecolors[class_idx], edgecolors=class_colors[class_idx])
+
+plt.scatter(fx_pred.cpu()[:, 0], fx_pred.cpu()[:, 1], label=class_names[3], marker=class_markers[3], facecolors=class_facecolors[3], edgecolors=class_colors[3])
+
+plt.legend()
+```
+
+```{python}
+metadata
+```
+
+- [] Look for any interesting compounds in [PubChem](https://pubchem.ncbi.nlm.nih.gov/)
+
+```{python}
+wells_metadata.query("well_position == 'O10' & Plate_type=='COMPOUND'")
 ```
