@@ -209,10 +209,10 @@ for idx, prob in zip(sorted_predicted_classes, sorted_probs):
 Only works with RGB images
 :::
 
-- [ ] Use the pre-trained model to classify images from the internet (maybe pictures of [dogs](https://en.wikipedia.org/wiki/Dog)).
+- [ ] Use the pre-trained model to classify images from the internet (try some from the [Kodak Lossless True Color Image Suite](https://r0k.us/graphics/kodak/)).
 
 ``` {python}
-sample_im = skimage.io.imread("https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Black_Labrador_Retriever_-_Male_IMG_3323.jpg/1280px-Black_Labrador_Retriever_-_Male_IMG_3323.jpg")
+sample_im = skimage.io.imread("https://r0k.us/graphics/kodak/kodak/kodim21.png")
 sample_x = pipeline(sample_im)
 sample_y = dl_model(sample_x[None, ...])
 
@@ -227,7 +227,7 @@ for idx, prob in zip(sorted_predicted_classes, sorted_probs):
     print(categories[idx], "%3.2f %%" % (prob * 100))
 ```
 
-- [ ] Try with an image from a category that is not in the labels set of the model (like giraffes: [https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Giraffe_Mikumi_National_Park.jpg/800px-Giraffe_Mikumi_National_Park.jpg](https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Giraffe_Mikumi_National_Park.jpg/800px-Giraffe_Mikumi_National_Park.jpg))
+- [ ] Try with an image from a category that is not in the labels set of the model (like one with [hanging caps](https://r0k.us/graphics/kodak/kodak/kodim03.png))
 
 # Using Deep Learning models as feature extractors
 

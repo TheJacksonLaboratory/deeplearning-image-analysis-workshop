@@ -1,12 +1,12 @@
 ---
-title: Advanced Machine Learning with Python (Session 1)
+title: Advanced Machine Learning with Python (Session 1 - Part 1)
 author: Fernando Cervantes (fernando.cervantes@jax.org)
 format: 
   revealjs:
     code-fold: false
     progress: true
     controls: true
-    output-file: "Adv_ML_Python_presentation_1"
+    output-file: "Adv_ML_Python_presentation_1_1"
     fontsize: 20pt
     include-in-header: 
       text: |
@@ -29,10 +29,6 @@ jupyter: python3
 *	Load pre-trained ML models and fine-tune them with new data.
 *	Evaluate the performance of ML models.
 *	Adapt ML models for different tasks from pre-trained models.
-
-### Materials
-
-[Open notebook in Colab](https://colab.research.google.com/drive/1c0Qw8ICTIl2yE2ChJZ4Fi6QNIoVUeWCx){.btn .btn-outline-primary .btn role="button" target=”_blank”} [View solutions](https://colab.research.google.com/drive/1QyVxdnwNrP1uGnsosClYsQ1hf7pF5ARF){.btn .btn-outline-primary .btn role="button" target=”_blank”}
 
 # 0. Setup environment
 
