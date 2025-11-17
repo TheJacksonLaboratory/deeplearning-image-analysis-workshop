@@ -6,6 +6,6 @@ title: "Advanced Machine Learning with Python"
 
 ## Dates: November 19th & 20th, 2025
 
-My name is Fernando Cervantes, a Systems Analyst II at the The Jackson Laboratory's Research IT department.
+My name is Fernando Cervantes, a Systems Analyst II at The Jackson Laboratory's Research IT department.
 
 You can ask me questions about this material at fernando.cervantes@jax.org

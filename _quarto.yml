@@ -12,6 +12,8 @@ website:
         text: Session 1 - Part 1
       - href: notes/DL_image_analysis_1_2.qmd
         text: Session 1 - Part 2
+      - href: notes/DL_image_analysis_1_3.qmd
+        text: Session 1 - Part 3
       - href: notes/DL_image_analysis_2.qmd
         text: Session 2
 
