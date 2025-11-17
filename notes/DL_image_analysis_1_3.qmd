@@ -1,0 +1,458 @@
+---
+title: Advanced Machine Learning with Python (Session 1 - Part 3)
+author: Fernando Cervantes (fernando.cervantes@jax.org)
+format:
+  revealjs:
+    code-fold: false
+    progress: true
+    controls: true
+    output-file: "Adv_ML_Python_presentation_1_3"
+    fontsize: 20pt
+    include-in-header:
+      text: |
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel ="stylesheet" integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg==" crossorigin="anonymous">
+
+execute:
+  error: true
+  echo: true
+  cache: true
+  freeze: true
+  keep-ipynb: true
+
+jupyter: python3
+---
+
+# Working with Transformers
+
+---
+
+## Review the architecture of a Vision Transformer (ViT) {.scrollable}
+
+![Dosovitskiy, Alexey et al. “An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale.” ArXiv abs/2010.11929 (2020)](../imgs/ViT.png)
+
+* https://docs.pytorch.org/vision/stable/models/vision_transformer.html
+
+- [ ] Review the Attention mechanism in transformer models
+
+![](../imgs/Attn_layer.png)
+
+![Vaswani, Ashish et al. “Attention is All you Need.” Neural Information Processing Systems (2017).](../imgs/Attn_operation.png)
+
+---
+
+## Exercise: Use a pre-trained ViT model to classify images {.scrollable}
+
+- [ ] Import the pre-trained weights of the Inception V3 model from models.inception_v3
+
+```{python}
+import torch
+from torchvision import models
+
+transformer_weights = models.ViT_B_16_Weights.IMAGENET1K_SWAG_E2E_V1
+
+transformer_weights.meta
+```
+
+- [ ] Store the categories in a variable to use them later
+
+```{python}
+categories = transformer_weights.meta["categories"]
+```
+
+::: {.callout-tip}
+More info about Vision Transformer implementation in `torchvision` [here](https://docs.pytorch.org/vision/stable/models/generated/torchvision.models.vit_b_16.html)
+:::
+
+---
+
+- [ ] Load the Inception V3 model using the pre-trained weights `inception_weights`
+
+```{python}
+#| scrolled: true
+dl_model = models.vit_b_16(transformer_weights, progress=True)
+
+dl_model.eval()
+```
+
+---
+
+- [ ] Load a sample image to predict its category
+
+```{python}
+import skimage
+import matplotlib.pyplot as plt
+
+sample_im = skimage.data.rocket()
+sample_im.shape
+```
+
+- [ ] Visualize the sample image
+
+```{python}
+plt.imshow(sample_im)
+plt.show()
+```
+
+---
+
+- [ ] Inspect what transforms are required by the pre-trained ViT model to work properly
+
+```{python}
+transformer_weights.transforms
+```
+
+::: {.callout-important}
+`functools.partial` is a function to define functions with static arguments. So 👆 returns a function when it is called!
+:::
+
+::: {.callout-note}
+The transforms used by the Inception V3 are
+
+  1. resize the image to 384x384 pixels, and
+
+  2. normalize the values of the RGB channels.
+:::
+
+---
+
+- [ ] Define a preprocessing pipeline using the inception_weights.transforms() method. Add also a transformation from `numpy` arrays into torch tensors.
+
+```{python}
+from torchvision.transforms.v2 import Compose, ToTensor
+
+pipeline = Compose([
+  ToTensor(),
+  transformer_weights.transforms()
+])
+
+pipeline
+```
+
+---
+
+- [ ] Pre-process the sample image using our pipeline
+
+```{python}
+sample_x = pipeline(sample_im)
+type(sample_x), sample_x.shape, sample_x.min(), sample_x.max()
+```
+
+---
+
+- [ ] Use the pre-trained model to predict the class of our sample image
+
+::: {.callout-caution}
+Apply the model on sample_x[None, ...], so it is treated as a one-sample batch
+:::
+
+```{python}
+sample_y = dl_model(sample_x[None, ...])
+
+sample_y.shape
+```
+
+---
+
+- [ ] Show the categories with the highest *log-*probabilities.
+
+```{python}
+#| scrolled: true
+sample_y.argsort(dim=1)
+```
+
+::: {.callout-note}
+The model's output are the log-probabilities of `sample_x` belonging to each of the 1000 classes.
+:::
+
+---
+
+- [ ] Use the list of categories to translate the predicted class index into its category.
+
+```{python}
+sorted_predicted_classes = sample_y.argsort(dim=1, descending=True)[0, :10]
+sorted_probs = torch.softmax(sample_y, dim=1)[0, sorted_predicted_classes]
+
+for idx, prob in zip(sorted_predicted_classes, sorted_probs):
+    print(categories[idx], "%3.2f %%" % (prob * 100))
+```
+
+## Inspect the self-attention operations of the ViT
+
+```{python}
+dl_model.encoder.layers[-1]
+```
+
+# Integrate a mechanism to review the attention maps of the model
+
+## Redefine some of transformer operations to enable storing the attention weights {.scrollable}
+
+```{python}
+from functools import partial
+from typing import Callable
+from timm.models.vision_transformer import Attention
+
+class EncoderBlockAttnMap(models.vision_transformer.EncoderBlock):
+    """Transformer encoder block."""
+
+    def __init__(self,
+                 num_heads: int,
+                 hidden_dim: int,
+                 mlp_dim: int,
+                 dropout: float,
+                 attention_dropout: float,
+                 norm_layer: Callable[..., torch.nn.Module] = partial(torch.nn.LayerNorm, eps=1e-6)):
+        # The definition is the same, only the forward function changes <------------------------------------
+        super(EncoderBlockAttnMap, self).__init__(num_heads, hidden_dim, mlp_dim, dropout, attention_dropout, norm_layer)
+        self.self_attention = Attention(hidden_dim, num_heads, attn_drop=attention_dropout, proj_drop=0.0, norm_layer=norm_layer, qkv_bias=True)
+
+    def forward(self, input: torch.Tensor):
+        # with torch.autograd.graph.save_on_cpu(pin_memory=True):
+        torch._assert(input.dim() == 3, f"Expected (batch_size, seq_length, hidden_dim) got {input.shape}")
+        x = self.ln_1(input)
+
+        # Modify this line, so we get the attention map from the self attention modules <--------------------
+        x = self.self_attention(x)
+
+        x = self.dropout(x)
+        x = x + input
+
+        y = self.ln_2(x)
+        y = self.mlp(y)
+
+        # Return the attention map along with the encoder output <-------------------------------------------
+        return x + y
+```
+
+```{python}
+from collections import OrderedDict
+
+class EncoderAttnMap(models.vision_transformer.Encoder):
+    """Transformer Model Encoder for sequence to sequence translation."""
+
+    def __init__(
+        self,
+        seq_length: int,
+        num_layers: int,
+        num_heads: int,
+        hidden_dim: int,
+        mlp_dim: int,
+        dropout: float,
+        attention_dropout: float,
+        norm_layer: Callable[..., torch.nn.Module] = partial(torch.nn.LayerNorm, eps=1e-6),
+    ):
+        super().__init__(seq_length, num_layers, num_heads, hidden_dim, mlp_dim, dropout, attention_dropout, norm_layer)
+
+        layers: OrderedDict[str, nn.Module] = OrderedDict()
+        for i in range(num_layers):
+            # Use the modified encoder block <---------------------------------------------------------------
+            layers[f"encoder_layer_{i}"] = EncoderBlockAttnMap(
+                num_heads,
+                hidden_dim,
+                mlp_dim,
+                dropout,
+                attention_dropout,
+                norm_layer,
+            )
+
+        self.layers = torch.nn.Sequential(layers)
+```
+
+```{python}
+# Redefine the classifier head to have access to the attention maps
+class ViTAttnEnabled(models.vision_transformer.VisionTransformer):
+    """Implementation of the classifier head from the ViT-B-16 architecture.
+    """
+    def __init__(self, image_size, patch_size=14, num_layers=32, num_heads=16, hidden_dim=1280, mlp_dim=5120, **kwargs):      
+        super(ViTAttnEnabled, self).__init__(
+            image_size,
+            patch_size=patch_size,
+            num_layers=num_layers,
+            num_heads=num_heads,
+            hidden_dim=hidden_dim,
+            mlp_dim=mlp_dim,
+            **kwargs)
+
+        # Change the encoder to the modified ekwargsoder that returns the attention maps <-----------
+        self.encoder = EncoderAttnMap(
+            self.seq_length,
+            num_layers=num_layers,
+            num_heads=num_heads,
+            hidden_dim=hidden_dim,
+            mlp_dim=mlp_dim,
+            dropout=0,
+            attention_dropout=0,
+            norm_layer=partial(torch.nn.LayerNorm, eps=1e-6)
+        )
+
+        self.attentions = []
+        self.attentions_gradients = []
+
+    def get_attention(self, module, input, output):
+        self.attentions.append(output.detach())
+
+    def get_attention_gradients(self, module, grad_input, grad_output):
+        self.attentions_gradients.append(grad_input[0].detach())
+
+    def register_attn_grad_hooks(self):
+        for name, module in self.named_modules():
+            if "self_attention.norm" in name:
+                module.register_forward_hook(self.get_attention)
+                module.register_full_backward_hook(self.get_attention_gradients)
+
+    def clear_attentions(self):
+        self.attentions.clear()
+        self.attentions_gradients.clear()
+```
+
+---
+
+## Use a modified ViT model that enables tracking its attention weights
+
+- [] Initialize a ViT with the `Vit-B-16` architecture
+
+```{python}
+vit_model_self_attn = ViTAttnEnabled(
+        image_size=384,
+        patch_size=16,
+        num_heads=12,
+        num_layers=12,
+        hidden_dim=768,
+        mlp_dim=3072)
+```
+
+---
+
+- [ ] Map the names of the modules in the orginal `torchvision` Attention layer, to the names of the `timm` Attention layer
+
+```{python}
+#| scrolled: true
+name_map = {
+    "in_proj_weight": "qkv.weight",
+    "in_proj_bias": "qkv.bias",
+    "out_proj.weight": "proj.weight",
+    "out_proj.bias": "proj.bias"
+}
+
+transformer_weights_dict = transformer_weights.get_state_dict(progress=True)
+
+vit_weights = {}
+for k, v in transformer_weights_dict.items():
+    k_old = list(filter(lambda n: n in k, name_map.keys()))
+    if len(k_old):
+        k_old = k_old[0]
+        old_name = k.split(k_old)[0]
+        new_name = old_name + name_map[k_old]
+    else:
+        new_name = k
+
+    vit_weights[new_name] = v
+
+vit_model_self_attn.load_state_dict(vit_weights)
+```
+
+---
+
+- [ ] Enable the tracking of the attention weights
+
+```{python}
+#| scrolled: false
+vit_model_self_attn.register_attn_grad_hooks()
+```
+
+---
+
+## Apply the ViT class prediction on an image and compute the corresponding attention map 
+
+- [ ] Run the `forward` operation of the ViT model and the respective `backward` opreation to compute and store the attention weights
+
+```{python}
+sample_im = skimage.io.imread("https://r0k.us/graphics/kodak/kodak/kodim20.png")
+
+vit_model_self_attn.clear_attentions()
+
+sample_x = pipeline(sample_im)
+
+with torch.autograd.graph.save_on_cpu(pin_memory=True):
+    sample_y = vit_model_self_attn(sample_x[None, ...])
+
+attn_class = torch.argmax(sample_y, dim=1).item()
+attn_class = torch.LongTensor([attn_class])
+attn_class = torch.nn.functional.one_hot(attn_class, num_classes=sample_y.shape[1])
+
+attn_class = torch.sum(attn_class * sample_y)
+
+vit_model_self_attn.zero_grad()
+attn_class.backward()
+
+attn_out = [attn_tensor.clone() for attn_tensor in vit_model_self_attn.attentions]
+grad_attn_out = [attn_tensor.clone() for attn_tensor in vit_model_self_attn.attentions_gradients]
+```
+
+---
+
+## Roll out the attention maps
+
+- [ ] The attention map can be computed as the accumulation of the attention weigths of each *Encoder* layer of the Transformer
+
+```{python}
+attn_rollout = torch.eye(attn_out[0].size(1))[None, ...]
+
+for attn_map, attn_grad in zip(attn_out, grad_attn_out):
+    if attn_grad is not None:
+        attn_map = attn_map * attn_grad
+        attn_map[attn_map < 0] = 0
+
+    attn_map, _ = torch.topk(attn_map, 10, dim=-1)
+    attn_map = attn_map.mean(dim=-1)
+
+    # Normalize attention map
+    attn_map = attn_map + torch.eye(attn_map.size(1), device=attn_map.device)[None, ...]
+    attn_map = attn_map / attn_map.sum(dim=-1, keepdim=True)
+
+    attn_rollout = torch.matmul(attn_map, attn_rollout)
+
+attn_rollout.shape
+```
+
+---
+
+- [ ] Keep only the attention weights of the class token with respect to the spatial tokens
+
+```{python}
+attn_rollout = attn_rollout[:, :1, 1:]
+```
+
+- [ ] Reshape the attention weights into the original patch coordinates
+
+```{python}
+attn_rollout = attn_rollout.reshape(1, -1, 24 ** 2)
+attn_rollout.shape
+```
+
+```{python}
+attn_rollout = torch.nn.functional.fold(attn_rollout.transpose(1, 2),
+                      (24, 24),
+                      kernel_size=(24, 24),
+                      stride=(24, 24))
+```
+
+```{python}
+attn_rollout = attn_rollout.squeeze()
+
+attn_rollout = attn_rollout / torch.max(attn_rollout)
+
+attn_rollout.shape
+```
+
+---
+
+## Visualize the attention map computed from the attention weights
+
+- [] Show an overlay of the attention map over the original image
+
+```{python}
+plt.imshow(sample_im)
+plt.imshow(attn_rollout, cmap="magma", extent=(0, sample_im.shape[1], sample_im.shape[0], 0), alpha=0.75)
+```
+
+

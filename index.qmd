@@ -4,6 +4,8 @@ title: "Advanced Machine Learning with Python"
 
 # Welcome to Advanced Machine Learning with Python!
 
-My name is Fernando Cervantes, a Systems Analyst II in the [Imaging Applications Group](https://thejacksonlaboratory.github.io/imaging_applications) of the Research IT department of The Jackson Laboratory.
+## Dates: November 19th & 20th, 2025
+
+My name is Fernando Cervantes, a Systems Analyst II at The Jackson Laboratory's Research IT department.
 
 You can ask me questions about this material at fernando.cervantes@jax.org

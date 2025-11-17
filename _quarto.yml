@@ -9,11 +9,13 @@ website:
       - href: index.qmd
         text: Home
       - href: notes/DL_image_analysis_1_1.qmd
-        text: Session 1
-      - href: notes/DL_image_analysis_2_1.qmd
-        text: Session 2 - Part 1
-      - href: notes/DL_image_analysis_2_2.qmd
-        text: Session 2 - Part 2
+        text: Session 1 - Part 1
+      - href: notes/DL_image_analysis_1_2.qmd
+        text: Session 1 - Part 2
+      - href: notes/DL_image_analysis_1_3.qmd
+        text: Session 1 - Part 3
+      - href: notes/DL_image_analysis_2.qmd
+        text: Session 2
 
 format:
   html:
