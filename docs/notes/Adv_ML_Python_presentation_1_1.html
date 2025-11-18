@@ -212,6 +212,8 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <li>Evaluate the performance of ML models.</li>
 <li>Adapt ML models for different tasks from pre-trained models.</li>
 </ul>
+<h3 id="materials">Materials</h3>
+<p><a href="https://colab.research.google.com/drive/1c0Qw8ICTIl2yE2ChJZ4Fi6QNIoVUeWCx" class="btn btn-outline-primary" role="button" target="”_blank”">Open notebook in Colab</a> <a href="https://colab.research.google.com/drive/1QyVxdnwNrP1uGnsosClYsQ1hf7pF5ARF" class="btn btn-outline-primary" role="button" target="”_blank”">View solutions</a></p>
 </section>
 <section>
 <section id="setup-environment" class="title-slide slide level1 center">
@@ -361,7 +363,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Load the CIFAR-100 dataset from torchvision.datasets</label></li>
 </ul>
-<div id="17245d39" class="cell" data-execution_count="2">
+<div id="da840dd9" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> torch</span>
 <span id="cb1-2"><a></a><span class="im">import</span> torchvision</span>
 <span id="cb1-3"><a></a></span>
@@ -370,15 +372,15 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Explore the CIFAR-100 dataset</label></li>
 </ul>
-<div id="7ca20a09" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a>x_im, y <span class="op">=</span> cifar_ds[<span class="dv">0</span>]</span>
-<span id="cb2-2"><a></a></span>
-<span id="cb2-3"><a></a><span class="bu">len</span>(cifar_ds), <span class="bu">type</span>(x_im), <span class="bu">type</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="6d212c36" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>x_im, y <span class="op">=</span> cifar_ds[<span class="dv">0</span>]</span>
+<span id="cb3-2"><a></a></span>
+<span id="cb3-3"><a></a><span class="bu">len</span>(cifar_ds), <span class="bu">type</span>(x_im), <span class="bu">type</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>(50000, PIL.Image.Image, int)</code></pre>
 </div>
 </div>
-<div id="748aeac3" class="cell" data-execution_count="4">
+<div id="d8892205" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-stdout">
 <pre><code>y = 19 (cattle)</code></pre>
 </div>
@@ -398,23 +400,23 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <li>two-dimensional variables are matrices,</li>
 <li>and three or more dimensional variables, are tensors.</li>
 </ul>
-<div id="58f04631" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="im">import</span> torch</span>
-<span id="cb5-2"><a></a></span>
-<span id="cb5-3"><a></a>x0 <span class="op">=</span> torch.Tensor([<span class="dv">7</span>]) <span class="co"># This is a point</span></span>
-<span id="cb5-4"><a></a></span>
-<span id="cb5-5"><a></a>x1 <span class="op">=</span> torch.Tensor([<span class="dv">15</span>, <span class="dv">64</span>, <span class="dv">123</span>]) <span class="co"># This is a vector</span></span>
-<span id="cb5-6"><a></a></span>
-<span id="cb5-7"><a></a>x2 <span class="op">=</span> torch.Tensor([[<span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">5</span>],</span>
-<span id="cb5-8"><a></a>                   [<span class="dv">7</span>, <span class="dv">9</span>, <span class="dv">12</span>],</span>
-<span id="cb5-9"><a></a>                   [<span class="dv">10</span>, <span class="dv">33</span>, <span class="dv">1</span>]]) <span class="co"># This is a matrix</span></span>
-<span id="cb5-10"><a></a></span>
-<span id="cb5-11"><a></a>x3 <span class="op">=</span> torch.Tensor([[[[<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
-<span id="cb5-12"><a></a>                     [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
-<span id="cb5-13"><a></a>                     [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>]],</span>
-<span id="cb5-14"><a></a>                    [[<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>],</span>
-<span id="cb5-15"><a></a>                     [<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">3</span>],</span>
-<span id="cb5-16"><a></a>                     [<span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">5</span>]]]]) <span class="co"># This is a tensor</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="9cfb3025" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a><span class="im">import</span> torch</span>
+<span id="cb6-2"><a></a></span>
+<span id="cb6-3"><a></a>x0 <span class="op">=</span> torch.Tensor([<span class="dv">7</span>]) <span class="co"># This is a point</span></span>
+<span id="cb6-4"><a></a></span>
+<span id="cb6-5"><a></a>x1 <span class="op">=</span> torch.Tensor([<span class="dv">15</span>, <span class="dv">64</span>, <span class="dv">123</span>]) <span class="co"># This is a vector</span></span>
+<span id="cb6-6"><a></a></span>
+<span id="cb6-7"><a></a>x2 <span class="op">=</span> torch.Tensor([[<span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">5</span>],</span>
+<span id="cb6-8"><a></a>                   [<span class="dv">7</span>, <span class="dv">9</span>, <span class="dv">12</span>],</span>
+<span id="cb6-9"><a></a>                   [<span class="dv">10</span>, <span class="dv">33</span>, <span class="dv">1</span>]]) <span class="co"># This is a matrix</span></span>
+<span id="cb6-10"><a></a></span>
+<span id="cb6-11"><a></a>x3 <span class="op">=</span> torch.Tensor([[[[<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb6-12"><a></a>                     [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
+<span id="cb6-13"><a></a>                     [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>]],</span>
+<span id="cb6-14"><a></a>                    [[<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>],</span>
+<span id="cb6-15"><a></a>                     [<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">3</span>],</span>
+<span id="cb6-16"><a></a>                     [<span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">5</span>]]]]) <span class="co"># This is a tensor</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section class="slide level2">
@@ -435,16 +437,16 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 </div>
 </div>
 </div>
-<div id="b7c67406" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a><span class="im">from</span> torchvision.transforms.v2 <span class="im">import</span> PILToTensor</span>
-<span id="cb6-2"><a></a></span>
-<span id="cb6-3"><a></a>pre_process <span class="op">=</span> PILToTensor()</span>
-<span id="cb6-4"><a></a></span>
-<span id="cb6-5"><a></a>x <span class="op">=</span> pre_process(x_im)</span>
-<span id="cb6-6"><a></a></span>
-<span id="cb6-7"><a></a>x <span class="op">=</span> x.<span class="bu">float</span>()</span>
-<span id="cb6-8"><a></a></span>
-<span id="cb6-9"><a></a><span class="bu">type</span>(x), x.shape, x.dtype, x.<span class="bu">min</span>(), x.<span class="bu">max</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="2e6a9878" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a><span class="im">from</span> torchvision.transforms.v2 <span class="im">import</span> PILToTensor</span>
+<span id="cb7-2"><a></a></span>
+<span id="cb7-3"><a></a>pre_process <span class="op">=</span> PILToTensor()</span>
+<span id="cb7-4"><a></a></span>
+<span id="cb7-5"><a></a>x <span class="op">=</span> pre_process(x_im)</span>
+<span id="cb7-6"><a></a></span>
+<span id="cb7-7"><a></a>x <span class="op">=</span> x.<span class="bu">float</span>()</span>
+<span id="cb7-8"><a></a></span>
+<span id="cb7-9"><a></a><span class="bu">type</span>(x), x.shape, x.dtype, x.<span class="bu">min</span>(), x.<span class="bu">max</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>(torch.Tensor,
  torch.Size([3, 32, 32]),
@@ -472,17 +474,17 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Create a composed transformation to carry out the conversion, casting to float, and rescaling to <span class="math inline">\([0, 1]\)</span> range in the same function.</label></li>
 </ul>
-<div id="57b565b0" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a><span class="im">from</span> torchvision.transforms.v2 <span class="im">import</span> Compose, PILToTensor, ToDtype</span>
-<span id="cb8-2"><a></a></span>
-<span id="cb8-3"><a></a>pre_process <span class="op">=</span> Compose([</span>
-<span id="cb8-4"><a></a>  PILToTensor(),</span>
-<span id="cb8-5"><a></a>  ToDtype(torch.float32, scale<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb8-6"><a></a>])</span>
-<span id="cb8-7"><a></a></span>
-<span id="cb8-8"><a></a>x <span class="op">=</span> pre_process(x_im)</span>
-<span id="cb8-9"><a></a></span>
-<span id="cb8-10"><a></a><span class="bu">type</span>(x), x.shape, x.dtype, x.<span class="bu">min</span>(), x.<span class="bu">max</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="46a616d6" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a><span class="im">from</span> torchvision.transforms.v2 <span class="im">import</span> Compose, PILToTensor, ToDtype</span>
+<span id="cb9-2"><a></a></span>
+<span id="cb9-3"><a></a>pre_process <span class="op">=</span> Compose([</span>
+<span id="cb9-4"><a></a>  PILToTensor(),</span>
+<span id="cb9-5"><a></a>  ToDtype(torch.float32, scale<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-6"><a></a>])</span>
+<span id="cb9-7"><a></a></span>
+<span id="cb9-8"><a></a>x <span class="op">=</span> pre_process(x_im)</span>
+<span id="cb9-9"><a></a></span>
+<span id="cb9-10"><a></a><span class="bu">type</span>(x), x.shape, x.dtype, x.<span class="bu">min</span>(), x.<span class="bu">max</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>(torch.Tensor,
  torch.Size([3, 32, 32]),
@@ -510,8 +512,11 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Re-load the CIFAR-100 dataset, this time passing the <code>pre_process</code> function as argument.</label></li>
 </ul>
-<div id="3b0a149f" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a>cifar_ds <span class="op">=</span> torchvision.datasets.CIFAR100(root<span class="op">=</span><span class="st">"/tmp"</span>, train<span class="op">=</span><span class="va">True</span>, download<span class="op">=</span><span class="va">True</span>, transform<span class="op">=</span>pre_process)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="5d3ce07c" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a>cifar_ds <span class="op">=</span> torchvision.datasets.CIFAR100(root<span class="op">=</span><span class="st">"/tmp"</span>, train<span class="op">=</span><span class="va">True</span>, download<span class="op">=</span><span class="va">True</span>, transform<span class="op">=</span>pre_process)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Files already downloaded and verified</code></pre>
+</div>
 </div>
 </section></section>
 <section>
@@ -551,16 +556,19 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Load the CIFAR-100 test set</label></li>
 </ul>
-<div id="7e934457" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a>cifar_test_ds <span class="op">=</span> torchvision.datasets.CIFAR100(root<span class="op">=</span><span class="st">"/tmp"</span>, train<span class="op">=</span><span class="va">False</span>, download<span class="op">=</span><span class="va">True</span>, transform<span class="op">=</span>pre_process)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cf05ddb2" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a>cifar_test_ds <span class="op">=</span> torchvision.datasets.CIFAR100(root<span class="op">=</span><span class="st">"/tmp"</span>, train<span class="op">=</span><span class="va">False</span>, download<span class="op">=</span><span class="va">True</span>, transform<span class="op">=</span>pre_process)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Files already downloaded and verified</code></pre>
+</div>
 </div>
 <ul class="task-list">
 <li><label><input type="checkbox">Split the training set into train and validation subsets</label></li>
 </ul>
-<div id="ecc7904f" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a></a><span class="im">from</span> torch.utils.data <span class="im">import</span> random_split</span>
-<span id="cb12-2"><a></a></span>
-<span id="cb12-3"><a></a>cifar_train_ds, cifar_val_ds <span class="op">=</span> random_split(cifar_ds, (<span class="dv">40_000</span>, <span class="dv">10_000</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="50bf1c4a" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a></a><span class="im">from</span> torch.utils.data <span class="im">import</span> random_split</span>
+<span id="cb15-2"><a></a></span>
+<span id="cb15-3"><a></a>cifar_train_ds, cifar_val_ds <span class="op">=</span> random_split(cifar_ds, (<span class="dv">40_000</span>, <span class="dv">10_000</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section></section>
 <section>
@@ -583,11 +591,11 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Use the <code>nn</code> (Neural Networks) module from <code>pytorch</code> to create a Logistic Regression model</label></li>
 </ul>
-<div id="e1ad882a" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
-<span id="cb13-2"><a></a></span>
-<span id="cb13-3"><a></a>lr_clf_1 <span class="op">=</span> nn.Linear(in_features<span class="op">=</span><span class="dv">3</span> <span class="op">*</span> <span class="dv">32</span> <span class="op">*</span> <span class="dv">32</span>, out_features<span class="op">=</span><span class="dv">100</span>, bias<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb13-4"><a></a>lr_clf_2 <span class="op">=</span> nn.Softmax()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="33f1c1b1" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
+<span id="cb16-2"><a></a></span>
+<span id="cb16-3"><a></a>lr_clf_1 <span class="op">=</span> nn.Linear(in_features<span class="op">=</span><span class="dv">3</span> <span class="op">*</span> <span class="dv">32</span> <span class="op">*</span> <span class="dv">32</span>, out_features<span class="op">=</span><span class="dv">100</span>, bias<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-4"><a></a>lr_clf_2 <span class="op">=</span> nn.Softmax()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul class="task-list">
 <li><label><input type="checkbox"><em>Feed</em> the model with a sample <code>x</code></label></li>
@@ -605,10 +613,10 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 </div>
 </div>
 </div>
-<div id="9b0468eb" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a></a>y_hat <span class="op">=</span> lr_clf_2( lr_clf_1( x.reshape(<span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>) ))</span>
-<span id="cb14-2"><a></a></span>
-<span id="cb14-3"><a></a><span class="bu">type</span>(y_hat), y_hat.shape, y_hat.dtype</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="a439b930" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a></a>y_hat <span class="op">=</span> lr_clf_2( lr_clf_1( x.reshape(<span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>) ))</span>
+<span id="cb17-2"><a></a></span>
+<span id="cb17-3"><a></a><span class="bu">type</span>(y_hat), y_hat.shape, y_hat.dtype</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>(torch.Tensor, torch.Size([1, 100]), torch.float32)</code></pre>
 </div>
@@ -619,21 +627,21 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Use the <code>nn.Sequential</code> module to build sequential models</label></li>
 </ul>
-<div id="f3014862" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a></a>mlp_clf <span class="op">=</span> nn.Sequential(</span>
-<span id="cb16-2"><a></a>  nn.Linear(in_features<span class="op">=</span><span class="dv">3</span> <span class="op">*</span> <span class="dv">32</span> <span class="op">*</span> <span class="dv">32</span>, out_features<span class="op">=</span><span class="dv">1024</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb16-3"><a></a>  nn.Tanh(),</span>
-<span id="cb16-4"><a></a>  nn.Linear(in_features<span class="op">=</span><span class="dv">1024</span>, out_features<span class="op">=</span><span class="dv">100</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb16-5"><a></a>  nn.Softmax()</span>
-<span id="cb16-6"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="aa4e0300" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a></a>mlp_clf <span class="op">=</span> nn.Sequential(</span>
+<span id="cb19-2"><a></a>  nn.Linear(in_features<span class="op">=</span><span class="dv">3</span> <span class="op">*</span> <span class="dv">32</span> <span class="op">*</span> <span class="dv">32</span>, out_features<span class="op">=</span><span class="dv">1024</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb19-3"><a></a>  nn.Tanh(),</span>
+<span id="cb19-4"><a></a>  nn.Linear(in_features<span class="op">=</span><span class="dv">1024</span>, out_features<span class="op">=</span><span class="dv">100</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb19-5"><a></a>  nn.Softmax()</span>
+<span id="cb19-6"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul class="task-list">
 <li><label><input type="checkbox"><em>Feed</em> the model with a sample <code>x</code></label></li>
 </ul>
-<div id="ada62b08" class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a></a>y_hat <span class="op">=</span> mlp_clf(x.reshape(<span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>))</span>
-<span id="cb17-2"><a></a></span>
-<span id="cb17-3"><a></a><span class="bu">type</span>(y_hat), y_hat.shape, y_hat.dtype</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="9da7f2bd" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a></a>y_hat <span class="op">=</span> mlp_clf(x.reshape(<span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>))</span>
+<span id="cb20-2"><a></a></span>
+<span id="cb20-3"><a></a><span class="bu">type</span>(y_hat), y_hat.shape, y_hat.dtype</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <pre><code>(torch.Tensor, torch.Size([1, 100]), torch.float32)</code></pre>
 </div>
@@ -731,8 +739,8 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Define a Cross Entropy loss function with <code>nn.CrossEntropyLoss</code></label></li>
 </ul>
-<div id="2421c540" class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a></a>loss_fun <span class="op">=</span> nn.CrossEntropyLoss()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="84c34c8c" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a></a>loss_fun <span class="op">=</span> nn.CrossEntropyLoss()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul class="task-list">
 <li><label><input type="checkbox">Remove the <code>nn.Softmax</code> layer from the MLP model.</label></li>
@@ -750,13 +758,13 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 </div>
 </div>
 </div>
-<div id="3a465d1e" class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a></a>mlp_clf <span class="op">=</span> nn.Sequential(</span>
-<span id="cb20-2"><a></a>  nn.Linear(in_features<span class="op">=</span><span class="dv">3</span> <span class="op">*</span> <span class="dv">32</span> <span class="op">*</span> <span class="dv">32</span>, out_features<span class="op">=</span><span class="dv">1024</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb20-3"><a></a>  nn.Tanh(),</span>
-<span id="cb20-4"><a></a>  nn.Linear(in_features<span class="op">=</span><span class="dv">1024</span>, out_features<span class="op">=</span><span class="dv">100</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb20-5"><a></a>  <span class="co"># nn.Softmax() # &lt;- remove this line</span></span>
-<span id="cb20-6"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="964186ad" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a></a>mlp_clf <span class="op">=</span> nn.Sequential(</span>
+<span id="cb23-2"><a></a>  nn.Linear(in_features<span class="op">=</span><span class="dv">3</span> <span class="op">*</span> <span class="dv">32</span> <span class="op">*</span> <span class="dv">32</span>, out_features<span class="op">=</span><span class="dv">1024</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb23-3"><a></a>  nn.Tanh(),</span>
+<span id="cb23-4"><a></a>  nn.Linear(in_features<span class="op">=</span><span class="dv">1024</span>, out_features<span class="op">=</span><span class="dv">100</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb23-5"><a></a>  <span class="co"># nn.Softmax() # &lt;- remove this line</span></span>
+<span id="cb23-6"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="exercise-define-the-loss-function-for-the-cifar-100-classification-problem-1" class="slide level2">
@@ -777,10 +785,10 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 </div>
 </div>
 </div>
-<div id="ba4926a3" class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a></a>loss <span class="op">=</span> loss_fun(y_hat, torch.LongTensor([y]))</span>
-<span id="cb21-2"><a></a></span>
-<span id="cb21-3"><a></a>loss</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="4f884333" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a></a>loss <span class="op">=</span> loss_fun(y_hat, torch.LongTensor([y]))</span>
+<span id="cb24-2"><a></a></span>
+<span id="cb24-3"><a></a>loss</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
 <pre><code>tensor(4.6027, grad_fn=&lt;NllLossBackward0&gt;)</code></pre>
 </div>
@@ -817,8 +825,8 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Check what are the gradients of the MLP parameters before back propagating the gradient.</label></li>
 </ul>
-<div id="1190a5c5" class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a></a>mlp_clf[<span class="dv">0</span>].bias.grad</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fb162ff6" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a></a>mlp_clf[<span class="dv">0</span>].bias.grad</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul class="task-list">
 <li><label><input type="checkbox">Compute the gradient of the loss function with respect to the MLP parameters.</label></li>
@@ -836,16 +844,16 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 </div>
 </div>
 </div>
-<div id="8ba7e68c" class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a></a>loss <span class="op">=</span> loss_fun(y_hat, torch.LongTensor([y]))</span>
-<span id="cb24-2"><a></a></span>
-<span id="cb24-3"><a></a>loss.backward()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="efc79a21" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a></a>loss <span class="op">=</span> loss_fun(y_hat, torch.LongTensor([y]))</span>
+<span id="cb27-2"><a></a></span>
+<span id="cb27-3"><a></a>loss.backward()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul class="task-list">
 <li><label><input type="checkbox">Verify that the gradients have been propagated to the model parameters.</label></li>
 </ul>
-<div id="75b50b68" class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a></a>mlp_clf[<span class="dv">0</span>].bias.grad</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="738c6c0b" class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a></a>mlp_clf[<span class="dv">0</span>].bias.grad</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="stochastic-methods" class="slide level2">
@@ -923,20 +931,20 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Use a <code>DataLoader</code> to serve mini-batches of images to train our MLP.</label></li>
 </ul>
-<div id="ef7cde14" class="cell" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a></a><span class="im">from</span> torch.utils.data <span class="im">import</span> DataLoader</span>
-<span id="cb26-2"><a></a></span>
-<span id="cb26-3"><a></a>cifar_train_dl <span class="op">=</span> DataLoader(cifar_train_ds, batch_size<span class="op">=</span><span class="dv">128</span>, shuffle<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb26-4"><a></a>cifar_val_dl <span class="op">=</span> DataLoader(cifar_val_ds, batch_size<span class="op">=</span><span class="dv">256</span>)</span>
-<span id="cb26-5"><a></a>cifar_test_dl <span class="op">=</span> DataLoader(cifar_test_ds, batch_size<span class="op">=</span><span class="dv">256</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="7ac55684" class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a></a><span class="im">from</span> torch.utils.data <span class="im">import</span> DataLoader</span>
+<span id="cb29-2"><a></a></span>
+<span id="cb29-3"><a></a>cifar_train_dl <span class="op">=</span> DataLoader(cifar_train_ds, batch_size<span class="op">=</span><span class="dv">128</span>, shuffle<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb29-4"><a></a>cifar_val_dl <span class="op">=</span> DataLoader(cifar_val_ds, batch_size<span class="op">=</span><span class="dv">256</span>)</span>
+<span id="cb29-5"><a></a>cifar_test_dl <span class="op">=</span> DataLoader(cifar_test_ds, batch_size<span class="op">=</span><span class="dv">256</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul class="task-list">
 <li><label><input type="checkbox">Create a Stochastic Gradient Descent optimizer for our MLP classifier.</label></li>
 </ul>
-<div id="538bcae6" class="cell" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a></a><span class="im">import</span> torch.optim <span class="im">as</span> optim</span>
-<span id="cb27-2"><a></a></span>
-<span id="cb27-3"><a></a>optimizer <span class="op">=</span> optim.SGD(mlp_clf.parameters(), lr<span class="op">=</span><span class="fl">0.01</span>, )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="af972269" class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a></a><span class="im">import</span> torch.optim <span class="im">as</span> optim</span>
+<span id="cb30-2"><a></a></span>
+<span id="cb30-3"><a></a>optimizer <span class="op">=</span> optim.SGD(mlp_clf.parameters(), lr<span class="op">=</span><span class="fl">0.01</span>, )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="exercise-train-the-mlp-classifier-1" class="slide level2 scrollable">
@@ -1060,14 +1068,14 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Plot the training loss for this <em>epoch</em>.</label></li>
 </ul>
-<div id="672872b7" class="cell" data-execution_count="26">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb31-2"><a></a></span>
-<span id="cb31-3"><a></a>plt.plot(train_loss, <span class="st">"b-"</span>, label<span class="op">=</span><span class="st">"Training loss"</span>)</span>
-<span id="cb31-4"><a></a>plt.plot([<span class="dv">0</span>, <span class="bu">len</span>(train_loss)], [train_loss_avg, train_loss_avg], <span class="st">"r:"</span>, label<span class="op">=</span><span class="st">"Average training loss"</span>)</span>
-<span id="cb31-5"><a></a>plt.plot([<span class="dv">0</span>, <span class="bu">len</span>(train_loss)], [val_loss_avg, val_loss_avg], <span class="st">"b:"</span>, label<span class="op">=</span><span class="st">"Average validation loss"</span>)</span>
-<span id="cb31-6"><a></a>plt.legend()</span>
-<span id="cb31-7"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fb87e26a" class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb34-2"><a></a></span>
+<span id="cb34-3"><a></a>plt.plot(train_loss, <span class="st">"b-"</span>, label<span class="op">=</span><span class="st">"Training loss"</span>)</span>
+<span id="cb34-4"><a></a>plt.plot([<span class="dv">0</span>, <span class="bu">len</span>(train_loss)], [train_loss_avg, train_loss_avg], <span class="st">"r:"</span>, label<span class="op">=</span><span class="st">"Average training loss"</span>)</span>
+<span id="cb34-5"><a></a>plt.plot([<span class="dv">0</span>, <span class="bu">len</span>(train_loss)], [val_loss_avg, val_loss_avg], <span class="st">"b:"</span>, label<span class="op">=</span><span class="st">"Average validation loss"</span>)</span>
+<span id="cb34-6"><a></a>plt.legend()</span>
+<span id="cb34-7"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1125,13 +1133,13 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Plot the average train and validation losses</label></li>
 </ul>
-<div id="96f926c1" class="cell" data-execution_count="28">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb33-2"><a></a></span>
-<span id="cb33-3"><a></a>plt.plot(train_loss, <span class="st">"b-"</span>, label<span class="op">=</span><span class="st">"Average training loss"</span>)</span>
-<span id="cb33-4"><a></a>plt.plot(val_loss, <span class="st">"r-"</span>, label<span class="op">=</span><span class="st">"Average validation loss"</span>)</span>
-<span id="cb33-5"><a></a>plt.legend()</span>
-<span id="cb33-6"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="08f15458" class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb36-2"><a></a></span>
+<span id="cb36-3"><a></a>plt.plot(train_loss, <span class="st">"b-"</span>, label<span class="op">=</span><span class="st">"Average training loss"</span>)</span>
+<span id="cb36-4"><a></a>plt.plot(val_loss, <span class="st">"r-"</span>, label<span class="op">=</span><span class="st">"Average validation loss"</span>)</span>
+<span id="cb36-5"><a></a>plt.legend()</span>
+<span id="cb36-6"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1202,22 +1210,22 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Compute the average accuracy for the Train set.</label></li>
 </ul>
-<div id="f3b4d385" class="cell" data-execution_count="29">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a></a><span class="im">from</span> torchmetrics.classification <span class="im">import</span> Accuracy</span>
-<span id="cb35-2"><a></a></span>
-<span id="cb35-3"><a></a>mlp_clf.<span class="bu">eval</span>()</span>
-<span id="cb35-4"><a></a></span>
-<span id="cb35-5"><a></a>train_acc_metric <span class="op">=</span> Accuracy(task<span class="op">=</span><span class="st">"multiclass"</span>, num_classes<span class="op">=</span><span class="dv">100</span>)</span>
-<span id="cb35-6"><a></a></span>
-<span id="cb35-7"><a></a><span class="cf">with</span> torch.no_grad():</span>
-<span id="cb35-8"><a></a>  <span class="cf">for</span> x, y <span class="kw">in</span> cifar_train_dl:</span>
-<span id="cb35-9"><a></a>    y_hat <span class="op">=</span> mlp_clf( x.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span> <span class="op">*</span> <span class="dv">32</span> <span class="op">*</span> <span class="dv">32</span>) )</span>
-<span id="cb35-10"><a></a>    train_acc_metric(y_hat.softmax(dim<span class="op">=</span><span class="dv">1</span>), y)</span>
-<span id="cb35-11"><a></a></span>
-<span id="cb35-12"><a></a>  train_acc <span class="op">=</span> train_acc_metric.compute()</span>
-<span id="cb35-13"><a></a></span>
-<span id="cb35-14"><a></a><span class="bu">print</span>(<span class="ss">f"Training acc=</span><span class="sc">{</span>train_acc<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb35-15"><a></a>train_acc_metric.reset()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="97a5daf4" class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a></a><span class="im">from</span> torchmetrics.classification <span class="im">import</span> Accuracy</span>
+<span id="cb38-2"><a></a></span>
+<span id="cb38-3"><a></a>mlp_clf.<span class="bu">eval</span>()</span>
+<span id="cb38-4"><a></a></span>
+<span id="cb38-5"><a></a>train_acc_metric <span class="op">=</span> Accuracy(task<span class="op">=</span><span class="st">"multiclass"</span>, num_classes<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb38-6"><a></a></span>
+<span id="cb38-7"><a></a><span class="cf">with</span> torch.no_grad():</span>
+<span id="cb38-8"><a></a>  <span class="cf">for</span> x, y <span class="kw">in</span> cifar_train_dl:</span>
+<span id="cb38-9"><a></a>    y_hat <span class="op">=</span> mlp_clf( x.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span> <span class="op">*</span> <span class="dv">32</span> <span class="op">*</span> <span class="dv">32</span>) )</span>
+<span id="cb38-10"><a></a>    train_acc_metric(y_hat.softmax(dim<span class="op">=</span><span class="dv">1</span>), y)</span>
+<span id="cb38-11"><a></a></span>
+<span id="cb38-12"><a></a>  train_acc <span class="op">=</span> train_acc_metric.compute()</span>
+<span id="cb38-13"><a></a></span>
+<span id="cb38-14"><a></a><span class="bu">print</span>(<span class="ss">f"Training acc=</span><span class="sc">{</span>train_acc<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb38-15"><a></a>train_acc_metric.reset()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Training acc=0.1317249983549118</code></pre>
 </div>
@@ -1228,28 +1236,28 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Compute the average accuracy for the Validation and Test sets.</label></li>
 </ul>
-<div id="dac464ba" class="cell" data-execution_count="30">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a></a>val_acc_metric <span class="op">=</span> Accuracy(task<span class="op">=</span><span class="st">"multiclass"</span>, num_classes<span class="op">=</span><span class="dv">100</span>)</span>
-<span id="cb37-2"><a></a>test_acc_metric <span class="op">=</span> Accuracy(task<span class="op">=</span><span class="st">"multiclass"</span>, num_classes<span class="op">=</span><span class="dv">100</span>)</span>
-<span id="cb37-3"><a></a></span>
-<span id="cb37-4"><a></a><span class="cf">with</span> torch.no_grad():</span>
-<span id="cb37-5"><a></a>  <span class="cf">for</span> x, y <span class="kw">in</span> cifar_val_dl:</span>
-<span id="cb37-6"><a></a>    y_hat <span class="op">=</span> mlp_clf( x.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span> <span class="op">*</span> <span class="dv">32</span> <span class="op">*</span> <span class="dv">32</span>) )</span>
-<span id="cb37-7"><a></a>    val_acc_metric(y_hat.softmax(dim<span class="op">=</span><span class="dv">1</span>), y)</span>
-<span id="cb37-8"><a></a></span>
-<span id="cb37-9"><a></a>  val_acc <span class="op">=</span> val_acc_metric.compute()</span>
-<span id="cb37-10"><a></a></span>
-<span id="cb37-11"><a></a>  <span class="cf">for</span> x, y <span class="kw">in</span> cifar_test_dl:</span>
-<span id="cb37-12"><a></a>    y_hat <span class="op">=</span> mlp_clf( x.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span> <span class="op">*</span> <span class="dv">32</span> <span class="op">*</span> <span class="dv">32</span>) )</span>
-<span id="cb37-13"><a></a>    test_acc_metric(y_hat.softmax(dim<span class="op">=</span><span class="dv">1</span>), y)</span>
-<span id="cb37-14"><a></a></span>
-<span id="cb37-15"><a></a>  test_acc <span class="op">=</span> test_acc_metric.compute()</span>
-<span id="cb37-16"><a></a></span>
-<span id="cb37-17"><a></a><span class="bu">print</span>(<span class="ss">f"Validation acc=</span><span class="sc">{</span>val_acc<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb37-18"><a></a><span class="bu">print</span>(<span class="ss">f"Test acc=</span><span class="sc">{</span>test_acc<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb37-19"><a></a></span>
-<span id="cb37-20"><a></a>val_acc_metric.reset()</span>
-<span id="cb37-21"><a></a>test_acc_metric.reset()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="d03fff04" class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a></a>val_acc_metric <span class="op">=</span> Accuracy(task<span class="op">=</span><span class="st">"multiclass"</span>, num_classes<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb40-2"><a></a>test_acc_metric <span class="op">=</span> Accuracy(task<span class="op">=</span><span class="st">"multiclass"</span>, num_classes<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb40-3"><a></a></span>
+<span id="cb40-4"><a></a><span class="cf">with</span> torch.no_grad():</span>
+<span id="cb40-5"><a></a>  <span class="cf">for</span> x, y <span class="kw">in</span> cifar_val_dl:</span>
+<span id="cb40-6"><a></a>    y_hat <span class="op">=</span> mlp_clf( x.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span> <span class="op">*</span> <span class="dv">32</span> <span class="op">*</span> <span class="dv">32</span>) )</span>
+<span id="cb40-7"><a></a>    val_acc_metric(y_hat.softmax(dim<span class="op">=</span><span class="dv">1</span>), y)</span>
+<span id="cb40-8"><a></a></span>
+<span id="cb40-9"><a></a>  val_acc <span class="op">=</span> val_acc_metric.compute()</span>
+<span id="cb40-10"><a></a></span>
+<span id="cb40-11"><a></a>  <span class="cf">for</span> x, y <span class="kw">in</span> cifar_test_dl:</span>
+<span id="cb40-12"><a></a>    y_hat <span class="op">=</span> mlp_clf( x.reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span> <span class="op">*</span> <span class="dv">32</span> <span class="op">*</span> <span class="dv">32</span>) )</span>
+<span id="cb40-13"><a></a>    test_acc_metric(y_hat.softmax(dim<span class="op">=</span><span class="dv">1</span>), y)</span>
+<span id="cb40-14"><a></a></span>
+<span id="cb40-15"><a></a>  test_acc <span class="op">=</span> test_acc_metric.compute()</span>
+<span id="cb40-16"><a></a></span>
+<span id="cb40-17"><a></a><span class="bu">print</span>(<span class="ss">f"Validation acc=</span><span class="sc">{</span>val_acc<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb40-18"><a></a><span class="bu">print</span>(<span class="ss">f"Test acc=</span><span class="sc">{</span>test_acc<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb40-19"><a></a></span>
+<span id="cb40-20"><a></a>val_acc_metric.reset()</span>
+<span id="cb40-21"><a></a>test_acc_metric.reset()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Validation acc=0.12780000269412994
 Test acc=0.12269999831914902</code></pre>
@@ -1272,14 +1280,14 @@ Test acc=0.12269999831914902</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Create a convolution layer with <code>nn.Conv2D</code> using 3 channels as input, and a single one for output.</label></li>
 </ul>
-<div id="4e9147a8" class="cell" data-execution_count="31">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a></a>conv_1 <span class="op">=</span> nn.Conv2d(in_channels<span class="op">=</span><span class="dv">3</span>, out_channels<span class="op">=</span><span class="dv">1</span>, kernel_size<span class="op">=</span><span class="dv">7</span>, padding<span class="op">=</span><span class="dv">0</span>, bias<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb39-2"><a></a></span>
-<span id="cb39-3"><a></a>x, _ <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(cifar_train_dl))</span>
-<span id="cb39-4"><a></a></span>
-<span id="cb39-5"><a></a>fx <span class="op">=</span> conv_1(x)</span>
-<span id="cb39-6"><a></a></span>
-<span id="cb39-7"><a></a><span class="bu">type</span>(fx), fx.dtype, fx.shape, fx.<span class="bu">min</span>(), fx.<span class="bu">max</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="373d671d" class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a></a>conv_1 <span class="op">=</span> nn.Conv2d(in_channels<span class="op">=</span><span class="dv">3</span>, out_channels<span class="op">=</span><span class="dv">1</span>, kernel_size<span class="op">=</span><span class="dv">7</span>, padding<span class="op">=</span><span class="dv">0</span>, bias<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb42-2"><a></a></span>
+<span id="cb42-3"><a></a>x, _ <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(cifar_train_dl))</span>
+<span id="cb42-4"><a></a></span>
+<span id="cb42-5"><a></a>fx <span class="op">=</span> conv_1(x)</span>
+<span id="cb42-6"><a></a></span>
+<span id="cb42-7"><a></a><span class="bu">type</span>(fx), fx.dtype, fx.shape, fx.<span class="bu">min</span>(), fx.<span class="bu">max</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="31">
 <pre><code>(torch.Tensor,
  torch.float32,
@@ -1307,13 +1315,13 @@ Test acc=0.12269999831914902</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Create a convolution layer with <code>nn.Conv2D</code> using 3 channels as input, and a single one for output.</label></li>
 </ul>
-<div id="7abe6377" class="cell" data-execution_count="32">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a></a>plt.rcParams[<span class="st">'figure.figsize'</span>] <span class="op">=</span> [<span class="dv">5</span>, <span class="dv">5</span>]</span>
-<span id="cb41-2"><a></a></span>
-<span id="cb41-3"><a></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>)</span>
-<span id="cb41-4"><a></a>ax[<span class="dv">0</span>].imshow(x[<span class="dv">0</span>].permute(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>))</span>
-<span id="cb41-5"><a></a>ax[<span class="dv">1</span>].imshow(fx.detach()[<span class="dv">0</span>, <span class="dv">0</span>], cmap<span class="op">=</span><span class="st">"gray"</span>)</span>
-<span id="cb41-6"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="482bec97" class="cell" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a></a>plt.rcParams[<span class="st">'figure.figsize'</span>] <span class="op">=</span> [<span class="dv">5</span>, <span class="dv">5</span>]</span>
+<span id="cb44-2"><a></a></span>
+<span id="cb44-3"><a></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb44-4"><a></a>ax[<span class="dv">0</span>].imshow(x[<span class="dv">0</span>].permute(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>))</span>
+<span id="cb44-5"><a></a>ax[<span class="dv">1</span>].imshow(fx.detach()[<span class="dv">0</span>, <span class="dv">0</span>], cmap<span class="op">=</span><span class="st">"gray"</span>)</span>
+<span id="cb44-6"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1342,19 +1350,19 @@ Test acc=0.12269999831914902</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Visualize the weights of the convolution layer.</label></li>
 </ul>
-<div id="34487795" class="cell" data-execution_count="33">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a></a>conv_1.weight.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="6f50a2cf" class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a></a>conv_1.weight.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="33">
 <pre><code>torch.Size([1, 3, 7, 7])</code></pre>
 </div>
 </div>
-<div id="b228b8f8" class="cell" data-execution_count="34">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>)</span>
-<span id="cb44-2"><a></a>ax[<span class="dv">0</span>, <span class="dv">0</span>].imshow(conv_1.weight.detach()[<span class="dv">0</span>, <span class="dv">0</span>], cmap<span class="op">=</span><span class="st">"gray"</span>)</span>
-<span id="cb44-3"><a></a>ax[<span class="dv">0</span>, <span class="dv">1</span>].imshow(conv_1.weight.detach()[<span class="dv">0</span>, <span class="dv">1</span>], cmap<span class="op">=</span><span class="st">"gray"</span>)</span>
-<span id="cb44-4"><a></a>ax[<span class="dv">1</span>, <span class="dv">0</span>].imshow(conv_1.weight.detach()[<span class="dv">0</span>, <span class="dv">2</span>], cmap<span class="op">=</span><span class="st">"gray"</span>)</span>
-<span id="cb44-5"><a></a>ax[<span class="dv">1</span>, <span class="dv">1</span>].set_axis_off()</span>
-<span id="cb44-6"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="5b85c327" class="cell" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>)</span>
+<span id="cb47-2"><a></a>ax[<span class="dv">0</span>, <span class="dv">0</span>].imshow(conv_1.weight.detach()[<span class="dv">0</span>, <span class="dv">0</span>], cmap<span class="op">=</span><span class="st">"gray"</span>)</span>
+<span id="cb47-3"><a></a>ax[<span class="dv">0</span>, <span class="dv">1</span>].imshow(conv_1.weight.detach()[<span class="dv">0</span>, <span class="dv">1</span>], cmap<span class="op">=</span><span class="st">"gray"</span>)</span>
+<span id="cb47-4"><a></a>ax[<span class="dv">1</span>, <span class="dv">0</span>].imshow(conv_1.weight.detach()[<span class="dv">0</span>, <span class="dv">2</span>], cmap<span class="op">=</span><span class="st">"gray"</span>)</span>
+<span id="cb47-5"><a></a>ax[<span class="dv">1</span>, <span class="dv">1</span>].set_axis_off()</span>
+<span id="cb47-6"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1369,28 +1377,28 @@ Test acc=0.12269999831914902</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Modify the weights of the convolution layer.</label></li>
 </ul>
-<div id="d9ed80ca" class="cell" data-execution_count="35">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a></a>conv_1 <span class="op">=</span> nn.Conv2d(in_channels<span class="op">=</span><span class="dv">3</span>, out_channels<span class="op">=</span><span class="dv">1</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">0</span>, bias<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb45-2"><a></a></span>
-<span id="cb45-3"><a></a>conv_1.weight.data[:] <span class="op">=</span> torch.FloatTensor([</span>
-<span id="cb45-4"><a></a>  [</span>
-<span id="cb45-5"><a></a>    [</span>
-<span id="cb45-6"><a></a>      [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
-<span id="cb45-7"><a></a>      [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
-<span id="cb45-8"><a></a>      [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
-<span id="cb45-9"><a></a>    ],</span>
-<span id="cb45-10"><a></a>    [</span>
-<span id="cb45-11"><a></a>      [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
-<span id="cb45-12"><a></a>      [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
-<span id="cb45-13"><a></a>      [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
-<span id="cb45-14"><a></a>    ],</span>
-<span id="cb45-15"><a></a>    [</span>
-<span id="cb45-16"><a></a>      [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
-<span id="cb45-17"><a></a>      [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
-<span id="cb45-18"><a></a>      [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
-<span id="cb45-19"><a></a>    ],</span>
-<span id="cb45-20"><a></a>  ]</span>
-<span id="cb45-21"><a></a>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="846889e5" class="cell" data-execution_count="36">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a></a>conv_1 <span class="op">=</span> nn.Conv2d(in_channels<span class="op">=</span><span class="dv">3</span>, out_channels<span class="op">=</span><span class="dv">1</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">0</span>, bias<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb48-2"><a></a></span>
+<span id="cb48-3"><a></a>conv_1.weight.data[:] <span class="op">=</span> torch.FloatTensor([</span>
+<span id="cb48-4"><a></a>  [</span>
+<span id="cb48-5"><a></a>    [</span>
+<span id="cb48-6"><a></a>      [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb48-7"><a></a>      [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb48-8"><a></a>      [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb48-9"><a></a>    ],</span>
+<span id="cb48-10"><a></a>    [</span>
+<span id="cb48-11"><a></a>      [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb48-12"><a></a>      [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
+<span id="cb48-13"><a></a>      [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb48-14"><a></a>    ],</span>
+<span id="cb48-15"><a></a>    [</span>
+<span id="cb48-16"><a></a>      [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb48-17"><a></a>      [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb48-18"><a></a>      [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb48-19"><a></a>    ],</span>
+<span id="cb48-20"><a></a>  ]</span>
+<span id="cb48-21"><a></a>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="exercise-visualize-the-effect-of-the-convolution-operation-4" class="slide level2">
@@ -1398,13 +1406,13 @@ Test acc=0.12269999831914902</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Visualize the effects after changing the values.</label></li>
 </ul>
-<div id="12a8ef36" class="cell" data-execution_count="36">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a></a>fx <span class="op">=</span> conv_1(x)</span>
-<span id="cb46-2"><a></a></span>
-<span id="cb46-3"><a></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>)</span>
-<span id="cb46-4"><a></a>ax[<span class="dv">0</span>].imshow(x[<span class="dv">0</span>].permute(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>))</span>
-<span id="cb46-5"><a></a>ax[<span class="dv">1</span>].imshow(fx.detach()[<span class="dv">0</span>].permute(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>))</span>
-<span id="cb46-6"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="7cc57205" class="cell" data-execution_count="37">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a></a>fx <span class="op">=</span> conv_1(x)</span>
+<span id="cb49-2"><a></a></span>
+<span id="cb49-3"><a></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb49-4"><a></a>ax[<span class="dv">0</span>].imshow(x[<span class="dv">0</span>].permute(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>))</span>
+<span id="cb49-5"><a></a>ax[<span class="dv">1</span>].imshow(fx.detach()[<span class="dv">0</span>].permute(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>))</span>
+<span id="cb49-6"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1420,21 +1428,21 @@ Test acc=0.12269999831914902</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Modify the weights of the convolution layer.</label></li>
 </ul>
-<div id="a6646423" class="cell" data-execution_count="37">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a></a>conv_1 <span class="op">=</span> nn.Conv2d(in_channels<span class="op">=</span><span class="dv">3</span>, out_channels<span class="op">=</span><span class="dv">1</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">0</span>, bias<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb47-2"><a></a></span>
-<span id="cb47-3"><a></a>conv_1.weight.data[:] <span class="op">=</span> torch.FloatTensor([</span>
-<span id="cb47-4"><a></a>  [[[<span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>], [<span class="op">-</span><span class="dv">1</span>, <span class="dv">5</span>, <span class="op">-</span><span class="dv">1</span>], [<span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>]],</span>
-<span id="cb47-5"><a></a>   [[<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>], [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>], [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>]],</span>
-<span id="cb47-6"><a></a>   [[<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>], [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>], [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>]]]</span>
-<span id="cb47-7"><a></a>])</span>
-<span id="cb47-8"><a></a></span>
-<span id="cb47-9"><a></a>fx <span class="op">=</span> conv_1(x)</span>
-<span id="cb47-10"><a></a></span>
-<span id="cb47-11"><a></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>)</span>
-<span id="cb47-12"><a></a>ax[<span class="dv">0</span>].imshow(x[<span class="dv">0</span>].permute(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>))</span>
-<span id="cb47-13"><a></a>ax[<span class="dv">1</span>].imshow(fx.detach()[<span class="dv">0</span>, <span class="dv">0</span>], cmap<span class="op">=</span><span class="st">"gray"</span>)</span>
-<span id="cb47-14"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="f1fe3b71" class="cell" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a></a>conv_1 <span class="op">=</span> nn.Conv2d(in_channels<span class="op">=</span><span class="dv">3</span>, out_channels<span class="op">=</span><span class="dv">1</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">0</span>, bias<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb50-2"><a></a></span>
+<span id="cb50-3"><a></a>conv_1.weight.data[:] <span class="op">=</span> torch.FloatTensor([</span>
+<span id="cb50-4"><a></a>  [[[<span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>], [<span class="op">-</span><span class="dv">1</span>, <span class="dv">5</span>, <span class="op">-</span><span class="dv">1</span>], [<span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>]],</span>
+<span id="cb50-5"><a></a>   [[<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>], [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>], [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>]],</span>
+<span id="cb50-6"><a></a>   [[<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>], [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>], [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>]]]</span>
+<span id="cb50-7"><a></a>])</span>
+<span id="cb50-8"><a></a></span>
+<span id="cb50-9"><a></a>fx <span class="op">=</span> conv_1(x)</span>
+<span id="cb50-10"><a></a></span>
+<span id="cb50-11"><a></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb50-12"><a></a>ax[<span class="dv">0</span>].imshow(x[<span class="dv">0</span>].permute(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>))</span>
+<span id="cb50-13"><a></a>ax[<span class="dv">1</span>].imshow(fx.detach()[<span class="dv">0</span>, <span class="dv">0</span>], cmap<span class="op">=</span><span class="st">"gray"</span>)</span>
+<span id="cb50-14"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1450,21 +1458,21 @@ Test acc=0.12269999831914902</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Modify the weights of the convolution layer.</label></li>
 </ul>
-<div id="41f4696e" class="cell" data-execution_count="38">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a></a>conv_1 <span class="op">=</span> nn.Conv2d(in_channels<span class="op">=</span><span class="dv">3</span>, out_channels<span class="op">=</span><span class="dv">1</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">0</span>, bias<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb48-2"><a></a></span>
-<span id="cb48-3"><a></a>conv_1.weight.data[:] <span class="op">=</span> torch.FloatTensor([</span>
-<span id="cb48-4"><a></a>  [[[<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>], [<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>], [<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>]],</span>
-<span id="cb48-5"><a></a>   [[<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>], [<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>], [<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>]],</span>
-<span id="cb48-6"><a></a>   [[<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>], [<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>], [<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>]]]</span>
-<span id="cb48-7"><a></a>])</span>
-<span id="cb48-8"><a></a></span>
-<span id="cb48-9"><a></a>fx <span class="op">=</span> conv_1(x)</span>
-<span id="cb48-10"><a></a></span>
-<span id="cb48-11"><a></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>)</span>
-<span id="cb48-12"><a></a>ax[<span class="dv">0</span>].imshow(x[<span class="dv">0</span>].permute(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>))</span>
-<span id="cb48-13"><a></a>ax[<span class="dv">1</span>].imshow(fx.detach()[<span class="dv">0</span>, <span class="dv">0</span>], cmap<span class="op">=</span><span class="st">"gray"</span>)</span>
-<span id="cb48-14"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="717b878c" class="cell" data-execution_count="39">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a></a>conv_1 <span class="op">=</span> nn.Conv2d(in_channels<span class="op">=</span><span class="dv">3</span>, out_channels<span class="op">=</span><span class="dv">1</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">0</span>, bias<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb51-2"><a></a></span>
+<span id="cb51-3"><a></a>conv_1.weight.data[:] <span class="op">=</span> torch.FloatTensor([</span>
+<span id="cb51-4"><a></a>  [[[<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>], [<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>], [<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>]],</span>
+<span id="cb51-5"><a></a>   [[<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>], [<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>], [<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>]],</span>
+<span id="cb51-6"><a></a>   [[<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>], [<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>], [<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>]]]</span>
+<span id="cb51-7"><a></a>])</span>
+<span id="cb51-8"><a></a></span>
+<span id="cb51-9"><a></a>fx <span class="op">=</span> conv_1(x)</span>
+<span id="cb51-10"><a></a></span>
+<span id="cb51-11"><a></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb51-12"><a></a>ax[<span class="dv">0</span>].imshow(x[<span class="dv">0</span>].permute(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>))</span>
+<span id="cb51-13"><a></a>ax[<span class="dv">1</span>].imshow(fx.detach()[<span class="dv">0</span>, <span class="dv">0</span>], cmap<span class="op">=</span><span class="st">"gray"</span>)</span>
+<span id="cb51-14"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1520,21 +1528,21 @@ Test acc=0.12269999831914902</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Build the convolutional neural network using <code>nn.Sequential</code>, and the <code>nn.ReLU()</code> activation function.</label></li>
 </ul>
-<div id="bb8c1058" class="cell" data-execution_count="39">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a></a>lenet_clf <span class="op">=</span> nn.Sequential(</span>
-<span id="cb49-2"><a></a>    nn.Conv2d(in_channels<span class="op">=</span><span class="dv">3</span>, out_channels<span class="op">=</span><span class="dv">6</span>, kernel_size<span class="op">=</span><span class="dv">5</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb49-3"><a></a>    nn.ReLU(),</span>
-<span id="cb49-4"><a></a>    nn.MaxPool2d(kernel_size<span class="op">=</span><span class="dv">2</span>),</span>
-<span id="cb49-5"><a></a>    nn.Conv2d(in_channels<span class="op">=</span><span class="dv">6</span>, out_channels<span class="op">=</span><span class="dv">16</span>, kernel_size<span class="op">=</span><span class="dv">5</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb49-6"><a></a>    nn.ReLU(),</span>
-<span id="cb49-7"><a></a>    nn.MaxPool2d(kernel_size<span class="op">=</span><span class="dv">2</span>),</span>
-<span id="cb49-8"><a></a>    nn.Flatten(),</span>
-<span id="cb49-9"><a></a>    nn.Linear(in_features<span class="op">=</span><span class="dv">16</span><span class="op">*</span><span class="dv">5</span><span class="op">*</span><span class="dv">5</span>, out_features<span class="op">=</span><span class="dv">120</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb49-10"><a></a>    nn.ReLU(),</span>
-<span id="cb49-11"><a></a>    nn.Linear(in_features<span class="op">=</span><span class="dv">120</span>, out_features<span class="op">=</span><span class="dv">84</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb49-12"><a></a>    nn.ReLU(),</span>
-<span id="cb49-13"><a></a>    nn.Linear(in_features<span class="op">=</span><span class="dv">84</span>, out_features<span class="op">=</span><span class="dv">100</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
-<span id="cb49-14"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fdee84a5" class="cell" data-execution_count="40">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a></a>lenet_clf <span class="op">=</span> nn.Sequential(</span>
+<span id="cb52-2"><a></a>    nn.Conv2d(in_channels<span class="op">=</span><span class="dv">3</span>, out_channels<span class="op">=</span><span class="dv">6</span>, kernel_size<span class="op">=</span><span class="dv">5</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb52-3"><a></a>    nn.ReLU(),</span>
+<span id="cb52-4"><a></a>    nn.MaxPool2d(kernel_size<span class="op">=</span><span class="dv">2</span>),</span>
+<span id="cb52-5"><a></a>    nn.Conv2d(in_channels<span class="op">=</span><span class="dv">6</span>, out_channels<span class="op">=</span><span class="dv">16</span>, kernel_size<span class="op">=</span><span class="dv">5</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb52-6"><a></a>    nn.ReLU(),</span>
+<span id="cb52-7"><a></a>    nn.MaxPool2d(kernel_size<span class="op">=</span><span class="dv">2</span>),</span>
+<span id="cb52-8"><a></a>    nn.Flatten(),</span>
+<span id="cb52-9"><a></a>    nn.Linear(in_features<span class="op">=</span><span class="dv">16</span><span class="op">*</span><span class="dv">5</span><span class="op">*</span><span class="dv">5</span>, out_features<span class="op">=</span><span class="dv">120</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb52-10"><a></a>    nn.ReLU(),</span>
+<span id="cb52-11"><a></a>    nn.Linear(in_features<span class="op">=</span><span class="dv">120</span>, out_features<span class="op">=</span><span class="dv">84</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb52-12"><a></a>    nn.ReLU(),</span>
+<span id="cb52-13"><a></a>    nn.Linear(in_features<span class="op">=</span><span class="dv">84</span>, out_features<span class="op">=</span><span class="dv">100</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb52-14"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
@@ -1555,10 +1563,10 @@ Test acc=0.12269999831914902</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Test our implementation.</label></li>
 </ul>
-<div id="015db876" class="cell" data-execution_count="40">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a></a>y_hat <span class="op">=</span> lenet_clf(x)</span>
-<span id="cb50-2"><a></a></span>
-<span id="cb50-3"><a></a><span class="bu">type</span>(y_hat), y_hat.dtype, y_hat.shape, y_hat.<span class="bu">min</span>(), y_hat.<span class="bu">max</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="424d75d7" class="cell" data-execution_count="41">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a></a>y_hat <span class="op">=</span> lenet_clf(x)</span>
+<span id="cb53-2"><a></a></span>
+<span id="cb53-3"><a></a><span class="bu">type</span>(y_hat), y_hat.dtype, y_hat.shape, y_hat.<span class="bu">min</span>(), y_hat.<span class="bu">max</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="40">
 <pre><code>(torch.Tensor,
  torch.float32,
@@ -1573,58 +1581,58 @@ Test acc=0.12269999831914902</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Train the model to classify images from CIFAR-100.</label></li>
 </ul>
-<div id="83931bd0" class="cell" data-execution_count="41">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a></a>num_epochs <span class="op">=</span> <span class="dv">10</span></span>
-<span id="cb52-2"><a></a>train_loss <span class="op">=</span> []</span>
-<span id="cb52-3"><a></a>val_loss <span class="op">=</span> []</span>
-<span id="cb52-4"><a></a></span>
-<span id="cb52-5"><a></a><span class="cf">if</span> torch.cuda.is_available():</span>
-<span id="cb52-6"><a></a>  lenet_clf.cuda()</span>
-<span id="cb52-7"><a></a></span>
-<span id="cb52-8"><a></a>optimizer <span class="op">=</span> optim.SGD(lenet_clf.parameters(), lr<span class="op">=</span><span class="fl">0.01</span>)</span>
-<span id="cb52-9"><a></a></span>
-<span id="cb52-10"><a></a><span class="cf">for</span> e <span class="kw">in</span> <span class="bu">range</span>(num_epochs):</span>
-<span id="cb52-11"><a></a>  train_loss_avg <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb52-12"><a></a>  total_train_samples <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb52-13"><a></a></span>
-<span id="cb52-14"><a></a>  lenet_clf.train()</span>
-<span id="cb52-15"><a></a>  <span class="cf">for</span> x, y <span class="kw">in</span> cifar_train_dl:</span>
-<span id="cb52-16"><a></a>    optimizer.zero_grad()</span>
-<span id="cb52-17"><a></a></span>
-<span id="cb52-18"><a></a>    <span class="cf">if</span> torch.cuda.is_available():</span>
-<span id="cb52-19"><a></a>      x <span class="op">=</span> x.cuda()</span>
-<span id="cb52-20"><a></a>    </span>
-<span id="cb52-21"><a></a>    y_hat <span class="op">=</span> lenet_clf( x ).cpu()</span>
-<span id="cb52-22"><a></a></span>
-<span id="cb52-23"><a></a>    loss <span class="op">=</span> loss_fun(y_hat, y)</span>
-<span id="cb52-24"><a></a></span>
-<span id="cb52-25"><a></a>    train_loss_avg <span class="op">+=</span> loss.item() <span class="op">*</span> <span class="bu">len</span>(x)</span>
-<span id="cb52-26"><a></a>    total_train_samples <span class="op">+=</span> <span class="bu">len</span>(x)</span>
-<span id="cb52-27"><a></a></span>
-<span id="cb52-28"><a></a>    loss.backward()</span>
-<span id="cb52-29"><a></a></span>
-<span id="cb52-30"><a></a>    optimizer.step()</span>
-<span id="cb52-31"><a></a></span>
-<span id="cb52-32"><a></a>  train_loss_avg <span class="op">/=</span> total_train_samples</span>
-<span id="cb52-33"><a></a>  train_loss.append(train_loss_avg)</span>
-<span id="cb52-34"><a></a></span>
-<span id="cb52-35"><a></a>  val_loss_avg <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb52-36"><a></a>  total_val_samples <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb52-37"><a></a></span>
-<span id="cb52-38"><a></a>  lenet_clf.<span class="bu">eval</span>()</span>
-<span id="cb52-39"><a></a>  <span class="cf">with</span> torch.no_grad():</span>
-<span id="cb52-40"><a></a>    <span class="cf">for</span> x, y <span class="kw">in</span> cifar_val_dl:</span>
-<span id="cb52-41"><a></a>      <span class="cf">if</span> torch.cuda.is_available():</span>
-<span id="cb52-42"><a></a>        x <span class="op">=</span> x.cuda()</span>
-<span id="cb52-43"><a></a>      </span>
-<span id="cb52-44"><a></a>      y_hat <span class="op">=</span> lenet_clf( x ).cpu()</span>
-<span id="cb52-45"><a></a>      loss <span class="op">=</span> loss_fun(y_hat, y)</span>
-<span id="cb52-46"><a></a></span>
-<span id="cb52-47"><a></a>      val_loss_avg <span class="op">+=</span> loss.item() <span class="op">*</span> <span class="bu">len</span>(x)</span>
-<span id="cb52-48"><a></a>      total_val_samples <span class="op">+=</span> <span class="bu">len</span>(x)</span>
-<span id="cb52-49"><a></a></span>
-<span id="cb52-50"><a></a>  val_loss_avg <span class="op">/=</span> total_val_samples</span>
-<span id="cb52-51"><a></a>  val_loss.append(val_loss_avg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="4530663f" class="cell" data-execution_count="42">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a></a>num_epochs <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb55-2"><a></a>train_loss <span class="op">=</span> []</span>
+<span id="cb55-3"><a></a>val_loss <span class="op">=</span> []</span>
+<span id="cb55-4"><a></a></span>
+<span id="cb55-5"><a></a><span class="cf">if</span> torch.cuda.is_available():</span>
+<span id="cb55-6"><a></a>  lenet_clf.cuda()</span>
+<span id="cb55-7"><a></a></span>
+<span id="cb55-8"><a></a>optimizer <span class="op">=</span> optim.SGD(lenet_clf.parameters(), lr<span class="op">=</span><span class="fl">0.01</span>)</span>
+<span id="cb55-9"><a></a></span>
+<span id="cb55-10"><a></a><span class="cf">for</span> e <span class="kw">in</span> <span class="bu">range</span>(num_epochs):</span>
+<span id="cb55-11"><a></a>  train_loss_avg <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb55-12"><a></a>  total_train_samples <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb55-13"><a></a></span>
+<span id="cb55-14"><a></a>  lenet_clf.train()</span>
+<span id="cb55-15"><a></a>  <span class="cf">for</span> x, y <span class="kw">in</span> cifar_train_dl:</span>
+<span id="cb55-16"><a></a>    optimizer.zero_grad()</span>
+<span id="cb55-17"><a></a></span>
+<span id="cb55-18"><a></a>    <span class="cf">if</span> torch.cuda.is_available():</span>
+<span id="cb55-19"><a></a>      x <span class="op">=</span> x.cuda()</span>
+<span id="cb55-20"><a></a>    </span>
+<span id="cb55-21"><a></a>    y_hat <span class="op">=</span> lenet_clf( x ).cpu()</span>
+<span id="cb55-22"><a></a></span>
+<span id="cb55-23"><a></a>    loss <span class="op">=</span> loss_fun(y_hat, y)</span>
+<span id="cb55-24"><a></a></span>
+<span id="cb55-25"><a></a>    train_loss_avg <span class="op">+=</span> loss.item() <span class="op">*</span> <span class="bu">len</span>(x)</span>
+<span id="cb55-26"><a></a>    total_train_samples <span class="op">+=</span> <span class="bu">len</span>(x)</span>
+<span id="cb55-27"><a></a></span>
+<span id="cb55-28"><a></a>    loss.backward()</span>
+<span id="cb55-29"><a></a></span>
+<span id="cb55-30"><a></a>    optimizer.step()</span>
+<span id="cb55-31"><a></a></span>
+<span id="cb55-32"><a></a>  train_loss_avg <span class="op">/=</span> total_train_samples</span>
+<span id="cb55-33"><a></a>  train_loss.append(train_loss_avg)</span>
+<span id="cb55-34"><a></a></span>
+<span id="cb55-35"><a></a>  val_loss_avg <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb55-36"><a></a>  total_val_samples <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb55-37"><a></a></span>
+<span id="cb55-38"><a></a>  lenet_clf.<span class="bu">eval</span>()</span>
+<span id="cb55-39"><a></a>  <span class="cf">with</span> torch.no_grad():</span>
+<span id="cb55-40"><a></a>    <span class="cf">for</span> x, y <span class="kw">in</span> cifar_val_dl:</span>
+<span id="cb55-41"><a></a>      <span class="cf">if</span> torch.cuda.is_available():</span>
+<span id="cb55-42"><a></a>        x <span class="op">=</span> x.cuda()</span>
+<span id="cb55-43"><a></a>      </span>
+<span id="cb55-44"><a></a>      y_hat <span class="op">=</span> lenet_clf( x ).cpu()</span>
+<span id="cb55-45"><a></a>      loss <span class="op">=</span> loss_fun(y_hat, y)</span>
+<span id="cb55-46"><a></a></span>
+<span id="cb55-47"><a></a>      val_loss_avg <span class="op">+=</span> loss.item() <span class="op">*</span> <span class="bu">len</span>(x)</span>
+<span id="cb55-48"><a></a>      total_val_samples <span class="op">+=</span> <span class="bu">len</span>(x)</span>
+<span id="cb55-49"><a></a></span>
+<span id="cb55-50"><a></a>  val_loss_avg <span class="op">/=</span> total_val_samples</span>
+<span id="cb55-51"><a></a>  val_loss.append(val_loss_avg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="exercise-implement-and-train-the-letnet-5-model-with-pytorch-3" class="slide level2">
@@ -1632,11 +1640,11 @@ Test acc=0.12269999831914902</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Plot the average train and validation losses</label></li>
 </ul>
-<div id="fd9f4fdc" class="cell" data-execution_count="42">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a></a>plt.plot(train_loss, <span class="st">"b-"</span>, label<span class="op">=</span><span class="st">"Average training loss"</span>)</span>
-<span id="cb53-2"><a></a>plt.plot(val_loss, <span class="st">"r-"</span>, label<span class="op">=</span><span class="st">"Average validation loss"</span>)</span>
-<span id="cb53-3"><a></a>plt.legend()</span>
-<span id="cb53-4"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="e36ac04b" class="cell" data-execution_count="43">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a></a>plt.plot(train_loss, <span class="st">"b-"</span>, label<span class="op">=</span><span class="st">"Average training loss"</span>)</span>
+<span id="cb56-2"><a></a>plt.plot(val_loss, <span class="st">"r-"</span>, label<span class="op">=</span><span class="st">"Average validation loss"</span>)</span>
+<span id="cb56-3"><a></a>plt.legend()</span>
+<span id="cb56-4"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1651,45 +1659,45 @@ Test acc=0.12269999831914902</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Compute the average accuracy for the Validation and Test sets.</label></li>
 </ul>
-<div id="150f038e" class="cell" data-execution_count="43">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a></a>lenet_clf.<span class="bu">eval</span>()</span>
-<span id="cb54-2"><a></a></span>
-<span id="cb54-3"><a></a>val_acc_metric <span class="op">=</span> Accuracy(task<span class="op">=</span><span class="st">"multiclass"</span>, num_classes<span class="op">=</span><span class="dv">100</span>)</span>
-<span id="cb54-4"><a></a>test_acc_metric <span class="op">=</span> Accuracy(task<span class="op">=</span><span class="st">"multiclass"</span>, num_classes<span class="op">=</span><span class="dv">100</span>)</span>
-<span id="cb54-5"><a></a>train_acc_metric <span class="op">=</span> Accuracy(task<span class="op">=</span><span class="st">"multiclass"</span>, num_classes<span class="op">=</span><span class="dv">100</span>)</span>
-<span id="cb54-6"><a></a></span>
-<span id="cb54-7"><a></a><span class="cf">with</span> torch.no_grad():</span>
-<span id="cb54-8"><a></a>  <span class="cf">for</span> x, y <span class="kw">in</span> cifar_train_dl:</span>
-<span id="cb54-9"><a></a>    <span class="cf">if</span> torch.cuda.is_available():</span>
-<span id="cb54-10"><a></a>      x <span class="op">=</span> x.cuda()</span>
-<span id="cb54-11"><a></a>    y_hat <span class="op">=</span> lenet_clf( x ).cpu()</span>
-<span id="cb54-12"><a></a>    train_acc_metric(y_hat.softmax(dim<span class="op">=</span><span class="dv">1</span>), y)</span>
-<span id="cb54-13"><a></a></span>
-<span id="cb54-14"><a></a>  train_acc <span class="op">=</span> train_acc_metric.compute()</span>
-<span id="cb54-15"><a></a></span>
-<span id="cb54-16"><a></a>  <span class="cf">for</span> x, y <span class="kw">in</span> cifar_val_dl:</span>
-<span id="cb54-17"><a></a>    <span class="cf">if</span> torch.cuda.is_available():</span>
-<span id="cb54-18"><a></a>      x <span class="op">=</span> x.cuda()</span>
-<span id="cb54-19"><a></a>    y_hat <span class="op">=</span> lenet_clf( x ).cpu()</span>
-<span id="cb54-20"><a></a>    val_acc_metric(y_hat.softmax(dim<span class="op">=</span><span class="dv">1</span>), y)</span>
-<span id="cb54-21"><a></a></span>
-<span id="cb54-22"><a></a>  val_acc <span class="op">=</span> val_acc_metric.compute()</span>
-<span id="cb54-23"><a></a></span>
-<span id="cb54-24"><a></a>  <span class="cf">for</span> x, y <span class="kw">in</span> cifar_test_dl:</span>
-<span id="cb54-25"><a></a>    <span class="cf">if</span> torch.cuda.is_available():</span>
-<span id="cb54-26"><a></a>      x <span class="op">=</span> x.cuda()</span>
-<span id="cb54-27"><a></a>    y_hat <span class="op">=</span> lenet_clf( x ).cpu()</span>
-<span id="cb54-28"><a></a>    test_acc_metric(y_hat.softmax(dim<span class="op">=</span><span class="dv">1</span>), y)</span>
-<span id="cb54-29"><a></a></span>
-<span id="cb54-30"><a></a>  test_acc <span class="op">=</span> test_acc_metric.compute()</span>
-<span id="cb54-31"><a></a></span>
-<span id="cb54-32"><a></a><span class="bu">print</span>(<span class="ss">f"Training acc=</span><span class="sc">{</span>train_acc<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb54-33"><a></a><span class="bu">print</span>(<span class="ss">f"Validation acc=</span><span class="sc">{</span>val_acc<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb54-34"><a></a><span class="bu">print</span>(<span class="ss">f"Test acc=</span><span class="sc">{</span>test_acc<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb54-35"><a></a></span>
-<span id="cb54-36"><a></a>train_acc_metric.reset()</span>
-<span id="cb54-37"><a></a>val_acc_metric.reset()</span>
-<span id="cb54-38"><a></a>test_acc_metric.reset()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="b7e0de03" class="cell" data-execution_count="44">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a></a>lenet_clf.<span class="bu">eval</span>()</span>
+<span id="cb57-2"><a></a></span>
+<span id="cb57-3"><a></a>val_acc_metric <span class="op">=</span> Accuracy(task<span class="op">=</span><span class="st">"multiclass"</span>, num_classes<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb57-4"><a></a>test_acc_metric <span class="op">=</span> Accuracy(task<span class="op">=</span><span class="st">"multiclass"</span>, num_classes<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb57-5"><a></a>train_acc_metric <span class="op">=</span> Accuracy(task<span class="op">=</span><span class="st">"multiclass"</span>, num_classes<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb57-6"><a></a></span>
+<span id="cb57-7"><a></a><span class="cf">with</span> torch.no_grad():</span>
+<span id="cb57-8"><a></a>  <span class="cf">for</span> x, y <span class="kw">in</span> cifar_train_dl:</span>
+<span id="cb57-9"><a></a>    <span class="cf">if</span> torch.cuda.is_available():</span>
+<span id="cb57-10"><a></a>      x <span class="op">=</span> x.cuda()</span>
+<span id="cb57-11"><a></a>    y_hat <span class="op">=</span> lenet_clf( x ).cpu()</span>
+<span id="cb57-12"><a></a>    train_acc_metric(y_hat.softmax(dim<span class="op">=</span><span class="dv">1</span>), y)</span>
+<span id="cb57-13"><a></a></span>
+<span id="cb57-14"><a></a>  train_acc <span class="op">=</span> train_acc_metric.compute()</span>
+<span id="cb57-15"><a></a></span>
+<span id="cb57-16"><a></a>  <span class="cf">for</span> x, y <span class="kw">in</span> cifar_val_dl:</span>
+<span id="cb57-17"><a></a>    <span class="cf">if</span> torch.cuda.is_available():</span>
+<span id="cb57-18"><a></a>      x <span class="op">=</span> x.cuda()</span>
+<span id="cb57-19"><a></a>    y_hat <span class="op">=</span> lenet_clf( x ).cpu()</span>
+<span id="cb57-20"><a></a>    val_acc_metric(y_hat.softmax(dim<span class="op">=</span><span class="dv">1</span>), y)</span>
+<span id="cb57-21"><a></a></span>
+<span id="cb57-22"><a></a>  val_acc <span class="op">=</span> val_acc_metric.compute()</span>
+<span id="cb57-23"><a></a></span>
+<span id="cb57-24"><a></a>  <span class="cf">for</span> x, y <span class="kw">in</span> cifar_test_dl:</span>
+<span id="cb57-25"><a></a>    <span class="cf">if</span> torch.cuda.is_available():</span>
+<span id="cb57-26"><a></a>      x <span class="op">=</span> x.cuda()</span>
+<span id="cb57-27"><a></a>    y_hat <span class="op">=</span> lenet_clf( x ).cpu()</span>
+<span id="cb57-28"><a></a>    test_acc_metric(y_hat.softmax(dim<span class="op">=</span><span class="dv">1</span>), y)</span>
+<span id="cb57-29"><a></a></span>
+<span id="cb57-30"><a></a>  test_acc <span class="op">=</span> test_acc_metric.compute()</span>
+<span id="cb57-31"><a></a></span>
+<span id="cb57-32"><a></a><span class="bu">print</span>(<span class="ss">f"Training acc=</span><span class="sc">{</span>train_acc<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb57-33"><a></a><span class="bu">print</span>(<span class="ss">f"Validation acc=</span><span class="sc">{</span>val_acc<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb57-34"><a></a><span class="bu">print</span>(<span class="ss">f"Test acc=</span><span class="sc">{</span>test_acc<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb57-35"><a></a></span>
+<span id="cb57-36"><a></a>train_acc_metric.reset()</span>
+<span id="cb57-37"><a></a>val_acc_metric.reset()</span>
+<span id="cb57-38"><a></a>test_acc_metric.reset()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Training acc=0.010499999858438969
 Validation acc=0.00800000037997961

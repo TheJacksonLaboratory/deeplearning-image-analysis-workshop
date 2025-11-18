@@ -212,7 +212,43 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <li>Evaluate the performance of ML models.</li>
 <li>Adapt ML models for different tasks from pre-trained models.</li>
 </ul>
+<h3 id="materials">Materials</h3>
+<p><a href="https://colab.research.google.com/drive/1GntUwgFXynmwLMj9tGa74CIkbAuJ5mNN" class="btn btn-outline-primary" role="button" target="”_blank”">Open notebook in Colab</a> <a href="https://colab.research.google.com/drive/1jW_8ChQtOQgTllzhh6PwVS5avAht3Aol" class="btn btn-outline-primary" role="button" target="”_blank”">View solutions</a></p>
 </section>
+<section>
+<section id="setup-environment" class="title-slide slide level1 center">
+<h1>0. Setup environment</h1>
+
+</section>
+<section id="select-runtime-and-connect" class="slide level2">
+<h2>Select runtime and connect</h2>
+<p>On the top right corner of the page, click the drop-down arrow to the right of the <code>Connect</code> button and select <code>Change runtime type</code>.</p>
+
+<img data-src="../imgs/connect_runtime.png" style="width:50.0%" class="r-stretch"></section>
+<section class="slide level2">
+
+<p>Make sure <code>Python 3</code> runtime is selected. For this part of the workshop <code>CPU</code> acceleration is enough.</p>
+
+<img data-src="../imgs/select_runtime.png" style="width:50.0%" class="r-stretch"></section>
+<section class="slide level2">
+
+<p>Now we can connect to the runtime by clicking <code>Connect</code>. This will create a <strong>V</strong>irtual <strong>M</strong>achine (<strong>VM</strong>) with compute resources we can use for a limited amount of time.</p>
+<p><img data-src="../imgs/connect.png" style="height:25.0%"></p>
+<div class="callout callout-caution callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Caution</strong></p>
+</div>
+<div class="callout-content">
+<p>In free Colab accounts these resources are not guaranteed and can be taken away without notice (preemptible machines).</p>
+<p>Data stored in this runtime will be lost if not moved into other storage when the runtime is deleted.</p>
+</div>
+</div>
+</div>
+</section></section>
 <section>
 <section id="load-pre-trained-models" class="title-slide slide level1 center">
 <h1>Load pre-trained models</h1>
@@ -230,7 +266,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Import the pre-trained weights of the Inception V3 model from models.inception_v3</label></li>
 </ul>
-<div id="e7d6fd00" class="cell" data-execution_count="1">
+<div id="263963dd" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> torch</span>
 <span id="cb1-2"><a></a><span class="im">from</span> torchvision <span class="im">import</span> models</span>
 <span id="cb1-3"><a></a></span>
@@ -1250,7 +1286,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Store the categories in a variable to use them later</label></li>
 </ul>
-<div id="edeb401b" class="cell" data-execution_count="2">
+<div id="051c91e8" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>categories <span class="op">=</span> inception_weights.meta[<span class="st">"categories"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-tip callout-titled callout-style-default">
@@ -1272,7 +1308,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Load the Inception V3 model using the pre-trained weights <code>inception_weights</code></label></li>
 </ul>
-<div id="2f096b91" class="cell" data-execution_count="3">
+<div id="93c15e54" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a>dl_model <span class="op">=</span> models.inception_v3(inception_weights, progress<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb4-2"><a></a></span>
 <span id="cb4-3"><a></a>dl_model.<span class="bu">eval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1701,7 +1737,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Load a sample image to predict its category</label></li>
 </ul>
-<div id="79585e01" class="cell" data-execution_count="4">
+<div id="d683459e" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a><span class="im">import</span> skimage</span>
 <span id="cb6-2"><a></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb6-3"><a></a></span>
@@ -1717,7 +1753,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Visualize the sample image</label></li>
 </ul>
-<div id="bb65175e" class="cell" data-execution_count="5">
+<div id="08c24b6b" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a>plt.imshow(sample_im)</span>
 <span id="cb8-2"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
@@ -1734,7 +1770,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Inspect what transforms are required by the pre-trained Inception model to work properly</label></li>
 </ul>
-<div id="2eebbe74" class="cell" data-execution_count="6">
+<div id="232e7d5a" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a>inception_weights.transforms</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>functools.partial(&lt;class 'torchvision.transforms._presets.ImageClassification'&gt;, crop_size=299, resize_size=342)</code></pre>
@@ -1777,7 +1813,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Define a preprocessing pipeline using the inception_weights.transforms() method. Add also a transformation from <code>numpy</code> arrays into torch tensors.</label></li>
 </ul>
-<div id="299463a3" class="cell" data-execution_count="7">
+<div id="6d1734ac" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a><span class="im">from</span> torchvision.transforms.v2 <span class="im">import</span> Compose, ToTensor</span>
 <span id="cb11-2"><a></a></span>
 <span id="cb11-3"><a></a>pipeline <span class="op">=</span> Compose([</span>
@@ -1805,7 +1841,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Pre-process the sample image using our pipeline</label></li>
 </ul>
-<div id="f7b0eb86" class="cell" data-execution_count="8">
+<div id="af26284b" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a>sample_x <span class="op">=</span> pipeline(sample_im)</span>
 <span id="cb13-2"><a></a><span class="bu">type</span>(sample_x), sample_x.shape, sample_x.<span class="bu">min</span>(), sample_x.<span class="bu">max</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
@@ -1831,7 +1867,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 </div>
 </div>
 </div>
-<div id="7c9851aa" class="cell" data-execution_count="9">
+<div id="20e9713b" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a></a>sample_y <span class="op">=</span> dl_model(sample_x[<span class="va">None</span>, ...])</span>
 <span id="cb15-2"><a></a></span>
 <span id="cb15-3"><a></a>sample_y.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1858,7 +1894,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Show the categories with the highest <em>log-</em>probabilities.</label></li>
 </ul>
-<div id="1fc7bc47" class="cell" data-execution_count="10">
+<div id="25b97bc6" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a></a>sample_y.argsort(dim<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>tensor([[578, 253, 339, 982, 301,  40, 584, 897, 382,  12, 170, 181,  25, 161,
@@ -1941,7 +1977,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <ul class="task-list">
 <li><label><input type="checkbox">Use the list of categories to translate the predicted class index into its category.</label></li>
 </ul>
-<div id="fd93a1b9" class="cell" data-execution_count="11">
+<div id="ade56e7d" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a></a>sorted_predicted_classes <span class="op">=</span> sample_y.argsort(dim<span class="op">=</span><span class="dv">1</span>, descending<span class="op">=</span><span class="va">True</span>)[<span class="dv">0</span>, :<span class="dv">10</span>]</span>
 <span id="cb19-2"><a></a>sorted_probs <span class="op">=</span> torch.softmax(sample_y, dim<span class="op">=</span><span class="dv">1</span>)[<span class="dv">0</span>, sorted_predicted_classes]</span>
 <span id="cb19-3"><a></a></span>
@@ -1984,8 +2020,8 @@ solar dish 0.45 %</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Use the pre-trained model to classify images from the internet (try some from the <a href="https://r0k.us/graphics/kodak/">Kodak Lossless True Color Image Suite</a>).</label></li>
 </ul>
-<div id="ab375060" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a></a>sample_im <span class="op">=</span> skimage.io.imread(<span class="st">"https://r0k.us/graphics/kodak/kodak/kodim21.png"</span>)</span>
+<div id="498b8653" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a></a>sample_im <span class="op">=</span> skimage.io.imread(<span class="st">"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Black_Labrador_Retriever_-_Male_IMG_3323.jpg/1280px-Black_Labrador_Retriever_-_Male_IMG_3323.jpg"</span>)</span>
 <span id="cb21-2"><a></a>sample_x <span class="op">=</span> pipeline(sample_im)</span>
 <span id="cb21-3"><a></a>sample_y <span class="op">=</span> dl_model(sample_x[<span class="va">None</span>, ...])</span>
 <span id="cb21-4"><a></a></span>
@@ -2045,7 +2081,7 @@ seashore 0.02 %</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Load the pre-trained Inception V3 model again to use it as feature extractor.</label></li>
 </ul>
-<div id="35de16d9" class="cell" data-execution_count="13">
+<div id="5b57df1b" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a></a>dl_extractor <span class="op">=</span> models.inception_v3(inception_weights, progress<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb23-2"><a></a>dl_extractor.<span class="bu">eval</span>()</span>
 <span id="cb23-3"><a></a></span>
@@ -2060,13 +2096,13 @@ seashore 0.02 %</code></pre>
 <ul class="task-list">
 <li><label><input type="checkbox">Replace the <code>.fc</code> layer with a <code>torch.nn.Identity</code> module.</label></li>
 </ul>
-<div id="1d4ec696" class="cell" data-execution_count="14">
+<div id="6c4f9814" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a></a>dl_extractor.fc <span class="op">=</span> torch.nn.Identity()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul class="task-list">
 <li><label><input type="checkbox">Use the model for feature extraction in the same way it is used for image classification.</label></li>
 </ul>
-<div id="217de0e9" class="cell" data-execution_count="15">
+<div id="f5b18659" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a></a>sample_fx <span class="op">=</span> dl_extractor(sample_x[<span class="va">None</span>, ...])</span>
 <span id="cb26-2"><a></a></span>
 <span id="cb26-3"><a></a>sample_fx.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
