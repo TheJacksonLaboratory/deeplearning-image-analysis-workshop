@@ -1,12 +1,12 @@
 ---
-title: Advanced Machine Learning with Python (Session 1 - Part 2)
+title: Advanced Machine Learning with Python (Session 2 - Part 1)
 author: Fernando Cervantes (fernando.cervantes@jax.org)
 format: 
   revealjs:
     code-fold: false
     progress: true
     controls: true
-    output-file: "Adv_ML_Python_presentation_1_2"
+    output-file: "Adv_ML_Python_presentation_2_1"
     fontsize: 20pt
     include-in-header: 
       text: |
@@ -28,6 +28,39 @@ jupyter: python3
 *	Load pre-trained ML models and fine-tune them with new data.
 *	Evaluate the performance of ML models.
 *	Adapt ML models for different tasks from pre-trained models.
+
+
+## Materials
+
+[Open notebook in Colab](https://drive.google.com/file/d/1OKBun3L-4Q37YqqbnpmUwrtLTXhS37ym/view?usp=sharing){.btn .btn-outline-primary .btn role="button" target=”_blank”} [View solutions](https://drive.google.com/file/d/1rS52RLK9zEUgtGhdUKFdFPRRKZTubVGu){.btn .btn-outline-primary .btn role="button" target=”_blank”}
+
+
+# 0. Setup environment
+
+## Select runtime and connect
+
+
+On the top right corner of the page, click the drop-down arrow to the right of the `Connect` button and select `Change runtime type`.
+
+![](../imgs/connect_runtime.png){width=50%}
+
+---
+
+Make sure `Python 3` runtime is selected. For this part of the workshop `CPU` acceleration is enough.
+
+![](../imgs/select_runtime.png){width=50%}
+
+---
+
+Now we can connect to the runtime by clicking `Connect`. This will create a **V**irtual **M**achine (**VM**) with compute resources we can use for a limited amount of time.
+
+![](../imgs/connect.png){height=25%}
+
+:::{.callout-caution}
+In free Colab accounts these resources are not guaranteed and can be taken away without notice (preemptible machines).
+
+Data stored in this runtime will be lost if not moved into other storage when the runtime is deleted.
+:::
 
 # Load pre-trained models
 

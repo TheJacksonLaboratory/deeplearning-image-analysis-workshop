@@ -1,12 +1,12 @@
 ---
-title: Advanced Machine Learning with Python (Session 2)
+title: Advanced Machine Learning with Python (Session 2 - Part 3)
 author: Fernando Cervantes (fernando.cervantes@jax.org)
 format:
   revealjs:
     code-fold: false
     progress: true
     controls: true
-    output-file: "Adv_ML_Python_presentation_2"
+    output-file: "Adv_ML_Python_presentation_2_3"
     fontsize: 20pt
     include-in-header:
       text: |
@@ -22,17 +22,27 @@ execute:
 jupyter: python3
 ---
 
-```{python}
+## Materials
+
+[Open notebook in Colab](https://drive.google.com/file/d/15gkQDR9QTJRXRoLlQzZIteYN34OzmVEq){.btn .btn-outline-primary .btn role="button" target=”_blank”}
+
+# Setup
+
+```
+!pip install s3fs imagecodecs umap-learn
+```
+
+```
 !git clone https://github.com/jump-cellpainting/JUMP-Target
 ```
 
-```{python}
+```
 !git clone https://github.com/jump-cellpainting/datasets.git
 ```
 
 ## Review the `metadata` of the `cpg0016-jump` dataset
 
-### Check the plate-level metadata
+## Check the plate-level metadata
 
 - [ ] Load the plate-level metadata from the `jump-cellpainting/datasets` repository
 
@@ -57,7 +67,7 @@ jump_plates_metadata.groupby(["Metadata_Source", "Metadata_Batch"]).describe()
 
 ## Subset the dataset to extract samples with *CRISPR*, *ORF*, and *NONE/DMSO* treatments
 
-### Check the well-level metadata
+## Check the well-level metadata
 
 - [ ] Read the *CRISPR* plate maps from the `JUMP-Target` repository
 
