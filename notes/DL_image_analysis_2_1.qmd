@@ -32,7 +32,7 @@ jupyter: python3
 
 ## Materials
 
-[Open notebook in Colab](https://drive.google.com/file/d/1OKBun3L-4Q37YqqbnpmUwrtLTXhS37ym/view?usp=sharing){.btn .btn-outline-primary .btn role="button" target=”_blank”} [View solutions](https://drive.google.com/file/d/1rS52RLK9zEUgtGhdUKFdFPRRKZTubVGu){.btn .btn-outline-primary .btn role="button" target=”_blank”}
+[Open notebook in Colab](https://colab.research.google.com/gist/fercer/16149e05e7b2046f9d78940007fa4c2a/advanced_machine_learning_with_python_session_2_1.ipynb){.btn .btn-outline-primary .btn role="button" target=”_blank”} [View solutions](https://colab.research.google.com/gist/fercer/a357c3341ea726f7b4328d47155752d1/advanced_machine_learning_with_python_session_2_1-solved.ipynb){.btn .btn-outline-primary .btn role="button" target=”_blank”}
 
 
 # 0. Setup environment

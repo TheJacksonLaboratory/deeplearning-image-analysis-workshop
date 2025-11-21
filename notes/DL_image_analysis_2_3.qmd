@@ -24,7 +24,7 @@ jupyter: python3
 
 ## Materials
 
-[Open notebook in Colab](https://drive.google.com/file/d/15gkQDR9QTJRXRoLlQzZIteYN34OzmVEq){.btn .btn-outline-primary .btn role="button" target=”_blank”}
+[Open notebook in Colab](https://colab.research.google.com/gist/fercer/cdee0a8283df59b9e0f8bc04747b23f0/advanced_machine_learning_with_python_session_2_3.ipynb){.btn .btn-outline-primary .btn role="button" target=”_blank”}
 
 # Setup
 
