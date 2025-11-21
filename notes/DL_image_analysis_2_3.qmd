@@ -1,0 +1,1356 @@
+---
+title: Advanced Machine Learning with Python (Session 2 - Part 3)
+author: Fernando Cervantes (fernando.cervantes@jax.org)
+format:
+  revealjs:
+    code-fold: false
+    progress: true
+    controls: true
+    output-file: "Adv_ML_Python_presentation_2_3"
+    fontsize: 20pt
+    include-in-header:
+      text: |
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel ="stylesheet" integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg==" crossorigin="anonymous">
+
+execute:
+  error: true
+  echo: true
+  cache: true
+  freeze: true
+  keep-ipynb: true
+
+jupyter: python3
+---
+
+## Materials
+
+[Open notebook in Colab](https://colab.research.google.com/gist/fercer/cdee0a8283df59b9e0f8bc04747b23f0/advanced_machine_learning_with_python_session_2_3.ipynb){.btn .btn-outline-primary .btn role="button" target=”_blank”}
+
+# Setup
+
+```
+!pip install s3fs imagecodecs umap-learn torchmetrics
+```
+
+```{python}
+!git clone https://github.com/jump-cellpainting/JUMP-Target
+```
+
+```{python}
+!git clone https://github.com/jump-cellpainting/datasets.git
+```
+
+## Review the `metadata` of the `cpg0016-jump` dataset {.scrollable}
+
+- [ ] Load the plate-level metadata from the `jump-cellpainting/datasets` repository
+
+```{python}
+import pandas as pd
+```
+
+```{python}
+jump_plates_metadata = pd.read_csv("datasets/metadata/plate.csv.gz")
+jump_plates_metadata["Metadata_PlateType"].unique()
+```
+
+- [ ] Inspect the structure of the database
+
+```{python}
+jump_plates_metadata.groupby(["Metadata_Source", "Metadata_Batch"]).describe()
+```
+
+---
+
+## Subset the dataset to extract samples with *CRISPR*, *ORF*, and *NONE/DMSO* treatments {.scrollable}
+
+- [ ] Read the *CRISPR* plate maps from the `JUMP-Target` repository
+
+```{python}
+crispr_wells_metadata = pd.read_csv("JUMP-Target/JUMP-Target-1_crispr_platemap.tsv", sep="\t")
+```
+
+- [ ] Add one column to identify the type of treatment, and other to assign a numeric label (*CRISPR* = 1)
+
+```{python}
+crispr_wells_metadata["Plate_type"] = "CRISPR"
+crispr_wells_metadata["Plate_label"] = 1
+crispr_wells_metadata
+```
+
+---
+
+## Subset the dataset to extract samples with *CRISPR*, *ORF*, and *NONE/DMSO* treatments {.scrollable}
+
+- [ ] Read the *ORF* plate maps from the `JUMP-Target` repository
+
+```{python}
+orf_wells_metadata = pd.read_csv("JUMP-Target/JUMP-Target-1_orf_platemap.tsv", sep="\t")
+```
+
+- [ ] Add one column to identify the type of treatment, and other to assign a numeric label (*ORF* = 2)
+
+```{python}
+orf_wells_metadata["Plate_type"] = "ORF"
+orf_wells_metadata["Plate_label"] = 2
+orf_wells_metadata
+```
+
+---
+
+## Subset the dataset to extract samples with *CRISPR*, *ORF*, and *NONE/DMSO* treatments {.scrollable}
+
+- [ ] Read the *COMPOUND* plate maps from the `JUMP-Target` repository
+
+```{python}
+compound_wells_metadata = pd.read_csv("JUMP-Target/JUMP-Target-1_compound_platemap.tsv", sep="\t")
+```
+
+- [ ] Add one column to identify the type of treatment, and other to assign a numeric label (*COMPOUND* = 3)
+
+```{python}
+compound_wells_metadata["Plate_type"] = "COMPOUND"
+compound_wells_metadata["Plate_label"] = 3
+compound_wells_metadata
+```
+
+---
+
+## Subset the dataset to extract samples with *CRISPR*, *ORF*, and *NONE/DMSO* treatments {.scrollable}
+
+- [ ] Concatenate the three tables into a single table
+
+```{python}
+wells_metadata = pd.concat([compound_wells_metadata, orf_wells_metadata, crispr_wells_metadata])
+```
+
+- [ ] Change the label of the well positions that were not treated with any compound (*NONE/DMSO* = 0)
+
+```{python}
+wells_metadata.loc[wells_metadata["broad_sample"].isna(), "Plate_label"] = 0
+wells_metadata
+```
+
+---
+
+## Get the URL of each assay plate from the S3 bucket {.scrollable}
+
+- [ ] List the plates in the `cellpainting-gallery/cpg0016-jump` bucket
+
+```{python}
+import s3fs
+
+fs = s3fs.S3FileSystem(anon=True)
+
+batch_names = {}
+plate_paths = {}
+source_names = {}
+plate_types = {}
+
+for _, src_row in jump_plates_metadata.groupby(["Metadata_Source", "Metadata_Batch"]).describe().iterrows():
+    source_name, batch_name = src_row.name
+
+    # Ignore 'source_8' since the naming of the images is not standard
+    if source_name in ["source_8"]:
+        continue
+
+    plate_type = src_row["Metadata_PlateType"].top
+
+    for plate_path in fs.ls(f"cellpainting-gallery/cpg0016-jump/{source_name}/images/{batch_name}/images/"):
+        plate_path = plate_path.split("/")[-1]
+        if not plate_path:
+            continue
+
+        plate_name = plate_path.split("__")[0]
+
+        source_names[plate_name] = source_name
+        batch_names[plate_name] = batch_name
+        plate_types[plate_name] = plate_type
+        plate_paths[plate_name] = plate_path
+```
+
+---
+
+## Get the URL of each assay plate from the S3 bucket {.scrollable}
+
+- [ ] Create a `pandas` data frame to associate each plate to its location within the S3 bucket
+
+```{python}
+plate_maps = pd.DataFrame()
+
+plate_maps["Plate_name"] = batch_names.keys()
+plate_maps["Source_name"] = plate_maps["Plate_name"].map(source_names)
+plate_maps["Batch_name"] = plate_maps["Plate_name"].map(batch_names)
+plate_maps["Plate_type"] = plate_maps["Plate_name"].map(plate_types)
+plate_maps["Plate_path"] = plate_maps["Plate_name"].map(plate_paths)
+
+plate_maps
+```
+
+---
+
+## Subset the data frame to separate perturbation (*CRISPR/ORF/NONE*) plates from *COMPOUND* plates {.scrollable}
+
+- [ ] Subset the *COMPOUND* plates
+
+```{python}
+comp_plate_maps = plate_maps.query("Plate_type=='COMPOUND'")
+comp_plate_maps
+```
+
+- [ ] Subset the *CRISPR/ORF/DMSO* plates
+
+```{python}
+pert_plate_maps = plate_maps[plate_maps["Plate_type"].isin(["CRISPR", "ORF", "DMSO"])]
+pert_plate_maps
+```
+
+# Create a pipeline for loading images from the `cellpainting-gallery` storage
+
+## Split the perturbation plates into Training, Validation, and Test sets {.scrollable}
+
+We'll separate the plates in each batch into the three sets to have batch-level effects in each of the sets
+
+- [ ] Assign $70$ % of plates for training, $20$ % for validation, and $10$ % for testing
+
+```{python}
+import random
+import math
+```
+
+```{python}
+trn_plates = []
+val_plates = []
+tst_plates = []
+
+trn_proportion = 0.7
+val_proportion = 0.2
+tst_proportion = 0.1
+
+for batch_name in pert_plate_maps["Batch_name"].unique():
+    plate_names = pert_plate_maps.query(f"Batch_name == '{batch_name}'")["Plate_name"].tolist()
+    random.shuffle(plate_names)
+
+    tst_plates_count = int(math.ceil(len(plate_names) * tst_proportion))
+    val_plates_count = int(math.ceil(len(plate_names) * val_proportion))
+
+    tst_plates += plate_names[:tst_plates_count]
+    val_plates += plate_names[tst_plates_count:tst_plates_count + val_plates_count]
+    trn_plates += plate_names[tst_plates_count + val_plates_count:]
+```
+
+```{python}
+print("Training set size:", len(trn_plates))
+print("Validation set size:", len(val_plates))
+print("Testing set size:", len(tst_plates))
+```
+
+---
+
+## Create a PyTorch Dataset to load images from S3 storage {.scrollable}
+
+Defining a custom PyTorch dataset allows us to access the image data from S3 storage, even if it is not in a standard format across the distinct sources inside the database.
+Moreover, it is completely iterative, so no additional storage is used as the images are analyzed *on the fly*.
+
+```{python}
+# @title Definition of a Dataset class capable to pull images from S3 buckets
+import random
+import numpy as np
+import string
+import s3fs
+
+from itertools import product
+
+from PIL import Image
+import tifffile
+
+from torch.utils.data import IterableDataset, get_worker_info
+```
+
+- [ ] Define a function to load an image from the `cellpainting-gallery` bucket given a *field-well* position from a specific *plate*
+
+```{python}
+def load_well(plate_metadata, well_row, well_col, field_id, channels, s3):
+    # Get the label of the current well
+    curr_well_image = []
+
+    plate_path = "cellpainting-gallery/cpg0016-jump/" + plate_metadata["Source_name"] + "/images/" + plate_metadata["Batch_name"] + "/images/" + plate_metadata["Plate_path"]
+
+    for channel_id in range(channels):
+        if plate_metadata["Source_name"] in ["source_1", "source_3", "source_4", "source_9", "source_11", "source_15"]:
+            image_suffix = f"Images/r{well_row + 1:02d}c{well_col + 1:02d}f{field_id + 1:02d}p01-ch{channel_id + 1}sk1fk1fl1.tiff"
+
+        else:
+            if plate_metadata["Source_name"] in ["source_2", "source_5"]:
+                a_locs = [1, 2, 3, 4, 5]
+            elif plate_metadata["Source_name"] in ["source_6", "source_10"]:
+                a_locs = [1, 2, 2, 3, 1, 4]
+            elif plate_metadata["Source_name"] in ["source_7", "source_13"]:
+                a_locs = [1, 1, 2, 3, 4]
+
+            image_suffix = f"{plate_metadata["Plate_name"]}_{string.ascii_uppercase[well_row]}{well_col + 1:02d}_T0001F{field_id + 1:03d}L01A{a_locs[channel_id]:02d}Z01C{channel_id + 1:02d}.tif"
+
+        image_url = "s3://" + plate_path + "/" + image_suffix
+
+        try:
+            with s3.open(image_url, 'rb') as f:
+                curr_image = tifffile.imread(f)
+
+        except FileNotFoundError:
+            print("Failed retrieving:", image_url)
+            return None
+
+        curr_image = curr_image.astype(np.float32)
+        curr_image /= 2 ** 16 - 1
+
+        curr_well_image.append(curr_image)
+
+    curr_well_image = np.array(curr_well_image)
+
+    return curr_well_image
+```
+
+---
+
+## Create a PyTorch Dataset to load images from S3 storage {.scrollable}
+
+- [ ] Define an `IterableDataset` derived class to load images from S3 storage
+
+```{python}
+class TiffS3Dataset(IterableDataset):
+    """This dataset could have virtually infinite samples.
+    """
+    def __init__(self, plate_maps, wells_metadata, plate_names, well_rows=24, well_cols=16, fields=4, channels=5, shuffle=False):
+        super(TiffS3Dataset).__init__()
+
+        self._plate_maps = plate_maps
+        self._wells_metadata = wells_metadata
+
+        self._plate_names = plate_names
+        self._well_rows = well_rows
+        self._well_cols = well_cols
+        self._fields = fields
+        self._channels = channels
+
+        self._shuffle = shuffle
+
+        self._worker_sel = slice(0, len(plate_names) * self._well_rows * self._well_cols)
+        self._worker_id = 0
+        self._num_workers = 1
+
+        self._s3 = None
+
+    def __iter__(self):
+        # Select the barcodes that correspond to this worker
+        self._s3 = s3fs.S3FileSystem(anon=True)
+
+        self._plate_names = self._plate_names[self._worker_sel]
+
+        well_row_range = range(self._well_rows)
+        well_col_range = range(self._well_cols)
+        fields_range = range(self._fields)
+
+        for plate_name, well_row, well_col, field_id in product(self._plate_names, well_row_range, well_col_range, fields_range):
+            if self._shuffle:
+                plate_name = random.choice(self._plate_names)
+                well_row = random.randrange(self._well_rows)
+                well_col = random.randrange(self._well_cols)
+                field_id = random.randrange(self._fields)
+
+            curr_plate_map = self._plate_maps.query(f"Plate_name == '{plate_name}'")
+
+            curr_plate_metadata = curr_plate_map.to_dict(orient='records')[0]
+
+            if not len(curr_plate_metadata):
+                continue
+
+            curr_image = load_well(curr_plate_metadata, well_row, well_col, field_id, self._channels, self._s3)
+
+            if curr_image is None:
+                continue
+
+            curr_plate_metadata["Well_position"] = f"{string.ascii_uppercase[well_row]}{well_col + 1:02d}"
+
+            curr_image = curr_image[:, :1080, :1080]
+            _, h, w = curr_image.shape
+            pad_h = 1080 - h
+            pad_w = 1080 - w
+
+            if pad_h or pad_w:
+                curr_image = np.pad(curr_image, ((0, 0), (0, pad_h), (0, pad_w)))
+            
+            if curr_plate_metadata["Plate_type"] == "DMSO":
+                curr_label = 0
+
+            else:
+                curr_label = self._wells_metadata.query(f"Plate_type=='{curr_plate_metadata["Plate_type"]}' & well_position=='{string.ascii_uppercase[well_row]}{well_col + 1:02d}'")["Plate_label"]
+
+                if not len(curr_label):
+                    continue
+
+                curr_label = curr_label.item()
+
+            yield curr_image, curr_label, curr_plate_metadata
+
+        self._s3 = None
+```
+
+---
+
+## Create a PyTorch Dataset to load images from S3 storage {.scrollable}
+
+- [ ] Define an initialization function to separate the load when using *multi-thread* data loading
+
+```{python}
+def dataset_worker_init_fn(worker_id):
+    """ZarrDataset multithread workers initialization function.
+    """
+    worker_info = torch.utils.data.get_worker_info()
+    w_sel = slice(worker_id, None, worker_info.num_workers)
+
+    dataset_obj = worker_info.dataset
+
+    # Reset the random number generators in each worker.
+    torch_seed = torch.initial_seed()
+
+    dataset_obj._worker_sel = w_sel
+    dataset_obj._worker_id = worker_id
+    dataset_obj._num_workers = worker_info.num_workers
+```
+
+---
+
+## Create the different datasets from the plates lists {.scrollable}
+
+- [ ] Instantiate a `TiffS3Dataset` from the plates assigned for training, validation, and testing
+
+```{python}
+training_ds = TiffS3Dataset(pert_plate_maps, wells_metadata, trn_plates, 16, 24, 9, 5, shuffle=True)
+validation_ds = TiffS3Dataset(pert_plate_maps, wells_metadata, val_plates, 16, 24, 9, 5, shuffle=True)
+testing_ds = TiffS3Dataset(pert_plate_maps, wells_metadata, tst_plates, 16, 24, 9, 5, shuffle=True)
+```
+
+# Compute field-level morphological profiles from perturbation plates
+
+We'll use a pre-trained deep learning model for image recognition to extract morphological features at field-level.
+
+This process is usually applied at cell level; however, we'll analyze the data at field-level for simplicity.
+
+These morphological profiles will be used subsequently to train a *perturbation classifier*.
+
+---
+
+## Import a pre-trained model from `torchvision`
+
+We'll start with a pre-trained *MobileNet* model for feature extraction since it is lightweight and fast.
+This in terms of computation resources required to use this model.
+
+In the literature, more complex models are used, such as Inception V3, DenseNet, or even Vision Transformers.
+However, these models require GPU acceleration to be efficiently applied.
+
+- [ ] Load a pre-trained *MobileNet* from the `torchvision` package
+
+```{python}
+from torchvision.models import mobilenet_v3_small, MobileNet_V3_Small_Weights
+```
+
+```{python}
+weights = MobileNet_V3_Small_Weights.DEFAULT
+model = mobilenet_v3_small(weights=weights)
+```
+
+---
+
+## Modify the model's architecture to convert it into a feature extraction *function* {.scrollable}
+
+- [ ] Save the original aggregation layer (Average Pooling) and replace it with an `Identity` layer
+
+```{python}
+import torch
+```
+
+```{python}
+org_avgpool = model.avgpool
+model.avgpool = torch.nn.Identity()
+```
+
+- [ ] Replace the original `classifier` layer with an `Identity` layer
+
+```{python}
+model.classifier = torch.nn.Identity()
+```
+
+---
+
+## Modify the model's architecture to convert it into a feature extraction *function* {.scrollable}
+
+- [ ] Set the model into *evaluation* mode. (Optional) Move the model to the GPU if available
+
+```{python}
+#| scrolled: true
+if torch.cuda.is_available():
+    model.cuda()
+
+model.eval()
+```
+
+---
+
+## Load the pre-processing transforms form the original model {.scrollable}
+
+We need to apply the same transforms to the images that we *feed* to the model to have the expected behavior.
+
+- [ ] Get the original transforms pipeline used when the model was originally trained
+
+```{python}
+model_transforms = weights.transforms()
+model_transforms
+```
+
+---
+
+## Create a PyTorch `DataLoader`
+
+A `DataLoader` takes a `Dataset` (or `IterableDataset`) and serves *mini-batches* of samples that can be used for model training or evaluation.
+It manages the *mini-batch* collation, and if enabled, the *multi-thread* loading of data.
+
+```{python}
+from torch.utils.data.dataloader import DataLoader
+```
+
+```{python}
+batch_size = 10
+
+training_dl = DataLoader(training_ds, batch_size=batch_size, num_workers=2, worker_init_fn=dataset_worker_init_fn)
+```
+
+---
+
+## Execute the feature extraction with the deep learning model {.scrollable}
+
+- [ ] Use the *frozen* deep learning model to extract morphological features from the field-level images and create a features database
+
+```{python}
+from tqdm.auto import tqdm
+
+features = []
+targets = []
+
+for i, (x, y, _) in tqdm(enumerate(training_dl)):
+    b, c, h, w = x.shape
+    x_t = model_transforms(torch.tile(x.reshape(-1, 1, h, w), (1, 3, 1, 1)))
+
+    if torch.cuda.is_available():
+        x_t = x_t.cuda()
+    
+    with torch.no_grad():
+        x_out = model(x_t)
+        x_out = x_out.detach().cpu().reshape(-1, c, 576, 7, 7).sum(dim=1)
+        x_out = org_avgpool(x_out).detach().reshape(b, -1)
+
+    features.append(x_out)
+    targets.append(y)
+
+    # This is for illustration purposes.
+    # We'll load the pre-extracted features from Cloud Storage, so no need to generate it here.
+    break
+
+features = torch.cat(features, dim=0)
+targets = torch.cat(targets, dim=0)
+
+features.shape, targets.shape
+```
+
+---
+
+## Execute the feature extraction with the deep learning model {.scrollable}
+
+- [ ] Perform the same operation for the **validation** set
+
+```{python}
+val_features = []
+val_targets = []
+
+validation_dl = DataLoader(validation_ds, batch_size=batch_size, num_workers=2, worker_init_fn=dataset_worker_init_fn)
+
+for i, (x, y, _) in tqdm(enumerate(validation_dl)):
+    b, c, h, w = x.shape
+    x_t = model_transforms(torch.tile(x.reshape(-1, 1, h, w), (1, 3, 1, 1)))
+
+    if torch.cuda.is_available():
+        x_t = x_t.cuda()
+    
+    with torch.no_grad():
+        x_out = model(x_t)
+        x_out = x_out.detach().reshape(-1, c, 576, 7, 7).sum(dim=1)
+        x_out = org_avgpool(x_out).detach().reshape(b, -1)
+
+    val_features.append(x_out)
+    val_targets.append(y)
+
+    break
+
+val_features = torch.cat(val_features, dim=0)
+val_targets = torch.cat(val_targets, dim=0)
+```
+
+---
+
+## Execute the feature extraction with the deep learning model {.scrollable}
+
+- [ ] And again for the testing set
+
+```{python}
+tst_features = []
+tst_targets = []
+
+testing_dl = DataLoader(testing_ds, batch_size=batch_size, num_workers=2, worker_init_fn=dataset_worker_init_fn)
+
+for i, (x, y, _) in tqdm(enumerate(testing_dl)):
+    b, c, h, w = x.shape
+    x_t = model_transforms(torch.tile(x.reshape(-1, 1, h, w), (1, 3, 1, 1)))
+
+    if torch.cuda.is_available():
+        x_t = x_t.cuda()
+    
+    with torch.no_grad():
+        x_out = model(x_t)
+        x_out = x_out.detach().reshape(-1, c, 576, 7, 7).sum(dim=1)
+        x_out = org_avgpool(x_out).detach().reshape(b, -1)
+
+    tst_features.append(x_out)
+    tst_targets.append(y)
+
+    break
+
+tst_features = torch.cat(tst_features, dim=0)
+tst_targets = torch.cat(tst_targets, dim=0)
+```
+
+# Train a perturbation classifier model
+
+We'll take the pre-extracted features and train a perturbation classifier.
+
+This approach will use a Multilayer Perceptron (**MLP**) model to classify the field-level profiles into three categories: *NONE/DMSO* = 0, *CRISPR* = 1, and *ORF* = 2.
+
+The model will be fitted using *Adam* optimizer, which objective is to reduce the *Cross Entropy* loss between the predicted and the ground-truth category of each field.
+
+---
+
+## Load the pre-extracted features to train the classifier {.scrollable}
+
+- [ ] Define an `IterableDataset` to load the features from the `trn_feature_XXX.pt` files
+
+```{python}
+class GCPStorageDataset(IterableDataset):
+    """This dataset loads the features from Cloud Storage
+    """
+    def __init__(self, features_url, reducer=None, shuffle=False):
+        super(GCPStorageDataset).__init__()
+
+        self._features_url = features_url
+        self._features_dict = None
+        self._reducer = reducer
+
+        self._shuffle = shuffle
+
+        self._worker_sel = slice(0, len(self._features_url))
+        self._worker_id = 0
+        self._num_workers = 1
+
+    def __iter__(self):
+        # Select the barcodes that correspond to this worker
+        self._features_url = self._features_url[self._worker_sel]
+
+        if self._shuffle:
+            random.shuffle(self._features_url)
+
+        for url in self._features_url:
+            features_dict = torch.load(url)
+            
+            if self._reducer is not None:
+                embeddings = reducer.transform(features_dict["features"])
+
+            curr_n_samples = len(features_dict["features"])
+
+            for index in range(curr_n_samples):
+                if self._shuffle:
+                    index = random.randrange(curr_n_samples)
+
+                feats = features_dict["features"][index]
+                target = features_dict["targets"][index]
+
+                if self._reducer is not None:
+                    reduced_feats = embeddings[index]
+                else:
+                    reduced_feats = None
+
+                yield feats, target, reduced_feats
+```
+
+---
+
+## Inspect the distribution of the feature space
+
+- [ ] Fit a UMap to the training set of features to reduce the $576$ features into only $2$ dimensions for visualization
+
+```{python}
+import umap
+```
+
+```{python}
+reducer = umap.UMAP()
+```
+
+---
+
+## Inspect the distribution of the feature space
+
+- [ ] Load the training features and fit the UMap reducer
+
+```{python}
+trn_features_ds = GCPStorageDataset(["trn_features_002.pt"], shuffle=False)
+
+trn_features, trn_targets, _ = list(zip(*trn_features_ds))
+
+trn_targets = torch.tensor(trn_targets)
+
+reducer.fit(trn_features)
+
+trn_embeddings = reducer.transform(trn_features)
+```
+
+---
+
+## Inspect the distribution of the feature space {.scrollable}
+
+- [ ] Visualize the reduced feature space in two dimensions
+
+```{python}
+import matplotlib.pyplot as plt
+
+class_names = ["NONE/DMSO", "CRISPR", "ORF", "COMPOUND"]
+class_markers = ["*", "s", "o", "^"]
+class_colors = ["black", "red", "blue", "green"]
+class_facecolors = ["black", "none", "none", "none"]
+
+for class_idx, class_name in enumerate(class_names):
+    plt.scatter(trn_embeddings[trn_targets == class_idx, 0][::10], trn_embeddings[trn_targets == class_idx, 1][::10], label=class_names[class_idx], marker=class_markers[class_idx], facecolors=class_facecolors[class_idx], edgecolors=class_colors[class_idx])
+
+plt.legend()
+```
+
+---
+
+
+## Inspect the distribution of the feature space {.scrollable}
+
+- [ ] Confirm that the validation set is mapped to a similar space as the training set
+
+```{python}
+val_features_ds = GCPStorageDataset(["val_features.pt"], shuffle=False)
+
+val_features, val_targets, _ = list(zip(*val_features_ds))
+
+val_targets = torch.tensor(val_targets)
+
+val_embedding = reducer.transform(val_features)
+
+val_embedding.shape
+
+for class_idx, class_name in enumerate(class_names):
+    plt.scatter(val_embedding[val_targets == class_idx, 0][::10], val_embedding[val_targets == class_idx, 1][::10], label=class_names[class_idx], marker=class_markers[class_idx], facecolors=class_facecolors[class_idx], edgecolors=class_colors[class_idx])
+
+plt.legend()
+```
+
+---
+
+## Create a classifier with a Multilayer Perceptron (**MLP**) architecture {.scrollable}
+
+The *MobileNet* model extracts $576$ features per image, these will be the input features for the *MLP* classifer.
+
+- [ ] Define a Multilayer Perceptron *MLP* classifier that takes the pre-extracted features and predicts the perturbation applied to that sample
+
+```{python}
+class PerturbationClassifier(torch.nn.Module):
+    def __init__(self, num_features, num_classes):
+        super(PerturbationClassifier, self).__init__()
+
+        self._reducer = torch.nn.Sequential(
+            torch.nn.BatchNorm1d(num_features=num_features),
+            torch.nn.Linear(in_features=num_features, out_features=2, bias=False),
+        )
+
+        self._classifier = torch.nn.Sequential(
+            torch.nn.Dropout(0.1),
+            torch.nn.ReLU(),
+            torch.nn.Linear(in_features=2, out_features=num_classes, bias=False)
+        )
+
+    def forward(self, input):
+        fx = self._reducer(input)
+        
+        y_pred = self._classifier(fx)
+
+        return y_pred, fx
+```
+
+---
+
+## Create a classifier with a Multilayer Perceptron (**MLP**) architecture {.scrollable}
+
+- [ ] Instantiate the classifier for the set of $576$ features and $3$ classes
+
+```{python}
+classifier = PerturbationClassifier(576, 3)
+```
+
+- [ ] (Optional) If a GPU is available, move the classifier model to it
+
+```{python}
+if torch.cuda.is_available():
+    classifier.cuda()
+```
+
+---
+
+## Create a classifier with a Multilayer Perceptron (**MLP**) architecture {.scrollable} 
+
+- [ ] Define the optimizer algorithm
+
+```{python}
+optimizer = torch.optim.Adam([
+    {'params': classifier._reducer.parameters(), 'lr': 1e-5, 'weight_decay': 0.001},
+    {'params': classifier._classifier.parameters(), 'lr': 1e-4}
+])
+```
+
+- [ ] Define the loss function used to assess the classification performance of the model
+
+```{python}
+classifier_loss_fn = torch.nn.CrossEntropyLoss()
+reducer_loss_fn = torch.nn.MSELoss()
+```
+
+---
+
+## Train the *MLP* model {.scrollable}
+
+- [ ] Instantiate the datasets that will load the features from Cloud Storage
+
+```{python}
+trn_feat_ds = GCPStorageDataset([f"trn_features_{i:03d}.pt" for i in range(10)], reducer=reducer, shuffle=True)
+val_feat_ds = GCPStorageDataset(["val_features.pt"], reducer=reducer, shuffle=False)
+tst_feat_ds = GCPStorageDataset(["tst_features.pt"], reducer=reducer, shuffle=False)
+```
+
+- [ ] Create one `DataLoader` for the training set and one for the validation set of pre-extracted features
+
+```{python}
+trn_feat_dl = DataLoader(trn_feat_ds, batch_size=100, num_workers=2, worker_init_fn=dataset_worker_init_fn)
+val_feat_dl = DataLoader(val_feat_ds, batch_size=100)
+tst_feat_dl = DataLoader(tst_feat_ds, batch_size=100)
+```
+
+---
+
+## Train the *MLP* model {.scrollable}
+
+- [ ] Implement the training loop
+
+```{python}
+from torchmetrics.classification import Accuracy
+
+n_dmso = 0
+n_crispr = 0
+n_orf = 0
+
+# Training loop
+classifier.train()
+
+cls_loss_epoch = 0
+red_loss_epoch = 0
+
+trn_acc_metric = Accuracy(task="multiclass", num_classes=3)
+
+for x, y, fx in tqdm(trn_feat_dl, total=1000):
+    optimizer.zero_grad()
+
+    if torch.cuda.is_available():
+        x = x.cuda()
+
+    y_pred, fx_pred = classifier(x)
+
+    cls_loss = classifier_loss_fn(y_pred.cpu(), y)
+    red_loss = reducer_loss_fn(fx_pred.cpu(), fx)
+
+    cls_loss.backward(retain_graph=True)
+    red_loss.backward()
+
+    optimizer.step()
+
+    cls_loss_epoch += cls_loss.item()
+    red_loss_epoch += red_loss.item()
+
+    trn_acc_metric(y_pred.cpu().softmax(dim=1), y)
+
+    n_dmso += sum(y == 0)
+    n_crispr += sum(y == 1)
+    n_orf += sum(y == 2)
+```
+
+---
+
+## Train the *MLP* model {.scrollable}
+
+- [ ] Compute the proportion of samples per category in the training set
+
+```{python}
+n_total = n_dmso + n_crispr + n_orf
+n_dmso / n_total, n_crispr / n_total, n_orf / n_total
+```
+
+- [ ] Check the average loss metric of the model on the training set
+
+```{python}
+cls_loss_epoch / n_total
+```
+
+```{python}
+red_loss_epoch / n_total
+```
+
+- [ ] Compute the average accuracy of the model on the training set
+
+```{python}
+trn_acc_metric.compute()
+```
+
+---
+
+## Train the *MLP* model {.scrollable}
+
+- [ ] Implement the validation loop
+
+```{python}
+n_dmso = 0
+n_crispr = 0
+n_orf = 0
+
+cls_loss_epoch = 0
+red_loss_epoch = 0
+
+val_acc_metric = Accuracy(task="multiclass", num_classes=3)
+
+for x_val, y_val, fx_val in tqdm(val_feat_dl):
+    with torch.no_grad():
+        if torch.cuda.is_available():
+            x_val = x_val.cuda()
+
+        y_val_pred, fx_val_pred = classifier(x_val)
+
+        cls_loss = classifier_loss_fn(y_val_pred.cpu(), y_val)
+        red_loss = reducer_loss_fn(fx_val_pred.cpu(), fx_val)
+
+    cls_loss_epoch += cls_loss.item()
+    red_loss_epoch += red_loss.item()
+    
+    val_acc_metric(y_val_pred.cpu().softmax(dim=1), y_val)
+
+    n_dmso += sum(y_val == 0)
+    n_crispr += sum(y_val == 1)
+    n_orf += sum(y_val == 2)
+```
+
+---
+
+## Train the *MLP* model {.scrollable}
+
+- [ ] Compute the proportion of samples per category in the validation set
+
+```{python}
+n_total = n_dmso + n_crispr + n_orf
+n_dmso / n_total, n_crispr / n_total, n_orf / n_total
+```
+
+- [ ] Check the average loss metric of the model on the validation set
+
+```{python}
+cls_loss_epoch / n_total
+```
+
+```{python}
+red_loss_epoch / n_total
+```
+
+- [ ] Compute the average accuracy of the model on the validation set
+
+```{python}
+val_acc_metric.compute()
+```
+
+---
+
+## Wrap the training and validation steps for multiple epochs {.scrollable}
+
+Track the performance of the model throughout the epochs during training
+
+- [ ] Copy the training and validation steps into an epochs loop
+
+```{python}
+avg_cls_loss_trn = []
+avg_red_loss_trn = []
+avg_acc_trn = []
+
+avg_cls_loss_val = []
+avg_red_loss_val = []
+avg_acc_val = []
+
+n_epochs = 20
+q = tqdm(total=n_epochs)
+
+for e in range(n_epochs):
+    # Training loop
+    classifier.train()
+
+    loss_epoch = 0
+
+    trn_acc_metric.reset()
+    
+    total_samples = 0
+    for x, y, fx in trn_feat_dl:
+        optimizer.zero_grad()
+
+        if torch.cuda.is_available():
+            x = x.cuda()
+
+        y_pred, fx_pred = classifier(x)
+
+        cls_loss = classifier_loss_fn(y_pred.cpu(), y)
+        red_loss = reducer_loss_fn(fx_pred.cpu(), fx)
+
+        cls_loss.backward(retain_graph=True)
+        red_loss.backward()
+
+        optimizer.step()
+
+        cls_loss_epoch += cls_loss.item() * len(y)
+        red_loss_epoch += red_loss.item() * len(y)
+
+        trn_acc_metric(y_pred.cpu().softmax(dim=1), y)
+        total_samples += len(y)
+
+    avg_cls_loss_trn.append(cls_loss_epoch / total_samples)
+    avg_red_loss_trn.append(red_loss_epoch / total_samples)
+
+    avg_acc_trn.append(trn_acc_metric.compute())
+
+    # Validation loop
+    classifier.eval()
+
+    cls_loss_epoch = 0
+    red_loss_epoch = 0
+
+    val_acc_metric.reset()
+
+    total_samples = 0
+    for x_val, y_val, fx_val in val_feat_dl:
+        with torch.no_grad():
+            if torch.cuda.is_available():
+                x_val = x_val.cuda()
+
+            y_val_pred, fx_val_pred = classifier(x_val)
+
+            cls_loss = classifier_loss_fn(y_val_pred.cpu(), y_val)
+            red_loss = reducer_loss_fn(fx_val_pred.cpu(), fx_val)
+
+        cls_loss_epoch += cls_loss.item() * len(y_val)
+        red_loss_epoch += red_loss.item() * len(y_val)
+
+        val_acc_metric(y_val_pred.cpu().softmax(dim=1), y_val)
+        total_samples += len(y_val)
+
+    avg_cls_loss_val.append(cls_loss_epoch / total_samples)
+    avg_red_loss_val.append(red_loss_epoch / total_samples)
+
+    avg_acc_val.append(val_acc_metric.compute())
+
+    q.set_description(f"Average training CE loss: {avg_cls_loss_trn[-1]:0.4f} / MSE loss: {avg_red_loss_trn[-1]:0.4f} (Accuracy: {100 * avg_acc_trn[-1]:0.2f} %). Average validation CE loss: {avg_cls_loss_val[-1]:04f} / MSE loss: {avg_red_loss_val[-1]:04f} (Accuracy: {100 * avg_acc_val[-1]:0.2f} %)")
+    q.update()
+```
+
+---
+
+## Review the performance of the model throughout training {.scrollable}
+
+- [ ] Plot the loss function evaluation for the training and validation sets
+
+```{python}
+plt.plot(avg_cls_loss_trn, "k-", label="Training loss")
+plt.plot(avg_cls_loss_val, "b:", label="Validation loss")
+plt.legend()
+```
+
+```{python}
+plt.plot(avg_red_loss_trn, "k-", label="Training loss")
+plt.plot(avg_red_loss_val, "b:", label="Validation loss")
+plt.legend()
+```
+
+---
+
+## Review the performance of the model throughout training {.scrollable}
+
+- [ ] Plot the accuracy of the model on the training and validation sets
+
+```{python}
+plt.plot(avg_acc_trn, "k-", label="Training accuracy")
+plt.plot(avg_acc_val, "b:", label="Validation accuracy")
+plt.legend()
+```
+
+# Evaluate the model with the witheld testing data
+
+## Save the classifier model to be used later or shared with collaborators {.scrollable}
+
+- [ ] Evaluate the classifier on the testing set to measure its generalization capacity
+
+```{python}
+from torchmetrics.classification import ConfusionMatrix
+
+classifier.eval()
+
+n_dmso = 0
+n_crispr = 0
+n_orf = 0
+
+cls_loss_epoch = 0
+red_loss_epoch = 0
+
+tst_acc_metric = Accuracy("multiclass", num_classes=3)
+tst_confmat = ConfusionMatrix("multiclass", num_classes=3)
+
+for x_tst, y_tst, fx_tst in tst_feat_dl:
+    with torch.no_grad():
+        if torch.cuda.is_available():
+            x_tst = x_tst.cuda()
+
+        y_tst_pred, fx_tst_pred = classifier(x_tst)
+        cls_loss = classifier_loss_fn(y_tst_pred.cpu(), y_tst)
+        red_loss = reducer_loss_fn(fx_tst_pred.cpu(), fx_tst)
+
+    cls_loss_epoch += cls_loss.item() * len(y_tst)
+    red_loss_epoch += red_loss.item() * len(y_tst)
+    
+    y_tst_prob = y_tst_pred.cpu().softmax(dim=1)
+    tst_acc_metric.update(y_tst_prob, y_tst)
+    tst_confmat.update(y_tst_prob, y_tst)
+
+    n_dmso += sum(y_tst == 0)
+    n_crispr += sum(y_tst == 1)
+    n_orf += sum(y_tst == 2)
+```
+
+---
+
+## Save the classifier model to be used later or shared with collaborators {.scrollable}
+
+- [ ] Check the proportion of types of perturbation in the testing set
+
+```{python}
+n_total = n_dmso + n_crispr + n_orf
+n_dmso / n_total, n_crispr / n_total, n_orf / n_total
+```
+
+- [ ] Check the loss metrics on the testing set
+
+```{python}
+cls_loss_epoch / n_total
+```
+
+```{python}
+red_loss_epoch / n_total
+```
+
+---
+
+## Save the classifier model to be used later or shared with collaborators {.scrollable}
+
+- [ ] Check the accuracy metrics on the testing set
+
+```{python}
+tst_acc_metric.compute()
+tst_confmat.compute()
+tst_confmat.plot()
+```
+
+---
+
+## Evaluate the capacity to mimic the UMap dimensionality reduction {.scrollable}
+
+- [ ] Get the embeddings from the trained model for the training set
+
+```{python}
+trn_fx = []
+trn_fx_pred = []
+trn_y = []
+
+for i, (x, y, fx) in enumerate(trn_feat_dl):
+    if i >= 10:
+        break
+
+    with torch.no_grad():
+        if torch.cuda.is_available():
+            x = x.cuda()
+
+        _, fx_pred = classifier(x)
+        trn_fx_pred.append(fx_pred.detach().cpu())
+        trn_fx.append(fx)
+        trn_y.append(y)
+
+trn_fx = torch.cat(trn_fx, dim=0)
+trn_fx_pred = torch.cat(trn_fx_pred, dim=0)
+trn_y = torch.cat(trn_y, dim=0)
+```
+
+---
+
+## Evaluate the capacity to mimic the UMap dimensionality reduction {.scrollable}
+
+- [ ] Compate the embedding spaces (UMap vs learned) with the training set
+
+```{python}
+for class_idx, class_name in enumerate(class_names):
+    plt.scatter(trn_fx[trn_y == class_idx, 0], trn_fx[trn_y == class_idx, 1], label=class_names[class_idx], marker=class_markers[class_idx], facecolors=class_facecolors[class_idx], edgecolors=class_colors[class_idx])
+
+plt.legend()
+```
+
+```{python}
+#| scrolled: false
+for class_idx, class_name in enumerate(class_names):
+    plt.scatter(trn_fx_pred[trn_y == class_idx, 0], trn_fx_pred[trn_y == class_idx, 1], label=class_names[class_idx], marker=class_markers[class_idx], facecolors=class_facecolors[class_idx], edgecolors=class_colors[class_idx])
+
+plt.legend()
+```
+
+---
+
+## Evaluate the capacity to mimic the UMap dimensionality reduction {.scrollable}
+
+- [ ] Get the embeddings from the trained model for the validation set
+
+```{python}
+val_fx = []
+val_fx_pred = []
+val_y = []
+
+for i, (x_val, y_val, fx_val) in enumerate(val_feat_dl):
+    if i >= 10:
+        break
+
+    with torch.no_grad():
+        if torch.cuda.is_available():
+            x_val = x_val.cuda()
+
+        _, fx_pred_val = classifier(x_val)
+        val_fx_pred.append(fx_pred_val.detach().cpu())
+        val_fx.append(fx_val)
+        val_y.append(y_val)
+
+val_fx = torch.cat(val_fx, dim=0)
+val_fx_pred = torch.cat(val_fx_pred, dim=0)
+val_y = torch.cat(val_y, dim=0)
+```
+
+---
+
+## Evaluate the capacity to mimic the UMap dimensionality reduction {.scrollable}
+
+- [ ] Compate the embedding spaces (UMap vs learned) with the validation set
+
+```{python}
+for class_idx, class_name in enumerate(class_names):
+    plt.scatter(val_fx[val_y == class_idx, 0], val_fx[val_y == class_idx, 1], label=class_names[class_idx], marker=class_markers[class_idx], facecolors=class_facecolors[class_idx], edgecolors=class_colors[class_idx])
+
+plt.legend()
+```
+
+```{python}
+#| scrolled: false
+for class_idx, class_name in enumerate(class_names):
+    plt.scatter(val_fx_pred[val_y == class_idx, 0], val_fx_pred[val_y == class_idx, 1], label=class_names[class_idx], marker=class_markers[class_idx], facecolors=class_facecolors[class_idx], edgecolors=class_colors[class_idx])
+
+plt.legend()
+```
+
+# Use the pre-trained model to identify the behavior of compounds
+
+Because the model has learned to recognize *CRISPR*, *ORF*, and *NONE/DMSO* effects, it can be used to determine the behavior of any treatment based on their morphological profile.
+
+To do so, first extract the the morphological features using the pre-trained *MobileNet*, and then use the extracted features as input for the classifier model.
+
+---
+
+##  Execute the feature extraction and classification pipeline for *compound* data {.scrollable}
+
+```{python}
+compounds_ds = TiffS3Dataset(comp_plate_maps, wells_metadata, comp_plate_maps["Plate_name"].tolist(), 16, 24, 9, 5, shuffle=True)
+
+batch_size = 5
+
+compounds_dl = DataLoader(compounds_ds, batch_size=batch_size, num_workers=2, worker_init_fn=dataset_worker_init_fn)
+
+metadata_list = []
+for i, (x, y, metadata) in tqdm(enumerate(compounds_dl)):
+    metadata_list.append(metadata)
+
+    b, c, h, w = x.shape
+    x_t = model_transforms(torch.tile(x.reshape(-1, 1, h, w), (1, 3, 1, 1)))
+
+    if torch.cuda.is_available():
+        x_t = x_t.cuda()
+
+    with torch.no_grad():
+        x_out = model(x_t)
+        x_out = x_out.detach().reshape(-1, c, 576, 7, 7).sum(dim=1)
+        x_out = org_avgpool(x_out).detach().reshape(b, -1)
+
+        y_pred, fx_pred = classifier(x_out)
+
+    break
+```
+
+---
+
+##  Execute the feature extraction and classification pipeline for *compound* data {.scrollable}
+
+- [ ] Plot the embeddings of the compound samples
+
+```{python}
+for class_idx, class_name in enumerate(class_names[:3]):
+    plt.scatter(trn_fx_pred[trn_y == class_idx, 0][::10], trn_fx_pred[trn_y == class_idx, 1][::10], label=class_names[class_idx], marker=class_markers[class_idx], facecolors=class_facecolors[class_idx], edgecolors=class_colors[class_idx])
+
+plt.scatter(fx_pred.cpu()[:, 0], fx_pred.cpu()[:, 1], label=class_names[3], marker=class_markers[3], facecolors=class_facecolors[3], edgecolors=class_colors[3])
+
+plt.legend()
+```
+
+---
+
+##  Execute the feature extraction and classification pipeline for *compound* data {.scrollable}
+
+- [ ] Look for any interesting compounds in [PubChem](https://pubchem.ncbi.nlm.nih.gov/)
+
+
+```{python}
+metadata
+```
+
+```{python}
+y_pred.argmax(dim=1)
+```
+
+```{python}
+wells_metadata.query("well_position == 'H13' & Plate_type=='COMPOUND'")
+```

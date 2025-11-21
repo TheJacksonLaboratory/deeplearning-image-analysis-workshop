@@ -1,0 +1,1427 @@
+---
+title: Advanced Machine Learning with Python (Session 1)
+author: Fernando Cervantes (fernando.cervantes@jax.org)
+format: 
+  revealjs:
+    code-fold: false
+    progress: true
+    controls: true
+    output-file: "Adv_ML_Python_presentation_1_1"
+    fontsize: 20pt
+    include-in-header: 
+      text: |
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel ="stylesheet" integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg==" crossorigin="anonymous">
+
+execute:
+  error: true
+  echo: true
+  cache: true
+  freeze: true
+  keep-ipynb: true
+
+jupyter: python3
+---
+
+
+## Workshop outcomes
+
+* Understand the process of training ML models.
+*	Load pre-trained ML models and fine-tune them with new data.
+*	Evaluate the performance of ML models.
+*	Adapt ML models for different tasks from pre-trained models.
+
+## Materials
+
+[Open notebook in Colab](https://colab.research.google.com/gist/fercer/0dedf70ba39c94837e935c319b01ea23/advanced_machine_learning_with_python_session_1.ipynb){.btn .btn-outline-primary .btn role="button" target=”_blank”} [View solutions](https://colab.research.google.com/gist/fercer/e2cec3b2f9d7837abf312c6008cc1130/advanced_machine_learning_with_python_session_1-solved.ipynb){.btn .btn-outline-primary .btn role="button" target=”_blank”}
+
+# 0. Setup environment
+
+## Select runtime and connect
+
+
+On the top right corner of the page, click the drop-down arrow to the right of the `Connect` button and select `Change runtime type`.
+
+![](../imgs/connect_runtime.png){width=50%}
+
+---
+
+Make sure `Python 3` runtime is selected. For this part of the workshop `CPU` acceleration is enough.
+
+![](../imgs/select_runtime.png){width=50%}
+
+---
+
+Now we can connect to the runtime by clicking `Connect`. This will create a **V**irtual **M**achine (**VM**) with compute resources we can use for a limited amount of time.
+
+![](../imgs/connect.png){height=25%}
+
+:::{.callout-caution}
+In free Colab accounts these resources are not guaranteed and can be taken away without notice (preemptible machines).
+
+Data stored in this runtime will be lost if not moved into other storage when the runtime is deleted.
+:::
+
+# 1. What is **M**achine **L**earning (**ML**)?
+
+---
+
+## **M**achine **L**earning (**ML**)
+
+Sub-field of **Artificial Intelligence** that develops methods to address tasks that require human intelligence
+
+![](../imgs/Diagram_AI.png){width=50%}
+
+
+## Artificial intelligence tasks
+
+---
+
+## Common tasks
+
+:::: {.columns}
+
+::: {.column width="30%"}
+
+**Classification** 
+
+
+![](../imgs/Object.png)
+
+what is this?
+
+:::
+
+::: {.column width="30%"}
+
+**Detection** 
+
+![](../imgs/Detect.png)
+
+where is something?
+
+:::
+
+::: {.column width="30%"}
+
+**Segmentation**
+
+![](../imgs/Segment.png)
+
+where *specifically* is something?
+
+:::
+
+::::
+
+---
+
+### More tasks addressed in recent years
+
+* Style transference
+
+* Compression of image/video/etc...
+
+* Generation of content
+
+* Language processing
+
+# Types of machine learning
+
+---
+
+## Types of machine learning
+
+### Depending on how the model is trained
+
+* Supervised
+
+* Unsupervised
+
+* Weakly supervised
+
+* Reinforced
+
+* ...
+
+::: {.notes}
+Supervised learning: teach the machine to perform a task with a set of inputs and their respective expected outcome ($X$, $Y$).
+
+Unsupervised learning: let the machine learn to perform a task on its own ($X$) without any specific expected outcome.
+
+Weakly supervised: teach the machine to perform a task using a limited set of expected outcomes.
+
+Reinforced learning: let the machine learn to perform a task on its own, then give it a reward relative to its performance.
+:::
+
+
+# Inputs and outputs
+
+---
+
+## Inputs and outputs
+
+For a task, we want to *model* the **outcome/output** ($y$) obtained by a given **input** ($x$)
+
+$f(x) \approx y$
+
+::: {.callout-note}
+The complete set of ($x$, $y$) pairs is known as dataset ($X$, $Y$).
+:::
+
+::: {.callout-note}
+Inputs can be virtually anything, including images, texts, video, audio, electrical signals, etc.
+
+While outputs are expected to be some meaningful piece of information, such as a category, position, value, etc.
+:::
+
+---
+
+## Use case: Image classification with the CIFAR-100 dataset
+
+```{python}
+#| echo: false
+cifar100_categories = [
+  'apple',  # id 0
+  'aquarium_fish',
+  'baby',
+  'bear',
+  'beaver',
+  'bed',
+  'bee',
+  'beetle',
+  'bicycle',
+  'bottle',
+  'bowl',
+  'boy',
+  'bridge',
+  'bus',
+  'butterfly',
+  'camel',
+  'can',
+  'castle',
+  'caterpillar',
+  'cattle',
+  'chair',
+  'chimpanzee',
+  'clock',
+  'cloud',
+  'cockroach',
+  'couch',
+  'crab',
+  'crocodile',
+  'cup',
+  'dinosaur',
+  'dolphin',
+  'elephant',
+  'flatfish',
+  'forest',
+  'fox',
+  'girl',
+  'hamster',
+  'house',
+  'kangaroo',
+  'computer_keyboard',
+  'lamp',
+  'lawn_mower',
+  'leopard',
+  'lion',
+  'lizard',
+  'lobster',
+  'man',
+  'maple_tree',
+  'motorcycle',
+  'mountain',
+  'mouse',
+  'mushroom',
+  'oak_tree',
+  'orange',
+  'orchid',
+  'otter',
+  'palm_tree',
+  'pear',
+  'pickup_truck',
+  'pine_tree',
+  'plain',
+  'plate',
+  'poppy',
+  'porcupine',
+  'possum',
+  'rabbit',
+  'raccoon',
+  'ray',
+  'road',
+  'rocket',
+  'rose',
+  'sea',
+  'seal',
+  'shark',
+  'shrew',
+  'skunk',
+  'skyscraper',
+  'snail',
+  'snake',
+  'spider',
+  'squirrel',
+  'streetcar',
+  'sunflower',
+  'sweet_pepper',
+  'table',
+  'tank',
+  'telephone',
+  'television',
+  'tiger',
+  'tractor',
+  'train',
+  'trout',
+  'tulip',
+  'turtle',
+  'wardrobe',
+  'whale',
+  'willow_tree',
+  'wolf',
+  'woman',
+  'worm'
+]
+```
+
+- [ ] Load the CIFAR-100 dataset from torchvision.datasets
+
+```{python}
+import torch
+import torchvision
+
+cifar_ds = torchvision.datasets.CIFAR100(root="/tmp", train=True, download=True)
+```
+
+- [ ] Explore the CIFAR-100 dataset
+``` {python}
+x_im, y = cifar_ds[0]
+
+len(cifar_ds), type(x_im), type(y)
+```
+
+```{python}
+#| echo: false
+print("y = %i (%s)" % (y, cifar100_categories[y]))
+x_im.resize((x_im.height * 2, x_im.width * 2)).show()
+```
+
+# Introduction to PyTorch
+
+## What is a tensor (PyTorch)?
+
+A tensor is a multi-dimensional array. In PyTorch, this comes from a generalization of the notation of variables that exists on more than two dimensions.
+
+*   zero-dimensional variables are points,
+*   one-dimensional variables are vectors,
+*   two-dimensional variables are matrices,
+*   and three or more dimensional variables, are tensors.
+
+``` {python}
+import torch
+
+x0 = torch.Tensor([7]) # This is a point
+
+x1 = torch.Tensor([15, 64, 123]) # This is a vector
+
+x2 = torch.Tensor([[3, 6, 5],
+                   [7, 9, 12],
+                   [10, 33, 1]]) # This is a matrix
+
+x3 = torch.Tensor([[[[1, 0, 0],
+                     [0, 1, 0],
+                     [0, 0, 1]],
+                    [[2, 0, 1],
+                     [0, 2, 3],
+                     [4, 1, 5]]]]) # This is a tensor
+```
+
+---
+
+- [ ] Convert the example image `x_im` to a PyTorch tensor, and cast it to floating point data type
+
+::: {.callout-tip}
+We can use the utilities in `torchvision` to convert an image from PIL to tensor
+:::
+
+```{python}
+from torchvision.transforms.v2 import PILToTensor
+
+pre_process = PILToTensor()
+
+x = pre_process(x_im)
+
+x = x.float()
+
+type(x), x.shape, x.dtype, x.min(), x.max()
+```
+
+::: {.callout-note}
+For convenience, PyTorch's tensors have their channels axis before the spatial axes.
+:::
+
+---
+
+- [ ] Create a composed transformation to carry out the conversion, casting to float, and rescaling to $[0, 1]$ range in the same function.
+
+```{python}
+from torchvision.transforms.v2 import Compose, PILToTensor, ToDtype
+
+pre_process = Compose([
+  PILToTensor(),
+  ToDtype(torch.float32, scale=True)
+])
+
+x = pre_process(x_im)
+
+type(x), x.shape, x.dtype, x.min(), x.max()
+```
+
+::: {.callout-note}
+For convenience, PyTorch's tensors have their channels axis before the spatial axes.
+:::
+
+---
+
+## Exercise: Add the preprocessing pipeline to the CIFAR-100 dataset
+
+- [ ] Re-load the CIFAR-100 dataset, this time passing the `pre_process` function as argument.
+
+``` {python}
+cifar_ds = torchvision.datasets.CIFAR100(root="/tmp", train=True, download=True, transform=pre_process)
+```
+
+# Training, Validation, and Test data
+
+---
+
+## Training set
+
+The examples ($x$, $y$) used to teach a machine/model to perform a task
+
+---
+
+## Validation set
+
+Used to measure the performance of a model during training
+
+This subset is not used for training the model, so it is *unseen* data.
+
+::: {.notes}
+This is a subset from the *training set* and can be used to test the generalization capacity of the model or to select the best configuration of a model.
+:::
+
+---
+
+## Test set
+
+This set of samples is **not** used when training
+
+Its purpose is to measure the *generalization* capacity of the model
+
+---
+
+## Exercise: Load the test set and split the train set into train and validation subsets
+
+- [ ] Load the CIFAR-100 test set
+
+``` {python}
+cifar_test_ds = torchvision.datasets.CIFAR100(root="/tmp", train=False, download=True, transform=pre_process)
+```
+
+- [ ] Split the training set into train and validation subsets
+
+``` {python}
+from torch.utils.data import random_split
+
+cifar_train_ds, cifar_val_ds = random_split(cifar_ds, (40_000, 10_000))
+```
+
+# **D**eep **L**earning (**DL**) models
+
+---
+
+## Deep Learning (DL) models
+
+Models that construct knowledge in a hierarchical manner are considered **deep models**.
+
+![<a href=https://www.mdpi.com/595982>From Cervantes-Sanchez et al.</a>](https://www.mdpi.com/applsci/applsci-09-05507/article_deploy/html/images/applsci-09-05507-g003-550.jpg){height=50%}
+
+---
+
+## Exercise: Create a Logisic Regression model with PyTorch {.scrollable}
+
+- [ ] Use the `nn` (Neural Networks) module from `pytorch` to create a Logistic Regression model
+
+```{python}
+import torch.nn as nn
+
+lr_clf_1 = nn.Linear(in_features=3 * 32 * 32, out_features=100, bias=True)
+lr_clf_2 = nn.Softmax()
+```
+
+- [ ] *Feed* the model with a sample `x`
+
+::: {.callout-important}
+We have to *reshape* `x` before feeding it to the model because `x` is an image with axes: Channels, Height, Width (CHW), but the Logistic Regression input should be a vector.
+:::
+
+```{python}
+y_hat = lr_clf_2( lr_clf_1( x.reshape(1, -1) ))
+
+type(y_hat), y_hat.shape, y_hat.dtype
+```
+
+---
+
+## Exercise: Create a MultiLayer Perceptron (MLP) model with PyTorch {.scrollable}
+
+- [ ] Use the `nn.Sequential` module to build sequential models
+
+```{python}
+mlp_clf = nn.Sequential(
+  nn.Linear(in_features=3 * 32 * 32, out_features=1024, bias=True),
+  nn.Tanh(),
+  nn.Linear(in_features=1024, out_features=100, bias=True),
+  nn.Softmax()
+)
+```
+
+- [ ] *Feed* the model with a sample `x`
+
+```{python}
+y_hat = mlp_clf(x.reshape(1, -1))
+
+type(y_hat), y_hat.shape, y_hat.dtype
+```
+
+# Model optimization
+
+---
+
+## Model fitting/training
+
+Models behavior depends directly on the value of their set of parameters $\theta$.
+
+* $f(x) \approx y$
+* $f_\theta(x) = y + \epsilon = \hat{y}$
+
+::: {.callout-note}
+As models increase their number of parameters, they become more *complex*
+:::
+
+**Training** is the process of optimizing the values of $\theta$
+
+::: {.notes}
+Training is often an expensive process in terms of computational resources and time.
+:::
+
+# Loss function
+
+---
+
+## Loss function
+
+This is measure of the difference between the expected outputs and the predictions made by a model $L(Y, \hat{Y})$.
+
+::: {.callout-note}
+We look for *smooth* loss functions for which we can compute their gradient
+:::
+
+---
+
+## 11.1 Loss function for regression
+
+In the case of regression tasks we generally use the Mean Squared Error (MSE).
+
+$MSE=\frac{1}{N}\sum \left(Y - \hat{Y}\right)^2$
+
+---
+
+## Loss function for classification
+
+And for classification tasks we use the **C**ross **E**ntropy (**CE**) function.
+
+$CE = -\frac{1}{N}\sum\limits_i^N\sum\limits_k^C y_{i,k} log(\hat{y_{i,k}})$
+
+where $C$ is the number of classes.
+
+::: {.callout-note}
+For the binary classification case:
+
+$BCE = -\frac{1}{N}\sum\limits_i^N \left(y_i log(\hat{y_i}) + (1 - y_i) log(1 - \hat{y_i})\right)$
+:::
+
+---
+
+## Exercise: Define the loss function for the CIFAR-100 classification problem
+
+- [ ] Define a Cross Entropy loss function with `nn.CrossEntropyLoss`
+
+```{python}
+loss_fun = nn.CrossEntropyLoss()
+```
+
+- [ ] Remove the `nn.Softmax` layer from the MLP model.
+
+::: {.callout-note}
+According to the PyTorch documentation, the CrossEntropyLoss function takes as inputs the *logits* of the probabilities and not the probabilities themselves.
+So, we don't need to *squash* the output of the MLP model.
+:::
+
+``` {python}
+mlp_clf = nn.Sequential(
+  nn.Linear(in_features=3 * 32 * 32, out_features=1024, bias=True),
+  nn.Tanh(),
+  nn.Linear(in_features=1024, out_features=100, bias=True),
+  # nn.Softmax() # <- remove this line
+)
+```
+
+---
+
+## Exercise: Define the loss function for the CIFAR-100 classification problem
+
+- [ ] Measure the prediction loss (error) of our MLP with respect to the grund-truth
+
+::: {.callout-important}
+We are using a PyTorch loss function, and it expects PyTorch's tensors as arguments, so we have to convert `y` to tensor before computing the loss function.
+:::
+
+``` {python}
+loss = loss_fun(y_hat, torch.LongTensor([y]))
+
+loss
+```
+
+# Gradient based optimization
+
+---
+
+## Gradient based optimization
+
+*Gradient*-based methods are able to fit large numbers of parameters when using a *smooth* Loss function as target.
+
+::: {.callout-note}
+We compute the gradient of the loss function with respect to the model parameters using the chain rule from calculous.
+Generally, this is managed by the machine learning packages such as PyTorch and Tensorflow with a method called *back propagation*.
+:::
+
+### **Gradient Descent**
+
+* $\theta^{t+1} = \theta^t - \eta \nabla_\theta L(Y, \hat{Y})$
+
+---
+
+## Exercise: Compute the gradient of the loss function with respect to the parameters of the MLP.
+
+- [ ] Check what are the gradients of the MLP parameters before back propagating the gradient.
+
+``` {python}
+mlp_clf[0].bias.grad
+```
+
+- [ ] Compute the gradient of the loss function with respect to the MLP parameters.
+
+::: {.callout-note}
+To *back propagate* the gradients we use the `loss.backward()` method of the loss function.
+:::
+
+``` {python}
+loss = loss_fun(y_hat, torch.LongTensor([y]))
+
+loss.backward()
+```
+
+- [ ] Verify that the gradients have been propagated to the model parameters.
+
+``` {python}
+mlp_clf[0].bias.grad
+```
+
+---
+
+## Stochastic methods
+
+::: {.callout-caution}
+The Gradient descent method require to obtain the Loss function for the whole training set before doing a single update.
+
+This can be inefficient when large volumes of data are used for training the model.
+:::
+
+* These methods use a relative small sample from the training data called *mini-batch* at a time.
+
+* This reduces the amount of memory used for computing intermediate operations carried out during optimization process.
+
+---
+
+## **S**tochastic **G**radient **D**escent (**SGD**)
+
+::: {.notes}
+This strategy defines $\theta$'s' update rule for iteration $t+1$ using a *mini-batch* sampled at random from the training set as follows.
+:::
+
+* $\theta^{t+1} = \theta^t - \eta \nabla_\theta L(Y_{b}, \hat{Y_{b}})$
+
+* $\eta$ controls the update we perform on the current parameter's values
+
+::: {.callout-note}
+This parameter in Deep Learning is known as the **learning rate**
+:::
+
+---
+
+## Training with mini-batches
+
+::: {.callout-note}
+PyTorch can operate efficiently on multiple inputs at the same time.
+To do that, we can use a `DataLoader` to serve mini-batches of inputs.
+:::
+
+---
+
+## Exercise: Train the MLP classifier
+
+- [ ] Use a `DataLoader` to serve mini-batches of images to train our MLP.
+
+``` {python}
+from torch.utils.data import DataLoader
+
+cifar_train_dl = DataLoader(cifar_train_ds, batch_size=128, shuffle=True)
+cifar_val_dl = DataLoader(cifar_val_ds, batch_size=256)
+cifar_test_dl = DataLoader(cifar_test_ds, batch_size=256)
+```
+
+- [ ] Create a Stochastic Gradient Descent optimizer for our MLP classifier.
+
+```{python}
+import torch.optim as optim
+
+optimizer = optim.SGD(mlp_clf.parameters(), lr=0.01, )
+```
+
+---
+
+## Exercise: Train the MLP classifier {.scrollable}
+
+- [ ] Implement the *training-loop* to fit the parameters of our MLP classifier.
+
+::: {.callout-note}
+Gradients are accumulated on every iteration, so we need to reset the accumulator with `optimizer.zero_grad()` for every new batch.
+:::
+
+::: {.callout-note}
+To perform get the new iteration's parameter values $\theta^{t+1}$ we use `optimizer.step()` to compute the update step.
+:::
+
+```{.python code-line-numbers="|3|9|11"}
+mlp_clf.train()
+for x, y in cifar_train_dl:
+  optimizer.zero_grad()
+
+  y_hat = mlp_clf( x.reshape(-1, 3 * 32 * 32) ) # Reshape it into a batch of vectors
+
+  loss = loss_fun(y_hat, y)
+
+  loss.backward()
+
+  optimizer.step()
+```
+```{python}
+#| echo: false
+mlp_clf.train()
+for x, y in cifar_train_dl:
+  optimizer.zero_grad()
+
+  y_hat = mlp_clf( x.reshape(-1, 3 * 32 * 32) ) # Reshape it into a batch of vectors
+
+  loss = loss_fun(y_hat, y)
+
+  loss.backward()
+
+  optimizer.step()
+```
+
+---
+
+## Exercise: Train the MLP classifier and track the training and validation loss
+
+- [ ] Save the loss function of each batch and the overall average loss during training.
+
+::: {.callout-note}
+To extract the loss function's value without anything else attached use `loss.item()`.
+:::
+
+```{.python code-line-numbers="1-3,13-15,21"}
+train_loss = []
+train_loss_avg = 0
+total_train_samples = 0
+
+mlp_clf.train()
+for x, y in cifar_train_dl:
+  optimizer.zero_grad()
+
+  y_hat = mlp_clf( x.reshape(-1, 3 * 32 * 32) ) # Reshape it into a batch of vectors
+
+  loss = loss_fun(y_hat, y)
+
+  train_loss.append(loss.item())
+  train_loss_avg += loss.item() * len(x)
+  total_train_samples += len(x)
+
+  loss.backward()
+
+  optimizer.step()
+
+train_loss_avg /= total_train_samples
+```
+```{python}
+#| echo: false
+train_loss = []
+train_loss_avg = 0
+total_train_samples = 0
+
+mlp_clf.train()
+for x, y in cifar_train_dl:
+  optimizer.zero_grad()
+
+  y_hat = mlp_clf( x.reshape(-1, 3 * 32 * 32) ) # Reshape it into a batch of vectors
+
+  loss = loss_fun(y_hat, y)
+
+  train_loss.append(loss.item())
+  train_loss_avg += loss.item() * len(x)
+  total_train_samples += len(x)
+
+  loss.backward()
+
+  optimizer.step()
+
+train_loss_avg /= total_train_samples
+```
+
+---
+
+## Exercise: Train the MLP classifier and track the training and validation loss
+- [ ] Compute the average loss function for the validation set.
+
+::: {.callout-note}
+Because we don't train the model with the validation set, back-propagation and optimization steps are not needed.
+
+Additionally, we wrap the loop `with torch.no_grad()` to prevent the generation of gradients that could fill the memory unnecessarily.
+:::
+
+``` {.python code-line-numbers="|5"}
+val_loss_avg = 0
+total_val_samples = 0
+
+mlp_clf.eval()
+with torch.no_grad():
+  for x, y in cifar_val_dl:
+    y_hat = mlp_clf( x.reshape(-1, 3 * 32 * 32) ) # Reshape it into a batch of vectors
+    loss = loss_fun(y_hat, y)
+
+    val_loss_avg += loss.item() * len(x)
+    total_val_samples += len(x)
+
+val_loss_avg /= total_val_samples
+```
+``` {python}
+#| echo: false
+val_loss_avg = 0
+total_val_samples = 0
+
+mlp_clf.eval()
+with torch.no_grad():
+  for x, y in cifar_val_dl:
+    y_hat = mlp_clf( x.reshape(-1, 3 * 32 * 32) ) # Reshape it into a batch of vectors
+    loss = loss_fun(y_hat, y)
+
+    val_loss_avg += loss.item() * len(x)
+    total_val_samples += len(x)
+
+val_loss_avg /= total_val_samples
+```
+
+---
+
+## Exercise: Train the MLP classifier and track the training and validation loss
+
+- [ ] Plot the training loss for this *epoch*.
+
+``` {python}
+import matplotlib.pyplot as plt
+
+plt.plot(train_loss, "b-", label="Training loss")
+plt.plot([0, len(train_loss)], [train_loss_avg, train_loss_avg], "r:", label="Average training loss")
+plt.plot([0, len(train_loss)], [val_loss_avg, val_loss_avg], "b:", label="Average validation loss")
+plt.legend()
+plt.show()
+```
+
+---
+
+## Exercise: Train the MLP classifier and track the training and validation loss through several *epochs* {.scrollable}
+
+```{.python code-line-numbers="1-5|"}
+num_epochs = 10
+train_loss = []
+val_loss = []
+
+for e in range(num_epochs):
+  train_loss_avg = 0
+  total_train_samples = 0
+
+  mlp_clf.train()
+  for x, y in cifar_train_dl:
+    optimizer.zero_grad()
+
+    y_hat = mlp_clf( x.reshape(-1, 3 * 32 * 32) ) # Reshape it into a batch of vectors
+
+    loss = loss_fun(y_hat, y)
+
+    train_loss_avg += loss.item() * len(x)
+    total_train_samples += len(x)
+
+    loss.backward()
+
+    optimizer.step()
+
+  train_loss_avg /= total_train_samples
+  train_loss.append(train_loss_avg)
+
+  val_loss_avg = 0
+  total_val_samples = 0
+
+  mlp_clf.eval()
+  with torch.no_grad():
+    for x, y in cifar_val_dl:
+      y_hat = mlp_clf( x.reshape(-1, 3 * 32 * 32) ) # Reshape it into a batch of vectors
+      loss = loss_fun(y_hat, y)
+
+      val_loss_avg += loss.item() * len(x)
+      total_val_samples += len(x)
+
+  val_loss_avg /= total_val_samples
+  val_loss.append(val_loss_avg)
+```
+```{python}
+#| echo: false
+num_epochs = 5
+train_loss = []
+val_loss = []
+
+for e in range(num_epochs):
+  train_loss_avg = 0
+  total_train_samples = 0
+
+  mlp_clf.train()
+  for x, y in cifar_train_dl:
+    optimizer.zero_grad()
+
+    y_hat = mlp_clf( x.reshape(-1, 3 * 32 * 32) ) # Reshape it into a batch of vectors
+
+    loss = loss_fun(y_hat, y)
+
+    train_loss_avg += loss.item() * len(x)
+    total_train_samples += len(x)
+
+    loss.backward()
+
+    optimizer.step()
+
+  train_loss_avg /= total_train_samples
+  train_loss.append(train_loss_avg)
+
+  val_loss_avg = 0
+  total_val_samples = 0
+
+  mlp_clf.eval()
+  with torch.no_grad():
+    for x, y in cifar_val_dl:
+      y_hat = mlp_clf( x.reshape(-1, 3 * 32 * 32) ) # Reshape it into a batch of vectors
+      loss = loss_fun(y_hat, y)
+
+      val_loss_avg += loss.item() * len(x)
+      total_val_samples += len(x)
+
+  val_loss_avg /= total_val_samples
+  val_loss.append(val_loss_avg)
+```
+
+---
+
+## Exercise: Show the progress of the training throughout the epochs
+
+- [ ] Plot the average train and validation losses
+
+``` {python}
+import matplotlib.pyplot as plt
+
+plt.plot(train_loss, "b-", label="Average training loss")
+plt.plot(val_loss, "r-", label="Average validation loss")
+plt.legend()
+plt.show()
+```
+
+# Performance metrics
+
+---
+
+## Performance metrics
+
+Used to measure how good or bad a model carries out a task
+
+* $f(x) \approx y$
+
+* $f(x) = y + \epsilon = \hat{y}$
+
+::: {.notes}
+Given the set of parameters, as well as other factors, the output of a model can deviate from the expected outcome. So, the actual output of a model is $f(x) = \hat{y}$.
+:::
+
+::: {.callout-note}
+The output $\hat{y}$ is called **prediction ** given the context taken from statistical regression analysis.
+:::
+
+::: {.callout-important}
+Selecting the correct performance metrics depends on the training type, task, and even the distribution of the data.
+:::
+
+---
+
+## Exercise: Measure the accuracy of the MLP trained to classify images from CIFAR-100 {.scrollable}
+
+- [ ] Install the `torchmetrics` package.
+
+``` {.python}
+!pip install torchmetrics
+```
+
+- [ ] Compute the average accuracy for the Train set.
+
+``` {python}
+from torchmetrics.classification import Accuracy
+
+mlp_clf.eval()
+
+train_acc_metric = Accuracy(task="multiclass", num_classes=100)
+
+with torch.no_grad():
+  for x, y in cifar_train_dl:
+    y_hat = mlp_clf( x.reshape(-1, 3 * 32 * 32) )
+    train_acc_metric(y_hat.softmax(dim=1), y)
+
+  train_acc = train_acc_metric.compute()
+
+print(f"Training acc={train_acc}")
+train_acc_metric.reset()
+```
+
+---
+
+## Exercise: Measure the accuracy of the MLP trained to classify images from CIFAR-100 {.scrollable}
+
+- [ ] Compute the average accuracy for the Validation and Test sets.
+
+``` {python}
+val_acc_metric = Accuracy(task="multiclass", num_classes=100)
+test_acc_metric = Accuracy(task="multiclass", num_classes=100)
+
+with torch.no_grad():
+  for x, y in cifar_val_dl:
+    y_hat = mlp_clf( x.reshape(-1, 3 * 32 * 32) )
+    val_acc_metric(y_hat.softmax(dim=1), y)
+
+  val_acc = val_acc_metric.compute()
+
+  for x, y in cifar_test_dl:
+    y_hat = mlp_clf( x.reshape(-1, 3 * 32 * 32) )
+    test_acc_metric(y_hat.softmax(dim=1), y)
+
+  test_acc = test_acc_metric.compute()
+
+print(f"Validation acc={val_acc}")
+print(f"Test acc={test_acc}")
+
+val_acc_metric.reset()
+test_acc_metric.reset()
+```
+
+# **C**onvolutional **N**eural **N**etwork (**CNN** or **ConvNet**)
+
+---
+
+## Convolution layers
+
+The most common operation in DL models for image processing are Convolution operations.
+
+![2D Convolution](https://upload.wikimedia.org/wikipedia/commons/8/85/Convolution_arithmetic_-_Full_padding_no_strides_transposed.gif)
+
+The animation shows the convolution of a 7x7 pixels input image (bottom) with a 3x3 pixels kernel (moving window), that results in a 5x5 pixels output (top).
+
+---
+
+## Exercise: Visualize the effect of the convolution operation
+
+- [ ] Create a convolution layer with `nn.Conv2D` using 3 channels as input, and a single one for output.
+
+``` {python}
+conv_1 = nn.Conv2d(in_channels=3, out_channels=1, kernel_size=7, padding=0, bias=True)
+
+x, _ = next(iter(cifar_train_dl))
+
+fx = conv_1(x)
+
+type(fx), fx.dtype, fx.shape, fx.min(), fx.max()
+```
+
+::: {.callout-warning}
+The convolution layer is initialized with random values, so the results will vary.
+:::
+
+---
+
+## Exercise: Visualize the effect of the convolution operation
+
+- [ ] Create a convolution layer with `nn.Conv2D` using 3 channels as input, and a single one for output.
+
+``` {python}
+plt.rcParams['figure.figsize'] = [5, 5]
+
+fig, ax = plt.subplots(1, 2)
+ax[0].imshow(x[0].permute(1, 2, 0))
+ax[1].imshow(fx.detach()[0, 0], cmap="gray")
+plt.show()
+```
+
+::: {.callout-important}
+By default, outputs from PyTorch modules are tracked for back-propagation.
+
+To visualize it with `matplotlib` we have to `.detach()` the tensor first.
+:::
+
+---
+
+## Exercise: Visualize the effect of the convolution operation
+
+- [ ] Visualize the weights of the convolution layer.
+
+``` {python}
+conv_1.weight.shape
+```
+
+``` {python}
+fig, ax = plt.subplots(2, 2)
+ax[0, 0].imshow(conv_1.weight.detach()[0, 0], cmap="gray")
+ax[0, 1].imshow(conv_1.weight.detach()[0, 1], cmap="gray")
+ax[1, 0].imshow(conv_1.weight.detach()[0, 2], cmap="gray")
+ax[1, 1].set_axis_off()
+plt.show()
+```
+
+---
+
+## Exercise: Visualize the effect of the convolution operation
+
+- [ ] Modify the weights of the convolution layer.
+
+``` {python}
+conv_1 = nn.Conv2d(in_channels=3, out_channels=1, kernel_size=3, padding=0, bias=False)
+
+conv_1.weight.data[:] = torch.FloatTensor([
+  [
+    [
+      [0, 0, 0],
+      [0, 0, 0],
+      [0, 0, 0],
+    ],
+    [
+      [0, 0, 0],
+      [0, 1, 0],
+      [0, 0, 0],
+    ],
+    [
+      [0, 0, 0],
+      [0, 0, 0],
+      [0, 0, 0],
+    ],
+  ]
+])
+```
+
+---
+
+## Exercise: Visualize the effect of the convolution operation
+
+- [ ] Visualize the effects after changing the values.
+
+``` {python}
+fx = conv_1(x)
+
+fig, ax = plt.subplots(1, 2)
+ax[0].imshow(x[0].permute(1, 2, 0))
+ax[1].imshow(fx.detach()[0].permute(1, 2, 0))
+plt.show()
+```
+
+Experiment with different values and shapes of the kernel
+https://en.wikipedia.org/wiki/Kernel_(image_processing)
+
+---
+
+## Exercise: Visualize the effect of the convolution operation
+
+- [ ] Modify the weights of the convolution layer.
+
+``` {python}
+conv_1 = nn.Conv2d(in_channels=3, out_channels=1, kernel_size=3, padding=0, bias=False)
+
+conv_1.weight.data[:] = torch.FloatTensor([
+  [[[0, -1, 0], [-1, 5, -1], [0, -1, 0]],
+   [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+   [[0, 0, 0], [0, 0, 0], [0, 0, 0]]]
+])
+
+fx = conv_1(x)
+
+fig, ax = plt.subplots(1, 2)
+ax[0].imshow(x[0].permute(1, 2, 0))
+ax[1].imshow(fx.detach()[0, 0], cmap="gray")
+plt.show()
+```
+
+Experiment with different values and shapes of the kernel
+https://en.wikipedia.org/wiki/Kernel_(image_processing)
+
+---
+
+## Exercise: Visualize the effect of the convolution operation
+
+- [ ] Modify the weights of the convolution layer.
+
+``` {python}
+conv_1 = nn.Conv2d(in_channels=3, out_channels=1, kernel_size=3, padding=0, bias=False)
+
+conv_1.weight.data[:] = torch.FloatTensor([
+  [[[1, 0, -1], [1, 0, -1], [1, 0, -1]],
+   [[1, 0, -1], [1, 0, -1], [1, 0, -1]],
+   [[1, 0, -1], [1, 0, -1], [1, 0, -1]]]
+])
+
+fx = conv_1(x)
+
+fig, ax = plt.subplots(1, 2)
+ax[0].imshow(x[0].permute(1, 2, 0))
+ax[1].imshow(fx.detach()[0, 0], cmap="gray")
+plt.show()
+```
+
+Experiment with different values and shapes of the kernel
+https://en.wikipedia.org/wiki/Kernel_(image_processing)
+
+---
+
+## Examples of popular Deep Learning models in computer vision
+
+* Residual Neural Networks
+
+![He, Kaiming et al. “Deep Residual Learning for Image Recognition.” 2016 IEEE Conference on Computer Vision and Pattern Recognition (CVPR) (2015): 770-778.](https://en.wikipedia.org/wiki/Residual_neural_network#/media/File:Resnet-18_architecture.svg)
+
+---
+
+## Examples of popular Deep Learning models in computer vision
+
+* Inception (v3)
+
+![Szegedy, Christian et al. “Going deeper with convolutions.” 2015 IEEE Conference on Computer Vision and Pattern Recognition (CVPR) (2014): 1-9.](../imgs/Inception.png)
+
+---
+
+## Examples of popular Deep Learning models in computer vision
+
+* U-Net (cell segmentation)
+
+![Ronneberger, Olaf et al. “U-Net: Convolutional Networks for Biomedical Image Segmentation.” ArXiv abs/1505.04597 (2015): n. pag.](https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/u-net-architecture.png)
+
+---
+
+## Examples of popular Deep Learning models in computer vision
+
+* Vision Transformer (classification and segmentation)
+
+![Dosovitskiy, Alexey et al. “An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale.” ArXiv abs/2010.11929 (2020): n. pag.](../imgs/ViT.png)
+
+
+- Segment Anything Model (SAM)
+- Micro-SAM
+
+
+---
+
+## Examples of popular Deep Learning models in computer vision
+
+* LeNet-5 for handwritten digits classification (<a href=http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf>LeCun et al.</a>)
+
+![LeCun, Yann et al. “Gradient-based learning applied to document recognition.” Proc. IEEE 86 (1998): 2278-2324.](https://upload.wikimedia.org/wikipedia/commons/6/61/LeNet_architecture.png)
+
+By Daniel Voigt Godoy - <a rel="nofollow" class="external free" href="https://github.com/dvgodoy/dl-visuals/">https://github.com/dvgodoy/dl-visuals/</a>, <a href="https://creativecommons.org/licenses/by/4.0" title="Creative Commons Attribution 4.0">CC BY 4.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=150820922">Link</a>
+
+---
+
+## Exercise: Implement and train the LetNet-5 model with PyTorch
+
+- [ ] Build the convolutional neural network using `nn.Sequential`, and the `nn.ReLU()` activation function.
+
+``` {python}
+lenet_clf = nn.Sequential(
+    nn.Conv2d(in_channels=3, out_channels=6, kernel_size=5, bias=True),
+    nn.ReLU(),
+    nn.MaxPool2d(kernel_size=2),
+    nn.Conv2d(in_channels=6, out_channels=16, kernel_size=5, bias=True),
+    nn.ReLU(),
+    nn.MaxPool2d(kernel_size=2),
+    nn.Flatten(),
+    nn.Linear(in_features=16*5*5, out_features=120, bias=True),
+    nn.ReLU(),
+    nn.Linear(in_features=120, out_features=84, bias=True),
+    nn.ReLU(),
+    nn.Linear(in_features=84, out_features=100, bias=True),
+)
+```
+
+::: {.callout-note}
+Pooling layers are used to downsample feature maps to summarize information from large regions.
+:::
+
+---
+
+## Exercise: Implement and train the LetNet-5 model with PyTorch
+
+- [ ] Test our implementation.
+
+``` {python}
+y_hat = lenet_clf(x)
+
+type(y_hat), y_hat.dtype, y_hat.shape, y_hat.min(), y_hat.max()
+```
+
+---
+
+## Exercise: Implement and train the LetNet-5 model with PyTorch {.scrollable}
+
+- [ ] Train the model to classify images from CIFAR-100.
+
+``` {python}
+num_epochs = 10
+train_loss = []
+val_loss = []
+
+if torch.cuda.is_available():
+  lenet_clf.cuda()
+
+optimizer = optim.SGD(lenet_clf.parameters(), lr=0.01)
+
+for e in range(num_epochs):
+  train_loss_avg = 0
+  total_train_samples = 0
+
+  lenet_clf.train()
+  for x, y in cifar_train_dl:
+    optimizer.zero_grad()
+
+    if torch.cuda.is_available():
+      x = x.cuda()
+    
+    y_hat = lenet_clf( x ).cpu()
+
+    loss = loss_fun(y_hat, y)
+
+    train_loss_avg += loss.item() * len(x)
+    total_train_samples += len(x)
+
+    loss.backward()
+
+    optimizer.step()
+
+  train_loss_avg /= total_train_samples
+  train_loss.append(train_loss_avg)
+
+  val_loss_avg = 0
+  total_val_samples = 0
+
+  lenet_clf.eval()
+  with torch.no_grad():
+    for x, y in cifar_val_dl:
+      if torch.cuda.is_available():
+        x = x.cuda()
+      
+      y_hat = lenet_clf( x ).cpu()
+      loss = loss_fun(y_hat, y)
+
+      val_loss_avg += loss.item() * len(x)
+      total_val_samples += len(x)
+
+  val_loss_avg /= total_val_samples
+  val_loss.append(val_loss_avg)
+```
+
+---
+
+## Exercise: Implement and train the LetNet-5 model with PyTorch
+
+- [ ] Plot the average train and validation losses
+
+``` {python}
+plt.plot(train_loss, "b-", label="Average training loss")
+plt.plot(val_loss, "r-", label="Average validation loss")
+plt.legend()
+plt.show()
+```
+
+---
+
+## Exercise: Implement and train the LetNet-5 model with PyTorch {.scrollable}
+
+- [ ] Compute the average accuracy for the Validation and Test sets.
+
+``` {python}
+lenet_clf.eval()
+
+val_acc_metric = Accuracy(task="multiclass", num_classes=100)
+test_acc_metric = Accuracy(task="multiclass", num_classes=100)
+train_acc_metric = Accuracy(task="multiclass", num_classes=100)
+
+with torch.no_grad():
+  for x, y in cifar_train_dl:
+    if torch.cuda.is_available():
+      x = x.cuda()
+    y_hat = lenet_clf( x ).cpu()
+    train_acc_metric(y_hat.softmax(dim=1), y)
+
+  train_acc = train_acc_metric.compute()
+
+  for x, y in cifar_val_dl:
+    if torch.cuda.is_available():
+      x = x.cuda()
+    y_hat = lenet_clf( x ).cpu()
+    val_acc_metric(y_hat.softmax(dim=1), y)
+
+  val_acc = val_acc_metric.compute()
+
+  for x, y in cifar_test_dl:
+    if torch.cuda.is_available():
+      x = x.cuda()
+    y_hat = lenet_clf( x ).cpu()
+    test_acc_metric(y_hat.softmax(dim=1), y)
+
+  test_acc = test_acc_metric.compute()
+
+print(f"Training acc={train_acc}")
+print(f"Validation acc={val_acc}")
+print(f"Test acc={test_acc}")
+
+train_acc_metric.reset()
+val_acc_metric.reset()
+test_acc_metric.reset()
+```
