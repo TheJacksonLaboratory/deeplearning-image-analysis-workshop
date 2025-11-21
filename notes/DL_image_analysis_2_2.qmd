@@ -1,12 +1,12 @@
 ---
-title: Advanced Machine Learning with Python (Session 1 - Part 3)
+title: Advanced Machine Learning with Python (Session 2 - Part 2)
 author: Fernando Cervantes (fernando.cervantes@jax.org)
 format:
   revealjs:
     code-fold: false
     progress: true
     controls: true
-    output-file: "Adv_ML_Python_presentation_1_3"
+    output-file: "Adv_ML_Python_presentation_2_2"
     fontsize: 20pt
     include-in-header:
       text: |
@@ -21,6 +21,11 @@ execute:
 
 jupyter: python3
 ---
+
+## Materials
+
+[Open notebook in Colab](https://colab.research.google.com/gist/fercer/8e5262d5df22d5b55468642855e0d1b8/advanced_machine_learning_with_python_session_2_2.ipynb){.btn .btn-outline-primary .btn role="button" target=”_blank”}
+
 
 # Working with Transformers
 
