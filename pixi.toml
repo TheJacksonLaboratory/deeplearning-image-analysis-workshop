@@ -1,0 +1,22 @@
+[workspace]
+channels = ["conda-forge"]
+name = "deeplearning-image-analysis-workshop"
+platforms = ["win-64", "linux-64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+
+[feature.py312.dependencies]
+python = "3.12.*"
+scikit-image = ">=0.26.0,<0.27"
+scikit-learn = ">=1.8.0,<2"
+pytorch = ">=2.10.0,<3"
+torchvision = ">=0.26.0,<0.27"
+matplotlib = ">=3.10.8,<4"
+pandas = ">=3.0.2,<4"
+jupyterlab = ">=4.5.6,<5"
+
+[environments]
+py312 = ["py312"]

@@ -8,4 +8,5 @@
 *.pt
 /notes/.jupyter_cache/
 /_freeze
-/docs/
+/docs/# pixi environments
+.pixi
