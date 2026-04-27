@@ -6,7 +6,7 @@ format:
     code-fold: false
     progress: true
     controls: true
-    output-file: Adv_ML_Python_presentation_2_3
+    output-file: "Adv_ML_Python_presentation_2_3"
     fontsize: 20pt
     include-in-header:
       text: |
