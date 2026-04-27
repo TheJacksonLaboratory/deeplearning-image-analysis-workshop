@@ -530,7 +530,7 @@ We look for *smooth* loss functions for which we can compute their gradient
 
 ---
 
-## 11.1 Loss function for regression
+##  Loss function for regression
 
 In the case of regression tasks we generally use the Mean Squared Error (MSE).
 
