@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-html/tabby.min.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -186,6 +186,9 @@
       margin-right: 0; 
     }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+  
+  <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg==" crossorigin="anonymous">
 </head>
 <body class="quarto-light">
@@ -206,47 +209,36 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 </section>
 <section id="materials" class="slide level2">
 <h2>Materials</h2>
-<p><a href="https://colab.research.google.com/gist/fercer/8e5262d5df22d5b55468642855e0d1b8/advanced_machine_learning_with_python_session_2_2.ipynb" class="btn btn-outline-primary" role="button" target="”_blank”">Open notebook in Colab</a></p>
+<p><a href="https://colab.research.google.com/gist/fercer/d4757f8257607cb0748c65714660600b/advanced_machine_learning_with_python_session_2_2.ipynb" class="btn btn-outline-primary" role="button" target="”_blank”">Open notebook in Colab</a> <a href="https://colab.research.google.com/gist/fercer/d4757f8257607cb0748c65714660600b/advanced_machine_learning_with_python_session_2_2-solved.ipynb" class="btn btn-outline-primary" role="button" target="”_blank”">View solutions</a></p>
 </section>
 <section>
-<section id="working-with-transformers" class="title-slide slide level1 center">
-<h1>Working with Transformers</h1>
+<section id="load-pre-trained-models" class="title-slide slide level1 center">
+<h1>Load pre-trained models</h1>
 
 </section>
-<section id="review-the-architecture-of-a-vision-transformer-vit" class="slide level2 scrollable">
-<h2>Review the architecture of a Vision Transformer (ViT)</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="../imgs/ViT.png"></p>
-<figcaption>Dosovitskiy, Alexey et al.&nbsp;“An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale.” ArXiv abs/2010.11929 (2020)</figcaption>
-</figure>
-</div>
+<section id="load-pre-trained-models-1" class="slide level2">
+<h2>Load pre-trained models</h2>
 <ul>
-<li><p>https://docs.pytorch.org/vision/stable/models/vision_transformer.html</p></li>
-<li><p><label><input type="checkbox">Review the Attention mechanism in transformer models</label></p></li>
+<li><p>Lets use one from the PyTorch’s <code>torchvision</code> module for computer vision</p></li>
+<li><p>Try first with the InceptionV3 model. <img data-src="../imgs/Inception.png" alt="InceptionV3"></p></li>
 </ul>
-<p><img data-src="../imgs/Attn_layer.png"></p>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="../imgs/Attn_operation.png"></p>
-<figcaption>Vaswani, Ashish et al.&nbsp;“Attention is All you Need.” Neural Information Processing Systems (2017).</figcaption>
-</figure>
-</div>
 </section>
-<section id="exercise-use-a-pre-trained-vit-model-to-classify-images" class="slide level2 scrollable">
-<h2>Exercise: Use a pre-trained ViT model to classify images</h2>
+<section id="exercise-use-a-pre-trained-deep-learning-model-to-classify-images" class="slide level2 scrollable">
+<h2>Exercise: Use a pre-trained deep learning model to classify images</h2>
 <ul class="task-list">
 <li><label><input type="checkbox">Import the pre-trained weights of the Inception V3 model from models.inception_v3</label></li>
 </ul>
-<div id="4e9a0a70" class="cell" data-execution_count="1">
+<div id="cc01619a" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> torch</span>
 <span id="cb1-2"><a></a><span class="im">from</span> torchvision <span class="im">import</span> models</span>
 <span id="cb1-3"><a></a></span>
-<span id="cb1-4"><a></a>transformer_weights <span class="op">=</span> models.ViT_B_16_Weights.IMAGENET1K_SWAG_E2E_V1</span>
+<span id="cb1-4"><a></a>inception_weights <span class="op">=</span> models.inception.Inception_V3_Weights.IMAGENET1K_V1</span>
 <span id="cb1-5"><a></a></span>
-<span id="cb1-6"><a></a>transformer_weights.meta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-6"><a></a>inception_weights.meta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>{'categories': ['tench',
+<pre><code>{'num_params': 27161264,
+ 'min_size': (75, 75),
+ 'categories': ['tench',
   'goldfish',
   'great white shark',
   'tiger shark',
@@ -1246,21 +1238,18 @@ Fernando Cervantes (fernando.cervantes@jax.org)
   'bolete',
   'ear',
   'toilet tissue'],
- 'recipe': 'https://github.com/facebookresearch/SWAG',
- 'license': 'https://github.com/facebookresearch/SWAG/blob/main/LICENSE',
- 'num_params': 86859496,
- 'min_size': (384, 384),
- '_metrics': {'ImageNet-1K': {'acc@1': 85.304, 'acc@5': 97.65}},
- '_ops': 55.484,
- '_file_size': 331.398,
- '_docs': '\n                These weights are learnt via transfer learning by end-to-end fine-tuning the original\n                `SWAG &lt;https://arxiv.org/abs/2201.08371&gt;`_ weights on ImageNet-1K data.\n            '}</code></pre>
+ 'recipe': 'https://github.com/pytorch/vision/tree/main/references/classification#inception-v3',
+ '_metrics': {'ImageNet-1K': {'acc@1': 77.294, 'acc@5': 93.45}},
+ '_ops': 5.713,
+ '_file_size': 103.903,
+ '_docs': 'These weights are ported from the original paper.'}</code></pre>
 </div>
 </div>
 <ul class="task-list">
 <li><label><input type="checkbox">Store the categories in a variable to use them later</label></li>
 </ul>
-<div id="8dbe6e2a" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>categories <span class="op">=</span> transformer_weights.meta[<span class="st">"categories"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="3d98f3e6" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>categories <span class="op">=</span> inception_weights.meta[<span class="st">"categories"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
@@ -1271,222 +1260,446 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <p><strong>Tip</strong></p>
 </div>
 <div class="callout-content">
-<p>More info about Vision Transformer implementation in <code>torchvision</code> <a href="https://docs.pytorch.org/vision/stable/models/generated/torchvision.models.vit_b_16.html">here</a></p>
+<p>More info about Inception V3 implementation in <code>torchvision</code> <a href="https://pytorch.org/vision/main/models/generated/models.inception_v3.html">here</a></p>
 </div>
 </div>
 </div>
 </section>
-<section class="slide level2">
-
+<section id="exercise-use-a-pre-trained-deep-learning-model-to-classify-images-1" class="slide level2 scrollable">
+<h2>Exercise: Use a pre-trained deep learning model to classify images</h2>
 <ul class="task-list">
 <li><label><input type="checkbox">Load the Inception V3 model using the pre-trained weights <code>inception_weights</code></label></li>
 </ul>
-<div id="af45d02d" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a>dl_model <span class="op">=</span> models.vit_b_16(transformer_weights, progress<span class="op">=</span><span class="va">True</span>)</span>
+<div id="aa5acd29" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a>dl_model <span class="op">=</span> models.inception_v3(inception_weights, progress<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb4-2"><a></a></span>
 <span id="cb4-3"><a></a>dl_model.<span class="bu">eval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>VisionTransformer(
-  (conv_proj): Conv2d(3, 768, kernel_size=(16, 16), stride=(16, 16))
-  (encoder): Encoder(
-    (dropout): Dropout(p=0.0, inplace=False)
-    (layers): Sequential(
-      (encoder_layer_0): EncoderBlock(
-        (ln_1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
-        (self_attention): MultiheadAttention(
-          (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
-        )
-        (dropout): Dropout(p=0.0, inplace=False)
-        (ln_2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
-        (mlp): MLPBlock(
-          (0): Linear(in_features=768, out_features=3072, bias=True)
-          (1): GELU(approximate='none')
-          (2): Dropout(p=0.0, inplace=False)
-          (3): Linear(in_features=3072, out_features=768, bias=True)
-          (4): Dropout(p=0.0, inplace=False)
-        )
-      )
-      (encoder_layer_1): EncoderBlock(
-        (ln_1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
-        (self_attention): MultiheadAttention(
-          (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
-        )
-        (dropout): Dropout(p=0.0, inplace=False)
-        (ln_2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
-        (mlp): MLPBlock(
-          (0): Linear(in_features=768, out_features=3072, bias=True)
-          (1): GELU(approximate='none')
-          (2): Dropout(p=0.0, inplace=False)
-          (3): Linear(in_features=3072, out_features=768, bias=True)
-          (4): Dropout(p=0.0, inplace=False)
-        )
-      )
-      (encoder_layer_2): EncoderBlock(
-        (ln_1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
-        (self_attention): MultiheadAttention(
-          (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
-        )
-        (dropout): Dropout(p=0.0, inplace=False)
-        (ln_2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
-        (mlp): MLPBlock(
-          (0): Linear(in_features=768, out_features=3072, bias=True)
-          (1): GELU(approximate='none')
-          (2): Dropout(p=0.0, inplace=False)
-          (3): Linear(in_features=3072, out_features=768, bias=True)
-          (4): Dropout(p=0.0, inplace=False)
-        )
-      )
-      (encoder_layer_3): EncoderBlock(
-        (ln_1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
-        (self_attention): MultiheadAttention(
-          (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
-        )
-        (dropout): Dropout(p=0.0, inplace=False)
-        (ln_2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
-        (mlp): MLPBlock(
-          (0): Linear(in_features=768, out_features=3072, bias=True)
-          (1): GELU(approximate='none')
-          (2): Dropout(p=0.0, inplace=False)
-          (3): Linear(in_features=3072, out_features=768, bias=True)
-          (4): Dropout(p=0.0, inplace=False)
-        )
-      )
-      (encoder_layer_4): EncoderBlock(
-        (ln_1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
-        (self_attention): MultiheadAttention(
-          (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
-        )
-        (dropout): Dropout(p=0.0, inplace=False)
-        (ln_2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
-        (mlp): MLPBlock(
-          (0): Linear(in_features=768, out_features=3072, bias=True)
-          (1): GELU(approximate='none')
-          (2): Dropout(p=0.0, inplace=False)
-          (3): Linear(in_features=3072, out_features=768, bias=True)
-          (4): Dropout(p=0.0, inplace=False)
-        )
-      )
-      (encoder_layer_5): EncoderBlock(
-        (ln_1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
-        (self_attention): MultiheadAttention(
-          (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
-        )
-        (dropout): Dropout(p=0.0, inplace=False)
-        (ln_2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
-        (mlp): MLPBlock(
-          (0): Linear(in_features=768, out_features=3072, bias=True)
-          (1): GELU(approximate='none')
-          (2): Dropout(p=0.0, inplace=False)
-          (3): Linear(in_features=3072, out_features=768, bias=True)
-          (4): Dropout(p=0.0, inplace=False)
-        )
-      )
-      (encoder_layer_6): EncoderBlock(
-        (ln_1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
-        (self_attention): MultiheadAttention(
-          (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
-        )
-        (dropout): Dropout(p=0.0, inplace=False)
-        (ln_2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
-        (mlp): MLPBlock(
-          (0): Linear(in_features=768, out_features=3072, bias=True)
-          (1): GELU(approximate='none')
-          (2): Dropout(p=0.0, inplace=False)
-          (3): Linear(in_features=3072, out_features=768, bias=True)
-          (4): Dropout(p=0.0, inplace=False)
-        )
-      )
-      (encoder_layer_7): EncoderBlock(
-        (ln_1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
-        (self_attention): MultiheadAttention(
-          (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
-        )
-        (dropout): Dropout(p=0.0, inplace=False)
-        (ln_2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
-        (mlp): MLPBlock(
-          (0): Linear(in_features=768, out_features=3072, bias=True)
-          (1): GELU(approximate='none')
-          (2): Dropout(p=0.0, inplace=False)
-          (3): Linear(in_features=3072, out_features=768, bias=True)
-          (4): Dropout(p=0.0, inplace=False)
-        )
-      )
-      (encoder_layer_8): EncoderBlock(
-        (ln_1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
-        (self_attention): MultiheadAttention(
-          (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
-        )
-        (dropout): Dropout(p=0.0, inplace=False)
-        (ln_2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
-        (mlp): MLPBlock(
-          (0): Linear(in_features=768, out_features=3072, bias=True)
-          (1): GELU(approximate='none')
-          (2): Dropout(p=0.0, inplace=False)
-          (3): Linear(in_features=3072, out_features=768, bias=True)
-          (4): Dropout(p=0.0, inplace=False)
-        )
-      )
-      (encoder_layer_9): EncoderBlock(
-        (ln_1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
-        (self_attention): MultiheadAttention(
-          (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
-        )
-        (dropout): Dropout(p=0.0, inplace=False)
-        (ln_2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
-        (mlp): MLPBlock(
-          (0): Linear(in_features=768, out_features=3072, bias=True)
-          (1): GELU(approximate='none')
-          (2): Dropout(p=0.0, inplace=False)
-          (3): Linear(in_features=3072, out_features=768, bias=True)
-          (4): Dropout(p=0.0, inplace=False)
-        )
-      )
-      (encoder_layer_10): EncoderBlock(
-        (ln_1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
-        (self_attention): MultiheadAttention(
-          (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
-        )
-        (dropout): Dropout(p=0.0, inplace=False)
-        (ln_2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
-        (mlp): MLPBlock(
-          (0): Linear(in_features=768, out_features=3072, bias=True)
-          (1): GELU(approximate='none')
-          (2): Dropout(p=0.0, inplace=False)
-          (3): Linear(in_features=3072, out_features=768, bias=True)
-          (4): Dropout(p=0.0, inplace=False)
-        )
-      )
-      (encoder_layer_11): EncoderBlock(
-        (ln_1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
-        (self_attention): MultiheadAttention(
-          (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
-        )
-        (dropout): Dropout(p=0.0, inplace=False)
-        (ln_2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
-        (mlp): MLPBlock(
-          (0): Linear(in_features=768, out_features=3072, bias=True)
-          (1): GELU(approximate='none')
-          (2): Dropout(p=0.0, inplace=False)
-          (3): Linear(in_features=3072, out_features=768, bias=True)
-          (4): Dropout(p=0.0, inplace=False)
-        )
-      )
+<pre><code>Inception3(
+  (Conv2d_1a_3x3): BasicConv2d(
+    (conv): Conv2d(3, 32, kernel_size=(3, 3), stride=(2, 2), bias=False)
+    (bn): BatchNorm2d(32, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (Conv2d_2a_3x3): BasicConv2d(
+    (conv): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), bias=False)
+    (bn): BatchNorm2d(32, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (Conv2d_2b_3x3): BasicConv2d(
+    (conv): Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+    (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (maxpool1): MaxPool2d(kernel_size=3, stride=2, padding=0, dilation=1, ceil_mode=False)
+  (Conv2d_3b_1x1): BasicConv2d(
+    (conv): Conv2d(64, 80, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (bn): BatchNorm2d(80, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (Conv2d_4a_3x3): BasicConv2d(
+    (conv): Conv2d(80, 192, kernel_size=(3, 3), stride=(1, 1), bias=False)
+    (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (maxpool2): MaxPool2d(kernel_size=3, stride=2, padding=0, dilation=1, ceil_mode=False)
+  (Mixed_5b): InceptionA(
+    (branch1x1): BasicConv2d(
+      (conv): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
     )
-    (ln): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+    (branch5x5_1): BasicConv2d(
+      (conv): Conv2d(192, 48, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(48, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch5x5_2): BasicConv2d(
+      (conv): Conv2d(48, 64, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), bias=False)
+      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_1): BasicConv2d(
+      (conv): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_2): BasicConv2d(
+      (conv): Conv2d(64, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(96, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_3): BasicConv2d(
+      (conv): Conv2d(96, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(96, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch_pool): BasicConv2d(
+      (conv): Conv2d(192, 32, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(32, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
   )
-  (heads): Sequential(
-    (head): Linear(in_features=768, out_features=1000, bias=True)
+  (Mixed_5c): InceptionA(
+    (branch1x1): BasicConv2d(
+      (conv): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch5x5_1): BasicConv2d(
+      (conv): Conv2d(256, 48, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(48, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch5x5_2): BasicConv2d(
+      (conv): Conv2d(48, 64, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), bias=False)
+      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_1): BasicConv2d(
+      (conv): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_2): BasicConv2d(
+      (conv): Conv2d(64, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(96, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_3): BasicConv2d(
+      (conv): Conv2d(96, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(96, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch_pool): BasicConv2d(
+      (conv): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
   )
+  (Mixed_5d): InceptionA(
+    (branch1x1): BasicConv2d(
+      (conv): Conv2d(288, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch5x5_1): BasicConv2d(
+      (conv): Conv2d(288, 48, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(48, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch5x5_2): BasicConv2d(
+      (conv): Conv2d(48, 64, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), bias=False)
+      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_1): BasicConv2d(
+      (conv): Conv2d(288, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_2): BasicConv2d(
+      (conv): Conv2d(64, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(96, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_3): BasicConv2d(
+      (conv): Conv2d(96, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(96, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch_pool): BasicConv2d(
+      (conv): Conv2d(288, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (Mixed_6a): InceptionB(
+    (branch3x3): BasicConv2d(
+      (conv): Conv2d(288, 384, kernel_size=(3, 3), stride=(2, 2), bias=False)
+      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_1): BasicConv2d(
+      (conv): Conv2d(288, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_2): BasicConv2d(
+      (conv): Conv2d(64, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(96, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_3): BasicConv2d(
+      (conv): Conv2d(96, 96, kernel_size=(3, 3), stride=(2, 2), bias=False)
+      (bn): BatchNorm2d(96, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (Mixed_6b): InceptionC(
+    (branch1x1): BasicConv2d(
+      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7_1): BasicConv2d(
+      (conv): Conv2d(768, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(128, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7_2): BasicConv2d(
+      (conv): Conv2d(128, 128, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
+      (bn): BatchNorm2d(128, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7_3): BasicConv2d(
+      (conv): Conv2d(128, 192, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_1): BasicConv2d(
+      (conv): Conv2d(768, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(128, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_2): BasicConv2d(
+      (conv): Conv2d(128, 128, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
+      (bn): BatchNorm2d(128, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_3): BasicConv2d(
+      (conv): Conv2d(128, 128, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
+      (bn): BatchNorm2d(128, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_4): BasicConv2d(
+      (conv): Conv2d(128, 128, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
+      (bn): BatchNorm2d(128, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_5): BasicConv2d(
+      (conv): Conv2d(128, 192, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch_pool): BasicConv2d(
+      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (Mixed_6c): InceptionC(
+    (branch1x1): BasicConv2d(
+      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7_1): BasicConv2d(
+      (conv): Conv2d(768, 160, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7_2): BasicConv2d(
+      (conv): Conv2d(160, 160, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
+      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7_3): BasicConv2d(
+      (conv): Conv2d(160, 192, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_1): BasicConv2d(
+      (conv): Conv2d(768, 160, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_2): BasicConv2d(
+      (conv): Conv2d(160, 160, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
+      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_3): BasicConv2d(
+      (conv): Conv2d(160, 160, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
+      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_4): BasicConv2d(
+      (conv): Conv2d(160, 160, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
+      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_5): BasicConv2d(
+      (conv): Conv2d(160, 192, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch_pool): BasicConv2d(
+      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (Mixed_6d): InceptionC(
+    (branch1x1): BasicConv2d(
+      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7_1): BasicConv2d(
+      (conv): Conv2d(768, 160, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7_2): BasicConv2d(
+      (conv): Conv2d(160, 160, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
+      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7_3): BasicConv2d(
+      (conv): Conv2d(160, 192, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_1): BasicConv2d(
+      (conv): Conv2d(768, 160, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_2): BasicConv2d(
+      (conv): Conv2d(160, 160, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
+      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_3): BasicConv2d(
+      (conv): Conv2d(160, 160, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
+      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_4): BasicConv2d(
+      (conv): Conv2d(160, 160, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
+      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_5): BasicConv2d(
+      (conv): Conv2d(160, 192, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch_pool): BasicConv2d(
+      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (Mixed_6e): InceptionC(
+    (branch1x1): BasicConv2d(
+      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7_1): BasicConv2d(
+      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7_2): BasicConv2d(
+      (conv): Conv2d(192, 192, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7_3): BasicConv2d(
+      (conv): Conv2d(192, 192, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_1): BasicConv2d(
+      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_2): BasicConv2d(
+      (conv): Conv2d(192, 192, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_3): BasicConv2d(
+      (conv): Conv2d(192, 192, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_4): BasicConv2d(
+      (conv): Conv2d(192, 192, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7dbl_5): BasicConv2d(
+      (conv): Conv2d(192, 192, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch_pool): BasicConv2d(
+      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (AuxLogits): InceptionAux(
+    (conv0): BasicConv2d(
+      (conv): Conv2d(768, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(128, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (conv1): BasicConv2d(
+      (conv): Conv2d(128, 768, kernel_size=(5, 5), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(768, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (fc): Linear(in_features=768, out_features=1000, bias=True)
+  )
+  (Mixed_7a): InceptionD(
+    (branch3x3_1): BasicConv2d(
+      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3_2): BasicConv2d(
+      (conv): Conv2d(192, 320, kernel_size=(3, 3), stride=(2, 2), bias=False)
+      (bn): BatchNorm2d(320, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7x3_1): BasicConv2d(
+      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7x3_2): BasicConv2d(
+      (conv): Conv2d(192, 192, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7x3_3): BasicConv2d(
+      (conv): Conv2d(192, 192, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch7x7x3_4): BasicConv2d(
+      (conv): Conv2d(192, 192, kernel_size=(3, 3), stride=(2, 2), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (Mixed_7b): InceptionE(
+    (branch1x1): BasicConv2d(
+      (conv): Conv2d(1280, 320, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(320, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3_1): BasicConv2d(
+      (conv): Conv2d(1280, 384, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3_2a): BasicConv2d(
+      (conv): Conv2d(384, 384, kernel_size=(1, 3), stride=(1, 1), padding=(0, 1), bias=False)
+      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3_2b): BasicConv2d(
+      (conv): Conv2d(384, 384, kernel_size=(3, 1), stride=(1, 1), padding=(1, 0), bias=False)
+      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_1): BasicConv2d(
+      (conv): Conv2d(1280, 448, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(448, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_2): BasicConv2d(
+      (conv): Conv2d(448, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_3a): BasicConv2d(
+      (conv): Conv2d(384, 384, kernel_size=(1, 3), stride=(1, 1), padding=(0, 1), bias=False)
+      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_3b): BasicConv2d(
+      (conv): Conv2d(384, 384, kernel_size=(3, 1), stride=(1, 1), padding=(1, 0), bias=False)
+      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch_pool): BasicConv2d(
+      (conv): Conv2d(1280, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (Mixed_7c): InceptionE(
+    (branch1x1): BasicConv2d(
+      (conv): Conv2d(2048, 320, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(320, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3_1): BasicConv2d(
+      (conv): Conv2d(2048, 384, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3_2a): BasicConv2d(
+      (conv): Conv2d(384, 384, kernel_size=(1, 3), stride=(1, 1), padding=(0, 1), bias=False)
+      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3_2b): BasicConv2d(
+      (conv): Conv2d(384, 384, kernel_size=(3, 1), stride=(1, 1), padding=(1, 0), bias=False)
+      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_1): BasicConv2d(
+      (conv): Conv2d(2048, 448, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(448, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_2): BasicConv2d(
+      (conv): Conv2d(448, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_3a): BasicConv2d(
+      (conv): Conv2d(384, 384, kernel_size=(1, 3), stride=(1, 1), padding=(0, 1), bias=False)
+      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch3x3dbl_3b): BasicConv2d(
+      (conv): Conv2d(384, 384, kernel_size=(3, 1), stride=(1, 1), padding=(1, 0), bias=False)
+      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (branch_pool): BasicConv2d(
+      (conv): Conv2d(2048, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
+  (dropout): Dropout(p=0.5, inplace=False)
+  (fc): Linear(in_features=2048, out_features=1000, bias=True)
 )</code></pre>
 </div>
 </div>
 </section>
-<section class="slide level2">
-
+<section id="exercise-use-a-pre-trained-deep-learning-model-to-classify-images-2" class="slide level2 scrollable">
+<h2>Exercise: Use a pre-trained deep learning model to classify images</h2>
 <ul class="task-list">
 <li><label><input type="checkbox">Load a sample image to predict its category</label></li>
 </ul>
-<div id="0cb08424" class="cell" data-execution_count="4">
+<div id="60c044d6" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a><span class="im">import</span> skimage</span>
 <span id="cb6-2"><a></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb6-3"><a></a></span>
@@ -1496,30 +1709,27 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <pre><code>(427, 640, 3)</code></pre>
 </div>
 </div>
+</section>
+<section id="exercise-use-a-pre-trained-deep-learning-model-to-classify-images-3" class="slide level2 scrollable">
+<h2>Exercise: Use a pre-trained deep learning model to classify images</h2>
 <ul class="task-list">
 <li><label><input type="checkbox">Visualize the sample image</label></li>
 </ul>
-<div id="238fad12" class="cell" data-execution_count="5">
+<div id="b3b6d2d7" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a>plt.imshow(sample_im)</span>
 <span id="cb8-2"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure>
-<p><img data-src="DL_image_analysis_2_2_files/figure-revealjs/cell-6-output-1.png" width="608" height="416"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section class="slide level2">
 
+</div>
+<img data-src="DL_image_analysis_2_2_files/figure-revealjs/cell-6-output-1.png" class="r-stretch"></section>
+<section id="exercise-use-a-pre-trained-deep-learning-model-to-classify-images-4" class="slide level2">
+<h2>Exercise: Use a pre-trained deep learning model to classify images</h2>
 <ul class="task-list">
-<li><label><input type="checkbox">Inspect what transforms are required by the pre-trained ViT model to work properly</label></li>
+<li><label><input type="checkbox">Inspect what transforms are required by the pre-trained Inception model to work properly</label></li>
 </ul>
-<div id="e85125c7" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a>transformer_weights.transforms</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="52156729" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a>inception_weights.transforms</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
-<pre><code>functools.partial(&lt;class 'torchvision.transforms._presets.ImageClassification'&gt;, crop_size=384, resize_size=384, interpolation=&lt;InterpolationMode.BICUBIC: 'bicubic'&gt;)</code></pre>
+<pre><code>functools.partial(&lt;class 'torchvision.transforms._presets.ImageClassification'&gt;, crop_size=299, resize_size=342)</code></pre>
 </div>
 </div>
 <div class="callout callout-important callout-titled callout-style-default">
@@ -1546,24 +1756,25 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <div class="callout-content">
 <p>The transforms used by the Inception V3 are</p>
 <ol type="1">
-<li><p>resize the image to 384x384 pixels, and</p></li>
+<li><p>resize the image to 342x342 pixels,</p></li>
+<li><p>crop the center 299x299 pixels window, and</p></li>
 <li><p>normalize the values of the RGB channels.</p></li>
 </ol>
 </div>
 </div>
 </div>
 </section>
-<section class="slide level2">
-
+<section id="exercise-use-a-pre-trained-deep-learning-model-to-classify-images-5" class="slide level2">
+<h2>Exercise: Use a pre-trained deep learning model to classify images</h2>
 <ul class="task-list">
 <li><label><input type="checkbox">Define a preprocessing pipeline using the inception_weights.transforms() method. Add also a transformation from <code>numpy</code> arrays into torch tensors.</label></li>
 </ul>
-<div id="3ffdcd62" class="cell" data-execution_count="7">
+<div id="3295c0be" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a><span class="im">from</span> torchvision.transforms.v2 <span class="im">import</span> Compose, ToTensor</span>
 <span id="cb11-2"><a></a></span>
 <span id="cb11-3"><a></a>pipeline <span class="op">=</span> Compose([</span>
 <span id="cb11-4"><a></a>  ToTensor(),</span>
-<span id="cb11-5"><a></a>  transformer_weights.transforms()</span>
+<span id="cb11-5"><a></a>  inception_weights.transforms()</span>
 <span id="cb11-6"><a></a>])</span>
 <span id="cb11-7"><a></a></span>
 <span id="cb11-8"><a></a>pipeline</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1571,31 +1782,31 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <pre><code>Compose(
       ToTensor()
       ImageClassification(
-      crop_size=[384]
-      resize_size=[384]
+      crop_size=[299]
+      resize_size=[342]
       mean=[0.485, 0.456, 0.406]
       std=[0.229, 0.224, 0.225]
-      interpolation=InterpolationMode.BICUBIC
+      interpolation=InterpolationMode.BILINEAR
   )
 )</code></pre>
 </div>
 </div>
 </section>
-<section class="slide level2">
-
+<section id="exercise-use-a-pre-trained-deep-learning-model-to-classify-images-6" class="slide level2">
+<h2>Exercise: Use a pre-trained deep learning model to classify images</h2>
 <ul class="task-list">
 <li><label><input type="checkbox">Pre-process the sample image using our pipeline</label></li>
 </ul>
-<div id="7c095f0a" class="cell" data-execution_count="8">
+<div id="494125e9" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a>sample_x <span class="op">=</span> pipeline(sample_im)</span>
 <span id="cb13-2"><a></a><span class="bu">type</span>(sample_x), sample_x.shape, sample_x.<span class="bu">min</span>(), sample_x.<span class="bu">max</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
-<pre><code>(torch.Tensor, torch.Size([3, 384, 384]), tensor(-1.9139), tensor(2.8376))</code></pre>
+<pre><code>(torch.Tensor, torch.Size([3, 299, 299]), tensor(-1.8792), tensor(2.6400))</code></pre>
 </div>
 </div>
 </section>
-<section class="slide level2">
-
+<section id="exercise-use-a-pre-trained-deep-learning-model-to-classify-images-7" class="slide level2">
+<h2>Exercise: Use a pre-trained deep learning model to classify images</h2>
 <ul class="task-list">
 <li><label><input type="checkbox">Use the pre-trained model to predict the class of our sample image</label></li>
 </ul>
@@ -1612,7 +1823,7 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 </div>
 </div>
 </div>
-<div id="64d1cc97" class="cell" data-execution_count="9">
+<div id="3c6c0aa8" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a></a>sample_y <span class="op">=</span> dl_model(sample_x[<span class="va">None</span>, ...])</span>
 <span id="cb15-2"><a></a></span>
 <span id="cb15-3"><a></a>sample_y.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1621,88 +1832,8 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 </div>
 </div>
 </section>
-<section class="slide level2">
-
-<ul class="task-list">
-<li><label><input type="checkbox">Show the categories with the highest <em>log-</em>probabilities.</label></li>
-</ul>
-<div id="01f56eba" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a></a>sample_y.argsort(dim<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="10">
-<pre><code>tensor([[641, 646, 398, 926, 340, 429, 990, 645, 924, 469, 346, 885, 351, 116,
-         199,  62, 134, 661, 263, 678, 972, 594, 825, 976,  39, 397, 295, 880,
-         793, 396, 853, 973, 817, 347, 433, 227, 975,  84,  32, 160, 841, 993,
-         521, 462, 463, 544, 724, 518, 899,  25,  29, 832, 738, 982, 858, 290,
-         939, 238, 500, 334, 659, 306, 329, 869, 488,  48,  93, 639, 834, 624,
-         941, 843, 529, 966, 999, 343,  68, 801, 121, 809, 567, 373, 870,   0,
-         197, 323, 522, 652, 725, 479, 297,  50, 573, 390, 381, 350, 823,  45,
-         115, 344, 925, 515, 224, 865, 268, 235, 314, 706, 439, 173, 772, 453,
-         214, 177, 883, 301, 419, 406, 554,  82, 150,  30,  85,   7, 655, 308,
-         226, 849, 712, 369, 868, 828, 612, 460, 552, 109, 935, 959, 266,  88,
-         244, 225, 400, 703, 259, 997, 964, 808, 302, 236, 709, 223,   5, 157,
-          86, 649, 371, 179, 576, 928, 987, 960, 187,  36,  49, 417, 949, 291,
-         762,  42, 328, 723, 305, 281, 673, 275,  98, 205, 349, 601, 854,  27,
-           4, 449, 905, 392, 278, 904, 988, 366, 294, 245, 276, 292, 472, 216,
-         933, 144, 989, 971, 963, 670,  72, 643, 714, 955, 401,  76, 108, 937,
-         456, 512, 154, 304,  99, 289, 336, 775, 118, 133, 931, 836, 342, 962,
-         385, 983,  41, 608, 260, 961, 474, 246, 330, 752, 690, 310, 611, 717,
-         944, 459, 156, 345, 665, 602, 147,  75,  16, 208, 148, 539, 892, 207,
-         280, 286,  92, 996, 648, 654, 981, 124, 787, 715, 663, 241,  23, 543,
-         923, 909, 130, 277, 230, 288, 153, 948, 119, 879, 495, 943, 986, 211,
-         233, 578, 790, 198, 331,  83, 175,  15, 575, 676, 234, 875, 741, 496,
-         172, 627, 679, 353,  12, 421, 797, 658, 947, 167, 932, 531, 721, 969,
-         307, 824, 237,  28, 897, 102, 504, 778, 719,  61, 919, 756, 248, 911,
-         368,  17, 906, 584, 991, 729, 861, 430, 671,  14, 243, 887, 555, 874,
-         322, 376, 100, 293, 958,  37, 616, 922, 501, 901,  38, 774, 170, 229,
-         274, 339, 151,  67, 620, 326, 122, 965, 272,  51, 138, 193, 860, 936,
-         434, 386, 873, 418, 432, 794, 666, 127, 445, 623, 713, 750, 212, 375,
-         113, 549, 852, 638, 161, 614, 642,  20, 951, 270, 577, 635, 327, 364,
-         940, 766, 640, 231, 796, 475, 917,  47, 128, 332, 783,  69, 186, 204,
-         367, 748, 312,  31,  26, 215, 174,  71, 443, 180, 913, 866, 910, 468,
-          60, 159, 104, 210, 416, 607, 300, 194, 945, 736, 415,  97, 884,  73,
-         968, 391, 710, 771, 533, 192, 572,  53, 815, 651, 303, 735, 393,  64,
-         566, 387, 746,  34, 165, 731,  66,  18, 399, 355, 155,  33, 129,  10,
-         930, 956, 209, 110, 389, 934,  95, 499, 760, 363, 610, 598, 256, 335,
-         213, 502, 196, 271, 444, 705,  55, 548, 927, 374, 980, 618, 316, 219,
-         698, 979,  57, 361, 785,  21, 603, 337, 220, 921, 546, 876, 506, 158,
-         169, 647, 842, 242, 262, 162,  91, 838, 770, 454, 452,  80, 324, 938,
-         888, 136, 542, 672, 112, 617, 534, 768, 283, 864, 143, 953, 348, 633,
-         183, 526, 101, 886, 178, 605, 560, 221, 253,  90, 734, 896,  94, 889,
-         903, 946, 630, 749, 106, 568,  43, 918, 464,  54, 878, 287, 476, 510,
-         751,  77, 315, 789, 593, 486, 321, 379, 667, 282, 569, 513, 985,  79,
-         788, 636, 716, 826, 942, 370, 269, 821, 163, 240, 107, 320, 200, 509,
-         492, 952, 780, 586, 455, 114, 228, 103, 265, 831, 325, 377, 564, 791,
-         684,  58,  70, 388, 247, 420, 722, 457, 970, 126,  59,  24, 541, 252,
-         779, 239, 915,  44, 805, 111, 296, 422, 466, 490, 362, 311, 436, 309,
-         264, 957, 195, 358, 168,   9, 137, 588, 890, 333, 835, 257, 258, 284,
-         669, 249,  74, 201, 483, 950, 992, 580, 123,  46, 395, 357, 820, 916,
-         813,   3,  78, 769,  22, 806, 814, 802, 255, 285, 508, 382, 261, 697,
-         535, 203, 467,  52, 338, 810, 319,  81,  96, 352, 458, 767, 545, 739,
-         764, 446, 582, 596, 587, 726, 893, 800,  35, 441, 273, 675, 570, 176,
-         125, 480, 747, 435, 538, 581,   6,  13, 105, 354, 171, 859, 728, 407,
-         149,   1, 613, 622, 317, 978,  40, 424, 528, 699, 360, 411, 146, 135,
-         152, 365, 839, 359, 621, 696, 798, 732, 254, 743,  87, 730, 190, 579,
-         609, 591, 117, 777, 120, 977, 685, 489, 461, 615, 758, 318, 737, 140,
-         556, 425, 589, 998, 447, 442,  65, 691, 600, 428, 995, 855, 299, 164,
-         218, 487, 776, 759, 384, 394, 511, 142, 188, 631, 356,  89, 465, 491,
-         881, 202, 984, 380, 520, 590, 830, 827, 550, 505, 250, 232, 383, 372,
-         131, 891,   2, 378, 524, 403, 819, 423, 857, 850, 745, 574, 493, 954,
-         516, 547, 485, 478, 829, 902, 139, 626, 681, 840, 689, 592, 438,  19,
-         413, 537,  11, 298, 145, 251, 217, 822, 781, 816, 660, 597, 222, 530,
-         862,  63, 664, 967,   8, 604, 166, 532, 184, 206, 686, 481, 182, 440,
-         410, 628, 562, 551, 700, 599, 451, 848, 687, 804, 606, 753, 693, 267,
-         313,  56, 414, 677, 701, 448, 482, 402, 692, 527, 141, 727, 629, 662,
-         863, 929, 837, 803, 795, 784, 132, 656, 341, 702, 898, 683, 912, 695,
-         470, 914, 625, 426, 974, 559, 740, 497, 742, 525, 191, 846, 711, 786,
-         792, 409, 507, 757, 498, 181, 619, 718, 523, 704, 856, 427, 765, 484,
-         707, 553, 847, 185, 694, 920, 907, 650, 680, 595, 450, 477, 563, 473,
-         408, 189, 585, 514, 844, 994, 763, 634, 412, 708, 894, 536, 845, 851,
-         773, 761, 471, 279, 871, 688, 431, 644, 674, 682, 867, 782, 811, 799,
-         720, 558, 494, 877, 668, 833, 583, 637, 503, 557, 882, 632, 561, 895,
-         653, 519, 908, 404, 571, 405, 565, 818, 733, 872, 517, 807, 437, 755,
-         900, 540, 754, 744, 657, 812]])</code></pre>
-</div>
-</div>
+<section id="exercise-use-a-pre-trained-deep-learning-model-to-classify-images-8" class="slide level2 scrollable">
+<h2>Exercise: Use a pre-trained deep learning model to classify images</h2>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -1716,345 +1847,1113 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 </div>
 </div>
 </div>
+<ul class="task-list">
+<li><label><input type="checkbox">Show the categories with the highest <em>log-</em>probabilities.</label></li>
+</ul>
+<div id="d05b7cdf" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a></a>sample_y.argsort(dim<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>tensor([[578, 253, 339, 982, 301,  40, 584, 897, 382,  12, 170, 181,  25, 161,
+         255, 162, 159,  14, 500,  72,  44, 368, 714, 211, 201, 240,  90, 277,
+          99, 519,  46,  13, 790, 160, 883, 307,  31, 467, 271,  32, 452, 997,
+          92, 414, 286,  64, 241, 661, 360, 381, 473, 999, 316,  24, 184, 213,
+         804,  26, 889, 383, 689,  11, 231,  28, 207, 520, 134,  77,  37, 177,
+         513, 539, 191, 264, 306,  19, 103, 529, 823, 171, 838, 247, 174, 400,
+         228, 665, 669, 278,  16, 870, 354, 412, 272, 377, 175, 411, 551,  75,
+         265, 390, 601, 929,  27, 543, 434, 268,  94, 200,  33, 504, 760, 614,
+         387, 875, 167, 809, 588, 189,  30, 291, 703, 944, 323, 610, 631,  57,
+          41, 881, 349, 938, 493, 825, 732, 249, 593, 299, 516, 237, 246, 195,
+         137, 850, 756,  91, 695, 336, 799, 431, 766, 761, 310, 337, 894, 622,
+         305, 129, 351, 989, 581, 991, 612, 110, 672, 436, 239, 226,  93,  76,
+         785,  21, 260,  63, 294, 176, 960, 528, 606, 826, 168, 166,  87, 531,
+         355, 154,  15, 774, 717, 322,  18,   0, 193, 435, 152, 678, 722, 269,
+          86,  47, 292, 759, 248, 317, 105, 302, 621, 376,  60, 793, 295, 283,
+         692, 720, 495, 859, 284, 393, 267, 596, 537, 656, 235, 831, 707, 444,
+          85, 130, 232, 534, 560, 204, 188, 430, 379, 853,  43,  61, 261, 684,
+         932, 172, 746, 178, 986, 876, 615, 996, 770, 700, 298, 459, 384, 273,
+         328,  52, 605, 736, 968,  95, 410, 922, 296, 259, 347, 401, 518, 256,
+         912, 937, 319,  97, 155, 463, 636, 457,  53, 671, 119, 893, 300, 281,
+         921, 752, 394, 163, 244, 340, 697, 985, 763, 553, 243, 133, 568, 210,
+         454, 933, 597, 443,  20, 308, 451, 579, 549, 164, 716, 917,  59, 592,
+         136, 114, 185, 690, 472, 878, 642, 135, 771, 639, 276, 456, 485, 238,
+         943, 582, 486, 544, 979,  42, 868, 511, 321, 156,   9, 721, 365, 113,
+         263, 910,  88, 499, 670,  17, 635, 734, 266, 984, 386, 140, 280, 750,
+         407,  10, 654, 197, 478,  36,  62, 775, 638,  55, 275, 861, 230, 421,
+         603, 646, 447, 112, 233, 788, 222, 655, 492, 423, 896, 618, 675, 993,
+         794, 616, 215, 915, 196, 402, 229, 852, 364,  22, 139,  81, 685, 713,
+         309, 314, 153, 116, 547, 217, 643, 566, 719, 874,  98, 330, 587, 254,
+         458, 623, 886, 901, 842, 541, 930, 817, 507, 946, 362, 849,  73, 786,
+         939,  35, 157, 396, 250, 326, 725, 345, 617, 580, 988, 778, 552, 251,
+         187, 865,  71, 887, 242, 651, 448,  23, 559, 359, 202, 145, 180, 857,
+         691, 182, 475, 813, 743, 131, 843, 304, 318, 353, 422, 440,  89, 234,
+         704, 706,  68, 728, 150, 395, 108, 391, 512, 425, 468, 947, 143, 293,
+         350, 526, 257, 550, 957, 970, 955, 575,   5, 101, 123, 945, 633, 104,
+          80, 502, 729, 508,  49, 225, 258, 426, 637, 183, 995, 789, 344, 906,
+         948, 179, 950, 398, 397, 664, 532, 903, 198, 626, 194, 236, 667, 676,
+         757, 465, 324, 335, 218, 303, 699, 496, 934, 158,  38, 441, 433, 992,
+         375, 357, 810, 815, 693, 192, 585, 107, 586, 289, 331, 735, 772, 125,
+         515, 416, 392, 482, 869, 608, 681, 607, 882, 640, 380, 126, 854, 924,
+         768, 312, 589, 837, 141, 570, 315, 653, 102, 572, 479, 369, 956, 503,
+         115, 481,  74, 797, 122, 535, 327, 352,  45, 953, 802,  48, 389,  96,
+         270, 723, 224, 378, 795, 424, 450, 461, 796, 100,  39, 252, 800, 648,
+         679, 121, 787, 453, 925, 613, 846, 726, 702, 173,   8, 221, 287, 926,
+         169, 341, 325, 186, 128, 356, 709, 455, 645, 983,   6,  67, 449, 285,
+         972,  65, 765, 564, 282, 663, 677, 118, 806,  29, 576, 151, 388, 748,
+         782, 311, 358, 963, 329, 824, 333, 533, 203, 905, 673, 830, 951, 480,
+         419, 445, 829, 127, 904, 858,  69, 371, 313, 208, 753, 509, 521, 641,
+         219, 214, 209,  56, 928, 462, 138, 149, 776, 987, 523, 206, 916, 332,
+          51,   1, 320, 262, 798, 524, 805, 514, 627, 274, 705, 334, 420, 227,
+         773, 474, 205, 696, 899,  84, 212, 111,   7, 483, 801, 109, 990, 710,
+         866, 488,  78, 791, 602, 851, 747, 971,  70,  82, 439, 848, 367, 873,
+         591, 958, 505, 464, 342, 290, 674, 659, 898, 288, 803, 967, 594, 370,
+         730, 385, 567, 779, 223, 374, 429, 649, 741, 836, 711,  50, 952, 165,
+         598, 739, 546, 487, 686, 658, 749, 715, 501, 609, 890, 954, 432,  34,
+         769, 428, 647, 973, 962, 742, 981,   4, 619, 892,  58, 841, 964,  83,
+         142, 891, 361, 885, 909, 927, 124, 777, 363, 220, 373, 144, 406, 660,
+         731, 297, 783, 630, 245, 577, 106, 583, 965, 911, 427, 556, 834, 132,
+         762, 469, 569, 738, 199, 491, 446, 348,   3, 346, 147, 902, 808, 740,
+         936, 908, 819, 372, 827, 624, 975, 687, 548, 879, 611,  79, 574, 662,
+         476, 522, 864, 745, 969, 880, 998, 680, 343, 632, 884, 877, 497, 835,
+         477, 701, 811, 573, 818, 120, 949, 565, 190, 767, 914, 650, 418, 931,
+         216, 844, 872, 666, 415, 527, 117, 604, 148, 438, 923, 279, 599, 888,
+         698, 961, 855, 941, 338, 978, 466, 538, 688, 724, 839, 792, 542, 652,
+         525, 814, 918, 708, 366, 590, 860, 862, 600, 784, 942, 966, 976, 867,
+           2, 146, 489, 413, 712, 595, 644, 828, 994,  54, 399, 629, 780, 727,
+         822, 959, 764, 935, 832, 755, 751, 417, 977, 561, 558, 545, 625, 490,
+          66, 470, 980, 974, 816, 571, 863, 506, 737, 494, 555, 907, 409, 840,
+         460, 563, 471, 634, 620, 820, 484, 530, 913, 536, 403, 718, 856, 758,
+         845, 919, 821, 562, 871, 920, 404, 408, 683, 781, 940, 510, 847, 498,
+         628, 694, 895, 554, 405, 900, 442, 754, 833, 437, 807, 682, 668, 557,
+         812, 733, 517, 540, 744, 657]])</code></pre>
+</div>
+</div>
 </section>
-<section class="slide level2">
-
+<section id="exercise-use-a-pre-trained-deep-learning-model-to-classify-images-9" class="slide level2 scrollable">
+<h2>Exercise: Use a pre-trained deep learning model to classify images</h2>
 <ul class="task-list">
 <li><label><input type="checkbox">Use the list of categories to translate the predicted class index into its category.</label></li>
 </ul>
-<div id="91a87dc7" class="cell" data-execution_count="11">
+<div id="1b9728e9" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a></a>sorted_predicted_classes <span class="op">=</span> sample_y.argsort(dim<span class="op">=</span><span class="dv">1</span>, descending<span class="op">=</span><span class="va">True</span>)[<span class="dv">0</span>, :<span class="dv">10</span>]</span>
 <span id="cb19-2"><a></a>sorted_probs <span class="op">=</span> torch.softmax(sample_y, dim<span class="op">=</span><span class="dv">1</span>)[<span class="dv">0</span>, sorted_predicted_classes]</span>
 <span id="cb19-3"><a></a></span>
 <span id="cb19-4"><a></a><span class="cf">for</span> idx, prob <span class="kw">in</span> <span class="bu">zip</span>(sorted_predicted_classes, sorted_probs):</span>
 <span id="cb19-5"><a></a>    <span class="bu">print</span>(categories[idx], <span class="st">"</span><span class="sc">%3.2f</span><span class="st"> </span><span class="sc">%%</span><span class="st">"</span> <span class="op">%</span> (prob <span class="op">*</span> <span class="dv">100</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>space shuttle 79.91 %
-missile 12.59 %
-projectile 6.04 %
-radio 0.11 %
-drilling platform 0.08 %
-water tower 0.05 %
-radio telescope 0.05 %
-beacon 0.04 %
-solar dish 0.02 %
-crane 0.02 %</code></pre>
-</div>
-</div>
-</section>
-<section id="inspect-the-self-attention-operations-of-the-vit" class="slide level2">
-<h2>Inspect the self-attention operations of the ViT</h2>
-<div id="5df8f13d" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a></a>dl_model.encoder.layers[<span class="op">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="12">
-<pre><code>EncoderBlock(
-  (ln_1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
-  (self_attention): MultiheadAttention(
-    (out_proj): NonDynamicallyQuantizableLinear(in_features=768, out_features=768, bias=True)
-  )
-  (dropout): Dropout(p=0.0, inplace=False)
-  (ln_2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
-  (mlp): MLPBlock(
-    (0): Linear(in_features=768, out_features=3072, bias=True)
-    (1): GELU(approximate='none')
-    (2): Dropout(p=0.0, inplace=False)
-    (3): Linear(in_features=3072, out_features=768, bias=True)
-    (4): Dropout(p=0.0, inplace=False)
-  )
-)</code></pre>
+<pre><code>missile 37.93 %
+projectile 14.39 %
+drilling platform 12.16 %
+crane 5.72 %
+pole 1.06 %
+space shuttle 0.93 %
+flagpole 0.93 %
+mosque 0.51 %
+obelisk 0.46 %
+solar dish 0.45 %</code></pre>
 </div>
 </div>
 </section></section>
 <section>
-<section id="integrate-a-mechanism-to-review-the-attention-maps-of-the-model" class="title-slide slide level1 center">
-<h1>Integrate a mechanism to review the attention maps of the model</h1>
+<section id="try-with-other-sample-images-only-works-with-rgb" class="title-slide slide level1 center">
+<h1>Try with other sample images (only works with RGB!)</h1>
 
 </section>
-<section id="redefine-some-of-transformer-operations-to-enable-storing-the-attention-weights" class="slide level2 scrollable">
-<h2>Redefine some of transformer operations to enable storing the attention weights</h2>
-<div id="5d7f8131" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a></a><span class="im">from</span> functools <span class="im">import</span> partial</span>
-<span id="cb23-2"><a></a><span class="im">from</span> typing <span class="im">import</span> Callable</span>
-<span id="cb23-3"><a></a><span class="im">from</span> timm.models.vision_transformer <span class="im">import</span> Attention</span>
-<span id="cb23-4"><a></a></span>
-<span id="cb23-5"><a></a><span class="kw">class</span> EncoderBlockAttnMap(models.vision_transformer.EncoderBlock):</span>
-<span id="cb23-6"><a></a>    <span class="co">"""Transformer encoder block."""</span></span>
-<span id="cb23-7"><a></a></span>
-<span id="cb23-8"><a></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>,</span>
-<span id="cb23-9"><a></a>                 num_heads: <span class="bu">int</span>,</span>
-<span id="cb23-10"><a></a>                 hidden_dim: <span class="bu">int</span>,</span>
-<span id="cb23-11"><a></a>                 mlp_dim: <span class="bu">int</span>,</span>
-<span id="cb23-12"><a></a>                 dropout: <span class="bu">float</span>,</span>
-<span id="cb23-13"><a></a>                 attention_dropout: <span class="bu">float</span>,</span>
-<span id="cb23-14"><a></a>                 norm_layer: Callable[..., torch.nn.Module] <span class="op">=</span> partial(torch.nn.LayerNorm, eps<span class="op">=</span><span class="fl">1e-6</span>)):</span>
-<span id="cb23-15"><a></a>        <span class="co"># The definition is the same, only the forward function changes &lt;------------------------------------</span></span>
-<span id="cb23-16"><a></a>        <span class="bu">super</span>(EncoderBlockAttnMap, <span class="va">self</span>).<span class="fu">__init__</span>(num_heads, hidden_dim, mlp_dim, dropout, attention_dropout, norm_layer)</span>
-<span id="cb23-17"><a></a>        <span class="va">self</span>.self_attention <span class="op">=</span> Attention(hidden_dim, num_heads, attn_drop<span class="op">=</span>attention_dropout, proj_drop<span class="op">=</span><span class="fl">0.0</span>, norm_layer<span class="op">=</span>norm_layer, qkv_bias<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb23-18"><a></a></span>
-<span id="cb23-19"><a></a>    <span class="kw">def</span> forward(<span class="va">self</span>, <span class="bu">input</span>: torch.Tensor):</span>
-<span id="cb23-20"><a></a>        <span class="co"># with torch.autograd.graph.save_on_cpu(pin_memory=True):</span></span>
-<span id="cb23-21"><a></a>        torch._assert(<span class="bu">input</span>.dim() <span class="op">==</span> <span class="dv">3</span>, <span class="ss">f"Expected (batch_size, seq_length, hidden_dim) got </span><span class="sc">{</span><span class="bu">input</span><span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb23-22"><a></a>        x <span class="op">=</span> <span class="va">self</span>.ln_1(<span class="bu">input</span>)</span>
-<span id="cb23-23"><a></a></span>
-<span id="cb23-24"><a></a>        <span class="co"># Modify this line, so we get the attention map from the self attention modules &lt;--------------------</span></span>
-<span id="cb23-25"><a></a>        x <span class="op">=</span> <span class="va">self</span>.self_attention(x)</span>
-<span id="cb23-26"><a></a></span>
-<span id="cb23-27"><a></a>        x <span class="op">=</span> <span class="va">self</span>.dropout(x)</span>
-<span id="cb23-28"><a></a>        x <span class="op">=</span> x <span class="op">+</span> <span class="bu">input</span></span>
-<span id="cb23-29"><a></a></span>
-<span id="cb23-30"><a></a>        y <span class="op">=</span> <span class="va">self</span>.ln_2(x)</span>
-<span id="cb23-31"><a></a>        y <span class="op">=</span> <span class="va">self</span>.mlp(y)</span>
-<span id="cb23-32"><a></a></span>
-<span id="cb23-33"><a></a>        <span class="co"># Return the attention map along with the encoder output &lt;-------------------------------------------</span></span>
-<span id="cb23-34"><a></a>        <span class="cf">return</span> x <span class="op">+</span> y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="try-with-other-sample-images" class="slide level2 scrollable">
+<h2>Try with other sample images</h2>
+<div class="callout callout-caution callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<div id="0cfb652e" class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a></a><span class="im">from</span> collections <span class="im">import</span> OrderedDict</span>
-<span id="cb24-2"><a></a></span>
-<span id="cb24-3"><a></a><span class="kw">class</span> EncoderAttnMap(models.vision_transformer.Encoder):</span>
-<span id="cb24-4"><a></a>    <span class="co">"""Transformer Model Encoder for sequence to sequence translation."""</span></span>
-<span id="cb24-5"><a></a></span>
-<span id="cb24-6"><a></a>    <span class="kw">def</span> <span class="fu">__init__</span>(</span>
-<span id="cb24-7"><a></a>        <span class="va">self</span>,</span>
-<span id="cb24-8"><a></a>        seq_length: <span class="bu">int</span>,</span>
-<span id="cb24-9"><a></a>        num_layers: <span class="bu">int</span>,</span>
-<span id="cb24-10"><a></a>        num_heads: <span class="bu">int</span>,</span>
-<span id="cb24-11"><a></a>        hidden_dim: <span class="bu">int</span>,</span>
-<span id="cb24-12"><a></a>        mlp_dim: <span class="bu">int</span>,</span>
-<span id="cb24-13"><a></a>        dropout: <span class="bu">float</span>,</span>
-<span id="cb24-14"><a></a>        attention_dropout: <span class="bu">float</span>,</span>
-<span id="cb24-15"><a></a>        norm_layer: Callable[..., torch.nn.Module] <span class="op">=</span> partial(torch.nn.LayerNorm, eps<span class="op">=</span><span class="fl">1e-6</span>),</span>
-<span id="cb24-16"><a></a>    ):</span>
-<span id="cb24-17"><a></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(seq_length, num_layers, num_heads, hidden_dim, mlp_dim, dropout, attention_dropout, norm_layer)</span>
-<span id="cb24-18"><a></a></span>
-<span id="cb24-19"><a></a>        layers: OrderedDict[<span class="bu">str</span>, nn.Module] <span class="op">=</span> OrderedDict()</span>
-<span id="cb24-20"><a></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(num_layers):</span>
-<span id="cb24-21"><a></a>            <span class="co"># Use the modified encoder block &lt;---------------------------------------------------------------</span></span>
-<span id="cb24-22"><a></a>            layers[<span class="ss">f"encoder_layer_</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">"</span>] <span class="op">=</span> EncoderBlockAttnMap(</span>
-<span id="cb24-23"><a></a>                num_heads,</span>
-<span id="cb24-24"><a></a>                hidden_dim,</span>
-<span id="cb24-25"><a></a>                mlp_dim,</span>
-<span id="cb24-26"><a></a>                dropout,</span>
-<span id="cb24-27"><a></a>                attention_dropout,</span>
-<span id="cb24-28"><a></a>                norm_layer,</span>
-<span id="cb24-29"><a></a>            )</span>
-<span id="cb24-30"><a></a></span>
-<span id="cb24-31"><a></a>        <span class="va">self</span>.layers <span class="op">=</span> torch.nn.Sequential(layers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Caution</strong></p>
 </div>
-<div id="e7638947" class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a></a><span class="co"># Redefine the classifier head to have access to the attention maps</span></span>
-<span id="cb25-2"><a></a><span class="kw">class</span> ViTAttnEnabled(models.vision_transformer.VisionTransformer):</span>
-<span id="cb25-3"><a></a>    <span class="co">"""Implementation of the classifier head from the ViT-B-16 architecture.</span></span>
-<span id="cb25-4"><a></a><span class="co">    """</span></span>
-<span id="cb25-5"><a></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, image_size, patch_size<span class="op">=</span><span class="dv">14</span>, num_layers<span class="op">=</span><span class="dv">32</span>, num_heads<span class="op">=</span><span class="dv">16</span>, hidden_dim<span class="op">=</span><span class="dv">1280</span>, mlp_dim<span class="op">=</span><span class="dv">5120</span>, <span class="op">**</span>kwargs):      </span>
-<span id="cb25-6"><a></a>        <span class="bu">super</span>(ViTAttnEnabled, <span class="va">self</span>).<span class="fu">__init__</span>(</span>
-<span id="cb25-7"><a></a>            image_size,</span>
-<span id="cb25-8"><a></a>            patch_size<span class="op">=</span>patch_size,</span>
-<span id="cb25-9"><a></a>            num_layers<span class="op">=</span>num_layers,</span>
-<span id="cb25-10"><a></a>            num_heads<span class="op">=</span>num_heads,</span>
-<span id="cb25-11"><a></a>            hidden_dim<span class="op">=</span>hidden_dim,</span>
-<span id="cb25-12"><a></a>            mlp_dim<span class="op">=</span>mlp_dim,</span>
-<span id="cb25-13"><a></a>            <span class="op">**</span>kwargs)</span>
-<span id="cb25-14"><a></a></span>
-<span id="cb25-15"><a></a>        <span class="co"># Change the encoder to the modified ekwargsoder that returns the attention maps &lt;-----------</span></span>
-<span id="cb25-16"><a></a>        <span class="va">self</span>.encoder <span class="op">=</span> EncoderAttnMap(</span>
-<span id="cb25-17"><a></a>            <span class="va">self</span>.seq_length,</span>
-<span id="cb25-18"><a></a>            num_layers<span class="op">=</span>num_layers,</span>
-<span id="cb25-19"><a></a>            num_heads<span class="op">=</span>num_heads,</span>
-<span id="cb25-20"><a></a>            hidden_dim<span class="op">=</span>hidden_dim,</span>
-<span id="cb25-21"><a></a>            mlp_dim<span class="op">=</span>mlp_dim,</span>
-<span id="cb25-22"><a></a>            dropout<span class="op">=</span><span class="dv">0</span>,</span>
-<span id="cb25-23"><a></a>            attention_dropout<span class="op">=</span><span class="dv">0</span>,</span>
-<span id="cb25-24"><a></a>            norm_layer<span class="op">=</span>partial(torch.nn.LayerNorm, eps<span class="op">=</span><span class="fl">1e-6</span>)</span>
-<span id="cb25-25"><a></a>        )</span>
-<span id="cb25-26"><a></a></span>
-<span id="cb25-27"><a></a>        <span class="va">self</span>.attentions <span class="op">=</span> []</span>
-<span id="cb25-28"><a></a>        <span class="va">self</span>.attentions_gradients <span class="op">=</span> []</span>
-<span id="cb25-29"><a></a></span>
-<span id="cb25-30"><a></a>    <span class="kw">def</span> get_attention(<span class="va">self</span>, module, <span class="bu">input</span>, output):</span>
-<span id="cb25-31"><a></a>        <span class="va">self</span>.attentions.append(output.detach())</span>
-<span id="cb25-32"><a></a></span>
-<span id="cb25-33"><a></a>    <span class="kw">def</span> get_attention_gradients(<span class="va">self</span>, module, grad_input, grad_output):</span>
-<span id="cb25-34"><a></a>        <span class="va">self</span>.attentions_gradients.append(grad_input[<span class="dv">0</span>].detach())</span>
-<span id="cb25-35"><a></a></span>
-<span id="cb25-36"><a></a>    <span class="kw">def</span> register_attn_grad_hooks(<span class="va">self</span>):</span>
-<span id="cb25-37"><a></a>        <span class="cf">for</span> name, module <span class="kw">in</span> <span class="va">self</span>.named_modules():</span>
-<span id="cb25-38"><a></a>            <span class="cf">if</span> <span class="st">"self_attention.norm"</span> <span class="kw">in</span> name:</span>
-<span id="cb25-39"><a></a>                module.register_forward_hook(<span class="va">self</span>.get_attention)</span>
-<span id="cb25-40"><a></a>                module.register_full_backward_hook(<span class="va">self</span>.get_attention_gradients)</span>
-<span id="cb25-41"><a></a></span>
-<span id="cb25-42"><a></a>    <span class="kw">def</span> clear_attentions(<span class="va">self</span>):</span>
-<span id="cb25-43"><a></a>        <span class="va">self</span>.attentions.clear()</span>
-<span id="cb25-44"><a></a>        <span class="va">self</span>.attentions_gradients.clear()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout-content">
+<p>Only works with RGB images</p>
 </div>
-</section>
-<section id="use-a-modified-vit-model-that-enables-tracking-its-attention-weights" class="slide level2">
-<h2>Use a modified ViT model that enables tracking its attention weights</h2>
-<ul>
-<li>[] Initialize a ViT with the <code>Vit-B-16</code> architecture</li>
+</div>
+</div>
+<ul class="task-list">
+<li><label><input type="checkbox">Use the pre-trained model to classify images from the internet (try some from the <a href="https://r0k.us/graphics/kodak/">Kodak Lossless True Color Image Suite</a>).</label></li>
 </ul>
-<div id="ca59c829" class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a></a>vit_model_self_attn <span class="op">=</span> ViTAttnEnabled(</span>
-<span id="cb26-2"><a></a>        image_size<span class="op">=</span><span class="dv">384</span>,</span>
-<span id="cb26-3"><a></a>        patch_size<span class="op">=</span><span class="dv">16</span>,</span>
-<span id="cb26-4"><a></a>        num_heads<span class="op">=</span><span class="dv">12</span>,</span>
-<span id="cb26-5"><a></a>        num_layers<span class="op">=</span><span class="dv">12</span>,</span>
-<span id="cb26-6"><a></a>        hidden_dim<span class="op">=</span><span class="dv">768</span>,</span>
-<span id="cb26-7"><a></a>        mlp_dim<span class="op">=</span><span class="dv">3072</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section class="slide level2">
+<div id="03db141a" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a></a>sample_im <span class="op">=</span> skimage.io.imread(<span class="st">"https://r0k.us/graphics/kodak/kodak/kodim21.png"</span>)</span>
+<span id="cb21-2"><a></a>sample_x <span class="op">=</span> pipeline(sample_im)</span>
+<span id="cb21-3"><a></a>sample_y <span class="op">=</span> dl_model(sample_x[<span class="va">None</span>, ...])</span>
+<span id="cb21-4"><a></a></span>
+<span id="cb21-5"><a></a>plt.imshow(sample_im)</span>
+<span id="cb21-6"><a></a>plt.title(categories[sample_y.argmax(dim<span class="op">=</span><span class="dv">1</span>)])</span>
+<span id="cb21-7"><a></a>plt.show()</span>
+<span id="cb21-8"><a></a></span>
+<span id="cb21-9"><a></a>sorted_predicted_classes <span class="op">=</span> sample_y.argsort(dim<span class="op">=</span><span class="dv">1</span>, descending<span class="op">=</span><span class="va">True</span>)[<span class="dv">0</span>, :<span class="dv">10</span>]</span>
+<span id="cb21-10"><a></a>sorted_probs <span class="op">=</span> torch.softmax(sample_y, dim<span class="op">=</span><span class="dv">1</span>)[<span class="dv">0</span>, sorted_predicted_classes]</span>
+<span id="cb21-11"><a></a></span>
+<span id="cb21-12"><a></a><span class="cf">for</span> idx, prob <span class="kw">in</span> <span class="bu">zip</span>(sorted_predicted_classes, sorted_probs):</span>
+<span id="cb21-13"><a></a>    <span class="bu">print</span>(categories[idx], <span class="st">"</span><span class="sc">%3.2f</span><span class="st"> </span><span class="sc">%%</span><span class="st">"</span> <span class="op">%</span> (prob <span class="op">*</span> <span class="dv">100</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
-<ul class="task-list">
-<li><label><input type="checkbox">Map the names of the modules in the orginal <code>torchvision</code> Attention layer, to the names of the <code>timm</code> Attention layer</label></li>
+<div class="cell-output cell-output-stdout">
+<pre><code>beacon 97.15 %
+breakwater 0.15 %
+Angora 0.06 %
+wallaby 0.04 %
+wood rabbit 0.04 %
+promontory 0.03 %
+picket fence 0.03 %
+schooner 0.02 %
+castle 0.02 %
+seashore 0.02 %</code></pre>
+</div>
+</div>
+<img data-src="DL_image_analysis_2_2_files/figure-revealjs/cell-13-output-1.png" class="r-stretch"><ul class="task-list">
+<li><label><input type="checkbox">Try with an image from a category that is not in the labels set of the model (like one with <a href="https://r0k.us/graphics/kodak/kodak/kodim03.png">hanging caps</a>)</label></li>
 </ul>
-<div id="cad0d14b" class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a></a>name_map <span class="op">=</span> {</span>
-<span id="cb27-2"><a></a>    <span class="st">"in_proj_weight"</span>: <span class="st">"qkv.weight"</span>,</span>
-<span id="cb27-3"><a></a>    <span class="st">"in_proj_bias"</span>: <span class="st">"qkv.bias"</span>,</span>
-<span id="cb27-4"><a></a>    <span class="st">"out_proj.weight"</span>: <span class="st">"proj.weight"</span>,</span>
-<span id="cb27-5"><a></a>    <span class="st">"out_proj.bias"</span>: <span class="st">"proj.bias"</span></span>
-<span id="cb27-6"><a></a>}</span>
-<span id="cb27-7"><a></a></span>
-<span id="cb27-8"><a></a>transformer_weights_dict <span class="op">=</span> transformer_weights.get_state_dict(progress<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb27-9"><a></a></span>
-<span id="cb27-10"><a></a>vit_weights <span class="op">=</span> {}</span>
-<span id="cb27-11"><a></a><span class="cf">for</span> k, v <span class="kw">in</span> transformer_weights_dict.items():</span>
-<span id="cb27-12"><a></a>    k_old <span class="op">=</span> <span class="bu">list</span>(<span class="bu">filter</span>(<span class="kw">lambda</span> n: n <span class="kw">in</span> k, name_map.keys()))</span>
-<span id="cb27-13"><a></a>    <span class="cf">if</span> <span class="bu">len</span>(k_old):</span>
-<span id="cb27-14"><a></a>        k_old <span class="op">=</span> k_old[<span class="dv">0</span>]</span>
-<span id="cb27-15"><a></a>        old_name <span class="op">=</span> k.split(k_old)[<span class="dv">0</span>]</span>
-<span id="cb27-16"><a></a>        new_name <span class="op">=</span> old_name <span class="op">+</span> name_map[k_old]</span>
-<span id="cb27-17"><a></a>    <span class="cf">else</span>:</span>
-<span id="cb27-18"><a></a>        new_name <span class="op">=</span> k</span>
-<span id="cb27-19"><a></a></span>
-<span id="cb27-20"><a></a>    vit_weights[new_name] <span class="op">=</span> v</span>
-<span id="cb27-21"><a></a></span>
-<span id="cb27-22"><a></a>vit_model_self_attn.load_state_dict(vit_weights)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="17">
-<pre><code>&lt;All keys matched successfully&gt;</code></pre>
-</div>
-</div>
-</section>
-<section class="slide level2">
-
-<ul class="task-list">
-<li><label><input type="checkbox">Enable the tracking of the attention weights</label></li>
-</ul>
-<div id="9e6e1ecf" class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a></a>vit_model_self_attn.register_attn_grad_hooks()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="apply-the-vit-class-prediction-on-an-image-and-compute-the-corresponding-attention-map" class="slide level2">
-<h2>Apply the ViT class prediction on an image and compute the corresponding attention map</h2>
-<ul class="task-list">
-<li><label><input type="checkbox">Run the <code>forward</code> operation of the ViT model and the respective <code>backward</code> opreation to compute and store the attention weights</label></li>
-</ul>
-<div id="bce9041b" class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a></a>sample_im <span class="op">=</span> skimage.io.imread(<span class="st">"https://r0k.us/graphics/kodak/kodak/kodim20.png"</span>)</span>
-<span id="cb30-2"><a></a></span>
-<span id="cb30-3"><a></a>vit_model_self_attn.clear_attentions()</span>
-<span id="cb30-4"><a></a></span>
-<span id="cb30-5"><a></a>sample_x <span class="op">=</span> pipeline(sample_im)</span>
-<span id="cb30-6"><a></a></span>
-<span id="cb30-7"><a></a><span class="cf">with</span> torch.autograd.graph.save_on_cpu(pin_memory<span class="op">=</span><span class="va">True</span>):</span>
-<span id="cb30-8"><a></a>    sample_y <span class="op">=</span> vit_model_self_attn(sample_x[<span class="va">None</span>, ...])</span>
-<span id="cb30-9"><a></a></span>
-<span id="cb30-10"><a></a>attn_class <span class="op">=</span> torch.argmax(sample_y, dim<span class="op">=</span><span class="dv">1</span>).item()</span>
-<span id="cb30-11"><a></a>attn_class <span class="op">=</span> torch.LongTensor([attn_class])</span>
-<span id="cb30-12"><a></a>attn_class <span class="op">=</span> torch.nn.functional.one_hot(attn_class, num_classes<span class="op">=</span>sample_y.shape[<span class="dv">1</span>])</span>
-<span id="cb30-13"><a></a></span>
-<span id="cb30-14"><a></a>attn_class <span class="op">=</span> torch.<span class="bu">sum</span>(attn_class <span class="op">*</span> sample_y)</span>
-<span id="cb30-15"><a></a></span>
-<span id="cb30-16"><a></a>vit_model_self_attn.zero_grad()</span>
-<span id="cb30-17"><a></a>attn_class.backward()</span>
-<span id="cb30-18"><a></a></span>
-<span id="cb30-19"><a></a>attn_out <span class="op">=</span> [attn_tensor.clone() <span class="cf">for</span> attn_tensor <span class="kw">in</span> vit_model_self_attn.attentions]</span>
-<span id="cb30-20"><a></a>grad_attn_out <span class="op">=</span> [attn_tensor.clone() <span class="cf">for</span> attn_tensor <span class="kw">in</span> vit_model_self_attn.attentions_gradients]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="roll-out-the-attention-maps" class="slide level2">
-<h2>Roll out the attention maps</h2>
-<ul class="task-list">
-<li><label><input type="checkbox">The attention map can be computed as the accumulation of the attention weigths of each <em>Encoder</em> layer of the Transformer</label></li>
-</ul>
-<div id="223aaf61" class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a></a>attn_rollout <span class="op">=</span> torch.eye(attn_out[<span class="dv">0</span>].size(<span class="dv">1</span>))[<span class="va">None</span>, ...]</span>
-<span id="cb31-2"><a></a></span>
-<span id="cb31-3"><a></a><span class="cf">for</span> attn_map, attn_grad <span class="kw">in</span> <span class="bu">zip</span>(attn_out, grad_attn_out):</span>
-<span id="cb31-4"><a></a>    <span class="cf">if</span> attn_grad <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb31-5"><a></a>        attn_map <span class="op">=</span> attn_map <span class="op">*</span> attn_grad</span>
-<span id="cb31-6"><a></a>        attn_map[attn_map <span class="op">&lt;</span> <span class="dv">0</span>] <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb31-7"><a></a></span>
-<span id="cb31-8"><a></a>    attn_map, _ <span class="op">=</span> torch.topk(attn_map, <span class="dv">10</span>, dim<span class="op">=-</span><span class="dv">1</span>)</span>
-<span id="cb31-9"><a></a>    attn_map <span class="op">=</span> attn_map.mean(dim<span class="op">=-</span><span class="dv">1</span>)</span>
-<span id="cb31-10"><a></a></span>
-<span id="cb31-11"><a></a>    <span class="co"># Normalize attention map</span></span>
-<span id="cb31-12"><a></a>    attn_map <span class="op">=</span> attn_map <span class="op">+</span> torch.eye(attn_map.size(<span class="dv">1</span>), device<span class="op">=</span>attn_map.device)[<span class="va">None</span>, ...]</span>
-<span id="cb31-13"><a></a>    attn_map <span class="op">=</span> attn_map <span class="op">/</span> attn_map.<span class="bu">sum</span>(dim<span class="op">=-</span><span class="dv">1</span>, keepdim<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb31-14"><a></a></span>
-<span id="cb31-15"><a></a>    attn_rollout <span class="op">=</span> torch.matmul(attn_map, attn_rollout)</span>
-<span id="cb31-16"><a></a></span>
-<span id="cb31-17"><a></a>attn_rollout.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="20">
-<pre><code>torch.Size([1, 577, 577])</code></pre>
-</div>
-</div>
-</section>
-<section class="slide level2">
-
-<ul class="task-list">
-<li><label><input type="checkbox">Keep only the attention weights of the class token with respect to the spatial tokens</label></li>
-</ul>
-<div id="68b264e8" class="cell" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a></a>attn_rollout <span class="op">=</span> attn_rollout[:, :<span class="dv">1</span>, <span class="dv">1</span>:]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul class="task-list">
-<li><label><input type="checkbox">Reshape the attention weights into the original patch coordinates</label></li>
-</ul>
-<div id="24a946f9" class="cell" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a></a>attn_rollout <span class="op">=</span> attn_rollout.reshape(<span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>, <span class="dv">24</span> <span class="op">**</span> <span class="dv">2</span>)</span>
-<span id="cb34-2"><a></a>attn_rollout.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="22">
-<pre><code>torch.Size([1, 1, 576])</code></pre>
-</div>
-</div>
-<div id="e762e2e4" class="cell" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a></a>attn_rollout <span class="op">=</span> torch.nn.functional.fold(attn_rollout.transpose(<span class="dv">1</span>, <span class="dv">2</span>),</span>
-<span id="cb36-2"><a></a>                      (<span class="dv">24</span>, <span class="dv">24</span>),</span>
-<span id="cb36-3"><a></a>                      kernel_size<span class="op">=</span>(<span class="dv">24</span>, <span class="dv">24</span>),</span>
-<span id="cb36-4"><a></a>                      stride<span class="op">=</span>(<span class="dv">24</span>, <span class="dv">24</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="00a4c983" class="cell" data-execution_count="24">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a></a>attn_rollout <span class="op">=</span> attn_rollout.squeeze()</span>
-<span id="cb37-2"><a></a></span>
-<span id="cb37-3"><a></a>attn_rollout <span class="op">=</span> attn_rollout <span class="op">/</span> torch.<span class="bu">max</span>(attn_rollout)</span>
-<span id="cb37-4"><a></a></span>
-<span id="cb37-5"><a></a>attn_rollout.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="24">
-<pre><code>torch.Size([24, 24])</code></pre>
-</div>
-</div>
-</section>
-<section id="visualize-the-attention-map-computed-from-the-attention-weights" class="slide level2">
-<h2>Visualize the attention map computed from the attention weights</h2>
-<ul>
-<li>[] Show an overlay of the attention map over the original image</li>
-</ul>
-<div id="2da4a589" class="cell" data-execution_count="25">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a></a>plt.imshow(sample_im)</span>
-<span id="cb39-2"><a></a>plt.imshow(attn_rollout, cmap<span class="op">=</span><span class="st">"magma"</span>, extent<span class="op">=</span>(<span class="dv">0</span>, sample_im.shape[<span class="dv">1</span>], sample_im.shape[<span class="dv">0</span>], <span class="dv">0</span>), alpha<span class="op">=</span><span class="fl">0.75</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure>
-<p><img data-src="DL_image_analysis_2_2_files/figure-revealjs/cell-26-output-1.png" width="608" height="416"></p>
-</figure>
-</div>
-</div>
-</div>
-
-
 </section></section>
+<section>
+<section id="using-deep-learning-models-as-feature-extractors" class="title-slide slide level1 center">
+<h1>Using Deep Learning models as feature extractors</h1>
+
+</section>
+<section id="exercise-modify-the-classifier-layer-dl_model.fc-to-return-the-features-map-from-the-input-image-instead-of-the-category" class="slide level2">
+<h2>Exercise: Modify the classifier layer <code>dl_model.fc</code> to return the features map from the input image instead of the category</h2>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>The classifier layer is commonly implemented as a MultiLayer Perceptron (Fully connected) at the end of the models. The specific name of that layer can vary between implementations.</p>
+</div>
+</div>
+</div>
+<ul class="task-list">
+<li><label><input type="checkbox">Load the pre-trained Inception V3 model again to use it as feature extractor.</label></li>
+</ul>
+<div id="8b403a56" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a></a>dl_extractor <span class="op">=</span> models.inception_v3(inception_weights, progress<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb23-2"><a></a>dl_extractor.<span class="bu">eval</span>()</span>
+<span id="cb23-3"><a></a></span>
+<span id="cb23-4"><a></a>dl_extractor.fc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>Linear(in_features=2048, out_features=1000, bias=True)</code></pre>
+</div>
+</div>
+</section>
+<section id="exercise-modify-the-classifier-layer-dl_model.fc-to-return-the-features-map-from-the-input-image-instead-of-the-category-1" class="slide level2">
+<h2>Exercise: Modify the classifier layer <code>dl_model.fc</code> to return the features map from the input image instead of the category</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Replace the <code>.fc</code> layer with a <code>torch.nn.Identity</code> module.</label></li>
+</ul>
+<div id="93de063f" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a></a>dl_extractor.fc <span class="op">=</span> torch.nn.Identity()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul class="task-list">
+<li><label><input type="checkbox">Use the model for feature extraction in the same way it is used for image classification.</label></li>
+</ul>
+<div id="81be472d" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a></a>sample_fx <span class="op">=</span> dl_extractor(sample_x[<span class="va">None</span>, ...])</span>
+<span id="cb26-2"><a></a></span>
+<span id="cb26-3"><a></a>sample_fx.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<pre><code>torch.Size([1, 2048])</code></pre>
+</div>
+</div>
+</section>
+<section id="visualize-the-embedded-feature-space" class="slide level2">
+<h2>Visualize the embedded feature space</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Use the <code>dl_extractor</code> to embed multiple images into a feature space</label></li>
+</ul>
+<div id="2cac84ba" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a></a><span class="im">import</span> skimage</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<h3 id="load-some-pictures-of-cats-and-dogs">Load some pictures of cats and dogs</h3>
+<div class="sourceCode" id="cb29"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a></a>urls <span class="op">=</span> [</span>
+<span id="cb29-2"><a></a>    (<span class="st">"https://farm9.staticflickr.com/8313/8018401818_5eecf6b36e_z.jpg"</span>, <span class="dv">0</span>),</span>
+<span id="cb29-3"><a></a>    ...</span>
+<span id="cb29-4"><a></a>    (<span class="st">"http://farm4.staticflickr.com/3348/3652187987_e243f35e00_z.jpg"</span>, <span class="dv">2</span>)    </span>
+<span id="cb29-5"><a></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="3ed162fa" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a></a><span class="im">from</span> tqdm.auto <span class="im">import</span> tqdm</span>
+<span id="cb30-2"><a></a></span>
+<span id="cb30-3"><a></a>ys <span class="op">=</span> []</span>
+<span id="cb30-4"><a></a>fxs <span class="op">=</span> []</span>
+<span id="cb30-5"><a></a><span class="cf">for</span> x_url, y <span class="kw">in</span> tqdm(urls):</span>
+<span id="cb30-6"><a></a>    im <span class="op">=</span> skimage.io.imread(x_url)</span>
+<span id="cb30-7"><a></a>    x <span class="op">=</span> pipeline(im)</span>
+<span id="cb30-8"><a></a></span>
+<span id="cb30-9"><a></a>    <span class="cf">with</span> torch.no_grad():</span>
+<span id="cb30-10"><a></a>        fx <span class="op">=</span> dl_extractor(x[<span class="va">None</span>, ...])</span>
+<span id="cb30-11"><a></a></span>
+<span id="cb30-12"><a></a>    fxs.append(fx[<span class="dv">0</span>, ...])</span>
+<span id="cb30-13"><a></a>    ys.append(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="visualize-the-embedded-feature-space-1" class="slide level2">
+<h2>Visualize the embedded feature space</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Use <code>PCA</code> to project the <span class="math inline">\(2048\)</span> dimension feature space into a <strong>2D</strong> space for visualization</label></li>
+</ul>
+<div id="cf8b49ff" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb31-2"><a></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
+<span id="cb31-3"><a></a></span>
+<span id="cb31-4"><a></a>X <span class="op">=</span> np.array(fxs)</span>
+<span id="cb31-5"><a></a>Y <span class="op">=</span> np.array(ys)</span>
+<span id="cb31-6"><a></a></span>
+<span id="cb31-7"><a></a>pca <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb31-8"><a></a>pca.fit(X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<style>#sk-container-id-1 {
+  /* Definition of color scheme common for light and dark mode */
+  --sklearn-color-text: #000;
+  --sklearn-color-text-muted: #666;
+  --sklearn-color-line: gray;
+  /* Definition of color scheme for unfitted estimators */
+  --sklearn-color-unfitted-level-0: #fff5e6;
+  --sklearn-color-unfitted-level-1: #f6e4d2;
+  --sklearn-color-unfitted-level-2: #ffe0b3;
+  --sklearn-color-unfitted-level-3: chocolate;
+  /* Definition of color scheme for fitted estimators */
+  --sklearn-color-fitted-level-0: #f0f8ff;
+  --sklearn-color-fitted-level-1: #d4ebff;
+  --sklearn-color-fitted-level-2: #b3dbfd;
+  --sklearn-color-fitted-level-3: cornflowerblue;
+}
+
+#sk-container-id-1.light {
+  /* Specific color for light theme */
+  --sklearn-color-text-on-default-background: black;
+  --sklearn-color-background: white;
+  --sklearn-color-border-box: black;
+  --sklearn-color-icon: #696969;
+}
+
+#sk-container-id-1.dark {
+  --sklearn-color-text-on-default-background: white;
+  --sklearn-color-background: #111;
+  --sklearn-color-border-box: white;
+  --sklearn-color-icon: #878787;
+}
+
+#sk-container-id-1 {
+  color: var(--sklearn-color-text);
+}
+
+#sk-container-id-1 pre {
+  padding: 0;
+}
+
+#sk-container-id-1 input.sk-hidden--visually {
+  border: 0;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+#sk-container-id-1 div.sk-dashed-wrapped {
+  border: 1px dashed var(--sklearn-color-line);
+  margin: 0 0.4em 0.5em 0.4em;
+  box-sizing: border-box;
+  padding-bottom: 0.4em;
+  background-color: var(--sklearn-color-background);
+}
+
+#sk-container-id-1 div.sk-container {
+  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
+     but bootstrap.min.css set `[hidden] { display: none !important; }`
+     so we also need the `!important` here to be able to override the
+     default hidden behavior on the sphinx rendered scikit-learn.org.
+     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
+  display: inline-block !important;
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-text-repr-fallback {
+  display: none;
+}
+
+div.sk-parallel-item,
+div.sk-serial,
+div.sk-item {
+  /* draw centered vertical line to link estimators */
+  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
+  background-size: 2px 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Parallel-specific style estimator block */
+
+#sk-container-id-1 div.sk-parallel-item::after {
+  content: "";
+  width: 100%;
+  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
+  flex-grow: 1;
+}
+
+#sk-container-id-1 div.sk-parallel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background-color: var(--sklearn-color-background);
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-parallel-item {
+  display: flex;
+  flex-direction: column;
+}
+
+#sk-container-id-1 div.sk-parallel-item:first-child::after {
+  align-self: flex-end;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:last-child::after {
+  align-self: flex-start;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:only-child::after {
+  width: 0;
+}
+
+/* Serial-specific style estimator block */
+
+#sk-container-id-1 div.sk-serial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--sklearn-color-background);
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+
+/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
+clickable and can be expanded/collapsed.
+- Pipeline and ColumnTransformer use this feature and define the default style
+- Estimators will overwrite some part of the style using the `sk-estimator` class
+*/
+
+/* Pipeline and ColumnTransformer style (default) */
+
+#sk-container-id-1 div.sk-toggleable {
+  /* Default theme specific background. It is overwritten whether we have a
+  specific estimator or a Pipeline/ColumnTransformer */
+  background-color: var(--sklearn-color-background);
+}
+
+/* Toggleable label */
+#sk-container-id-1 label.sk-toggleable__label {
+  cursor: pointer;
+  display: flex;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0.5em;
+  box-sizing: border-box;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+}
+
+#sk-container-id-1 label.sk-toggleable__label .caption {
+  font-size: 0.6rem;
+  font-weight: lighter;
+  color: var(--sklearn-color-text-muted);
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:before {
+  /* Arrow on the left of the label */
+  content: "▸";
+  float: left;
+  margin-right: 0.25em;
+  color: var(--sklearn-color-icon);
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {
+  color: var(--sklearn-color-text);
+}
+
+/* Toggleable content - dropdown */
+
+#sk-container-id-1 div.sk-toggleable__content {
+  display: none;
+  text-align: left;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content pre {
+  margin: 0.2em;
+  border-radius: 0.25em;
+  color: var(--sklearn-color-text);
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted pre {
+  /* unfitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+  /* Expand drop-down */
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+  content: "▾";
+}
+
+/* Pipeline/ColumnTransformer-specific style */
+
+#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator-specific style */
+
+/* Colorize estimator box */
+#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label label.sk-toggleable__label,
+#sk-container-id-1 div.sk-label label {
+  /* The background is the default theme color */
+  color: var(--sklearn-color-text-on-default-background);
+}
+
+/* On hover, darken the color of the background */
+#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+/* Label box, darken color on hover, fitted */
+#sk-container-id-1 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator label */
+
+#sk-container-id-1 div.sk-label label {
+  font-family: monospace;
+  font-weight: bold;
+  line-height: 1.2em;
+}
+
+#sk-container-id-1 div.sk-label-container {
+  text-align: center;
+}
+
+/* Estimator-specific */
+#sk-container-id-1 div.sk-estimator {
+  font-family: monospace;
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: 0.25em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+/* on hover */
+#sk-container-id-1 div.sk-estimator:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Specification for estimator info (e.g. "i" and "?") */
+
+/* Common style for "i" and "?" */
+
+.sk-estimator-doc-link,
+a:link.sk-estimator-doc-link,
+a:visited.sk-estimator-doc-link {
+  float: right;
+  font-size: smaller;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-unfitted-level-0);
+  border-radius: 1em;
+  height: 1em;
+  width: 1em;
+  text-decoration: none !important;
+  margin-left: 0.5em;
+  text-align: center;
+  /* unfitted */
+  border: var(--sklearn-color-unfitted-level-3) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted,
+a:link.sk-estimator-doc-link.fitted,
+a:visited.sk-estimator-doc-link.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3) 1pt solid;
+  color: var(--sklearn-color-fitted-level-3);
+}
+
+/* On hover */
+div.sk-estimator:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover,
+div.sk-label-container:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  border: var(--sklearn-color-fitted-level-0) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-0);
+  text-decoration: none;
+}
+
+div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover,
+div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+  border: var(--sklearn-color-fitted-level-0) 1pt solid;
+  color: var(--sklearn-color-fitted-level-0);
+  text-decoration: none;
+}
+
+/* Span, style for the box shown on hovering the info icon */
+.sk-estimator-doc-link span {
+  display: none;
+  z-index: 9999;
+  position: relative;
+  font-weight: normal;
+  right: .2ex;
+  padding: .5ex;
+  margin: .5ex;
+  width: min-content;
+  min-width: 20ex;
+  max-width: 50ex;
+  color: var(--sklearn-color-text);
+  box-shadow: 2pt 2pt 4pt #999;
+  /* unfitted */
+  background: var(--sklearn-color-unfitted-level-0);
+  border: .5pt solid var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted span {
+  /* fitted */
+  background: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-estimator-doc-link:hover span {
+  display: block;
+}
+
+/* "?"-specific style due to the `<a>` HTML tag */
+
+#sk-container-id-1 a.estimator_doc_link {
+  float: right;
+  font-size: 1rem;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-unfitted-level-0);
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+  text-decoration: none;
+  /* unfitted */
+  color: var(--sklearn-color-unfitted-level-1);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+#sk-container-id-1 a.estimator_doc_link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+}
+
+.estimator-table {
+    font-family: monospace;
+}
+
+.estimator-table summary {
+    padding: .5rem;
+    cursor: pointer;
+}
+
+.estimator-table summary::marker {
+    font-size: 0.7rem;
+}
+
+.estimator-table details[open] {
+    padding-left: 0.1rem;
+    padding-right: 0.1rem;
+    padding-bottom: 0.3rem;
+}
+
+.estimator-table .parameters-table {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-top: 0;
+}
+
+.estimator-table .parameters-table tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+.estimator-table .parameters-table tr:nth-child(even) {
+    background-color: #f6f6f6;
+}
+
+.estimator-table .parameters-table tr:hover {
+    background-color: #e0e0e0;
+}
+
+.estimator-table table td {
+    border: 1px solid rgba(106, 105, 104, 0.232);
+}
+
+/*
+    `table td`is set in notebook with right text-align.
+    We need to overwrite it.
+*/
+.estimator-table table td.param {
+    text-align: left;
+    position: relative;
+    padding: 0;
+}
+
+.user-set td {
+    color:rgb(255, 94, 0);
+    text-align: left !important;
+}
+
+.user-set td.value {
+    color:rgb(255, 94, 0);
+    background-color: transparent;
+}
+
+.default td {
+    color: black;
+    text-align: left !important;
+}
+
+.user-set td i,
+.default td i {
+    color: black;
+}
+
+/*
+    Styles for parameter documentation links
+    We need styling for visited so jupyter doesn't overwrite it
+*/
+a.param-doc-link,
+a.param-doc-link:link,
+a.param-doc-link:visited {
+    text-decoration: underline dashed;
+    text-underline-offset: .3em;
+    color: inherit;
+    display: block;
+    padding: .5em;
+}
+
+/* "hack" to make the entire area of the cell containing the link clickable */
+a.param-doc-link::before {
+    position: absolute;
+    content: "";
+    inset: 0;
+}
+
+.param-doc-description {
+    display: none;
+    position: absolute;
+    z-index: 9999;
+    left: 0;
+    padding: .5ex;
+    margin-left: 1.5em;
+    color: var(--sklearn-color-text);
+    box-shadow: .3em .3em .4em #999;
+    width: max-content;
+    text-align: left;
+    max-height: 10em;
+    overflow-y: auto;
+
+    /* unfitted */
+    background: var(--sklearn-color-unfitted-level-0);
+    border: thin solid var(--sklearn-color-unfitted-level-3);
+}
+
+/* Fitted state for parameter tooltips */
+.fitted .param-doc-description {
+    /* fitted */
+    background: var(--sklearn-color-fitted-level-0);
+    border: thin solid var(--sklearn-color-fitted-level-3);
+}
+
+.param-doc-link:hover .param-doc-description {
+    display: block;
+}
+
+.copy-paste-icon {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NDggNTEyIj48IS0tIUZvbnQgQXdlc29tZSBGcmVlIDYuNy4yIGJ5IEBmb250YXdlc29tZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tIExpY2Vuc2UgLSBodHRwczovL2ZvbnRhd2Vzb21lLmNvbS9saWNlbnNlL2ZyZWUgQ29weXJpZ2h0IDIwMjUgRm9udGljb25zLCBJbmMuLS0+PHBhdGggZD0iTTIwOCAwTDMzMi4xIDBjMTIuNyAwIDI0LjkgNS4xIDMzLjkgMTQuMWw2Ny45IDY3LjljOSA5IDE0LjEgMjEuMiAxNC4xIDMzLjlMNDQ4IDMzNmMwIDI2LjUtMjEuNSA0OC00OCA0OGwtMTkyIDBjLTI2LjUgMC00OC0yMS41LTQ4LTQ4bDAtMjg4YzAtMjYuNSAyMS41LTQ4IDQ4LTQ4ek00OCAxMjhsODAgMCAwIDY0LTY0IDAgMCAyNTYgMTkyIDAgMC0zMiA2NCAwIDAgNDhjMCAyNi41LTIxLjUgNDgtNDggNDhMNDggNTEyYy0yNi41IDAtNDgtMjEuNS00OC00OEwwIDE3NmMwLTI2LjUgMjEuNS00OCA0OC00OHoiLz48L3N2Zz4=);
+    background-repeat: no-repeat;
+    background-size: 14px 14px;
+    background-position: 0;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+}
+</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>PCA(n_components=2)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked=""><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>PCA</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.decomposition.PCA.html">?<span>Documentation for PCA</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
+        <div class="estimator-table">
+            <details>
+                <summary>Parameters</summary>
+                
+<table class="parameters-table caption-top" data-quarto-postprocess="true">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<tbody>
+<tr class="user-set odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.decomposition.PCA.html#:~:text=n_components,-int%2C%20float%20or%20%27mle%27%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">n_components <span class="param-doc-description">n_components: int, float or 'mle', default=None<br>
+<br>
+Number of components to keep.<br>
+if n_components is not set all components are kept::<br>
+<br>
+n_components == min(n_samples, n_features)<br>
+<br>
+If ``n_components == 'mle'`` and ``svd_solver == 'full'``, Minka's<br>
+MLE is used to guess the dimension. Use of ``n_components == 'mle'``<br>
+will interpret ``svd_solver == 'auto'`` as ``svd_solver == 'full'``.<br>
+<br>
+If ``0 &lt; n_components &lt; 1`` and ``svd_solver == 'full'``, select the<br>
+number of components such that the amount of variance that needs to be<br>
+explained is greater than the percentage specified by n_components.<br>
+<br>
+If ``svd_solver == 'arpack'``, the number of components must be<br>
+strictly less than the minimum of n_features and n_samples.<br>
+<br>
+Hence, the None case results in::<br>
+<br>
+n_components == min(n_samples, n_features) - 1</span></a></td>
+<td class="value">2</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.decomposition.PCA.html#:~:text=copy,-bool%2C%20default%3DTrue" class="param-doc-link" rel="noreferrer" target="_blank">copy <span class="param-doc-description">copy: bool, default=True<br>
+<br>
+If False, data passed to fit are overwritten and running<br>
+fit(X).transform(X) will not yield the expected results,<br>
+use fit_transform(X) instead.</span></a></td>
+<td class="value">True</td>
+</tr>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.decomposition.PCA.html#:~:text=whiten,-bool%2C%20default%3DFalse" class="param-doc-link" rel="noreferrer" target="_blank">whiten <span class="param-doc-description">whiten: bool, default=False<br>
+<br>
+When True (False by default) the `components_` vectors are multiplied<br>
+by the square root of n_samples and then divided by the singular values<br>
+to ensure uncorrelated outputs with unit component-wise variances.<br>
+<br>
+Whitening will remove some information from the transformed signal<br>
+(the relative variance scales of the components) but can sometime<br>
+improve the predictive accuracy of the downstream estimators by<br>
+making their data respect some hard-wired assumptions.</span></a></td>
+<td class="value">False</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.decomposition.PCA.html#:~:text=svd_solver,-%7B%27auto%27%2C%20%27full%27%2C%20%27covariance_eigh%27%2C%20%27arpack%27%2C%20%27randomized%27%7D%2C%20%20%20%20%20%20%20%20%20%20%20%20default%3D%27auto%27" class="param-doc-link" rel="noreferrer" target="_blank">svd_solver <span class="param-doc-description">svd_solver: {'auto', 'full', 'covariance_eigh', 'arpack', 'randomized'}, default='auto'<br>
+<br>
+"auto" :<br>
+The solver is selected by a default 'auto' policy is based on `X.shape` and<br>
+`n_components`: if the input data has fewer than 1000 features and<br>
+more than 10 times as many samples, then the "covariance_eigh"<br>
+solver is used. Otherwise, if the input data is larger than 500x500<br>
+and the number of components to extract is lower than 80% of the<br>
+smallest dimension of the data, then the more efficient<br>
+"randomized" method is selected. Otherwise the exact "full" SVD is<br>
+computed and optionally truncated afterwards.<br>
+"full" :<br>
+Run exact full SVD calling the standard LAPACK solver via<br>
+`scipy.linalg.svd` and select the components by postprocessing<br>
+"covariance_eigh" :<br>
+Precompute the covariance matrix (on centered data), run a<br>
+classical eigenvalue decomposition on the covariance matrix<br>
+typically using LAPACK and select the components by postprocessing.<br>
+This solver is very efficient for n_samples &gt;&gt; n_features and small<br>
+n_features. It is, however, not tractable otherwise for large<br>
+n_features (large memory footprint required to materialize the<br>
+covariance matrix). Also note that compared to the "full" solver,<br>
+this solver effectively doubles the condition number and is<br>
+therefore less numerical stable (e.g. on input data with a large<br>
+range of singular values).<br>
+"arpack" :<br>
+Run SVD truncated to `n_components` calling ARPACK solver via<br>
+`scipy.sparse.linalg.svds`. It requires strictly<br>
+`0 &lt; n_components &lt; min(X.shape)`<br>
+"randomized" :<br>
+Run randomized SVD by the method of Halko et al.<br>
+<br>
+.. versionadded:: 0.18.0<br>
+<br>
+.. versionchanged:: 1.5<br>
+Added the 'covariance_eigh' solver.</span></a></td>
+<td class="value">'auto'</td>
+</tr>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.decomposition.PCA.html#:~:text=tol,-float%2C%20default%3D0.0" class="param-doc-link" rel="noreferrer" target="_blank">tol <span class="param-doc-description">tol: float, default=0.0<br>
+<br>
+Tolerance for singular values computed by svd_solver == 'arpack'.<br>
+Must be of range [0.0, infinity).<br>
+<br>
+.. versionadded:: 0.18.0</span></a></td>
+<td class="value">0.0</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.decomposition.PCA.html#:~:text=iterated_power,-int%20or%20%27auto%27%2C%20default%3D%27auto%27" class="param-doc-link" rel="noreferrer" target="_blank">iterated_power <span class="param-doc-description">iterated_power: int or 'auto', default='auto'<br>
+<br>
+Number of iterations for the power method computed by<br>
+svd_solver == 'randomized'.<br>
+Must be of range [0, infinity).<br>
+<br>
+.. versionadded:: 0.18.0</span></a></td>
+<td class="value">'auto'</td>
+</tr>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.decomposition.PCA.html#:~:text=n_oversamples,-int%2C%20default%3D10" class="param-doc-link" rel="noreferrer" target="_blank">n_oversamples <span class="param-doc-description">n_oversamples: int, default=10<br>
+<br>
+This parameter is only relevant when `svd_solver="randomized"`.<br>
+It corresponds to the additional number of random vectors to sample the<br>
+range of `X` so as to ensure proper conditioning. See<br>
+:func:`~sklearn.utils.extmath.randomized_svd` for more details.<br>
+<br>
+.. versionadded:: 1.1</span></a></td>
+<td class="value">10</td>
+</tr>
+<tr class="default even">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.decomposition.PCA.html#:~:text=power_iteration_normalizer,-%7B%27auto%27%2C%20%27QR%27%2C%20%27LU%27%2C%20%27none%27%7D%2C%20default%3D%27auto%27" class="param-doc-link" rel="noreferrer" target="_blank">power_iteration_normalizer <span class="param-doc-description">power_iteration_normalizer: {'auto', 'QR', 'LU', 'none'}, default='auto'<br>
+<br>
+Power iteration normalizer for randomized SVD solver.<br>
+Not used by ARPACK. See :func:`~sklearn.utils.extmath.randomized_svd`<br>
+for more details.<br>
+<br>
+.. versionadded:: 1.1</span></a></td>
+<td class="value">'auto'</td>
+</tr>
+<tr class="default odd">
+<td><em></em></td>
+<td class="param"><a href="https://scikit-learn.org/1.8/modules/generated/sklearn.decomposition.PCA.html#:~:text=random_state,-int%2C%20RandomState%20instance%20or%20None%2C%20default%3DNone" class="param-doc-link" rel="noreferrer" target="_blank">random_state <span class="param-doc-description">random_state: int, RandomState instance or None, default=None<br>
+<br>
+Used when the 'arpack' or 'randomized' solvers are used. Pass an int<br>
+for reproducible results across multiple function calls.<br>
+See :term:`Glossary <random_state>`.<br>
+<br>
+.. versionadded:: 0.18.0</random_state></span></a></td>
+<td class="value">None</td>
+</tr>
+</tbody>
+</table>
+
+            </details>
+        </div>
+    </div></div></div></div></div><script>function copyToClipboard(text, element) {
+    // Get the parameter prefix from the closest toggleable content
+    const toggleableContent = element.closest('.sk-toggleable__content');
+    const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
+    const fullParamName = paramPrefix ? `${paramPrefix}${text}` : text;
+
+    const originalStyle = element.style;
+    const computedStyle = window.getComputedStyle(element);
+    const originalWidth = computedStyle.width;
+    const originalHTML = element.innerHTML.replace('Copied!', '');
+
+    navigator.clipboard.writeText(fullParamName)
+        .then(() => {
+            element.style.width = originalWidth;
+            element.style.color = 'green';
+            element.innerHTML = "Copied!";
+
+            setTimeout(() => {
+                element.innerHTML = originalHTML;
+                element.style = originalStyle;
+            }, 2000);
+        })
+        .catch(err => {
+            console.error('Failed to copy:', err);
+            element.style.color = 'red';
+            element.innerHTML = "Failed!";
+            setTimeout(() => {
+                element.innerHTML = originalHTML;
+                element.style = originalStyle;
+            }, 2000);
+        });
+    return false;
+}
+
+document.querySelectorAll('.copy-paste-icon').forEach(function(element) {
+    const toggleableContent = element.closest('.sk-toggleable__content');
+    const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
+    const paramName = element.parentElement.nextElementSibling
+        .textContent.trim().split(' ')[0];
+    const fullParamName = paramPrefix ? `${paramPrefix}${paramName}` : paramName;
+
+    element.setAttribute('title', fullParamName);
+});
+
+
+/**
+ * Adapted from Skrub
+ * https://github.com/skrub-data/skrub/blob/403466d1d5d4dc76a7ef569b3f8228db59a31dc3/skrub/_reporting/_data/templates/report.js#L789
+ * @returns "light" or "dark"
+ */
+function detectTheme(element) {
+    const body = document.querySelector('body');
+
+    // Check VSCode theme
+    const themeKindAttr = body.getAttribute('data-vscode-theme-kind');
+    const themeNameAttr = body.getAttribute('data-vscode-theme-name');
+
+    if (themeKindAttr && themeNameAttr) {
+        const themeKind = themeKindAttr.toLowerCase();
+        const themeName = themeNameAttr.toLowerCase();
+
+        if (themeKind.includes("dark") || themeName.includes("dark")) {
+            return "dark";
+        }
+        if (themeKind.includes("light") || themeName.includes("light")) {
+            return "light";
+        }
+    }
+
+    // Check Jupyter theme
+    if (body.getAttribute('data-jp-theme-light') === 'false') {
+        return 'dark';
+    } else if (body.getAttribute('data-jp-theme-light') === 'true') {
+        return 'light';
+    }
+
+    // Guess based on a parent element's color
+    const color = window.getComputedStyle(element.parentNode, null).getPropertyValue('color');
+    const match = color.match(/^rgb\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)\s*$/i);
+    if (match) {
+        const [r, g, b] = [
+            parseFloat(match[1]),
+            parseFloat(match[2]),
+            parseFloat(match[3])
+        ];
+
+        // https://en.wikipedia.org/wiki/HSL_and_HSV#Lightness
+        const luma = 0.299 * r + 0.587 * g + 0.114 * b;
+
+        if (luma > 180) {
+            // If the text is very bright we have a dark theme
+            return 'dark';
+        }
+        if (luma < 75) {
+            // If the text is very dark we have a light theme
+            return 'light';
+        }
+        // Otherwise fall back to the next heuristic.
+    }
+
+    // Fallback to system preference
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+
+function forceTheme(elementId) {
+    const estimatorElement = document.querySelector(`#${elementId}`);
+    if (estimatorElement === null) {
+        console.error(`Element with id ${elementId} not found.`);
+    } else {
+        const theme = detectTheme(estimatorElement);
+        estimatorElement.classList.add(theme);
+    }
+}
+
+forceTheme('sk-container-id-1');</script>
+</div>
+</div>
+</section>
+<section id="visualize-the-embedded-feature-space-2" class="slide level2">
+<h2>Visualize the embedded feature space</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Use <code>PCA</code> to project the <span class="math inline">\(2048\)</span> dimension feature space into a <strong>2D</strong> space for visualization</label></li>
+</ul>
+<div id="e509009d" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a></a>embedded_X <span class="op">=</span> pca.transform(X)</span>
+<span id="cb32-2"><a></a></span>
+<span id="cb32-3"><a></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb32-4"><a></a></span>
+<span id="cb32-5"><a></a><span class="cf">for</span> c_id, (category, m) <span class="kw">in</span> <span class="bu">enumerate</span>([(<span class="st">"Cats"</span>, <span class="st">"o"</span>), (<span class="st">"Dogs"</span>, <span class="st">"x"</span>), (<span class="st">"Both"</span>, <span class="st">"^"</span>)]):</span>
+<span id="cb32-6"><a></a>    scatter <span class="op">=</span> ax.scatter(x<span class="op">=</span>embedded_X[Y <span class="op">==</span> c_id, <span class="dv">0</span>], y<span class="op">=</span>embedded_X[Y <span class="op">==</span> c_id, <span class="dv">1</span>], marker<span class="op">=</span>m, label<span class="op">=</span>category)</span>
+<span id="cb32-7"><a></a></span>
+<span id="cb32-8"><a></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+
+
+<img data-src="DL_image_analysis_2_2_files/figure-revealjs/cell-21-output-1.png" class="r-stretch"></section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">

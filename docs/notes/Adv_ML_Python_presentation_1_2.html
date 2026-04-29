@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.6.40">
 
   <meta name="author" content="Fernando Cervantes (fernando.cervantes@jax.org)">
-  <title>Advanced Machine Learning with Python workshop – Advanced Machine Learning with Python (Session 2 - Part 1)</title>
+  <title>Advanced Machine Learning with Python workshop – Advanced Machine Learning with Python (Session 1 - Part 2)</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -193,7 +193,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Advanced Machine Learning with Python (Session 2 - Part 1)</h1>
+  <h1 class="title">Advanced Machine Learning with Python (Session 1 - Part 2)</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -204,1581 +204,74 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 </div>
 
 </section>
-<section id="workshop-outcomes" class="slide level2">
-<h2>Workshop outcomes</h2>
-<ul>
-<li>Understand the process of training ML models.</li>
-<li>Load pre-trained ML models and fine-tune them with new data.</li>
-<li>Evaluate the performance of ML models.</li>
-<li>Adapt ML models for different tasks from pre-trained models.</li>
-</ul>
-</section>
 <section id="materials" class="slide level2">
 <h2>Materials</h2>
-<p><a href="https://colab.research.google.com/gist/fercer/16149e05e7b2046f9d78940007fa4c2a/advanced_machine_learning_with_python_session_2_1.ipynb" class="btn btn-outline-primary" role="button" target="”_blank”">Open notebook in Colab</a> <a href="https://colab.research.google.com/gist/fercer/a357c3341ea726f7b4328d47155752d1/advanced_machine_learning_with_python_session_2_1-solved.ipynb" class="btn btn-outline-primary" role="button" target="”_blank”">View solutions</a></p>
+<p><a href="https://colab.research.google.com/gist/fercer/d4757f8257607cb0748c65714660600b/advanced_machine_learning_with_python_session_1_2.ipynb" class="btn btn-outline-primary" role="button" target="”_blank”">Open notebook in Colab</a> <a href="https://colab.research.google.com/gist/fercer/d4757f8257607cb0748c65714660600b/advanced_machine_learning_with_python_session_1_2-solved.ipynb" class="btn btn-outline-primary" role="button" target="”_blank”">View solutions</a></p>
 </section>
 <section>
-<section id="setup-environment" class="title-slide slide level1 center">
-<h1>0. Setup environment</h1>
+<section id="convolutional-neural-network-cnn-or-convnet" class="title-slide slide level1 center">
+<h1><strong>C</strong>onvolutional <strong>N</strong>eural <strong>N</strong>etwork (<strong>CNN</strong> or <strong>ConvNet</strong>)</h1>
 
 </section>
-<section id="select-runtime-and-connect" class="slide level2">
-<h2>Select runtime and connect</h2>
-<p>On the top right corner of the page, click the drop-down arrow to the right of the <code>Connect</code> button and select <code>Change runtime type</code>.</p>
+<section id="convolution-layers" class="slide level2">
+<h2>Convolution layers</h2>
+<p>The most common operation in DL models for image processing are Convolution operations.</p>
 
-<img data-src="../imgs/connect_runtime.png" style="width:50.0%" class="r-stretch"></section>
-<section class="slide level2">
-
-<p>Make sure <code>Python 3</code> runtime is selected. For this part of the workshop <code>CPU</code> acceleration is enough.</p>
-
-<img data-src="../imgs/select_runtime.png" style="width:50.0%" class="r-stretch"></section>
-<section class="slide level2">
-
-<p>Now we can connect to the runtime by clicking <code>Connect</code>. This will create a <strong>V</strong>irtual <strong>M</strong>achine (<strong>VM</strong>) with compute resources we can use for a limited amount of time.</p>
-<p><img data-src="../imgs/connect.png" style="height:25.0%"></p>
-<div class="callout callout-caution callout-titled callout-style-default">
+<img data-src="https://upload.wikimedia.org/wikipedia/commons/8/85/Convolution_arithmetic_-_Full_padding_no_strides_transposed.gif" class="r-stretch quarto-figure-center"><p class="caption">2D Convolution</p><p>The animation shows the convolution of a 7x7 pixels input image (bottom) with a 3x3 pixels kernel (moving window), that results in a 5x5 pixels output (top).</p>
+</section>
+<section id="exercise-visualize-the-effect-of-the-convolution-operation" class="slide level2">
+<h2>Exercise: Visualize the effect of the convolution operation</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Create a convolution layer with <code>nn.Conv2D</code> using 3 channels as input, and a single one for output.</label></li>
+</ul>
+<div id="ad1b7a4a" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
+<span id="cb1-2"><a></a></span>
+<span id="cb1-3"><a></a>conv_1 <span class="op">=</span> nn.Conv2d(in_channels<span class="op">=</span><span class="dv">3</span>, out_channels<span class="op">=</span><span class="dv">1</span>, kernel_size<span class="op">=</span><span class="dv">7</span>, padding<span class="op">=</span><span class="dv">0</span>, bias<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-4"><a></a></span>
+<span id="cb1-5"><a></a>x, _ <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(cifar_train_dl))</span>
+<span id="cb1-6"><a></a></span>
+<span id="cb1-7"><a></a>fx <span class="op">=</span> conv_1(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="61b947a9" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="bu">print</span>(<span class="st">"Input:"</span>, <span class="bu">type</span>(x), x.dtype, x.shape, x.<span class="bu">min</span>(), x.<span class="bu">max</span>())</span>
+<span id="cb2-2"><a></a><span class="bu">print</span>(<span class="st">"Output:"</span>, <span class="bu">type</span>(fx), fx.dtype, fx.shape, fx.<span class="bu">min</span>(), fx.<span class="bu">max</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Input: &lt;class 'torch.Tensor'&gt; torch.float32 torch.Size([128, 3, 32, 32]) tensor(0.) tensor(1.)
+Output: &lt;class 'torch.Tensor'&gt; torch.float32 torch.Size([128, 1, 26, 26]) tensor(-0.8468, grad_fn=&lt;MinBackward1&gt;) tensor(0.1861, grad_fn=&lt;MaxBackward1&gt;)</code></pre>
+</div>
+</div>
+<div class="callout callout-warning callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Caution</strong></p>
+<p><strong>Warning</strong></p>
 </div>
 <div class="callout-content">
-<p>In free Colab accounts these resources are not guaranteed and can be taken away without notice (preemptible machines).</p>
-<p>Data stored in this runtime will be lost if not moved into other storage when the runtime is deleted.</p>
-</div>
-</div>
-</div>
-</section></section>
-<section>
-<section id="load-pre-trained-models" class="title-slide slide level1 center">
-<h1>Load pre-trained models</h1>
-
-</section>
-<section id="load-pre-trained-models-1" class="slide level2">
-<h2>Load pre-trained models</h2>
-<ul>
-<li><p>Lets use one from the PyTorch’s <code>torchvision</code> module for computer vision</p></li>
-<li><p>Try first with the InceptionV3 model. <img data-src="../imgs/Inception.png" alt="InceptionV3"></p></li>
-</ul>
-</section>
-<section id="exercise-use-a-pre-trained-deep-learning-model-to-classify-images" class="slide level2 scrollable">
-<h2>Exercise: Use a pre-trained deep learning model to classify images</h2>
-<ul class="task-list">
-<li><label><input type="checkbox">Import the pre-trained weights of the Inception V3 model from models.inception_v3</label></li>
-</ul>
-<div id="e4d97858" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a></a><span class="im">import</span> torch</span>
-<span id="cb1-2"><a></a><span class="im">from</span> torchvision <span class="im">import</span> models</span>
-<span id="cb1-3"><a></a></span>
-<span id="cb1-4"><a></a>inception_weights <span class="op">=</span> models.inception.Inception_V3_Weights.IMAGENET1K_V1</span>
-<span id="cb1-5"><a></a></span>
-<span id="cb1-6"><a></a>inception_weights.meta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>{'num_params': 27161264,
- 'min_size': (75, 75),
- 'categories': ['tench',
-  'goldfish',
-  'great white shark',
-  'tiger shark',
-  'hammerhead',
-  'electric ray',
-  'stingray',
-  'cock',
-  'hen',
-  'ostrich',
-  'brambling',
-  'goldfinch',
-  'house finch',
-  'junco',
-  'indigo bunting',
-  'robin',
-  'bulbul',
-  'jay',
-  'magpie',
-  'chickadee',
-  'water ouzel',
-  'kite',
-  'bald eagle',
-  'vulture',
-  'great grey owl',
-  'European fire salamander',
-  'common newt',
-  'eft',
-  'spotted salamander',
-  'axolotl',
-  'bullfrog',
-  'tree frog',
-  'tailed frog',
-  'loggerhead',
-  'leatherback turtle',
-  'mud turtle',
-  'terrapin',
-  'box turtle',
-  'banded gecko',
-  'common iguana',
-  'American chameleon',
-  'whiptail',
-  'agama',
-  'frilled lizard',
-  'alligator lizard',
-  'Gila monster',
-  'green lizard',
-  'African chameleon',
-  'Komodo dragon',
-  'African crocodile',
-  'American alligator',
-  'triceratops',
-  'thunder snake',
-  'ringneck snake',
-  'hognose snake',
-  'green snake',
-  'king snake',
-  'garter snake',
-  'water snake',
-  'vine snake',
-  'night snake',
-  'boa constrictor',
-  'rock python',
-  'Indian cobra',
-  'green mamba',
-  'sea snake',
-  'horned viper',
-  'diamondback',
-  'sidewinder',
-  'trilobite',
-  'harvestman',
-  'scorpion',
-  'black and gold garden spider',
-  'barn spider',
-  'garden spider',
-  'black widow',
-  'tarantula',
-  'wolf spider',
-  'tick',
-  'centipede',
-  'black grouse',
-  'ptarmigan',
-  'ruffed grouse',
-  'prairie chicken',
-  'peacock',
-  'quail',
-  'partridge',
-  'African grey',
-  'macaw',
-  'sulphur-crested cockatoo',
-  'lorikeet',
-  'coucal',
-  'bee eater',
-  'hornbill',
-  'hummingbird',
-  'jacamar',
-  'toucan',
-  'drake',
-  'red-breasted merganser',
-  'goose',
-  'black swan',
-  'tusker',
-  'echidna',
-  'platypus',
-  'wallaby',
-  'koala',
-  'wombat',
-  'jellyfish',
-  'sea anemone',
-  'brain coral',
-  'flatworm',
-  'nematode',
-  'conch',
-  'snail',
-  'slug',
-  'sea slug',
-  'chiton',
-  'chambered nautilus',
-  'Dungeness crab',
-  'rock crab',
-  'fiddler crab',
-  'king crab',
-  'American lobster',
-  'spiny lobster',
-  'crayfish',
-  'hermit crab',
-  'isopod',
-  'white stork',
-  'black stork',
-  'spoonbill',
-  'flamingo',
-  'little blue heron',
-  'American egret',
-  'bittern',
-  'crane bird',
-  'limpkin',
-  'European gallinule',
-  'American coot',
-  'bustard',
-  'ruddy turnstone',
-  'red-backed sandpiper',
-  'redshank',
-  'dowitcher',
-  'oystercatcher',
-  'pelican',
-  'king penguin',
-  'albatross',
-  'grey whale',
-  'killer whale',
-  'dugong',
-  'sea lion',
-  'Chihuahua',
-  'Japanese spaniel',
-  'Maltese dog',
-  'Pekinese',
-  'Shih-Tzu',
-  'Blenheim spaniel',
-  'papillon',
-  'toy terrier',
-  'Rhodesian ridgeback',
-  'Afghan hound',
-  'basset',
-  'beagle',
-  'bloodhound',
-  'bluetick',
-  'black-and-tan coonhound',
-  'Walker hound',
-  'English foxhound',
-  'redbone',
-  'borzoi',
-  'Irish wolfhound',
-  'Italian greyhound',
-  'whippet',
-  'Ibizan hound',
-  'Norwegian elkhound',
-  'otterhound',
-  'Saluki',
-  'Scottish deerhound',
-  'Weimaraner',
-  'Staffordshire bullterrier',
-  'American Staffordshire terrier',
-  'Bedlington terrier',
-  'Border terrier',
-  'Kerry blue terrier',
-  'Irish terrier',
-  'Norfolk terrier',
-  'Norwich terrier',
-  'Yorkshire terrier',
-  'wire-haired fox terrier',
-  'Lakeland terrier',
-  'Sealyham terrier',
-  'Airedale',
-  'cairn',
-  'Australian terrier',
-  'Dandie Dinmont',
-  'Boston bull',
-  'miniature schnauzer',
-  'giant schnauzer',
-  'standard schnauzer',
-  'Scotch terrier',
-  'Tibetan terrier',
-  'silky terrier',
-  'soft-coated wheaten terrier',
-  'West Highland white terrier',
-  'Lhasa',
-  'flat-coated retriever',
-  'curly-coated retriever',
-  'golden retriever',
-  'Labrador retriever',
-  'Chesapeake Bay retriever',
-  'German short-haired pointer',
-  'vizsla',
-  'English setter',
-  'Irish setter',
-  'Gordon setter',
-  'Brittany spaniel',
-  'clumber',
-  'English springer',
-  'Welsh springer spaniel',
-  'cocker spaniel',
-  'Sussex spaniel',
-  'Irish water spaniel',
-  'kuvasz',
-  'schipperke',
-  'groenendael',
-  'malinois',
-  'briard',
-  'kelpie',
-  'komondor',
-  'Old English sheepdog',
-  'Shetland sheepdog',
-  'collie',
-  'Border collie',
-  'Bouvier des Flandres',
-  'Rottweiler',
-  'German shepherd',
-  'Doberman',
-  'miniature pinscher',
-  'Greater Swiss Mountain dog',
-  'Bernese mountain dog',
-  'Appenzeller',
-  'EntleBucher',
-  'boxer',
-  'bull mastiff',
-  'Tibetan mastiff',
-  'French bulldog',
-  'Great Dane',
-  'Saint Bernard',
-  'Eskimo dog',
-  'malamute',
-  'Siberian husky',
-  'dalmatian',
-  'affenpinscher',
-  'basenji',
-  'pug',
-  'Leonberg',
-  'Newfoundland',
-  'Great Pyrenees',
-  'Samoyed',
-  'Pomeranian',
-  'chow',
-  'keeshond',
-  'Brabancon griffon',
-  'Pembroke',
-  'Cardigan',
-  'toy poodle',
-  'miniature poodle',
-  'standard poodle',
-  'Mexican hairless',
-  'timber wolf',
-  'white wolf',
-  'red wolf',
-  'coyote',
-  'dingo',
-  'dhole',
-  'African hunting dog',
-  'hyena',
-  'red fox',
-  'kit fox',
-  'Arctic fox',
-  'grey fox',
-  'tabby',
-  'tiger cat',
-  'Persian cat',
-  'Siamese cat',
-  'Egyptian cat',
-  'cougar',
-  'lynx',
-  'leopard',
-  'snow leopard',
-  'jaguar',
-  'lion',
-  'tiger',
-  'cheetah',
-  'brown bear',
-  'American black bear',
-  'ice bear',
-  'sloth bear',
-  'mongoose',
-  'meerkat',
-  'tiger beetle',
-  'ladybug',
-  'ground beetle',
-  'long-horned beetle',
-  'leaf beetle',
-  'dung beetle',
-  'rhinoceros beetle',
-  'weevil',
-  'fly',
-  'bee',
-  'ant',
-  'grasshopper',
-  'cricket',
-  'walking stick',
-  'cockroach',
-  'mantis',
-  'cicada',
-  'leafhopper',
-  'lacewing',
-  'dragonfly',
-  'damselfly',
-  'admiral',
-  'ringlet',
-  'monarch',
-  'cabbage butterfly',
-  'sulphur butterfly',
-  'lycaenid',
-  'starfish',
-  'sea urchin',
-  'sea cucumber',
-  'wood rabbit',
-  'hare',
-  'Angora',
-  'hamster',
-  'porcupine',
-  'fox squirrel',
-  'marmot',
-  'beaver',
-  'guinea pig',
-  'sorrel',
-  'zebra',
-  'hog',
-  'wild boar',
-  'warthog',
-  'hippopotamus',
-  'ox',
-  'water buffalo',
-  'bison',
-  'ram',
-  'bighorn',
-  'ibex',
-  'hartebeest',
-  'impala',
-  'gazelle',
-  'Arabian camel',
-  'llama',
-  'weasel',
-  'mink',
-  'polecat',
-  'black-footed ferret',
-  'otter',
-  'skunk',
-  'badger',
-  'armadillo',
-  'three-toed sloth',
-  'orangutan',
-  'gorilla',
-  'chimpanzee',
-  'gibbon',
-  'siamang',
-  'guenon',
-  'patas',
-  'baboon',
-  'macaque',
-  'langur',
-  'colobus',
-  'proboscis monkey',
-  'marmoset',
-  'capuchin',
-  'howler monkey',
-  'titi',
-  'spider monkey',
-  'squirrel monkey',
-  'Madagascar cat',
-  'indri',
-  'Indian elephant',
-  'African elephant',
-  'lesser panda',
-  'giant panda',
-  'barracouta',
-  'eel',
-  'coho',
-  'rock beauty',
-  'anemone fish',
-  'sturgeon',
-  'gar',
-  'lionfish',
-  'puffer',
-  'abacus',
-  'abaya',
-  'academic gown',
-  'accordion',
-  'acoustic guitar',
-  'aircraft carrier',
-  'airliner',
-  'airship',
-  'altar',
-  'ambulance',
-  'amphibian',
-  'analog clock',
-  'apiary',
-  'apron',
-  'ashcan',
-  'assault rifle',
-  'backpack',
-  'bakery',
-  'balance beam',
-  'balloon',
-  'ballpoint',
-  'Band Aid',
-  'banjo',
-  'bannister',
-  'barbell',
-  'barber chair',
-  'barbershop',
-  'barn',
-  'barometer',
-  'barrel',
-  'barrow',
-  'baseball',
-  'basketball',
-  'bassinet',
-  'bassoon',
-  'bathing cap',
-  'bath towel',
-  'bathtub',
-  'beach wagon',
-  'beacon',
-  'beaker',
-  'bearskin',
-  'beer bottle',
-  'beer glass',
-  'bell cote',
-  'bib',
-  'bicycle-built-for-two',
-  'bikini',
-  'binder',
-  'binoculars',
-  'birdhouse',
-  'boathouse',
-  'bobsled',
-  'bolo tie',
-  'bonnet',
-  'bookcase',
-  'bookshop',
-  'bottlecap',
-  'bow',
-  'bow tie',
-  'brass',
-  'brassiere',
-  'breakwater',
-  'breastplate',
-  'broom',
-  'bucket',
-  'buckle',
-  'bulletproof vest',
-  'bullet train',
-  'butcher shop',
-  'cab',
-  'caldron',
-  'candle',
-  'cannon',
-  'canoe',
-  'can opener',
-  'cardigan',
-  'car mirror',
-  'carousel',
-  "carpenter's kit",
-  'carton',
-  'car wheel',
-  'cash machine',
-  'cassette',
-  'cassette player',
-  'castle',
-  'catamaran',
-  'CD player',
-  'cello',
-  'cellular telephone',
-  'chain',
-  'chainlink fence',
-  'chain mail',
-  'chain saw',
-  'chest',
-  'chiffonier',
-  'chime',
-  'china cabinet',
-  'Christmas stocking',
-  'church',
-  'cinema',
-  'cleaver',
-  'cliff dwelling',
-  'cloak',
-  'clog',
-  'cocktail shaker',
-  'coffee mug',
-  'coffeepot',
-  'coil',
-  'combination lock',
-  'computer keyboard',
-  'confectionery',
-  'container ship',
-  'convertible',
-  'corkscrew',
-  'cornet',
-  'cowboy boot',
-  'cowboy hat',
-  'cradle',
-  'crane',
-  'crash helmet',
-  'crate',
-  'crib',
-  'Crock Pot',
-  'croquet ball',
-  'crutch',
-  'cuirass',
-  'dam',
-  'desk',
-  'desktop computer',
-  'dial telephone',
-  'diaper',
-  'digital clock',
-  'digital watch',
-  'dining table',
-  'dishrag',
-  'dishwasher',
-  'disk brake',
-  'dock',
-  'dogsled',
-  'dome',
-  'doormat',
-  'drilling platform',
-  'drum',
-  'drumstick',
-  'dumbbell',
-  'Dutch oven',
-  'electric fan',
-  'electric guitar',
-  'electric locomotive',
-  'entertainment center',
-  'envelope',
-  'espresso maker',
-  'face powder',
-  'feather boa',
-  'file',
-  'fireboat',
-  'fire engine',
-  'fire screen',
-  'flagpole',
-  'flute',
-  'folding chair',
-  'football helmet',
-  'forklift',
-  'fountain',
-  'fountain pen',
-  'four-poster',
-  'freight car',
-  'French horn',
-  'frying pan',
-  'fur coat',
-  'garbage truck',
-  'gasmask',
-  'gas pump',
-  'goblet',
-  'go-kart',
-  'golf ball',
-  'golfcart',
-  'gondola',
-  'gong',
-  'gown',
-  'grand piano',
-  'greenhouse',
-  'grille',
-  'grocery store',
-  'guillotine',
-  'hair slide',
-  'hair spray',
-  'half track',
-  'hammer',
-  'hamper',
-  'hand blower',
-  'hand-held computer',
-  'handkerchief',
-  'hard disc',
-  'harmonica',
-  'harp',
-  'harvester',
-  'hatchet',
-  'holster',
-  'home theater',
-  'honeycomb',
-  'hook',
-  'hoopskirt',
-  'horizontal bar',
-  'horse cart',
-  'hourglass',
-  'iPod',
-  'iron',
-  "jack-o'-lantern",
-  'jean',
-  'jeep',
-  'jersey',
-  'jigsaw puzzle',
-  'jinrikisha',
-  'joystick',
-  'kimono',
-  'knee pad',
-  'knot',
-  'lab coat',
-  'ladle',
-  'lampshade',
-  'laptop',
-  'lawn mower',
-  'lens cap',
-  'letter opener',
-  'library',
-  'lifeboat',
-  'lighter',
-  'limousine',
-  'liner',
-  'lipstick',
-  'Loafer',
-  'lotion',
-  'loudspeaker',
-  'loupe',
-  'lumbermill',
-  'magnetic compass',
-  'mailbag',
-  'mailbox',
-  'maillot',
-  'maillot tank suit',
-  'manhole cover',
-  'maraca',
-  'marimba',
-  'mask',
-  'matchstick',
-  'maypole',
-  'maze',
-  'measuring cup',
-  'medicine chest',
-  'megalith',
-  'microphone',
-  'microwave',
-  'military uniform',
-  'milk can',
-  'minibus',
-  'miniskirt',
-  'minivan',
-  'missile',
-  'mitten',
-  'mixing bowl',
-  'mobile home',
-  'Model T',
-  'modem',
-  'monastery',
-  'monitor',
-  'moped',
-  'mortar',
-  'mortarboard',
-  'mosque',
-  'mosquito net',
-  'motor scooter',
-  'mountain bike',
-  'mountain tent',
-  'mouse',
-  'mousetrap',
-  'moving van',
-  'muzzle',
-  'nail',
-  'neck brace',
-  'necklace',
-  'nipple',
-  'notebook',
-  'obelisk',
-  'oboe',
-  'ocarina',
-  'odometer',
-  'oil filter',
-  'organ',
-  'oscilloscope',
-  'overskirt',
-  'oxcart',
-  'oxygen mask',
-  'packet',
-  'paddle',
-  'paddlewheel',
-  'padlock',
-  'paintbrush',
-  'pajama',
-  'palace',
-  'panpipe',
-  'paper towel',
-  'parachute',
-  'parallel bars',
-  'park bench',
-  'parking meter',
-  'passenger car',
-  'patio',
-  'pay-phone',
-  'pedestal',
-  'pencil box',
-  'pencil sharpener',
-  'perfume',
-  'Petri dish',
-  'photocopier',
-  'pick',
-  'pickelhaube',
-  'picket fence',
-  'pickup',
-  'pier',
-  'piggy bank',
-  'pill bottle',
-  'pillow',
-  'ping-pong ball',
-  'pinwheel',
-  'pirate',
-  'pitcher',
-  'plane',
-  'planetarium',
-  'plastic bag',
-  'plate rack',
-  'plow',
-  'plunger',
-  'Polaroid camera',
-  'pole',
-  'police van',
-  'poncho',
-  'pool table',
-  'pop bottle',
-  'pot',
-  "potter's wheel",
-  'power drill',
-  'prayer rug',
-  'printer',
-  'prison',
-  'projectile',
-  'projector',
-  'puck',
-  'punching bag',
-  'purse',
-  'quill',
-  'quilt',
-  'racer',
-  'racket',
-  'radiator',
-  'radio',
-  'radio telescope',
-  'rain barrel',
-  'recreational vehicle',
-  'reel',
-  'reflex camera',
-  'refrigerator',
-  'remote control',
-  'restaurant',
-  'revolver',
-  'rifle',
-  'rocking chair',
-  'rotisserie',
-  'rubber eraser',
-  'rugby ball',
-  'rule',
-  'running shoe',
-  'safe',
-  'safety pin',
-  'saltshaker',
-  'sandal',
-  'sarong',
-  'sax',
-  'scabbard',
-  'scale',
-  'school bus',
-  'schooner',
-  'scoreboard',
-  'screen',
-  'screw',
-  'screwdriver',
-  'seat belt',
-  'sewing machine',
-  'shield',
-  'shoe shop',
-  'shoji',
-  'shopping basket',
-  'shopping cart',
-  'shovel',
-  'shower cap',
-  'shower curtain',
-  'ski',
-  'ski mask',
-  'sleeping bag',
-  'slide rule',
-  'sliding door',
-  'slot',
-  'snorkel',
-  'snowmobile',
-  'snowplow',
-  'soap dispenser',
-  'soccer ball',
-  'sock',
-  'solar dish',
-  'sombrero',
-  'soup bowl',
-  'space bar',
-  'space heater',
-  'space shuttle',
-  'spatula',
-  'speedboat',
-  'spider web',
-  'spindle',
-  'sports car',
-  'spotlight',
-  'stage',
-  'steam locomotive',
-  'steel arch bridge',
-  'steel drum',
-  'stethoscope',
-  'stole',
-  'stone wall',
-  'stopwatch',
-  'stove',
-  'strainer',
-  'streetcar',
-  'stretcher',
-  'studio couch',
-  'stupa',
-  'submarine',
-  'suit',
-  'sundial',
-  'sunglass',
-  'sunglasses',
-  'sunscreen',
-  'suspension bridge',
-  'swab',
-  'sweatshirt',
-  'swimming trunks',
-  'swing',
-  'switch',
-  'syringe',
-  'table lamp',
-  'tank',
-  'tape player',
-  'teapot',
-  'teddy',
-  'television',
-  'tennis ball',
-  'thatch',
-  'theater curtain',
-  'thimble',
-  'thresher',
-  'throne',
-  'tile roof',
-  'toaster',
-  'tobacco shop',
-  'toilet seat',
-  'torch',
-  'totem pole',
-  'tow truck',
-  'toyshop',
-  'tractor',
-  'trailer truck',
-  'tray',
-  'trench coat',
-  'tricycle',
-  'trimaran',
-  'tripod',
-  'triumphal arch',
-  'trolleybus',
-  'trombone',
-  'tub',
-  'turnstile',
-  'typewriter keyboard',
-  'umbrella',
-  'unicycle',
-  'upright',
-  'vacuum',
-  'vase',
-  'vault',
-  'velvet',
-  'vending machine',
-  'vestment',
-  'viaduct',
-  'violin',
-  'volleyball',
-  'waffle iron',
-  'wall clock',
-  'wallet',
-  'wardrobe',
-  'warplane',
-  'washbasin',
-  'washer',
-  'water bottle',
-  'water jug',
-  'water tower',
-  'whiskey jug',
-  'whistle',
-  'wig',
-  'window screen',
-  'window shade',
-  'Windsor tie',
-  'wine bottle',
-  'wing',
-  'wok',
-  'wooden spoon',
-  'wool',
-  'worm fence',
-  'wreck',
-  'yawl',
-  'yurt',
-  'web site',
-  'comic book',
-  'crossword puzzle',
-  'street sign',
-  'traffic light',
-  'book jacket',
-  'menu',
-  'plate',
-  'guacamole',
-  'consomme',
-  'hot pot',
-  'trifle',
-  'ice cream',
-  'ice lolly',
-  'French loaf',
-  'bagel',
-  'pretzel',
-  'cheeseburger',
-  'hotdog',
-  'mashed potato',
-  'head cabbage',
-  'broccoli',
-  'cauliflower',
-  'zucchini',
-  'spaghetti squash',
-  'acorn squash',
-  'butternut squash',
-  'cucumber',
-  'artichoke',
-  'bell pepper',
-  'cardoon',
-  'mushroom',
-  'Granny Smith',
-  'strawberry',
-  'orange',
-  'lemon',
-  'fig',
-  'pineapple',
-  'banana',
-  'jackfruit',
-  'custard apple',
-  'pomegranate',
-  'hay',
-  'carbonara',
-  'chocolate sauce',
-  'dough',
-  'meat loaf',
-  'pizza',
-  'potpie',
-  'burrito',
-  'red wine',
-  'espresso',
-  'cup',
-  'eggnog',
-  'alp',
-  'bubble',
-  'cliff',
-  'coral reef',
-  'geyser',
-  'lakeside',
-  'promontory',
-  'sandbar',
-  'seashore',
-  'valley',
-  'volcano',
-  'ballplayer',
-  'groom',
-  'scuba diver',
-  'rapeseed',
-  'daisy',
-  "yellow lady's slipper",
-  'corn',
-  'acorn',
-  'hip',
-  'buckeye',
-  'coral fungus',
-  'agaric',
-  'gyromitra',
-  'stinkhorn',
-  'earthstar',
-  'hen-of-the-woods',
-  'bolete',
-  'ear',
-  'toilet tissue'],
- 'recipe': 'https://github.com/pytorch/vision/tree/main/references/classification#inception-v3',
- '_metrics': {'ImageNet-1K': {'acc@1': 77.294, 'acc@5': 93.45}},
- '_ops': 5.713,
- '_file_size': 103.903,
- '_docs': 'These weights are ported from the original paper.'}</code></pre>
-</div>
-</div>
-<ul class="task-list">
-<li><label><input type="checkbox">Store the categories in a variable to use them later</label></li>
-</ul>
-<div id="c5f9b1c7" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a></a>categories <span class="op">=</span> inception_weights.meta[<span class="st">"categories"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Tip</strong></p>
-</div>
-<div class="callout-content">
-<p>More info about Inception V3 implementation in <code>torchvision</code> <a href="https://pytorch.org/vision/main/models/generated/models.inception_v3.html">here</a></p>
+<p>The convolution layer is initialized with random values, so the results will vary.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="exercise-use-a-pre-trained-deep-learning-model-to-classify-images-1" class="slide level2 scrollable">
-<h2>Exercise: Use a pre-trained deep learning model to classify images</h2>
+<section id="exercise-visualize-the-effect-of-the-convolution-operation-1" class="slide level2">
+<h2>Exercise: Visualize the effect of the convolution operation</h2>
 <ul class="task-list">
-<li><label><input type="checkbox">Load the Inception V3 model using the pre-trained weights <code>inception_weights</code></label></li>
+<li><label><input type="checkbox">Create a convolution layer with <code>nn.Conv2D</code> using 3 channels as input, and a single one for output.</label></li>
 </ul>
-<div id="9592a4d3" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a>dl_model <span class="op">=</span> models.inception_v3(inception_weights, progress<span class="op">=</span><span class="va">True</span>)</span>
+<div id="76280ce7" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb4-2"><a></a></span>
-<span id="cb4-3"><a></a>dl_model.<span class="bu">eval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>Inception3(
-  (Conv2d_1a_3x3): BasicConv2d(
-    (conv): Conv2d(3, 32, kernel_size=(3, 3), stride=(2, 2), bias=False)
-    (bn): BatchNorm2d(32, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-  )
-  (Conv2d_2a_3x3): BasicConv2d(
-    (conv): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), bias=False)
-    (bn): BatchNorm2d(32, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-  )
-  (Conv2d_2b_3x3): BasicConv2d(
-    (conv): Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
-    (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-  )
-  (maxpool1): MaxPool2d(kernel_size=3, stride=2, padding=0, dilation=1, ceil_mode=False)
-  (Conv2d_3b_1x1): BasicConv2d(
-    (conv): Conv2d(64, 80, kernel_size=(1, 1), stride=(1, 1), bias=False)
-    (bn): BatchNorm2d(80, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-  )
-  (Conv2d_4a_3x3): BasicConv2d(
-    (conv): Conv2d(80, 192, kernel_size=(3, 3), stride=(1, 1), bias=False)
-    (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-  )
-  (maxpool2): MaxPool2d(kernel_size=3, stride=2, padding=0, dilation=1, ceil_mode=False)
-  (Mixed_5b): InceptionA(
-    (branch1x1): BasicConv2d(
-      (conv): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch5x5_1): BasicConv2d(
-      (conv): Conv2d(192, 48, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(48, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch5x5_2): BasicConv2d(
-      (conv): Conv2d(48, 64, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), bias=False)
-      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch3x3dbl_1): BasicConv2d(
-      (conv): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch3x3dbl_2): BasicConv2d(
-      (conv): Conv2d(64, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
-      (bn): BatchNorm2d(96, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch3x3dbl_3): BasicConv2d(
-      (conv): Conv2d(96, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
-      (bn): BatchNorm2d(96, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch_pool): BasicConv2d(
-      (conv): Conv2d(192, 32, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(32, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-  )
-  (Mixed_5c): InceptionA(
-    (branch1x1): BasicConv2d(
-      (conv): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch5x5_1): BasicConv2d(
-      (conv): Conv2d(256, 48, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(48, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch5x5_2): BasicConv2d(
-      (conv): Conv2d(48, 64, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), bias=False)
-      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch3x3dbl_1): BasicConv2d(
-      (conv): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch3x3dbl_2): BasicConv2d(
-      (conv): Conv2d(64, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
-      (bn): BatchNorm2d(96, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch3x3dbl_3): BasicConv2d(
-      (conv): Conv2d(96, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
-      (bn): BatchNorm2d(96, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch_pool): BasicConv2d(
-      (conv): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-  )
-  (Mixed_5d): InceptionA(
-    (branch1x1): BasicConv2d(
-      (conv): Conv2d(288, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch5x5_1): BasicConv2d(
-      (conv): Conv2d(288, 48, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(48, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch5x5_2): BasicConv2d(
-      (conv): Conv2d(48, 64, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), bias=False)
-      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch3x3dbl_1): BasicConv2d(
-      (conv): Conv2d(288, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch3x3dbl_2): BasicConv2d(
-      (conv): Conv2d(64, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
-      (bn): BatchNorm2d(96, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch3x3dbl_3): BasicConv2d(
-      (conv): Conv2d(96, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
-      (bn): BatchNorm2d(96, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch_pool): BasicConv2d(
-      (conv): Conv2d(288, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-  )
-  (Mixed_6a): InceptionB(
-    (branch3x3): BasicConv2d(
-      (conv): Conv2d(288, 384, kernel_size=(3, 3), stride=(2, 2), bias=False)
-      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch3x3dbl_1): BasicConv2d(
-      (conv): Conv2d(288, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(64, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch3x3dbl_2): BasicConv2d(
-      (conv): Conv2d(64, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
-      (bn): BatchNorm2d(96, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch3x3dbl_3): BasicConv2d(
-      (conv): Conv2d(96, 96, kernel_size=(3, 3), stride=(2, 2), bias=False)
-      (bn): BatchNorm2d(96, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-  )
-  (Mixed_6b): InceptionC(
-    (branch1x1): BasicConv2d(
-      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7_1): BasicConv2d(
-      (conv): Conv2d(768, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(128, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7_2): BasicConv2d(
-      (conv): Conv2d(128, 128, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
-      (bn): BatchNorm2d(128, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7_3): BasicConv2d(
-      (conv): Conv2d(128, 192, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
-      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7dbl_1): BasicConv2d(
-      (conv): Conv2d(768, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(128, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7dbl_2): BasicConv2d(
-      (conv): Conv2d(128, 128, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
-      (bn): BatchNorm2d(128, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7dbl_3): BasicConv2d(
-      (conv): Conv2d(128, 128, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
-      (bn): BatchNorm2d(128, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7dbl_4): BasicConv2d(
-      (conv): Conv2d(128, 128, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
-      (bn): BatchNorm2d(128, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7dbl_5): BasicConv2d(
-      (conv): Conv2d(128, 192, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
-      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch_pool): BasicConv2d(
-      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-  )
-  (Mixed_6c): InceptionC(
-    (branch1x1): BasicConv2d(
-      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7_1): BasicConv2d(
-      (conv): Conv2d(768, 160, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7_2): BasicConv2d(
-      (conv): Conv2d(160, 160, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
-      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7_3): BasicConv2d(
-      (conv): Conv2d(160, 192, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
-      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7dbl_1): BasicConv2d(
-      (conv): Conv2d(768, 160, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7dbl_2): BasicConv2d(
-      (conv): Conv2d(160, 160, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
-      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7dbl_3): BasicConv2d(
-      (conv): Conv2d(160, 160, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
-      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7dbl_4): BasicConv2d(
-      (conv): Conv2d(160, 160, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
-      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7dbl_5): BasicConv2d(
-      (conv): Conv2d(160, 192, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
-      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch_pool): BasicConv2d(
-      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-  )
-  (Mixed_6d): InceptionC(
-    (branch1x1): BasicConv2d(
-      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7_1): BasicConv2d(
-      (conv): Conv2d(768, 160, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7_2): BasicConv2d(
-      (conv): Conv2d(160, 160, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
-      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7_3): BasicConv2d(
-      (conv): Conv2d(160, 192, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
-      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7dbl_1): BasicConv2d(
-      (conv): Conv2d(768, 160, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7dbl_2): BasicConv2d(
-      (conv): Conv2d(160, 160, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
-      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7dbl_3): BasicConv2d(
-      (conv): Conv2d(160, 160, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
-      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7dbl_4): BasicConv2d(
-      (conv): Conv2d(160, 160, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
-      (bn): BatchNorm2d(160, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7dbl_5): BasicConv2d(
-      (conv): Conv2d(160, 192, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
-      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch_pool): BasicConv2d(
-      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-  )
-  (Mixed_6e): InceptionC(
-    (branch1x1): BasicConv2d(
-      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7_1): BasicConv2d(
-      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7_2): BasicConv2d(
-      (conv): Conv2d(192, 192, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
-      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7_3): BasicConv2d(
-      (conv): Conv2d(192, 192, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
-      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7dbl_1): BasicConv2d(
-      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7dbl_2): BasicConv2d(
-      (conv): Conv2d(192, 192, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
-      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7dbl_3): BasicConv2d(
-      (conv): Conv2d(192, 192, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
-      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7dbl_4): BasicConv2d(
-      (conv): Conv2d(192, 192, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
-      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7dbl_5): BasicConv2d(
-      (conv): Conv2d(192, 192, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
-      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch_pool): BasicConv2d(
-      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-  )
-  (AuxLogits): InceptionAux(
-    (conv0): BasicConv2d(
-      (conv): Conv2d(768, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(128, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (conv1): BasicConv2d(
-      (conv): Conv2d(128, 768, kernel_size=(5, 5), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(768, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (fc): Linear(in_features=768, out_features=1000, bias=True)
-  )
-  (Mixed_7a): InceptionD(
-    (branch3x3_1): BasicConv2d(
-      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch3x3_2): BasicConv2d(
-      (conv): Conv2d(192, 320, kernel_size=(3, 3), stride=(2, 2), bias=False)
-      (bn): BatchNorm2d(320, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7x3_1): BasicConv2d(
-      (conv): Conv2d(768, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7x3_2): BasicConv2d(
-      (conv): Conv2d(192, 192, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), bias=False)
-      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7x3_3): BasicConv2d(
-      (conv): Conv2d(192, 192, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), bias=False)
-      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch7x7x3_4): BasicConv2d(
-      (conv): Conv2d(192, 192, kernel_size=(3, 3), stride=(2, 2), bias=False)
-      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-  )
-  (Mixed_7b): InceptionE(
-    (branch1x1): BasicConv2d(
-      (conv): Conv2d(1280, 320, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(320, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch3x3_1): BasicConv2d(
-      (conv): Conv2d(1280, 384, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch3x3_2a): BasicConv2d(
-      (conv): Conv2d(384, 384, kernel_size=(1, 3), stride=(1, 1), padding=(0, 1), bias=False)
-      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch3x3_2b): BasicConv2d(
-      (conv): Conv2d(384, 384, kernel_size=(3, 1), stride=(1, 1), padding=(1, 0), bias=False)
-      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch3x3dbl_1): BasicConv2d(
-      (conv): Conv2d(1280, 448, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(448, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch3x3dbl_2): BasicConv2d(
-      (conv): Conv2d(448, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
-      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch3x3dbl_3a): BasicConv2d(
-      (conv): Conv2d(384, 384, kernel_size=(1, 3), stride=(1, 1), padding=(0, 1), bias=False)
-      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch3x3dbl_3b): BasicConv2d(
-      (conv): Conv2d(384, 384, kernel_size=(3, 1), stride=(1, 1), padding=(1, 0), bias=False)
-      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch_pool): BasicConv2d(
-      (conv): Conv2d(1280, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-  )
-  (Mixed_7c): InceptionE(
-    (branch1x1): BasicConv2d(
-      (conv): Conv2d(2048, 320, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(320, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch3x3_1): BasicConv2d(
-      (conv): Conv2d(2048, 384, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch3x3_2a): BasicConv2d(
-      (conv): Conv2d(384, 384, kernel_size=(1, 3), stride=(1, 1), padding=(0, 1), bias=False)
-      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch3x3_2b): BasicConv2d(
-      (conv): Conv2d(384, 384, kernel_size=(3, 1), stride=(1, 1), padding=(1, 0), bias=False)
-      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch3x3dbl_1): BasicConv2d(
-      (conv): Conv2d(2048, 448, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(448, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch3x3dbl_2): BasicConv2d(
-      (conv): Conv2d(448, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
-      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch3x3dbl_3a): BasicConv2d(
-      (conv): Conv2d(384, 384, kernel_size=(1, 3), stride=(1, 1), padding=(0, 1), bias=False)
-      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch3x3dbl_3b): BasicConv2d(
-      (conv): Conv2d(384, 384, kernel_size=(3, 1), stride=(1, 1), padding=(1, 0), bias=False)
-      (bn): BatchNorm2d(384, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-    (branch_pool): BasicConv2d(
-      (conv): Conv2d(2048, 192, kernel_size=(1, 1), stride=(1, 1), bias=False)
-      (bn): BatchNorm2d(192, eps=0.001, momentum=0.1, affine=True, track_running_stats=True)
-    )
-  )
-  (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
-  (dropout): Dropout(p=0.5, inplace=False)
-  (fc): Linear(in_features=2048, out_features=1000, bias=True)
-)</code></pre>
+<span id="cb4-3"><a></a>plt.rcParams[<span class="st">'figure.figsize'</span>] <span class="op">=</span> [<span class="dv">5</span>, <span class="dv">5</span>]</span>
+<span id="cb4-4"><a></a></span>
+<span id="cb4-5"><a></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb4-6"><a></a>ax[<span class="dv">0</span>].imshow(x[<span class="dv">0</span>].permute(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>))</span>
+<span id="cb4-7"><a></a>ax[<span class="dv">1</span>].imshow(fx.detach()[<span class="dv">0</span>, <span class="dv">0</span>], cmap<span class="op">=</span><span class="st">"gray"</span>)</span>
+<span id="cb4-8"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
 </div>
-</div>
-</section>
-<section id="exercise-use-a-pre-trained-deep-learning-model-to-classify-images-2" class="slide level2 scrollable">
-<h2>Exercise: Use a pre-trained deep learning model to classify images</h2>
-<ul class="task-list">
-<li><label><input type="checkbox">Load a sample image to predict its category</label></li>
-</ul>
-<div id="27e65267" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a></a><span class="im">import</span> skimage</span>
-<span id="cb6-2"><a></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb6-3"><a></a></span>
-<span id="cb6-4"><a></a>sample_im <span class="op">=</span> skimage.data.rocket()</span>
-<span id="cb6-5"><a></a>sample_im.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
-<pre><code>(427, 640, 3)</code></pre>
-</div>
-</div>
-</section>
-<section id="exercise-use-a-pre-trained-deep-learning-model-to-classify-images-3" class="slide level2 scrollable">
-<h2>Exercise: Use a pre-trained deep learning model to classify images</h2>
-<ul class="task-list">
-<li><label><input type="checkbox">Visualize the sample image</label></li>
-</ul>
-<div id="e0720794" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a>plt.imshow(sample_im)</span>
-<span id="cb8-2"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure>
-<p><img data-src="DL_image_analysis_2_1_files/figure-revealjs/cell-6-output-1.png" width="608" height="416"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="exercise-use-a-pre-trained-deep-learning-model-to-classify-images-4" class="slide level2">
-<h2>Exercise: Use a pre-trained deep learning model to classify images</h2>
-<ul class="task-list">
-<li><label><input type="checkbox">Inspect what transforms are required by the pre-trained Inception model to work properly</label></li>
-</ul>
-<div id="facf0a62" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a>inception_weights.transforms</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
-<pre><code>functools.partial(&lt;class 'torchvision.transforms._presets.ImageClassification'&gt;, crop_size=299, resize_size=342)</code></pre>
-</div>
-</div>
-<div class="callout callout-important callout-titled callout-style-default">
+<img data-src="DL_image_analysis_1_2_files/figure-revealjs/cell-5-output-1.png" class="r-stretch"><div class="callout callout-important callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
@@ -1787,99 +280,187 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <p><strong>Important</strong></p>
 </div>
 <div class="callout-content">
-<p><code>functools.partial</code> is a function to define functions with static arguments. So 👆 returns a function when it is called!</p>
-</div>
-</div>
-</div>
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Note</strong></p>
-</div>
-<div class="callout-content">
-<p>The transforms used by the Inception V3 are</p>
-<ol type="1">
-<li><p>resize the image to 342x342 pixels,</p></li>
-<li><p>crop the center 299x299 pixels window, and</p></li>
-<li><p>normalize the values of the RGB channels.</p></li>
-</ol>
+<p>By default, outputs from PyTorch modules are tracked for back-propagation.</p>
+<p>To visualize it with <code>matplotlib</code> we have to <code>.detach()</code> the tensor first.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="exercise-use-a-pre-trained-deep-learning-model-to-classify-images-5" class="slide level2">
-<h2>Exercise: Use a pre-trained deep learning model to classify images</h2>
+<section id="exercise-visualize-the-effect-of-the-convolution-operation-2" class="slide level2">
+<h2>Exercise: Visualize the effect of the convolution operation</h2>
 <ul class="task-list">
-<li><label><input type="checkbox">Define a preprocessing pipeline using the inception_weights.transforms() method. Add also a transformation from <code>numpy</code> arrays into torch tensors.</label></li>
+<li><label><input type="checkbox">Visualize the weights of the convolution layer.</label></li>
 </ul>
-<div id="446e2cba" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a><span class="im">from</span> torchvision.transforms.v2 <span class="im">import</span> Compose, ToTensor</span>
+<div id="aae7ef67" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a>conv_1.weight.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>torch.Size([1, 3, 7, 7])</code></pre>
+</div>
+</div>
+<div id="3ad9a3b1" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>)</span>
+<span id="cb7-2"><a></a>ax[<span class="dv">0</span>, <span class="dv">0</span>].imshow(conv_1.weight.detach()[<span class="dv">0</span>, <span class="dv">0</span>], cmap<span class="op">=</span><span class="st">"gray"</span>)</span>
+<span id="cb7-3"><a></a>ax[<span class="dv">0</span>, <span class="dv">1</span>].imshow(conv_1.weight.detach()[<span class="dv">0</span>, <span class="dv">1</span>], cmap<span class="op">=</span><span class="st">"gray"</span>)</span>
+<span id="cb7-4"><a></a>ax[<span class="dv">1</span>, <span class="dv">0</span>].imshow(conv_1.weight.detach()[<span class="dv">0</span>, <span class="dv">2</span>], cmap<span class="op">=</span><span class="st">"gray"</span>)</span>
+<span id="cb7-5"><a></a>ax[<span class="dv">1</span>, <span class="dv">1</span>].set_axis_off()</span>
+<span id="cb7-6"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="DL_image_analysis_1_2_files/figure-revealjs/cell-7-output-1.png" class="r-stretch"></section>
+<section id="exercise-visualize-the-effect-of-the-convolution-operation-3" class="slide level2">
+<h2>Exercise: Visualize the effect of the convolution operation</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Modify the weights of the convolution layer.</label></li>
+</ul>
+<div id="54aff8aa" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a>conv_1 <span class="op">=</span> nn.Conv2d(in_channels<span class="op">=</span><span class="dv">3</span>, out_channels<span class="op">=</span><span class="dv">1</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">0</span>, bias<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb8-2"><a></a></span>
+<span id="cb8-3"><a></a>conv_1.weight.data[:] <span class="op">=</span> torch.FloatTensor([</span>
+<span id="cb8-4"><a></a>  [</span>
+<span id="cb8-5"><a></a>    [</span>
+<span id="cb8-6"><a></a>      [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb8-7"><a></a>      [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb8-8"><a></a>      [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb8-9"><a></a>    ],</span>
+<span id="cb8-10"><a></a>    [</span>
+<span id="cb8-11"><a></a>      [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb8-12"><a></a>      [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>],</span>
+<span id="cb8-13"><a></a>      [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb8-14"><a></a>    ],</span>
+<span id="cb8-15"><a></a>    [</span>
+<span id="cb8-16"><a></a>      [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb8-17"><a></a>      [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb8-18"><a></a>      [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>],</span>
+<span id="cb8-19"><a></a>    ],</span>
+<span id="cb8-20"><a></a>  ]</span>
+<span id="cb8-21"><a></a>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="exercise-visualize-the-effect-of-the-convolution-operation-4" class="slide level2">
+<h2>Exercise: Visualize the effect of the convolution operation</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Visualize the effects after changing the values.</label></li>
+</ul>
+<div id="88fe533d" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a>fx <span class="op">=</span> conv_1(x)</span>
+<span id="cb9-2"><a></a></span>
+<span id="cb9-3"><a></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb9-4"><a></a>ax[<span class="dv">0</span>].imshow(x[<span class="dv">0</span>].permute(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>))</span>
+<span id="cb9-5"><a></a>ax[<span class="dv">1</span>].imshow(fx.detach()[<span class="dv">0</span>].permute(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>))</span>
+<span id="cb9-6"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="DL_image_analysis_1_2_files/figure-revealjs/cell-9-output-1.png" class="r-stretch"><p>Experiment with different values and shapes of the kernel https://en.wikipedia.org/wiki/Kernel_(image_processing)</p>
+</section>
+<section id="exercise-visualize-the-effect-of-the-convolution-operation-5" class="slide level2">
+<h2>Exercise: Visualize the effect of the convolution operation</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Modify the weights of the convolution layer.</label></li>
+</ul>
+<div id="7ac4013c" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a></a>conv_1 <span class="op">=</span> nn.Conv2d(in_channels<span class="op">=</span><span class="dv">3</span>, out_channels<span class="op">=</span><span class="dv">1</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">0</span>, bias<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb10-2"><a></a></span>
+<span id="cb10-3"><a></a>conv_1.weight.data[:] <span class="op">=</span> torch.FloatTensor([</span>
+<span id="cb10-4"><a></a>  [[[<span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>], [<span class="op">-</span><span class="dv">1</span>, <span class="dv">5</span>, <span class="op">-</span><span class="dv">1</span>], [<span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>]],</span>
+<span id="cb10-5"><a></a>   [[<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>], [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>], [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>]],</span>
+<span id="cb10-6"><a></a>   [[<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>], [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>], [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>]]]</span>
+<span id="cb10-7"><a></a>])</span>
+<span id="cb10-8"><a></a></span>
+<span id="cb10-9"><a></a>fx <span class="op">=</span> conv_1(x)</span>
+<span id="cb10-10"><a></a></span>
+<span id="cb10-11"><a></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb10-12"><a></a>ax[<span class="dv">0</span>].imshow(x[<span class="dv">0</span>].permute(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>))</span>
+<span id="cb10-13"><a></a>ax[<span class="dv">1</span>].imshow(fx.detach()[<span class="dv">0</span>, <span class="dv">0</span>], cmap<span class="op">=</span><span class="st">"gray"</span>)</span>
+<span id="cb10-14"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="DL_image_analysis_1_2_files/figure-revealjs/cell-10-output-1.png" class="r-stretch"><p>Experiment with different values and shapes of the kernel https://en.wikipedia.org/wiki/Kernel_(image_processing)</p>
+</section>
+<section id="exercise-visualize-the-effect-of-the-convolution-operation-6" class="slide level2">
+<h2>Exercise: Visualize the effect of the convolution operation</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Modify the weights of the convolution layer.</label></li>
+</ul>
+<div id="12aa2269" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a>conv_1 <span class="op">=</span> nn.Conv2d(in_channels<span class="op">=</span><span class="dv">3</span>, out_channels<span class="op">=</span><span class="dv">1</span>, kernel_size<span class="op">=</span><span class="dv">3</span>, padding<span class="op">=</span><span class="dv">0</span>, bias<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb11-2"><a></a></span>
-<span id="cb11-3"><a></a>pipeline <span class="op">=</span> Compose([</span>
-<span id="cb11-4"><a></a>  ToTensor(),</span>
-<span id="cb11-5"><a></a>  inception_weights.transforms()</span>
-<span id="cb11-6"><a></a>])</span>
-<span id="cb11-7"><a></a></span>
-<span id="cb11-8"><a></a>pipeline</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
-<pre><code>Compose(
-      ToTensor()
-      ImageClassification(
-      crop_size=[299]
-      resize_size=[342]
-      mean=[0.485, 0.456, 0.406]
-      std=[0.229, 0.224, 0.225]
-      interpolation=InterpolationMode.BILINEAR
-  )
-)</code></pre>
+<span id="cb11-3"><a></a>conv_1.weight.data[:] <span class="op">=</span> torch.FloatTensor([</span>
+<span id="cb11-4"><a></a>  [[[<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>], [<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>], [<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>]],</span>
+<span id="cb11-5"><a></a>   [[<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>], [<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>], [<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>]],</span>
+<span id="cb11-6"><a></a>   [[<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>], [<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>], [<span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>]]]</span>
+<span id="cb11-7"><a></a>])</span>
+<span id="cb11-8"><a></a></span>
+<span id="cb11-9"><a></a>fx <span class="op">=</span> conv_1(x)</span>
+<span id="cb11-10"><a></a></span>
+<span id="cb11-11"><a></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb11-12"><a></a>ax[<span class="dv">0</span>].imshow(x[<span class="dv">0</span>].permute(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>))</span>
+<span id="cb11-13"><a></a>ax[<span class="dv">1</span>].imshow(fx.detach()[<span class="dv">0</span>, <span class="dv">0</span>], cmap<span class="op">=</span><span class="st">"gray"</span>)</span>
+<span id="cb11-14"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
 </div>
-</div>
+<img data-src="DL_image_analysis_1_2_files/figure-revealjs/cell-11-output-1.png" class="r-stretch"><p>Experiment with different values and shapes of the kernel https://en.wikipedia.org/wiki/Kernel_(image_processing)</p>
 </section>
-<section id="exercise-use-a-pre-trained-deep-learning-model-to-classify-images-6" class="slide level2">
-<h2>Exercise: Use a pre-trained deep learning model to classify images</h2>
-<ul class="task-list">
-<li><label><input type="checkbox">Pre-process the sample image using our pipeline</label></li>
+<section id="examples-of-popular-deep-learning-models-in-computer-vision" class="slide level2">
+<h2>Examples of popular Deep Learning models in computer vision</h2>
+<ul>
+<li>Residual Neural Networks</li>
 </ul>
-<div id="16da2cd8" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a>sample_x <span class="op">=</span> pipeline(sample_im)</span>
-<span id="cb13-2"><a></a><span class="bu">type</span>(sample_x), sample_x.shape, sample_x.<span class="bu">min</span>(), sample_x.<span class="bu">max</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
-<pre><code>(torch.Tensor, torch.Size([3, 299, 299]), tensor(-1.8792), tensor(2.6400))</code></pre>
-</div>
-</div>
-</section>
-<section id="exercise-use-a-pre-trained-deep-learning-model-to-classify-images-7" class="slide level2">
-<h2>Exercise: Use a pre-trained deep learning model to classify images</h2>
-<ul class="task-list">
-<li><label><input type="checkbox">Use the pre-trained model to predict the class of our sample image</label></li>
+
+<img data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Resnet-18_architecture.svg/250px-Resnet-18_architecture.svg.png" class="r-stretch quarto-figure-center"><p class="caption">He, Kaiming et al.&nbsp;“Deep Residual Learning for Image Recognition.” 2016 IEEE Conference on Computer Vision and Pattern Recognition (CVPR) (2015): 770-778.</p></section>
+<section id="examples-of-popular-deep-learning-models-in-computer-vision-1" class="slide level2">
+<h2>Examples of popular Deep Learning models in computer vision</h2>
+<ul>
+<li>Inception (v3)</li>
 </ul>
-<div class="callout callout-caution callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Caution</strong></p>
-</div>
-<div class="callout-content">
-<p>Apply the model on sample_x[None, …], so it is treated as a one-sample batch</p>
-</div>
-</div>
-</div>
-<div id="f33787f0" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a></a>sample_y <span class="op">=</span> dl_model(sample_x[<span class="va">None</span>, ...])</span>
-<span id="cb15-2"><a></a></span>
-<span id="cb15-3"><a></a>sample_y.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
-<pre><code>torch.Size([1, 1000])</code></pre>
-</div>
-</div>
+
+<img data-src="../imgs/Inception.png" class="r-stretch quarto-figure-center"><p class="caption">Szegedy, Christian et al.&nbsp;“Going deeper with convolutions.” 2015 IEEE Conference on Computer Vision and Pattern Recognition (CVPR) (2014): 1-9.</p></section>
+<section id="examples-of-popular-deep-learning-models-in-computer-vision-2" class="slide level2">
+<h2>Examples of popular Deep Learning models in computer vision</h2>
+<ul>
+<li>U-Net (cell segmentation)</li>
+</ul>
+
+<img data-src="https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/u-net-architecture.png" class="r-stretch quarto-figure-center"><p class="caption">Ronneberger, Olaf et al.&nbsp;“U-Net: Convolutional Networks for Biomedical Image Segmentation.” ArXiv abs/1505.04597 (2015): n.&nbsp;pag.</p></section>
+<section id="examples-of-popular-deep-learning-models-in-computer-vision-3" class="slide level2">
+<h2>Examples of popular Deep Learning models in computer vision</h2>
+<ul>
+<li>Vision Transformer (classification and segmentation)</li>
+</ul>
+
+<img data-src="../imgs/ViT.png" class="r-stretch quarto-figure-center"><p class="caption">Dosovitskiy, Alexey et al.&nbsp;“An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale.” ArXiv abs/2010.11929 (2020): n.&nbsp;pag.</p><ul>
+<li>Segment Anything Model (SAM)</li>
+<li>Micro-SAM</li>
+</ul>
 </section>
-<section id="exercise-use-a-pre-trained-deep-learning-model-to-classify-images-8" class="slide level2 scrollable">
-<h2>Exercise: Use a pre-trained deep learning model to classify images</h2>
+<section id="examples-of-popular-deep-learning-models-in-computer-vision-4" class="slide level2">
+<h2>Examples of popular Deep Learning models in computer vision</h2>
+<ul>
+<li>LeNet-5 for handwritten digits classification (<a href="http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf">LeCun et al.</a>)</li>
+</ul>
+
+<img data-src="https://upload.wikimedia.org/wikipedia/commons/6/61/LeNet_architecture.png" class="r-stretch quarto-figure-center"><p class="caption">LeCun, Yann et al.&nbsp;“Gradient-based learning applied to document recognition.” Proc. IEEE 86 (1998): 2278-2324.</p><p>By Daniel Voigt Godoy - <a rel="nofollow" class="external free" href="https://github.com/dvgodoy/dl-visuals/">https://github.com/dvgodoy/dl-visuals/</a>, <a href="https://creativecommons.org/licenses/by/4.0" title="Creative Commons Attribution 4.0">CC BY 4.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=150820922">Link</a></p>
+</section>
+<section id="exercise-implement-and-train-the-letnet-5-model-with-pytorch" class="slide level2">
+<h2>Exercise: Implement and train the LetNet-5 model with PyTorch</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Build the convolutional neural network using <code>nn.Sequential</code>, and the <code>nn.ReLU()</code> activation function.</label></li>
+</ul>
+<div id="9a234e05" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a></a>lenet_clf <span class="op">=</span> nn.Sequential(</span>
+<span id="cb12-2"><a></a>    nn.Conv2d(in_channels<span class="op">=</span><span class="dv">3</span>, out_channels<span class="op">=</span><span class="dv">6</span>, kernel_size<span class="op">=</span><span class="dv">5</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb12-3"><a></a>    nn.ReLU(),</span>
+<span id="cb12-4"><a></a>    nn.MaxPool2d(kernel_size<span class="op">=</span><span class="dv">2</span>),</span>
+<span id="cb12-5"><a></a>    nn.Conv2d(in_channels<span class="op">=</span><span class="dv">6</span>, out_channels<span class="op">=</span><span class="dv">16</span>, kernel_size<span class="op">=</span><span class="dv">5</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb12-6"><a></a>    nn.ReLU(),</span>
+<span id="cb12-7"><a></a>    nn.MaxPool2d(kernel_size<span class="op">=</span><span class="dv">2</span>),</span>
+<span id="cb12-8"><a></a>    nn.Flatten(),</span>
+<span id="cb12-9"><a></a>    nn.Linear(in_features<span class="op">=</span><span class="dv">16</span><span class="op">*</span><span class="dv">5</span><span class="op">*</span><span class="dv">5</span>, out_features<span class="op">=</span><span class="dv">120</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb12-10"><a></a>    nn.ReLU(),</span>
+<span id="cb12-11"><a></a>    nn.Linear(in_features<span class="op">=</span><span class="dv">120</span>, out_features<span class="op">=</span><span class="dv">84</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb12-12"><a></a>    nn.ReLU(),</span>
+<span id="cb12-13"><a></a>    nn.Linear(in_features<span class="op">=</span><span class="dv">84</span>, out_features<span class="op">=</span><span class="dv">100</span>, bias<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb12-14"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -1889,227 +470,168 @@ Fernando Cervantes (fernando.cervantes@jax.org)
 <p><strong>Note</strong></p>
 </div>
 <div class="callout-content">
-<p>The model’s output are the log-probabilities of <code>sample_x</code> belonging to each of the 1000 classes.</p>
+<p>Pooling layers are used to downsample feature maps to summarize information from large regions.</p>
 </div>
-</div>
-</div>
-<ul class="task-list">
-<li><label><input type="checkbox">Show the categories with the highest <em>log-</em>probabilities.</label></li>
-</ul>
-<div id="d3cc88e5" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a></a>sample_y.argsort(dim<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="10">
-<pre><code>tensor([[578, 253, 339, 982, 301,  40, 584, 897, 382,  12, 170, 181,  25, 161,
-         255, 162, 159,  14, 500,  72,  44, 368, 714, 211, 201, 240,  90, 277,
-          99, 519,  46,  13, 790, 160, 883, 307,  31, 467, 271,  32, 452, 997,
-          92, 414, 286,  64, 241, 661, 360, 381, 473, 999, 316,  24, 184, 213,
-         804,  26, 889, 383, 689,  11, 231,  28, 207, 520, 134,  77,  37, 177,
-         513, 539, 191, 264, 306,  19, 103, 529, 823, 171, 838, 247, 174, 400,
-         228, 665, 669, 278,  16, 870, 354, 412, 272, 377, 175, 411, 551,  75,
-         265, 390, 601, 929,  27, 543, 434, 268,  94, 200,  33, 504, 760, 614,
-         387, 875, 167, 809, 588, 189,  30, 291, 703, 944, 323, 610, 631,  57,
-          41, 881, 349, 938, 493, 825, 732, 249, 593, 299, 516, 237, 246, 195,
-         137, 850, 756,  91, 695, 336, 799, 431, 766, 761, 310, 337, 894, 622,
-         305, 129, 351, 989, 581, 991, 612, 110, 672, 436, 239, 226,  93,  76,
-         785,  21, 260,  63, 294, 176, 960, 528, 606, 826, 168, 166,  87, 531,
-         355, 154,  15, 774, 717, 322,  18,   0, 193, 435, 152, 678, 722, 269,
-          86,  47, 292, 759, 248, 317, 105, 302, 621, 376,  60, 793, 295, 283,
-         692, 720, 495, 859, 284, 393, 267, 596, 537, 656, 235, 831, 707, 444,
-          85, 130, 232, 534, 560, 204, 188, 430, 379, 853,  43,  61, 261, 684,
-         932, 172, 746, 178, 986, 876, 615, 996, 770, 700, 298, 459, 384, 273,
-         328,  52, 605, 736, 968,  95, 410, 922, 296, 259, 347, 401, 518, 256,
-         912, 937, 319,  97, 155, 463, 636, 457,  53, 671, 119, 893, 300, 281,
-         921, 752, 394, 163, 244, 340, 697, 985, 763, 553, 243, 133, 568, 210,
-         454, 933, 597, 443,  20, 308, 451, 579, 549, 164, 716, 917,  59, 592,
-         136, 114, 185, 690, 472, 878, 642, 135, 771, 639, 276, 456, 485, 238,
-         943, 582, 486, 544, 979,  42, 868, 511, 321, 156,   9, 721, 365, 113,
-         263, 910,  88, 499, 670,  17, 635, 734, 266, 984, 386, 140, 280, 750,
-         407,  10, 654, 197, 478,  36,  62, 775, 638,  55, 275, 861, 230, 421,
-         603, 646, 447, 112, 233, 788, 222, 655, 492, 423, 896, 618, 675, 993,
-         794, 616, 215, 915, 196, 402, 229, 852, 364,  22, 139,  81, 685, 713,
-         309, 314, 153, 116, 547, 217, 643, 566, 719, 874,  98, 330, 587, 254,
-         458, 623, 886, 901, 842, 541, 930, 817, 507, 946, 362, 849,  73, 786,
-         939,  35, 157, 396, 250, 326, 725, 345, 617, 580, 988, 778, 552, 251,
-         187, 865,  71, 887, 242, 651, 448,  23, 559, 359, 202, 145, 180, 857,
-         691, 182, 475, 813, 743, 131, 843, 304, 318, 353, 422, 440,  89, 234,
-         704, 706,  68, 728, 150, 395, 108, 391, 512, 425, 468, 947, 143, 293,
-         350, 526, 257, 550, 957, 970, 955, 575,   5, 101, 123, 945, 633, 104,
-          80, 502, 729, 508,  49, 225, 258, 426, 637, 183, 995, 789, 344, 906,
-         948, 179, 950, 398, 397, 664, 532, 903, 198, 626, 194, 236, 667, 676,
-         757, 465, 324, 335, 218, 303, 699, 496, 934, 158,  38, 441, 433, 992,
-         375, 357, 810, 815, 693, 192, 585, 107, 586, 289, 331, 735, 772, 125,
-         515, 416, 392, 482, 869, 608, 681, 607, 882, 640, 380, 126, 854, 924,
-         768, 312, 589, 837, 141, 570, 315, 653, 102, 572, 479, 369, 956, 503,
-         115, 481,  74, 797, 122, 535, 327, 352,  45, 953, 802,  48, 389,  96,
-         270, 723, 224, 378, 795, 424, 450, 461, 796, 100,  39, 252, 800, 648,
-         679, 121, 787, 453, 925, 613, 846, 726, 702, 173,   8, 221, 287, 926,
-         169, 341, 325, 186, 128, 356, 709, 455, 645, 983,   6,  67, 449, 285,
-         972,  65, 765, 564, 282, 663, 677, 118, 806,  29, 576, 151, 388, 748,
-         782, 311, 358, 963, 329, 824, 333, 533, 203, 905, 673, 830, 951, 480,
-         419, 445, 829, 127, 904, 858,  69, 371, 313, 208, 753, 509, 521, 641,
-         219, 214, 209,  56, 928, 462, 138, 149, 776, 987, 523, 206, 916, 332,
-          51,   1, 320, 262, 798, 524, 805, 514, 627, 274, 705, 334, 420, 227,
-         773, 474, 205, 696, 899,  84, 212, 111,   7, 483, 801, 109, 990, 710,
-         866, 488,  78, 791, 602, 851, 747, 971,  70,  82, 439, 848, 367, 873,
-         591, 958, 505, 464, 342, 290, 674, 659, 898, 288, 803, 967, 594, 370,
-         730, 385, 567, 779, 223, 374, 429, 649, 741, 836, 711,  50, 952, 165,
-         598, 739, 546, 487, 686, 658, 749, 715, 501, 609, 890, 954, 432,  34,
-         769, 428, 647, 973, 962, 742, 981,   4, 619, 892,  58, 841, 964,  83,
-         142, 891, 361, 885, 909, 927, 124, 777, 363, 220, 373, 144, 406, 660,
-         731, 297, 783, 630, 245, 577, 106, 583, 965, 911, 427, 556, 834, 132,
-         762, 469, 569, 738, 199, 491, 446, 348,   3, 346, 147, 902, 808, 740,
-         936, 908, 819, 372, 827, 624, 975, 687, 548, 879, 611,  79, 574, 662,
-         476, 522, 864, 745, 969, 880, 998, 680, 343, 632, 884, 877, 497, 835,
-         477, 701, 811, 573, 818, 120, 949, 565, 190, 767, 914, 650, 418, 931,
-         216, 844, 872, 666, 415, 527, 117, 604, 148, 438, 923, 279, 599, 888,
-         698, 961, 855, 941, 338, 978, 466, 538, 688, 724, 839, 792, 542, 652,
-         525, 814, 918, 708, 366, 590, 860, 862, 600, 784, 942, 966, 976, 867,
-           2, 146, 489, 413, 712, 595, 644, 828, 994,  54, 399, 629, 780, 727,
-         822, 959, 764, 935, 832, 755, 751, 417, 977, 561, 558, 545, 625, 490,
-          66, 470, 980, 974, 816, 571, 863, 506, 737, 494, 555, 907, 409, 840,
-         460, 563, 471, 634, 620, 820, 484, 530, 913, 536, 403, 718, 856, 758,
-         845, 919, 821, 562, 871, 920, 404, 408, 683, 781, 940, 510, 847, 498,
-         628, 694, 895, 554, 405, 900, 442, 754, 833, 437, 807, 682, 668, 557,
-         812, 733, 517, 540, 744, 657]])</code></pre>
 </div>
 </div>
 </section>
-<section id="exercise-use-a-pre-trained-deep-learning-model-to-classify-images-9" class="slide level2 scrollable">
-<h2>Exercise: Use a pre-trained deep learning model to classify images</h2>
+<section id="exercise-implement-and-train-the-letnet-5-model-with-pytorch-1" class="slide level2">
+<h2>Exercise: Implement and train the LetNet-5 model with PyTorch</h2>
 <ul class="task-list">
-<li><label><input type="checkbox">Use the list of categories to translate the predicted class index into its category.</label></li>
+<li><label><input type="checkbox">Test our implementation.</label></li>
 </ul>
-<div id="fb6c98f2" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a></a>sorted_predicted_classes <span class="op">=</span> sample_y.argsort(dim<span class="op">=</span><span class="dv">1</span>, descending<span class="op">=</span><span class="va">True</span>)[<span class="dv">0</span>, :<span class="dv">10</span>]</span>
-<span id="cb19-2"><a></a>sorted_probs <span class="op">=</span> torch.softmax(sample_y, dim<span class="op">=</span><span class="dv">1</span>)[<span class="dv">0</span>, sorted_predicted_classes]</span>
-<span id="cb19-3"><a></a></span>
-<span id="cb19-4"><a></a><span class="cf">for</span> idx, prob <span class="kw">in</span> <span class="bu">zip</span>(sorted_predicted_classes, sorted_probs):</span>
-<span id="cb19-5"><a></a>    <span class="bu">print</span>(categories[idx], <span class="st">"</span><span class="sc">%3.2f</span><span class="st"> </span><span class="sc">%%</span><span class="st">"</span> <span class="op">%</span> (prob <span class="op">*</span> <span class="dv">100</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="6ee6c41b" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a>y_hat <span class="op">=</span> lenet_clf(x)</span>
+<span id="cb13-2"><a></a></span>
+<span id="cb13-3"><a></a><span class="bu">type</span>(y_hat), y_hat.dtype, y_hat.shape, y_hat.<span class="bu">min</span>(), y_hat.<span class="bu">max</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<pre><code>(torch.Tensor,
+ torch.float32,
+ torch.Size([128, 100]),
+ tensor(-0.1309, grad_fn=&lt;MinBackward1&gt;),
+ tensor(0.1939, grad_fn=&lt;MaxBackward1&gt;))</code></pre>
+</div>
+</div>
+</section>
+<section id="exercise-implement-and-train-the-letnet-5-model-with-pytorch-2" class="slide level2 scrollable">
+<h2>Exercise: Implement and train the LetNet-5 model with PyTorch</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Train the model to classify images from CIFAR-100.</label></li>
+</ul>
+<div id="a5d1da75" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a></a><span class="im">import</span> torch.optim <span class="im">as</span> optim</span>
+<span id="cb15-2"><a></a></span>
+<span id="cb15-3"><a></a>num_epochs <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb15-4"><a></a>train_loss <span class="op">=</span> []</span>
+<span id="cb15-5"><a></a>val_loss <span class="op">=</span> []</span>
+<span id="cb15-6"><a></a></span>
+<span id="cb15-7"><a></a><span class="cf">if</span> torch.cuda.is_available():</span>
+<span id="cb15-8"><a></a>  lenet_clf.cuda()</span>
+<span id="cb15-9"><a></a></span>
+<span id="cb15-10"><a></a>optimizer <span class="op">=</span> optim.SGD(lenet_clf.parameters(), lr<span class="op">=</span><span class="fl">0.01</span>)</span>
+<span id="cb15-11"><a></a>loss_fun <span class="op">=</span> nn.CrossEntropyLoss()</span>
+<span id="cb15-12"><a></a></span>
+<span id="cb15-13"><a></a><span class="cf">for</span> e <span class="kw">in</span> <span class="bu">range</span>(num_epochs):</span>
+<span id="cb15-14"><a></a>  train_loss_avg <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb15-15"><a></a>  total_train_samples <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb15-16"><a></a></span>
+<span id="cb15-17"><a></a>  lenet_clf.train()</span>
+<span id="cb15-18"><a></a>  <span class="cf">for</span> x, y <span class="kw">in</span> cifar_train_dl:</span>
+<span id="cb15-19"><a></a>    optimizer.zero_grad()</span>
+<span id="cb15-20"><a></a></span>
+<span id="cb15-21"><a></a>    <span class="cf">if</span> torch.cuda.is_available():</span>
+<span id="cb15-22"><a></a>      x <span class="op">=</span> x.cuda()</span>
+<span id="cb15-23"><a></a>    </span>
+<span id="cb15-24"><a></a>    y_hat <span class="op">=</span> lenet_clf( x ).cpu()</span>
+<span id="cb15-25"><a></a></span>
+<span id="cb15-26"><a></a>    loss <span class="op">=</span> loss_fun(y_hat, y)</span>
+<span id="cb15-27"><a></a></span>
+<span id="cb15-28"><a></a>    train_loss_avg <span class="op">+=</span> loss.item() <span class="op">*</span> <span class="bu">len</span>(x)</span>
+<span id="cb15-29"><a></a>    total_train_samples <span class="op">+=</span> <span class="bu">len</span>(x)</span>
+<span id="cb15-30"><a></a></span>
+<span id="cb15-31"><a></a>    loss.backward()</span>
+<span id="cb15-32"><a></a></span>
+<span id="cb15-33"><a></a>    optimizer.step()</span>
+<span id="cb15-34"><a></a></span>
+<span id="cb15-35"><a></a>  train_loss_avg <span class="op">/=</span> total_train_samples</span>
+<span id="cb15-36"><a></a>  train_loss.append(train_loss_avg)</span>
+<span id="cb15-37"><a></a></span>
+<span id="cb15-38"><a></a>  val_loss_avg <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb15-39"><a></a>  total_val_samples <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb15-40"><a></a></span>
+<span id="cb15-41"><a></a>  lenet_clf.<span class="bu">eval</span>()</span>
+<span id="cb15-42"><a></a>  <span class="cf">with</span> torch.no_grad():</span>
+<span id="cb15-43"><a></a>    <span class="cf">for</span> x, y <span class="kw">in</span> cifar_val_dl:</span>
+<span id="cb15-44"><a></a>      <span class="cf">if</span> torch.cuda.is_available():</span>
+<span id="cb15-45"><a></a>        x <span class="op">=</span> x.cuda()</span>
+<span id="cb15-46"><a></a>      </span>
+<span id="cb15-47"><a></a>      y_hat <span class="op">=</span> lenet_clf( x ).cpu()</span>
+<span id="cb15-48"><a></a>      loss <span class="op">=</span> loss_fun(y_hat, y)</span>
+<span id="cb15-49"><a></a></span>
+<span id="cb15-50"><a></a>      val_loss_avg <span class="op">+=</span> loss.item() <span class="op">*</span> <span class="bu">len</span>(x)</span>
+<span id="cb15-51"><a></a>      total_val_samples <span class="op">+=</span> <span class="bu">len</span>(x)</span>
+<span id="cb15-52"><a></a></span>
+<span id="cb15-53"><a></a>  val_loss_avg <span class="op">/=</span> total_val_samples</span>
+<span id="cb15-54"><a></a>  val_loss.append(val_loss_avg)</span>
+<span id="cb15-55"><a></a></span>
+<span id="cb15-56"><a></a>  <span class="bu">print</span>(<span class="ss">f"[Epoch </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">] Training loss: </span><span class="sc">{</span>train_loss_avg<span class="sc">}</span><span class="ss">, validation loss: </span><span class="sc">{</span>val_loss_avg<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>missile 37.93 %
-projectile 14.39 %
-drilling platform 12.16 %
-crane 5.72 %
-pole 1.06 %
-space shuttle 0.93 %
-flagpole 0.93 %
-mosque 0.51 %
-obelisk 0.46 %
-solar dish 0.45 %</code></pre>
+<pre><code>[Epoch 0] Training loss: 4.606845104980469, validation loss: 4.607688095855713
+[Epoch 1] Training loss: 4.606358392333984, validation loss: 4.6072938385009765
+[Epoch 2] Training loss: 4.6058888946533205, validation loss: 4.606900331115723
+[Epoch 3] Training loss: 4.605380735778809, validation loss: 4.606419638061523
+[Epoch 4] Training loss: 4.604751779937744, validation loss: 4.605797494506836
+[Epoch 5] Training loss: 4.603894428253174, validation loss: 4.604871366882324
+[Epoch 6] Training loss: 4.6026390899658205, validation loss: 4.60345597076416
+[Epoch 7] Training loss: 4.600434151458741, validation loss: 4.600740374755859
+[Epoch 8] Training loss: 4.596508473205566, validation loss: 4.59577003326416
+[Epoch 9] Training loss: 4.588493662261963, validation loss: 4.584687497711181</code></pre>
 </div>
 </div>
-</section></section>
-<section>
-<section id="try-with-other-sample-images-only-works-with-rgb" class="title-slide slide level1 center">
-<h1>Try with other sample images (only works with RGB!)</h1>
-
 </section>
-<section id="try-with-other-sample-images" class="slide level2 scrollable">
-<h2>Try with other sample images</h2>
-<div class="callout callout-caution callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Caution</strong></p>
-</div>
-<div class="callout-content">
-<p>Only works with RGB images</p>
-</div>
-</div>
-</div>
+<section id="exercise-implement-and-train-the-letnet-5-model-with-pytorch-3" class="slide level2">
+<h2>Exercise: Implement and train the LetNet-5 model with PyTorch</h2>
 <ul class="task-list">
-<li><label><input type="checkbox">Use the pre-trained model to classify images from the internet (try some from the <a href="https://r0k.us/graphics/kodak/">Kodak Lossless True Color Image Suite</a>).</label></li>
+<li><label><input type="checkbox">Plot the average train and validation losses</label></li>
 </ul>
-<div id="a7f13cf8" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a></a>sample_im <span class="op">=</span> skimage.io.imread(<span class="st">"https://r0k.us/graphics/kodak/kodak/kodim21.png"</span>)</span>
-<span id="cb21-2"><a></a>sample_x <span class="op">=</span> pipeline(sample_im)</span>
-<span id="cb21-3"><a></a>sample_y <span class="op">=</span> dl_model(sample_x[<span class="va">None</span>, ...])</span>
-<span id="cb21-4"><a></a></span>
-<span id="cb21-5"><a></a>plt.imshow(sample_im)</span>
-<span id="cb21-6"><a></a>plt.title(categories[sample_y.argmax(dim<span class="op">=</span><span class="dv">1</span>)])</span>
-<span id="cb21-7"><a></a>plt.show()</span>
-<span id="cb21-8"><a></a></span>
-<span id="cb21-9"><a></a>sorted_predicted_classes <span class="op">=</span> sample_y.argsort(dim<span class="op">=</span><span class="dv">1</span>, descending<span class="op">=</span><span class="va">True</span>)[<span class="dv">0</span>, :<span class="dv">10</span>]</span>
-<span id="cb21-10"><a></a>sorted_probs <span class="op">=</span> torch.softmax(sample_y, dim<span class="op">=</span><span class="dv">1</span>)[<span class="dv">0</span>, sorted_predicted_classes]</span>
-<span id="cb21-11"><a></a></span>
-<span id="cb21-12"><a></a><span class="cf">for</span> idx, prob <span class="kw">in</span> <span class="bu">zip</span>(sorted_predicted_classes, sorted_probs):</span>
-<span id="cb21-13"><a></a>    <span class="bu">print</span>(categories[idx], <span class="st">"</span><span class="sc">%3.2f</span><span class="st"> </span><span class="sc">%%</span><span class="st">"</span> <span class="op">%</span> (prob <span class="op">*</span> <span class="dv">100</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure>
-<p><img data-src="DL_image_analysis_2_1_files/figure-revealjs/cell-13-output-1.png" width="608" height="431"></p>
-</figure>
+<div id="ec35b189" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a></a>plt.plot(train_loss, <span class="st">"b-"</span>, label<span class="op">=</span><span class="st">"Average training loss"</span>)</span>
+<span id="cb17-2"><a></a>plt.plot(val_loss, <span class="st">"r-"</span>, label<span class="op">=</span><span class="st">"Average validation loss"</span>)</span>
+<span id="cb17-3"><a></a>plt.legend()</span>
+<span id="cb17-4"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
 </div>
-</div>
+<img data-src="DL_image_analysis_1_2_files/figure-revealjs/cell-15-output-1.png" class="r-stretch"></section>
+<section id="exercise-implement-and-train-the-letnet-5-model-with-pytorch-4" class="slide level2 scrollable">
+<h2>Exercise: Implement and train the LetNet-5 model with PyTorch</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Compute the average accuracy for the Validation and Test sets.</label></li>
+</ul>
+<div id="c82c5b9e" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a></a><span class="im">from</span> torchmetrics.classification <span class="im">import</span> Accuracy</span>
+<span id="cb18-2"><a></a></span>
+<span id="cb18-3"><a></a>lenet_clf.<span class="bu">eval</span>()</span>
+<span id="cb18-4"><a></a></span>
+<span id="cb18-5"><a></a>val_acc_metric <span class="op">=</span> Accuracy(task<span class="op">=</span><span class="st">"multiclass"</span>, num_classes<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb18-6"><a></a>test_acc_metric <span class="op">=</span> Accuracy(task<span class="op">=</span><span class="st">"multiclass"</span>, num_classes<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb18-7"><a></a>train_acc_metric <span class="op">=</span> Accuracy(task<span class="op">=</span><span class="st">"multiclass"</span>, num_classes<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb18-8"><a></a></span>
+<span id="cb18-9"><a></a><span class="cf">with</span> torch.no_grad():</span>
+<span id="cb18-10"><a></a>  <span class="cf">for</span> x, y <span class="kw">in</span> cifar_train_dl:</span>
+<span id="cb18-11"><a></a>    <span class="cf">if</span> torch.cuda.is_available():</span>
+<span id="cb18-12"><a></a>      x <span class="op">=</span> x.cuda()</span>
+<span id="cb18-13"><a></a>    y_hat <span class="op">=</span> lenet_clf( x ).cpu()</span>
+<span id="cb18-14"><a></a>    train_acc_metric(y_hat.softmax(dim<span class="op">=</span><span class="dv">1</span>), y)</span>
+<span id="cb18-15"><a></a></span>
+<span id="cb18-16"><a></a>  train_acc <span class="op">=</span> train_acc_metric.compute()</span>
+<span id="cb18-17"><a></a></span>
+<span id="cb18-18"><a></a>  <span class="cf">for</span> x, y <span class="kw">in</span> cifar_val_dl:</span>
+<span id="cb18-19"><a></a>    <span class="cf">if</span> torch.cuda.is_available():</span>
+<span id="cb18-20"><a></a>      x <span class="op">=</span> x.cuda()</span>
+<span id="cb18-21"><a></a>    y_hat <span class="op">=</span> lenet_clf( x ).cpu()</span>
+<span id="cb18-22"><a></a>    val_acc_metric(y_hat.softmax(dim<span class="op">=</span><span class="dv">1</span>), y)</span>
+<span id="cb18-23"><a></a></span>
+<span id="cb18-24"><a></a>  val_acc <span class="op">=</span> val_acc_metric.compute()</span>
+<span id="cb18-25"><a></a></span>
+<span id="cb18-26"><a></a>  <span class="cf">for</span> x, y <span class="kw">in</span> cifar_test_dl:</span>
+<span id="cb18-27"><a></a>    <span class="cf">if</span> torch.cuda.is_available():</span>
+<span id="cb18-28"><a></a>      x <span class="op">=</span> x.cuda()</span>
+<span id="cb18-29"><a></a>    y_hat <span class="op">=</span> lenet_clf( x ).cpu()</span>
+<span id="cb18-30"><a></a>    test_acc_metric(y_hat.softmax(dim<span class="op">=</span><span class="dv">1</span>), y)</span>
+<span id="cb18-31"><a></a></span>
+<span id="cb18-32"><a></a>  test_acc <span class="op">=</span> test_acc_metric.compute()</span>
+<span id="cb18-33"><a></a></span>
+<span id="cb18-34"><a></a><span class="bu">print</span>(<span class="ss">f"Training acc=</span><span class="sc">{</span>train_acc<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb18-35"><a></a><span class="bu">print</span>(<span class="ss">f"Validation acc=</span><span class="sc">{</span>val_acc<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb18-36"><a></a><span class="bu">print</span>(<span class="ss">f"Test acc=</span><span class="sc">{</span>test_acc<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb18-37"><a></a></span>
+<span id="cb18-38"><a></a>train_acc_metric.reset()</span>
+<span id="cb18-39"><a></a>val_acc_metric.reset()</span>
+<span id="cb18-40"><a></a>test_acc_metric.reset()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>beacon 97.15 %
-breakwater 0.15 %
-Angora 0.06 %
-wallaby 0.04 %
-wood rabbit 0.04 %
-promontory 0.03 %
-picket fence 0.03 %
-schooner 0.02 %
-castle 0.02 %
-seashore 0.02 %</code></pre>
-</div>
-</div>
-<ul class="task-list">
-<li><label><input type="checkbox">Try with an image from a category that is not in the labels set of the model (like one with <a href="https://r0k.us/graphics/kodak/kodak/kodim03.png">hanging caps</a>)</label></li>
-</ul>
-</section></section>
-<section>
-<section id="using-deep-learning-models-as-feature-extractors" class="title-slide slide level1 center">
-<h1>Using Deep Learning models as feature extractors</h1>
-
-</section>
-<section id="exercise-modify-the-classifier-layer-dl_model.fc-to-return-the-features-map-from-the-input-image-instead-of-the-category" class="slide level2">
-<h2>Exercise: Modify the classifier layer <code>dl_model.fc</code> to return the features map from the input image instead of the category</h2>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Tip</strong></p>
-</div>
-<div class="callout-content">
-<p>The classifier layer is commonly implemented as a MultiLayer Perceptron (Fully connected) at the end of the models. The specific name of that layer can vary between implementations.</p>
-</div>
-</div>
-</div>
-<ul class="task-list">
-<li><label><input type="checkbox">Load the pre-trained Inception V3 model again to use it as feature extractor.</label></li>
-</ul>
-<div id="cc14d246" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a></a>dl_extractor <span class="op">=</span> models.inception_v3(inception_weights, progress<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb23-2"><a></a>dl_extractor.<span class="bu">eval</span>()</span>
-<span id="cb23-3"><a></a></span>
-<span id="cb23-4"><a></a>dl_extractor.fc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="13">
-<pre><code>Linear(in_features=2048, out_features=1000, bias=True)</code></pre>
-</div>
-</div>
-</section>
-<section id="exercise-modify-the-classifier-layer-dl_model.fc-to-return-the-features-map-from-the-input-image-instead-of-the-category-1" class="slide level2">
-<h2>Exercise: Modify the classifier layer <code>dl_model.fc</code> to return the features map from the input image instead of the category</h2>
-<ul class="task-list">
-<li><label><input type="checkbox">Replace the <code>.fc</code> layer with a <code>torch.nn.Identity</code> module.</label></li>
-</ul>
-<div id="09697e1e" class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a></a>dl_extractor.fc <span class="op">=</span> torch.nn.Identity()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul class="task-list">
-<li><label><input type="checkbox">Use the model for feature extraction in the same way it is used for image classification.</label></li>
-</ul>
-<div id="896cd225" class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a></a>sample_fx <span class="op">=</span> dl_extractor(sample_x[<span class="va">None</span>, ...])</span>
-<span id="cb26-2"><a></a></span>
-<span id="cb26-3"><a></a>sample_fx.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="15">
-<pre><code>torch.Size([1, 2048])</code></pre>
+<pre><code>Training acc=0.014574999921023846
+Validation acc=0.01510000042617321
+Test acc=0.013700000010430813</code></pre>
 </div>
 </div>
 
