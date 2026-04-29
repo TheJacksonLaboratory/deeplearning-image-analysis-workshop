@@ -77,7 +77,7 @@ Data stored in this runtime will be lost if not moved into other storage when th
 
 ---
 
-## Exercise: Use a pre-trained deep learning model to detect objects {.scrollable}
+## Exercise: Use a pre-trained deep learning model to detect objects in images {.scrollable}
  
 - [ ] Import the pre-trained weights of the SSD model from `models.detection`
 
@@ -102,7 +102,7 @@ More info about SSD implementation in `torchvision` [here](https://docs.pytorch.
 
 ---
 
-## Exercise: Use a pre-trained deep learning model to classify images {.scrollable}
+## Exercise: Use a pre-trained deep learning model to detect objects in images {.scrollable}
 
 - [ ] Load the SSD model using the pre-trained weights `ssd_weights`
 
@@ -114,7 +114,7 @@ dl_model.eval()
 
 ---
 
-## Use a pre-trained deep learning model to detect objects {.scrollable}
+## Exercise: Use a pre-trained deep learning model to detect objects in images {.scrollable}
 
 - [ ] Load a sample image to predict its category
 
@@ -130,7 +130,7 @@ sample_im.shape
 
 ---
 
-## Exercise: Use a pre-trained deep learning model to classify images {.scrollable}
+## Exercise: Use a pre-trained deep learning model to detect objects in images {.scrollable}
 
 - [ ] Visualize the sample image
 
@@ -141,7 +141,7 @@ plt.show()
 
 ---
 
-## Exercise: Use a pre-trained deep learning model to classify images
+## Exercise: Use a pre-trained deep learning model to detect objects in images {.scrollable}
 
 - [ ] Inspect what transforms are required by the pre-trained Inception model to work properly
 
@@ -163,7 +163,7 @@ The transforms used by the SSD are
 
 ---
 
-## Exercise: Use a pre-trained deep learning model to classify images
+## Exercise: Use a pre-trained deep learning model to detect objects in images 
 
 - [ ] Define a preprocessing pipeline using the `ssd_weights.transforms()` method. Add also a transformation from `numpy` arrays into torch tensors.
 
@@ -180,7 +180,7 @@ pipeline
 
 ---
 
-## Exercise: Use a pre-trained deep learning model to classify images
+## Exercise: Use a pre-trained deep learning model to detect objects in images 
 
 - [ ] Pre-process the sample image using our pipeline
 
@@ -191,7 +191,7 @@ type(sample_x), sample_x.shape, sample_x.min(), sample_x.max()
 
 ---
 
-## Exercise: Use a pre-trained deep learning model to classify images
+## Exercise: Use a pre-trained deep learning model to detect objects in images 
 
 - [ ] Use the pre-trained model to predict the class of our sample image
 
