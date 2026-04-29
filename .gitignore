@@ -7,6 +7,6 @@
 /site_libs/
 *.pt
 /notes/.jupyter_cache/
-/_freeze
-/docs/# pixi environments
+
+# pixi environments
 .pixi
