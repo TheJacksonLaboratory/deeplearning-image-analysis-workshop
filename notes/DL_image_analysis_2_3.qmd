@@ -20,17 +20,18 @@ execute:
 jupyter: python3
 ---
 
-```{python}
+## Prepare the `cpg0016-jump` dataset {.scrollable}
+
+```{.python}
 !git clone https://github.com/jump-cellpainting/JUMP-Target
 ```
 
-```{python}
+```{.python}
 !git clone https://github.com/jump-cellpainting/datasets.git
 ```
 
-# Prepare the `cpg0016-jump` dataset {.scrollable}
-
 ```{python}
+#| echo: false
 # @title Definition of a PyTorch Dataset class capable to pull images from S3 buckets
 
 import pandas as pd
@@ -149,6 +150,7 @@ print("Testing set size:", len(tst_plates), "plates")
 ```
 
 ```{python}
+#| echo: false
 # @title Define function to retrieve fields from the JUMP dataset knowing their URL
 def load_well(plate_metadata, well_row, well_col, field_id, channels, s3):
     # Get the label of the current well
@@ -191,6 +193,7 @@ def load_well(plate_metadata, well_row, well_col, field_id, channels, s3):
 ```
 
 ```{python}
+#| echo: false
 # @title Define a PyTorch Dataset that iterates through the wells of plates of the JUMP dataset
 class TiffS3Dataset(IterableDataset):
     """This dataset could have virtually infinite samples.
@@ -292,7 +295,7 @@ def dataset_worker_init_fn(worker_id):
     dataset_obj._num_workers = worker_info.num_workers
 ```
 
-## Instantiate a `TiffS3Dataset` from the plates assigned for training, validation, and testing
+- [ ] Instantiate a `TiffS3Dataset` from the plates assigned for training, validation, and testing
 
 ```{python}
 training_ds = TiffS3Dataset(pert_plate_maps, wells_metadata, trn_plates, 16, 24, 9, 5, shuffle=True)
@@ -300,39 +303,35 @@ validation_ds = TiffS3Dataset(pert_plate_maps, wells_metadata, val_plates, 16, 2
 testing_ds = TiffS3Dataset(pert_plate_maps, wells_metadata, tst_plates, 16, 24, 9, 5, shuffle=True)
 ```
 
-# Inspect the dataset
+---
 
-## Visuzalize an image from a single field retrieved from the JUMP dataset
+## Inspect the dataset {.scrollable}
+
+- [ ] Visuzalize an image from a single field retrieved from the JUMP dataset.
 
 ```{python}
 import matplotlib.pyplot as plt
-```
 
-```{python}
 sample_x, sample_y, sample_metadata = next(iter(training_ds))
-```
 
-```{python}
-sample_metadata
-```
+print(sample_metadata)
 
-```{python}
-sample_x.shape
-```
+print("Sample shape", sample_x.shape)
 
-```{python}
 plt.imshow(np.moveaxis(sample_x, 0, -1)[..., :3])
-```
 
-```{python}
-sample_y, class_names[sample_y]
+print("Sample target", sample_y, class_names[sample_y])
 ```
 
 ---
 
-## Create a PyTorch `DataLoader` that takes a `Dataset` (or `IterableDataset`) and serves *mini-batches* of samples.
+## Inspect the dataset {.scrollable}
 
-It also manages the *mini-batch* collation and *multi-thread* loading of data for us.
+- [ ] Create a PyTorch `DataLoader` that takes a `Dataset` (or `IterableDataset`) and serves *mini-batches* of samples.
+
+::: {.callot-note}
+The `DataLoader` also manages the *mini-batch* collation and *multi-thread* loading of data for us.
+:::
 
 ```{python}
 from torch.utils.data.dataloader import DataLoader
@@ -343,58 +342,56 @@ validation_dl = DataLoader(validation_ds, batch_size=batch_size, num_workers=2, 
 testing_dl = DataLoader(testing_ds, batch_size=batch_size, num_workers=2, worker_init_fn=dataset_worker_init_fn)
 ```
 
-## Visuzalize a batch of images retrieved from the JUMP dataset
+---
+
+## Inspect the dataset {.scrollable}
+
+- [ ] Visuzalize a batch of images retrieved from the JUMP dataset.
 
 ```{python}
 batch_x, batch_y, batch_metadata = next(iter(training_dl))
-```
 
-```{python}
-batch_x.shape
-```
-
-```{python}
-batch_y.shape
-```
-
-```{python}
+print("Batch inputs", batch_x.shape)
+print("Batch targets", batch_y.shape)
 pd.DataFrame(batch_metadata)
 ```
 
----
-
 # Train a perturbation classifier model
 
-This approach will use a Multilayer Perceptron (**MLP**) model to classify the field-level profiles into three categories: *NONE/DMSO* = 0, *CRISPR* = 1, and *ORF* = 2.
+## Method
+
+::: {.callout-note}
+This approach will use a Multilayer Perceptron (**MLP**) model to classify the field-level morphological profiles into three categories: *NONE/DMSO* = 0, *CRISPR* = 1, and *ORF* = 2.
 
 The model will be fitted using *Adam* optimizer, which objective is to reduce the *Cross Entropy* loss between the predicted and the ground-truth category of each field.
+:::
+
+---
 
 ## Use a pre-trained model to compute field-level morphological profiles from perturbation plates
 
-### Import a pre-trained model from `torchvision`
-
+::: {.callout-note}
 We'll start with a pre-trained *MobileNet* model for feature extraction since it is lightweight and fast.
-This in terms of computation resources required to use this model.
 
 In the literature, more complex models are used, such as Inception V3, DenseNet, or even Vision Transformers.
 However, these models require GPU acceleration to be efficiently applied.
+:::
 
 - [ ] Load a pre-trained *MobileNet* from the `torchvision` package
 
 ```{python}
 import torch
 from torchvision.models import mobilenet_v3_small, MobileNet_V3_Small_Weights
-```
 
-```{python}
 weights = MobileNet_V3_Small_Weights.DEFAULT
 model = mobilenet_v3_small(weights=weights)
 ```
 
+---
 
-### Modify the model's architecture to convert it into a feature extraction *function* {.scrollable}
+## Use a pre-trained model to compute field-level morphological profiles from perturbation plates {.scrollable}
 
-- [ ] Replace the original `classifier` layer with an `Identity` layer
+- [ ] Modify the MobileNet architecture to convert it into a feature extraction *function*. For that, replace the original `classifier` layer with an `Identity` layer.
 
 ```{python}
 model.classifier = torch.nn.Identity()
@@ -404,15 +401,16 @@ model.classifier = torch.nn.Identity()
 
 ```{python}
 torch.cuda.is_available()
-```
 
-```{python}
-#| scrolled: true
 if torch.cuda.is_available():
     model.cuda()
 
 model.eval()
 ```
+
+---
+
+## Use a pre-trained model to compute field-level morphological profiles from perturbation plates {.scrollable}
 
 - [ ] Get the original transforms pipeline used when the model was originally trained
 
@@ -421,24 +419,17 @@ model_transforms = weights.transforms()
 model_transforms
 ```
 
-### Test the feature extraction model
+- [ ] Test the feature extraction model.
 
-- [ ] Apply the model to each channel by separate
+::: {.callout-note}
+Apply the model to each channel by separate.
+:::
 
 ```{python}
 b, c, h, w = batch_x.shape
-b, c, h, w
-```
 
-```{python}
 x_t = model_transforms(torch.tile(batch_x.reshape(-1, 1, h, w), (1, 3, 1, 1)))
-```
 
-```{python}
-x_t.shape
-```
-
-```{python}
 if torch.cuda.is_available():
     x_t = x_t.cuda()
 
@@ -446,25 +437,19 @@ with torch.no_grad():
     x_out = model(x_t).cpu()
 ```
 
-- [ ] Aggregate the features per channel into a single vector per sample
-
-```{python}
-x_out.shape
-```
+- [ ] Aggregate the features per channel into a single vector per sample.
 
 ```{python}
 x_out = x_out.reshape(b, c, -1)
-```
 
-```{python}
 fx = x_out.sum(dim=1)
-```
 
-```{python}
 fx.shape
 ```
 
 ---
+
+## Use a pre-trained model to compute field-level morphological profiles from perturbation plates {.scrollable}
 
 - [ ] Tidy up the feature extraction operation
 
@@ -480,9 +465,7 @@ def feature_extractor(batch_x):
     fx = x_out.reshape(b, c, -1).sum(dim=1)
 
     return fx
-```
 
-```{python}
 if torch.cuda.is_available():
     batch_x = batch_x.cuda()
 
@@ -497,9 +480,11 @@ fx.shape
 
 ## Create a classifier with a Multilayer Perceptron (**MLP**) architecture {.scrollable}
 
+::: {.callout-note}
 The *MobileNet* model extracts $576$ features per image, these will be the input features for the *MLP* classifer.
+:::
 
-- [ ] Define a Multilayer Perceptron *MLP* classifier that takes the pre-extracted features and predicts the perturbation applied to that sample
+- [ ] Define a Multilayer Perceptron *MLP* classifier that takes the pre-extracted features and predicts the perturbation applied to that sample.
 
 ```{python}
 class PerturbationClassifier(torch.nn.Module):
@@ -517,9 +502,7 @@ class PerturbationClassifier(torch.nn.Module):
     def forward(self, input):
         y_pred = self._classifier(input)
         return y_pred
-```
 
-```{python}
 classifier = PerturbationClassifier(576, 128, 3)
 ```
 
@@ -541,6 +524,7 @@ optimizer = torch.optim.Adam(classifier.parameters(), lr=1e-4, weight_decay=0.00
 ```
 
 ```{python}
+#| echo: false
 optimizer = torch.optim.Adam([
     {'params': classifier._classifier.parameters(), 'lr': 1e-4, 'weight_decay': 0.001}
 ])
@@ -558,10 +542,7 @@ classifier_loss_fn = torch.nn.CrossEntropyLoss()
 
 ```{python}
 max_trn_batches = 100
-```
 
-```{python}
-%%time
 from tqdm.auto import tqdm
 from torchmetrics.classification import Accuracy
 
@@ -610,6 +591,10 @@ for trn_batch_i, (trn_batch_x, trn_batch_y, _) in enumerate(training_dl):
 trn_q.close()
 ```
 
+---
+
+## Train the *MLP* model {.scrollable}
+
 - [ ] Compute the proportion of samples per category in the training set
 
 ```{python}
@@ -629,13 +614,15 @@ trn_cls_loss_epoch / trn_n_total
 trn_acc_metric.compute()
 ```
 
+---
+
+## Validate the *MLP* model {.scrollable}
+
 - [ ] Implement the validation loop
 
 ```{python}
 max_val_batches = 20
-```
 
-```{python}
 val_n_dmso = 0
 val_n_crispr = 0
 val_n_orf = 0
@@ -678,7 +665,7 @@ val_q.close()
 
 ---
 
-## Train the *MLP* model {.scrollable}
+## Validate the *MLP* model {.scrollable}
 
 - [ ] Compute the proportion of samples per category in the validation set
 
@@ -699,18 +686,16 @@ val_cls_loss_epoch / val_n_total
 val_acc_metric.compute()
 ```
 
-# Evaluate the model with the witheld testing data
+---
 
-## Save the classifier model to be used later or shared with collaborators {.scrollable}
+## Evaluate the model with the witheld testing data {.scrollable}
 
 - [ ] Evaluate the classifier on the testing set to measure its generalization capacity
 
 ```{python}
-max_tst_batches = 10
-```
-
-```{python}
 from torchmetrics.classification import ConfusionMatrix
+
+max_tst_batches = 10
 
 tst_n_dmso = 0
 tst_n_crispr = 0
@@ -755,6 +740,9 @@ for tst_batch_i, (tst_batch_x, tst_batch_y, _) in enumerate(validation_dl):
 
 tst_q.close()
 ```
+---
+
+## Evaluate the model with the witheld testing data {.scrollable}
 
 - [ ] Check the proportion of types of perturbation in the testing set
 
@@ -777,30 +765,22 @@ tst_confmat.compute()
 tst_confmat.plot()
 ```
 
-# Use the pre-trained model to identify the behavior of compounds
-
-Because the model has learned to recognize *CRISPR*, *ORF*, and *NONE/DMSO* effects, it can be used to determine the behavior of any treatment based on their morphological profile.
-
-To do so, first extract the the morphological features using the pre-trained *MobileNet*, and then use the extracted features as input for the classifier model.
-
 ---
 
-##  Execute the feature extraction and classification pipeline for *compound* data {.scrollable}
+## Use the pre-trained model to identify the behavior of compounds
+
+::: {.callout-note}
+Because the model has learned to recognize *CRISPR*, *ORF*, and *NONE/DMSO* effects, it can be used to determine the behavior of any treatment based on their morphological profile.
+:::
+
+- [ ] Test the classification pipeline with data from the **Compund** dataset.
 
 ```{python}
 compounds_ds = TiffS3Dataset(comp_plate_maps, wells_metadata, comp_plate_maps["Plate_name"].tolist(), 16, 24, 9, 5, shuffle=True)
 compounds_dl = DataLoader(compounds_ds, batch_size=batch_size, num_workers=2, worker_init_fn=dataset_worker_init_fn)
-```
 
-```{python}
 batch_comp_x, batch_comp_y, batch_comp_meta = next(iter(compounds_dl))
-```
 
-```{python}
-batch_comp_x.shape
-```
-
-```{python}
 if torch.cuda.is_available():
     batch_comp_x = batch_comp_x.cuda()
 
@@ -812,20 +792,20 @@ with torch.no_grad():
 comp_batch_y_pred.argmax(dim=1)
 ```
 
+---
 
-- [ ] Look for any interesting compounds in [PubChem](https://pubchem.ncbi.nlm.nih.gov/)
+
+## Use the pre-trained model to identify the behavior of compounds
+
+- [ ] Look for any interesting compounds in [PubChem](https://pubchem.ncbi.nlm.nih.gov/).
 
 ```{python}
 def compound_query(well_position):
     return wells_metadata.query(f"well_position == '{well_position}' & Plate_type=='COMPOUND'")["broad_sample"].to_numpy()[0]
-```
 
-```{python}
 batch_comp_df = pd.DataFrame(batch_comp_meta)
 batch_comp_df["Predicted_class"] = comp_batch_y_pred.argmax(dim=1)
 batch_comp_df["Predicted_class"] = batch_comp_df["Predicted_class"].map(class_names)
 batch_comp_df["Broad_compound"] = batch_comp_df["Well_position"].map(compound_query)
 batch_comp_df
 ```
-
-
